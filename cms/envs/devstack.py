@@ -5,8 +5,12 @@ Specific overrides to the base prod settings to make development easier.
 from .aws import * # pylint: disable=wildcard-import, unused-wildcard-import
 
 DEBUG = True
-USE_I18N = True
 TEMPLATE_DEBUG = DEBUG
+
+USE_I18N = True
+LANGUAGES = ( ('es_419', 'Spanish'), )
+TIME_ZONE = 'America/Bogota'
+LANGUAGE_CODE = 'es_419'
 
 ################################ LOGGERS ######################################
 
