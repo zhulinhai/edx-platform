@@ -1,13 +1,14 @@
 # Configuration for i18n workflow.
 
 locales:
-    - en
+    # - en
 
     # More languages we might want someday, these have started on Transifex.
     # fr
     # ko_KR
     # ru
-    # es_419
+    # - en_US
+    - es_419
     # ja_JP
     # pt_BR
     # zh_CN
