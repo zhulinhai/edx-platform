@@ -194,6 +194,9 @@ BULK_EMAIL_ROUTING_KEY = HIGH_PRIORITY_QUEUE
 
 # Theme overrides
 THEME_NAME = ENV_TOKENS.get('THEME_NAME', None)
+if THEME_NAME is not "":
+    STATICFILES_DIRS.append('/edx/app/edxapp/themes/edunext/static')
+
 
 # Marketing link overrides
 MKTG_URL_LINK_MAP.update(ENV_TOKENS.get('MKTG_URL_LINK_MAP', {}))
