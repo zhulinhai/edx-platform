@@ -194,7 +194,7 @@ BULK_EMAIL_ROUTING_KEY = HIGH_PRIORITY_QUEUE
 
 # Theme overrides
 THEME_NAME = ENV_TOKENS.get('THEME_NAME', None)
-if THEME_NAME is not "":
+if THEME_NAME is not None:
     STATICFILES_DIRS.append('/edx/app/edxapp/themes/edunext/static')
 
 
