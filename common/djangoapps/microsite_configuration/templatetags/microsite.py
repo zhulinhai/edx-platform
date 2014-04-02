@@ -48,3 +48,16 @@ def favicon_path(default=settings.FAVICON_PATH):
     {% favicon_path %}
     """
     return static(MicrositeConfiguration.get_microsite_configuration_value('favicon_path', default))
+
+
+@register.simple_tag(name="microsite_css_overrides_file")
+def microsite_css_overrides_file():
+    """
+    Django template tag that outputs the css import for a:
+    {% microsite_css_overrides_file %}
+    """
+    file_path = MicrositeConfiguration.get_microsite_configuration_value('css_overrides_file')
+    if file_path is not None:
+        return "<link href='{}' rel='stylesheet' type='text/css'>".format(static(file_path))
+    else:
+        return ""
