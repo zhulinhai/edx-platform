@@ -4,7 +4,7 @@
 <head>
   {% block title %}<title>{% platform_name %}</title>{% endblock %}
 
-  <link rel="icon" type="image/x-icon" href="{% static "images/favicon.ico" %}" />
+ <link rel="icon" type="image/x-icon" href="{% favicon_path %}" />
 
   {% compressed_css 'style-vendor' %}
   {% compressed_css 'style-app' %}
@@ -19,6 +19,7 @@
   {% block headextra %}{% endblock %}
   {% render_block "css" %}
 
+  {% microsite_css_overrides_file %}
 
   <!--[if lt IE 9]>
   <script src="{% static 'js/html5shiv.js' %}"></script>
