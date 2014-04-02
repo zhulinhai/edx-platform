@@ -4,7 +4,7 @@
 <head>
   {% block title %}<title>{% platform_name %}</title>{% endblock %}
 
-  <link rel="icon" type="image/x-icon" href="{% static "images/favicon.ico" %}" />
+ <link rel="icon" type="image/x-icon" href="{% favicon_path %}" />
 
   {% compressed_css 'style-vendor' %}
   {% compressed_css 'style-app' %}
