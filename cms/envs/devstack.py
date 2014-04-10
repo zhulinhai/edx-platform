@@ -30,6 +30,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LMS_BASE = "localhost:8000"
 FEATURES['PREVIEW_LMS_BASE'] = "preview." + LMS_BASE
 
+
+FEATURES['ENABLE_CREATOR_GROUP'] = True
+# FEATURES['STUDIO_REQUEST_EMAIL'] = 'felipe.montoya@edunext.co'
+
 ################################# CELERY ######################################
 
 # By default don't use a worker, execute tasks as if they were local functions
@@ -58,6 +62,51 @@ DEBUG_TOOLBAR_CONFIG = {
 # To see stacktraces for MongoDB queries, set this to True.
 # Stacktraces slow down page loads drastically (for pages with lots of queries).
 DEBUG_TOOLBAR_MONGO_STACKTRACES = False
+
+
+CELERY_RESULT_BACKEND = 'database'
+CELERY_CACHE_BACKEND = 'memory'
+
+
+CACHES = {
+    # This is the cache used for most things. Askbot will not work without a
+    # functioning cache -- it relies on caching to load its settings in places.
+    # In staging/prod envs, the sessions also live here.
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'edx_loc_mem_cache',
+        'KEY_FUNCTION': 'util.memcache.safe_key',
+    },
+
+    # The general cache is what you get if you use our util.cache. It's used for
+    # things like caching the course.xml file for different A/B test groups.
+    # We set it to be a DummyCache to force reloading of course.xml in dev.
+    # In staging environments, we would grab VERSION from data uploaded by the
+    # push process.
+    'general': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'KEY_PREFIX': 'general',
+        'VERSION': 4,
+        'KEY_FUNCTION': 'util.memcache.safe_key',
+    },
+
+    'mongo_metadata_inheritance': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/mongo_metadata_inheritance',
+        'TIMEOUT': 300,
+        'KEY_FUNCTION': 'util.memcache.safe_key',
+    },
+    'loc_cache': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'edx_location_mem_cache',
+    },
+
+}
+
+# Make the keyedcache startup warnings go away
+CACHE_TIMEOUT = 0
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 ###############################################################################
 # Lastly, see if the developer has any local overrides.
