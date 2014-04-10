@@ -562,11 +562,17 @@ def course_about(request, course_id):
         reg_then_add_to_cart_link = "{reg_url}?course_id={course_id}&enrollment_action=add_to_cart".format(
             reg_url=reverse('register_user'), course_id=course.id)
 
+    available_modes = CourseMode.modes_for_course(course_id)
+    default_mode = available_modes[0]
+    if len(available_modes) > 1:
+        default_mode = None
+
     return render_to_response('courseware/course_about.html',
                               {'course': course,
                                'registered': registered,
                                'course_target': course_target,
                                'registration_price': registration_price,
+                               'default_mode': default_mode,
                                'in_cart': in_cart,
                                'reg_then_add_to_cart_link': reg_then_add_to_cart_link,
                                'show_courseware_link': show_courseware_link})

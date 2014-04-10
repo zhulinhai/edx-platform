@@ -571,6 +571,12 @@ def change_enrollment(request):
 
         current_mode = available_modes[0]
 
+        if current_mode.slug == "manual":
+            return HttpResponse(
+                reverse("course_modes_manual", kwargs={'course_id': course_id})
+            )
+            # return HttpResponse("The course staff was notified")
+
         org, course_num, run = course_id.split("/")
         dog_stats_api.increment(
             "common.student.enrollment",
