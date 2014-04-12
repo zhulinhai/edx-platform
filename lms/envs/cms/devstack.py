@@ -13,6 +13,47 @@ LANGUAGES = (
 # By default don't use a worker, execute tasks as if they were local functions
 CELERY_ALWAYS_EAGER = True
 
+
+CELERY_RESULT_BACKEND = None
+CELERY_CACHE_BACKEND = None
+
+CACHES = {
+    # This is the cache used for most things.
+    # In staging/prod envs, the sessions also live here.
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'edx_loc_mem_cache',
+        'KEY_FUNCTION': 'util.memcache.safe_key',
+    },
+
+    # The general cache is what you get if you use our util.cache. It's used for
+    # things like caching the course.xml file for different A/B test groups.
+    # We set it to be a DummyCache to force reloading of course.xml in dev.
+    # In staging environments, we would grab VERSION from data uploaded by the
+    # push process.
+    'general': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'KEY_PREFIX': 'general',
+        'VERSION': 4,
+        'KEY_FUNCTION': 'util.memcache.safe_key',
+    },
+
+    'mongo_metadata_inheritance': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/mongo_metadata_inheritance',
+        'TIMEOUT': 300,
+        'KEY_FUNCTION': 'util.memcache.safe_key',
+    },
+    'loc_cache': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'edx_location_mem_cache',
+    },
+}
+
+# Make the keyedcache startup warnings go away
+CACHE_TIMEOUT = 0
+
+
 ################################ LOGGERS ######################################
 
 import logging

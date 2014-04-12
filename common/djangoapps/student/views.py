@@ -21,7 +21,7 @@ from django.contrib.auth.views import password_reset_confirm
 # from django.contrib.sessions.models import Session
 from django.core.cache import cache
 from django.core.context_processors import csrf
-from django.core.mail import send_mail
+from mail import send_mail
 from django.core.urlresolvers import reverse
 from django.core.validators import validate_email, validate_slug, ValidationError
 from django.core.exceptions import ObjectDoesNotExist
@@ -1086,6 +1086,9 @@ def create_account(request, post_override=None):
     # Email subject *must not* contain newlines
     subject = ''.join(subject.splitlines())
     message = render_to_string('emails/activation_email.txt', context)
+    message_html = None
+    if (settings.FEATURES.get('ENABLE_MULTIPART_EMAIL')):
+        message_html = render_to_string('emails/html/activation_email.html', context)
 
     # don't send email if we are doing load testing or random user generation for some reason
     if not (settings.FEATURES.get('AUTOMATIC_AUTH_FOR_TESTING')):
@@ -1100,7 +1103,7 @@ def create_account(request, post_override=None):
                            '-' * 80 + '\n\n' + message)
                 send_mail(subject, message, from_address, [dest_addr], fail_silently=False)
             else:
-                _res = user.email_user(subject, message, from_address)
+                _res = send_mail(subject, message, from_address, [user.email], html_message=message_html)
         except:
             log.warning('Unable to send activation email to user', exc_info=True)
             js['value'] = _('Could not send activation e-mail.')
@@ -1333,9 +1336,17 @@ def reactivation_email_for_user(user):
     subject = render_to_string('emails/activation_email_subject.txt', d)
     subject = ''.join(subject.splitlines())
     message = render_to_string('emails/activation_email.txt', d)
+    message_html = None
+    if (settings.FEATURES.get('ENABLE_MULTIPART_EMAIL')):
+        message_html = render_to_string('emails/html/activation_email.html', d)
+
+    from_address = MicrositeConfiguration.get_microsite_configuration_value(
+            'email_from_address',
+            settings.DEFAULT_FROM_EMAIL
+        )
 
     try:
-        _res = user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+        _res = send_mail(subject, message, from_address, [user.email], html_message=message_html)
     except:
         log.warning('Unable to send reactivation email', exc_info=True)
         return HttpResponse(json.dumps({'success': False, 'error': _('Unable to send reactivation email')}))
@@ -1395,13 +1406,16 @@ def change_email_request(request):
     subject = ''.join(subject.splitlines())
 
     message = render_to_string('emails/email_change.txt', context)
+    message_html = None
+    if (settings.FEATURES.get('ENABLE_MULTIPART_EMAIL')):
+        message_html = render_to_string('emails/html/email_change.html', context)
 
     from_address = MicrositeConfiguration.get_microsite_configuration_value(
         'email_from_address',
         settings.DEFAULT_FROM_EMAIL
     )
 
-    _res = send_mail(subject, message, from_address, [pec.new_email])
+    _res = send_mail(subject, message, from_address, [pec.new_email], html_message=message_html)
 
     return HttpResponse(json.dumps({'success': True}))
 
@@ -1434,6 +1448,13 @@ def confirm_email_change(request, key):
         subject = render_to_string('emails/email_change_subject.txt', address_context)
         subject = ''.join(subject.splitlines())
         message = render_to_string('emails/confirm_email_change.txt', address_context)
+        message_html = None
+        if (settings.FEATURES.get('ENABLE_MULTIPART_EMAIL')):
+            message_html = render_to_string('emails/html/confirm_email_change.html', address_context)
+        from_address = MicrositeConfiguration.get_microsite_configuration_value(
+            'email_from_address',
+            settings.DEFAULT_FROM_EMAIL
+        )
         up = UserProfile.objects.get(user=user)
         meta = up.get_meta()
         if 'old_emails' not in meta:
@@ -1443,7 +1464,7 @@ def confirm_email_change(request, key):
         up.save()
         # Send it to the old email...
         try:
-            user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+            send_mail(subject, message, from_address, [user.email], html_message=message_html)
         except Exception:
             log.warning('Unable to send confirmation email to old address', exc_info=True)
             response = render_to_response("email_change_failed.html", {'email': user.email})
@@ -1455,7 +1476,7 @@ def confirm_email_change(request, key):
         pec.delete()
         # And send it to the new email...
         try:
-            user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
+            send_mail(subject, message, from_address, [user.email], html_message=message_html)
         except Exception:
             log.warning('Unable to send confirmation email to new address', exc_info=True)
             response = render_to_response("email_change_failed.html", {'email': pec.new_email})
