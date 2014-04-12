@@ -13,7 +13,7 @@ from django.dispatch import receiver
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import send_mail
+from mail import send_mail
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.db import transaction
@@ -167,14 +167,19 @@ class Order(models.Model):
 
         # send confirmation e-mail
         subject = _("Order Payment Confirmation")
-        message = render_to_string(
-            'emails/order_confirmation_email.txt',
-            {
+        context = {
                 'order': self,
                 'order_items': orderitems,
                 'has_billing_info': settings.FEATURES['STORE_BILLING_INFO']
             }
+        message = render_to_string(
+            'emails/order_confirmation_email.txt',
+            context
         )
+        message_html = None
+        if (settings.FEATURES.get('ENABLE_MULTIPART_EMAIL')):
+            message_html = render_to_string('emails/html/order_confirmation_email.html', context)
+
         try:
             from_address = MicrositeConfiguration.get_microsite_configuration_value(
                 'email_from_address',
@@ -182,7 +187,7 @@ class Order(models.Model):
             )
 
             send_mail(subject, message,
-                      from_address, [self.user.email])  # pylint: disable=E1101
+                      from_address, [self.user.email], html_message=message_html)  # pylint: disable=E1101
         except (smtplib.SMTPException, BotoServerError):  # sadly need to handle diff. mail backends individually
             log.error('Failed sending confirmation e-mail for order %d', self.id)  # pylint: disable=E1101
 
