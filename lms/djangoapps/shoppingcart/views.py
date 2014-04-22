@@ -50,7 +50,7 @@ def add_course_to_cart(request, course_id):
     cart = Order.get_cart_for_user(request.user)
     # All logging from here handled by the model
     try:
-        PaidCourseRegistration.add_to_order(cart, course_id)
+        PaidCourseRegistration.add_to_order(cart, course_id, mode_slug="paid")
     except CourseDoesNotExistException:
         return HttpResponseNotFound(_('The course you requested does not exist.'))
     except ItemAlreadyInCartException:

@@ -12,8 +12,9 @@ from django.views.generic.base import View
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from datetime import datetime
 
-from edxmako.shortcuts import render_to_response
+from edxmako.shortcuts import render_to_response, render_to_string
 
 from course_modes.models import CourseMode
 from courseware.access import has_access
@@ -21,6 +22,11 @@ from student.models import CourseEnrollment
 from student.views import course_from_id
 from verify_student.models import SoftwareSecurePhotoVerification
 
+from microsite_configuration.middleware import MicrositeConfiguration
+from django.core.mail import send_mail
+from smtplib import SMTPException
+from shoppingcart.views import add_course_to_cart
+from shoppingcart.models import Order, PaidCourseRegistration
 
 class ChooseModeView(View):
     """
@@ -62,10 +68,14 @@ class ChooseModeView(View):
             "error": error,
             "upgrade": upgrade,
         }
-        if "verified" in modes:
-            context["suggested_prices"] = [decimal.Decimal(x) for x in modes["verified"].suggested_prices.split(",")]
-            context["currency"] = modes["verified"].currency.upper()
-            context["min_price"] = modes["verified"].min_price
+        if "paid" in modes:
+            context["suggested_prices"] = [decimal.Decimal(x) for x in modes["paid"].suggested_prices.split(",")]
+            context["currency"] = modes["paid"].currency.upper()
+            context["min_price"] = modes["paid"].min_price
+
+            cart = Order.get_cart_for_user(request.user)
+            context["in_cart"] = PaidCourseRegistration.contained_in_order(cart, course_id)
+
 
         return render_to_response("course_modes/choose.html", context)
 
@@ -89,11 +99,23 @@ class ChooseModeView(View):
         if requested_mode not in allowed_modes:
             return HttpResponseBadRequest(_("Enrollment mode not supported"))
 
-        if requested_mode in ("audit", "honor"):
+        if requested_mode in ("audit", "honor", "free"):
             CourseEnrollment.enroll(user, course_id, requested_mode)
             return redirect('dashboard')
 
+        if requested_mode == "manual":
+            return redirect('course_modes_manual', course_id=course_id)
+
         mode_info = allowed_modes[requested_mode]
+
+        if requested_mode == "paid":
+            response = add_course_to_cart(request,course_id)
+            # happy path
+            if response.status_code < 400:
+                return redirect(reverse('shoppingcart.views.show_cart'))
+            # sad path
+            else:
+                return response
 
         if requested_mode == "verified":
             amount = request.POST.get("contribution") or \
@@ -129,9 +151,85 @@ class ChooseModeView(View):
         Given the request object of `user_choice`, return the
         corresponding course mode slug
         """
-        if 'audit_mode' in request_dict:
-            return 'audit'
-        if 'certificate_mode' and request_dict.get("honor-code"):
-            return 'honor'
-        if 'certificate_mode' in request_dict:
-            return 'verified'
+        # if 'audit_mode' in request_dict:
+        #     return 'audit'
+        # if 'certificate_mode' and request_dict.get("honor-code"):
+        #     return 'honor'
+        # if 'certificate_mode' in request_dict:
+        #     return 'verified'
+        if 'manual_mode' in request_dict:
+            return 'manual'
+        if 'free_mode' in request_dict:
+            return 'free'
+        if 'paid_mode' in request_dict:
+            return 'paid'
+
+class ChosedManualView(View):
+    """
+    View used when the user chooses the manual mode
+
+    When a get request is used, shows the contact form.
+    When a post request is used, assumes that it is a form submission
+        from the contact page
+    """
+    @method_decorator(login_required)
+    def get(self, request, course_id, error=None):
+        """ Displays a contact form page """
+
+        enrollment_mode = CourseEnrollment.enrollment_mode_for_user(request.user, course_id)
+
+        # registered users do not need to re-register
+        if enrollment_mode is not None:
+            return redirect(reverse('dashboard'))
+
+        self.notify_course_support(request, course_id)
+
+        modes = CourseMode.modes_for_course_dict(course_id)
+        course = course_from_id(course_id)
+        context = {
+            "course_id": course_id,
+            "modes": modes,
+            "course_name": course.display_name_with_default,
+            "course_org": course.display_org_with_default,
+            "course_num": course.display_number_with_default,
+            "error": error,
+        }
+        return render_to_response("course_modes/manual.html", context)
+
+    def notify_course_support(self, request, course_id):
+        """ Emails the course staff from the site/microsite """
+        to_address = MicrositeConfiguration.get_microsite_configuration_value(
+            'registration_email',
+            'cursos@edunext.co'
+        )
+        site_name = MicrositeConfiguration.get_microsite_configuration_value(
+            'platform_name',
+            'edunext'
+        )
+        user = request.user
+        time = datetime.now()
+        context = {
+            'user_name': user.username,
+            'user_realname': user.profile.name,
+            'user_email': user.email,
+            'course_id': course_id,
+            'site_name':site_name,
+            'to_address':to_address,
+            'time':time,
+        }
+
+        subject = render_to_string('emails/manual_registration_course_subject.txt', context)
+        subject = ''.join(subject.splitlines())
+        message = render_to_string('emails/manual_registration_course.txt', context)
+
+        try:
+            send_mail(
+                subject,
+                message,
+                'no-reply@edunext.co',
+                [to_address],
+                fail_silently=False
+            )
+        except SMTPException:
+            log.warning("Failure sending 'manual registration' e-mail for %s to %s", user.email, to_address)
+
