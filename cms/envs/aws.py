@@ -173,6 +173,7 @@ PLATFORM_NAME = ENV_TOKENS.get('PLATFORM_NAME', 'edX')
 
 # Theme overrides
 STUDIO_THEME_NAME = 'studio'
+THEME_NAME = ENV_TOKENS.get('THEME_NAME', None)
 if STUDIO_THEME_NAME is not None:
     theme_root = CONFIG_ROOT / "themes" / STUDIO_THEME_NAME
     TEMPLATE_DIRS.insert(0, theme_root / 'templates')
