@@ -172,9 +172,12 @@ LOGGING = get_logger_config(LOG_DIR,
 PLATFORM_NAME = ENV_TOKENS.get('PLATFORM_NAME', 'edX')
 
 # Theme overrides
-THEME_NAME = ENV_TOKENS.get('THEME_NAME', None)
-if THEME_NAME is not None:
-    STATICFILES_DIRS.append('/edx/app/edxapp/themes/edunext/static')
+STUDIO_THEME_NAME = 'studio'
+if STUDIO_THEME_NAME is not None:
+    theme_root = CONFIG_ROOT / "themes" / STUDIO_THEME_NAME
+    TEMPLATE_DIRS.insert(0, theme_root / 'templates')
+    MAKO_TEMPLATES['main'].insert(0, theme_root / 'templates')
+    STATICFILES_DIRS.insert(0,( theme_root / 'static'))
 
 # Event Tracking
 if "TRACKING_IGNORE_URL_PATTERNS" in ENV_TOKENS:
