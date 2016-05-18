@@ -268,6 +268,7 @@ FEATURES = {
     # Special Exams, aka Timed and Proctored Exams
     'ENABLE_SPECIAL_EXAMS': False,
 
+    # enable organization course linking
     'ORGANIZATIONS_APP': False,
 
     # Show the language selector in the header
@@ -474,6 +475,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 
     'student.middleware.UserStandingMiddleware',
+    'student.middleware.UserCourseFilteringMiddleware',
+
     'openedx.core.djangoapps.contentserver.middleware.StaticContentServer',
 
     'django.contrib.messages.middleware.MessageMiddleware',
