@@ -1,214 +1,188 @@
-# Keyboard Support
+(function() {
+    'use strict';
+    console.log('new calc');
+    this.Calculator = (function() {
 
-# If focus is on the hint button:
-#   * Enter: Open or close hint popup. Select last focused hint item if opening
-#   * Space: Open or close hint popup. Select last focused hint item if opening
+        function Calculator() {
+            this.hintButton = $('#calculator_hint');
+            this.hintPopup = $('.help');
+            this.hintsList = this.hintPopup.find('.hint-item');
+            this.selectHint($('#' + this.hintPopup.attr('aria-activedescendant')));
+            $('.calc').click(this.toggle);
+            $('form#calculator').submit(this.calculate).submit(function(e) {
+                return e.preventDefault();
+            });
+            this.hintButton.click($.proxy(this.handleClickOnHintButton, this));
+            this.hintPopup.click($.proxy(this.handleClickOnHintPopup, this));
+            this.hintPopup.keydown($.proxy(this.handleKeyDownOnHint, this));
+            $('#calculator_wrapper').keyup($.proxy(this.handleKeyUpOnHint, this));
+            this.handleClickOnDocument = $.proxy(this.handleClickOnDocument, this);
+        }
 
-# If focus is on a hint item:
-#   * Left arrow: Select previous hint item
-#   * Up arrow: Select previous hint item
-#   * Right arrow: Select next hint item
-#   * Down arrow: Select next hint item
+        Calculator.prototype.KEY = {
+            TAB: 9,
+            ENTER: 13,
+            ESC: 27,
+            SPACE: 32,
+            LEFT: 37,
+            UP: 38,
+            RIGHT: 39,
+            DOWN: 40
+        };
 
+        Calculator.prototype.toggle = function(event) {
+            var $calc, $calcWrapper, icon, isExpanded, text;
+            event.preventDefault();
+            $calc = $('.calc');
+            $calcWrapper = $('#calculator_wrapper');
+            text = gettext('Open Calculator');
+            isExpanded = false;
+            icon = 'fa-calculator';
+            $('div.calc-main').toggleClass('open');
+            if ($calc.hasClass('closed')) {
+                $calcWrapper.find('input, a').attr('tabindex', -1);
+            } else {
+                text = gettext('Close Calculator');
+                icon = 'fa-close';
+                isExpanded = true;
+                $calcWrapper.find('input, a').attr('tabindex', 0);
+                setTimeout(function() {
+                    return $calcWrapper.find('#calculator_input').focus();
+                }, 100);
+            }
+            $calc.attr({
+                'title': text,
+                'aria-expanded': isExpanded
+            }).find('.utility-control-label').text(text);
+            $calc.find('.icon').removeClass('fa-calculator').removeClass('fa-close').addClass(icon);
+            return $calc.toggleClass('closed');
+        };
 
-class @Calculator
-  constructor: ->
-    @hintButton = $('#calculator_hint')
-    @hintPopup = $('.help')
-    @hintsList = @hintPopup.find('.hint-item')
-    @selectHint($('#' + @hintPopup.attr('aria-activedescendant')));
+        Calculator.prototype.showHint = function() {
+            this.hintPopup.addClass('shown').attr('aria-hidden', false);
+            return $(document).on('click', this.handleClickOnDocument);
+        };
 
-    $('.calc').click @toggle
-    $('form#calculator').submit(@calculate).submit (e) ->
-      e.preventDefault()
-    @hintButton
-      .click(($.proxy(@handleClickOnHintButton, @)))
+        Calculator.prototype.hideHint = function() {
+            this.hintPopup.removeClass('shown').attr('aria-hidden', true);
+            return $(document).off('click', this.handleClickOnDocument);
+        };
 
-    @hintPopup
-      .click(($.proxy(@handleClickOnHintPopup, @)))
+        Calculator.prototype.selectHint = function(element) {
+            if (!element || (element && element.length === 0)) {
+                element = this.hintsList.first();
+            }
+            this.activeHint = element;
+            this.activeHint.focus();
+            return this.hintPopup.attr('aria-activedescendant', element.attr('id'));
+        };
 
-    @hintPopup
-      .keydown($.proxy(@handleKeyDownOnHint, @))
+        Calculator.prototype.prevHint = function() {
+            var prev;
+            prev = this.activeHint.prev();
+            if (this.activeHint.index() === 0) {
+                prev = this.hintsList.last();
+            }
+            return this.selectHint(prev);
+        };
 
-    $('#calculator_wrapper')
-      .keyup($.proxy(@handleKeyUpOnHint, @))
+        Calculator.prototype.nextHint = function() {
+            var next;
+            next = this.activeHint.next();
+            if (this.activeHint.index() === this.hintsList.length - 1) {
+                next = this.hintsList.first();
+            }
+            return this.selectHint(next);
+        };
 
-    @handleClickOnDocument = $.proxy(@handleClickOnDocument, @)
+        Calculator.prototype.handleKeyDown = function(e) {
+            if (e.altKey) {
+                return true;
+            }
+            if (e.keyCode === this.KEY.ENTER || e.keyCode === this.KEY.SPACE) {
+                if (this.hintPopup.hasClass('shown')) {
+                    this.hideHint();
+                } else {
+                    this.showHint();
+                    this.activeHint.focus();
+                }
+                e.preventDefault();
+                return false;
+            }
+            return true;
+        };
 
-  KEY:
-    TAB   : 9
-    ENTER : 13
-    ESC   : 27
-    SPACE : 32
-    LEFT  : 37
-    UP    : 38
-    RIGHT : 39
-    DOWN  : 40
+        Calculator.prototype.handleKeyDownOnHint = function(e) {
+            if (e.altKey) {
+                return true;
+            }
+            switch (e.keyCode) {
+                case this.KEY.ESC:
+                    this.hideHint();
+                    this.hintButton.focus();
+                    e.stopPropagation();
+                    return false;
+                case this.KEY.LEFT:
+                case this.KEY.UP:
+                    if (e.shiftKey) {
+                        return true;
+                    }
+                    this.prevHint();
+                    e.stopPropagation();
+                    return false;
+                case this.KEY.RIGHT:
+                case this.KEY.DOWN:
+                    if (e.shiftKey) {
+                        return true;
+                    }
+                    this.nextHint();
+                    e.stopPropagation();
+                    return false;
+            }
+            return true;
+        };
 
-  toggle: (event) ->
-    event.preventDefault()
-    $calc = $('.calc')
-    $calcWrapper = $('#calculator_wrapper')
-    text = gettext('Open Calculator')
-    isExpanded = false
-    icon = 'fa-calculator'
+        Calculator.prototype.handleKeyUpOnHint = function(e) {
+            switch (e.keyCode) {
+                case this.KEY.TAB:
+                    this.active_element = document.activeElement;
+                    if (!$(this.active_element).parents().is(this.hintPopup)) {
+                        return this.hideHint();
+                    }
+            }
+        };
 
-    $('div.calc-main').toggleClass 'open'
-    if $calc.hasClass('closed')
-      $calcWrapper
-        .find('input, a')
-        .attr 'tabindex', -1
-    else
-      text = gettext('Close Calculator')
-      icon = 'fa-close'
-      isExpanded = true
+        Calculator.prototype.handleClickOnDocument = function() {
+            return this.hideHint();
+        };
 
-      $calcWrapper
-        .find('input, a')
-        .attr 'tabindex', 0
-      # TODO: Investigate why doing this without the timeout causes it to jump
-      # down to the bottom of the page. I suspect it's because it's putting the
-      # focus on the text field before it transitions onto the page.
-      setTimeout (-> $calcWrapper.find('#calculator_input').focus()), 100
+        Calculator.prototype.handleClickOnHintButton = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (this.hintPopup.hasClass('shown')) {
+                this.hideHint();
+                return this.hintButton.attr('aria-expanded', false);
+            } else {
+                this.showHint();
+                this.hintButton.attr('aria-expanded', true);
+                return this.activeHint.focus();
+            }
+        };
 
-    $calc
-      .attr
-        'title': text
-        'aria-expanded': isExpanded
-      .find('.utility-control-label').text text
-      
-    $calc
-      .find('.icon')
-      .removeClass('fa-calculator')
-      .removeClass('fa-close')
-      .addClass(icon)
+        Calculator.prototype.handleClickOnHintPopup = function(e) {
+            return e.stopPropagation();
+        };
 
-    $calc.toggleClass 'closed'
+        Calculator.prototype.calculate = function() {
+            return $.getWithPrefix('/calculate', {
+                equation: $('#calculator_input').val()
+            }, function(data) {
+                return $('#calculator_output').val(data.result).focus();
+            });
+        };
 
-  showHint: ->
-    @hintPopup
-      .addClass('shown')
-      .attr('aria-hidden', false)
+        return Calculator;
 
+    })();
 
-    $(document).on('click', @handleClickOnDocument)
-
-  hideHint: ->
-    @hintPopup
-      .removeClass('shown')
-      .attr('aria-hidden', true)
-
-    $(document).off('click', @handleClickOnDocument)
-
-  selectHint: (element) ->
-    if not element or (element and element.length == 0)
-      element = @hintsList.first()
-
-    @activeHint = element;
-    @activeHint.focus();
-    @hintPopup.attr('aria-activedescendant', element.attr('id'));
-
-  prevHint: () ->
-    prev = @activeHint.prev(); # the previous hint
-    # if this was the first item
-    # select the last one in the group.
-    if @activeHint.index() == 0
-      prev = @hintsList.last()
-    # select the previous hint
-    @selectHint(prev)
-
-  nextHint: () ->
-    next = @activeHint.next(); # the next hint
-    # if this was the last item,
-    # select the first one in the group.
-    if @activeHint.index() == @hintsList.length - 1
-      next = @hintsList.first()
-    # give the next hint focus
-    @selectHint(next)
-
-  handleKeyDown: (e) ->
-    if e.altKey
-      # do nothing
-      return true
-
-    if e.keyCode == @KEY.ENTER or e.keyCode == @KEY.SPACE
-      if @hintPopup.hasClass 'shown'
-          @hideHint()
-      else
-        @showHint()
-        @activeHint.focus()
-
-      e.preventDefault()
-      return false
-
-    # allow the event to propagate
-    return true
-
-  handleKeyDownOnHint: (e) ->
-    if e.altKey
-      # do nothing
-      return true
-
-    switch e.keyCode
-
-      when @KEY.ESC
-        # hide popup with hints
-        @hideHint()
-        @hintButton.focus()
-
-        e.stopPropagation()
-        return false
-
-      when @KEY.LEFT, @KEY.UP
-        if e.shiftKey
-           # do nothing
-          return true
-
-        @prevHint()
-
-        e.stopPropagation()
-        return false
-
-      when @KEY.RIGHT, @KEY.DOWN
-        if e.shiftKey
-          # do nothing
-          return true
-
-        @nextHint()
-
-        e.stopPropagation()
-        return false
-
-    # allow the event to propagate
-    return true
-
-  handleKeyUpOnHint: (e) ->
-    switch e.keyCode
-      when @KEY.TAB
-        # move focus to hint links and hide hint once focus is out of hint pop up
-        @active_element = document.activeElement
-        if not $(@active_element).parents().is(@hintPopup)
-          @hideHint()
-
-  handleClickOnDocument: (e) ->
-    @hideHint()
-
-  handleClickOnHintButton: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
-    if @hintPopup.hasClass 'shown'
-      @hideHint()
-      @hintButton.attr('aria-expanded', false)
-    else
-      @showHint()
-      @hintButton.attr('aria-expanded', true)
-      @activeHint.focus()
-
-  handleClickOnHintPopup: (e) ->
-    e.stopPropagation()
-
-  calculate: ->
-    $.getWithPrefix '/calculate', { equation: $('#calculator_input').val() }, (data) ->
-      $('#calculator_output')
-        .val(data.result)
-        .focus()
+}).call(this);
