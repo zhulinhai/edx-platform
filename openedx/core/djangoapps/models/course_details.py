@@ -279,8 +279,8 @@ class CourseDetails(object):
         result = None
         if video_key:
             result = (
-                '<iframe title="YouTube Video" width="560" height="315" src="//www.youtube.com/embed/' +
+                '<iframe title="YouTube Video" width="640" height="360" src="//www.youtube.com/embed/' +
                 video_key +
-                '?rel=0" frameborder="0" allowfullscreen=""></iframe>'
+                '?rel=0" frameborder="0" allowfullscreen="" nunpa></iframe>'
             )
         return result

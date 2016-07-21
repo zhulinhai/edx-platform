@@ -1,0 +1,152 @@
+<%!
+from django.utils.translation import ugettext as _ 
+import requests
+%>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("Subscriptions : Step 3")}</%block>
+
+<link href="/static/subscription/css/subscription.css" rel="stylesheet">
+
+<!-- style -->
+<style>
+.hide-for-small.sub-navigation{display:none !important}
+#desktop-nav .menu-right{display:none !important}
+#mobile-nav .hamburger,#mobile-nav .sign-in{display:none !important}
+</style>
+<!-- style -->
+
+<section class="subscribe-step1">
+
+    <div class="row push-up push-down">
+        <div class="large-33-48 columns">
+            <div class="subscribe-tracker text-center">
+                <div class="large-4 small-4 columns">
+                    <img src="/static/subscription/images/account-gray.png">
+                </div>
+                <div class="large-4 small-4 columns ">
+                    <img src="/static/subscription/images/billing-gray-v2.png">
+                </div>
+                <div class="large-4 small-4 columns">
+                    <img src="/static/subscription/images/start-training-orange-v1.png">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-controller="SubscribeStep2Controller" class="row ng-scope">
+        <div class="small-12 large-33-48 columns">
+
+                <h4 class="underline">Start Training </h4>
+		<div class="row">
+                    <div class="large-6 columns">
+                        <label ng-class="labelClass('subscribeForm', 'FirstName')">
+                        </label>
+                    </div>
+                    <div class="large-6 columns">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="small-12 columns"><p><br></p>
+			You have been subscribed. <br>
+			<div style="margin-top: 165px;" class="getstarted"><a href="/dashboard">Get started</a></div>
+                    </div>
+                </div>
+        </div>
+
+
+
+        <div ng-controller="SharedSubscribeController as sharedSub" class="large-15-48 columns ng-scope">
+            <div class="right-panel-version-a">
+                <div class="text-center">
+                    <img alt="BA logo" class="ps-icon" src="/static/subscription/images/ba-icon-hexagon-v1.png">
+                </div>
+
+                <div ng-show="analytics.isTrial" class="subscription bold">
+		% if stype == '1' or stype == '2' or stype == '3':
+			For individuals
+		% else:
+			For Enterprises
+		% endif
+		</div>
+
+                <div ng-hide="analytics.isTrial" class="subscription ng-hide">Subscription</div>
+                <div class="subscription-term ng-binding">
+                % if stype == '1': 
+			Free 
+		% elif stype == '2':
+			Basic $99 / Year
+		% elif stype == '3':
+			Plus $199 / Year
+		% elif stype == '4':
+			Free
+		% elif stype == '5':
+			Plus $199 / Year
+		% elif stype == '6':
+			Pro $499 / Year
+		% endif
+		</div>
+                <hr>
+                <div class="text-center">
+                    <h4>Real training. Real results.</h4>
+                    <div class="benefits">
+			% if stype == '1' or stype == '4':
+                            Introductory courses <br>
+                            Products courses + CEUs<br>
+                            Mobile compatibility<br>
+                            Unlimited viewing<br>
+                            Discussion forums<br>
+			% endif
+
+			% if stype == '2':
+				Free Features<br>
+				17+ courses<br>
+				New courses monthly<br>
+				Course certificates<br>
+				Professional community<br>
+			% endif
+
+			% if stype == '3':
+				Free + Basic Features<br>
+				AIA-CES/CEU credits<br>
+				Professor &amp; TA support<br>
+				Virtual meetings<br>
+			% endif
+
+			% if stype == '5':
+				Free Features<br>
+				17+ courses<br>
+				New courses monthly<br>
+				Professional community<br>
+				Course certificates<br>
+				AIA-CES/CEU credits<br>
+				Professor &amp; TA support<br>
+				Virtual meetings<br>
+			% endif
+
+			% if stype == '6':
+				Free + Plus Features<br>
+				Dedicated enterprise cohort<br>
+				Learning &amp; analytics reporting<br>
+				Easy member registration<br>
+				Company specific content<br>
+				Team organization tools<br>
+				Private networking events<br>
+				Facilitated introductions globally<br>
+			% endif
+
+                    </div>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <div class="support-phone ng-scope">contact info</div>
+                    <div class="push-down">Mon-Fri 8:00am-5:00pm MT</div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

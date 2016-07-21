@@ -52,14 +52,13 @@ textarea {
 <div class="sysadmin-dashboard-wrapper">
 
   <section class="sysadmin-dashboard-content" style="margin-left:10pt;margin-top:10pt;margin-right:10pt;margin-bottom:20pt">
-    <h1>${_('Sysadmin Dashboard')}</h1>
+    <h1>IBL ${_('Sysadmin Dashboard')}</h1>
 	<hr />
     <h2 class="instructor-nav">
 	  <a href="${reverse('sysadmin')}" class="${modeflag.get('users')}">${_('Users')}</a>
       <a href="${reverse('sysadmin_courses')}" class="${modeflag.get('courses')}">${_('Courses')}</a>
       <a href="${reverse('sysadmin_staffing')}" class="${modeflag.get('staffing')}">${_('Staffing and Enrollment')}</a>
       ## Translators: refers to http://git-scm.com/docs/git-log
-      <a href="${reverse('gitlogs')}">${_('Git Logs')}</a>
     </h2>
 	<hr />
 %if modeflag.get('users'):
@@ -126,29 +125,6 @@ textarea {
 
 <form name="action" method="POST">
   <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }" />
-  <ul class="list-input">
-	<li class="field text">
-	  <label for="repo_location">
-		## Translators: Repo is short for git repository or source of
-		## courseware; see http://git-scm.com/about
-		${_('Repo Location')}:
-	  </label>
-	  <input type="text" name="repo_location" style="width:60%" />
-	</li>
-	<li class="field text">
-	  <label for="repo_location">
-		## Translators: Repo is short for git repository (http://git-scm.com/about) or source of
-		## courseware and branch is a specific version within that repository
-		${_('Repo Branch (optional)')}:
-	  </label>
-	  <input type="text" name="repo_branch" style="width:60%" />
-	</li>
-  </ul>
-  <div class="form-actions">
-        ## Translators: GitHub is a popular website for hosting code
-	<button type="submit" name="action" value="add_course">${_('Load new course from GitHub')}</button>
-  </div>
-  <hr />
   <ul class="list-input">
 	<li class="field text">
 	  <label for="course_id">

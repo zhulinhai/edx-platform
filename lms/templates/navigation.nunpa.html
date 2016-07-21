@@ -37,12 +37,12 @@ site_status_msg = get_site_status_msg(course_id)
 % endif
 </%block>
 
-  <header id="global-navigation" class="global" >
+  <header id="global-navigation" class="global ${"slimnunpa" if course else ""}" >
     <nav class="nav-wrapper" aria-label="${_('Global')}">
     <h1 class="logo">
-      <a href="https://buildacademy.com">
+      <a href="${marketing_link('ROOT')}">
         <%block name="navigation_logo">
-            <img src="/static/images/BUILD-Horizontal-S.jpg" alt="${_("{platform_name} Home Page").format(platform_name=platform_name())}" id="mainlogo"/>
+            <img src="/static/images/BUILD-Horizontal-S.jpg"  style="height:50px;" alt="${_("{platform_name} Home Page").format(platform_name=platform_name())}"/>
         </%block>
       </a>
     </h1>
@@ -61,6 +61,7 @@ site_status_msg = get_site_status_msg(course_id)
     % endif
 
     % if user.is_authenticated():
+
     <ol class="user">
       <li class="primary">
         <a href="${reverse('dashboard')}" class="user-link">
@@ -82,18 +83,22 @@ site_status_msg = get_site_status_msg(course_id)
         </ul>
       </li>
     </ol>
-
-    <ol class="left nav-global authenticated " id="navbar1">
+    <ol class="right nav-global authenticated">
+<li class="searchli">
+<div class="course-search adjust1" >
+            <form method="get" action="/courses">
+              <label>
+                <input class="search-input" name="search_query" type="text" placeholder="${_("Search for a course")}"></input>
+              </label>
+            </form>
+          </div>
+</li>
       <%block name="navigation_global_links_authenticated">
-       <li>
-       <a href="https://buildacademy.com/">Home</a>
-	</li>
-	
+        % if settings.FEATURES.get('COURSES_ARE_BROWSABLE'):
           <li class="nav-global-01">
             <a href="${marketing_link('COURSES')}">${_('Find Courses')}</a>
           </li>
-        
-
+        % endif
         %if settings.FEATURES.get('ENABLE_SYSADMIN_DASHBOARD','') and user.is_staff:
           <li>
             ## Translators: This is short for "System administration".
@@ -101,13 +106,8 @@ site_status_msg = get_site_status_msg(course_id)
           </li>
         %endif
       </%block>
-       <li>
-       <a href="https://buildacademy.com/team">Team</a>
-	</li>
-       <li>
-       <a href="https://buildacademy.com/contact">Contact</a>
-	</li>
     </ol>
+
       % if should_display_shopping_cart_func() and not (course and microsite.is_request_in_microsite()): # see shoppingcart.context_processor.user_has_cart_context_processor
         <ol class="user">
           <li class="primary">
@@ -117,26 +117,32 @@ site_status_msg = get_site_status_msg(course_id)
           </li>
         </ol>
       % endif
+
     % else:
-    <ol class="left nav-global" id="navbar2">
+
+    <ol class="right nav-courseware">
+    <li class="nav-courseware-01">
+      % if not settings.FEATURES['DISABLE_LOGIN_BUTTON']:
+          % if course and settings.FEATURES.get('RESTRICT_ENROLL_BY_REG_METHOD') and course.enrollment_domain:
+          <a class="cta cta-login" href="${reverse('course-specific-login', args=[course.id.to_deprecated_string()])}${login_query()}">${_("Sign in")}</a>
+          % else:
+          <a class="cta cta-login" href="/login${login_query()}">${_("Sign in")}</a>
+          % endif
+      % endif
+    </li>
+    </ol>
+    <ol class="right nav-global">
+<li class="searchli">
+<div class="course-search adjust1" >
+            <form method="get" action="/courses">
+              <label>
+                <input class="search-input" name="search_query" type="text" placeholder="${_("Search for a course")}"></input>
+              </label>
+            </form>
+          </div>
+</li>
+
       <%block name="navigation_global_links">
-       <li>
-       <a href="https://buildacademy.com/">Home</a>
-        </li>
-       <li>
-       <a href="https://courses.buildacademy.com/">Courses</a>
-        </li>
-
-	       <li class="nav-global-02">
-              <a href="${marketing_link('COURSES')}">Catalog</a>
-            </li>
-       <li>
-       <a href="https://buildacademy.com/team">Team</a>
-        </li>
-       <li>
-       <a href="https://buildacademy.com/contact">Contact</a>
-        </li>
-
         % if microsite.get_value('ENABLE_MKTG_SITE', settings.FEATURES.get('ENABLE_MKTG_SITE', False)):
           <li class="nav-global-01">
             <a href="${marketing_link('HOW_IT_WORKS')}">${_("How it Works")}</a>
@@ -152,50 +158,22 @@ site_status_msg = get_site_status_msg(course_id)
         % endif
       </%block>
       % if not settings.FEATURES['DISABLE_LOGIN_BUTTON']:
-
-        
-
-
-
-
-
-
-    <li class="nav-courseware-01">
-      % if not settings.FEATURES['DISABLE_LOGIN_BUTTON']:
           % if course and settings.FEATURES.get('RESTRICT_ENROLL_BY_REG_METHOD') and course.enrollment_domain:
-          <a class="cta cta-login" href="${reverse('course-specific-login', args=[course.id.to_deprecated_string()])}${login_query()}"><b>${_("Sign in")}</b></a>
+          <li class="nav-global-04">
+            <a class="cta cta-register" href="${reverse('course-specific-register', args=[course.id.to_deprecated_string()])}">${_("Register")}</a>
+          </li>
           % else:
-          <a class="cta cta-login" href="/login${login_query()}"><b>${_("Sign in")}</b></a>
+          <li class="nav-global-04">
+            <a class="cta cta-register" href="/register${login_query()}">${_("Register")}</a>
+          </li>
           % endif
-      % endif
-    </li>
-<li class="item nav-global-04">
-                <a class="btn-neutral" href="/#subscr"><b>Subscribe</b></a>
-              </li>
 
       % endif
     </ol>
 
     % endif
 
-<div id='compatmenu'>
-<img src='/static/images/menuicon.png' height=25 onclick="toggle_visibility('menulist');">
-</div>
-
   </nav>
-
-<div id='menulist'>
-
-<ul>
-<li class="compact_menu_list"> <a href='https://buildacademy.com/'>Home</a> </li>
-<li class="compact_menu_list"> <a href='/courses'>Catalog</a> </li>
-<li class="compact_menu_list"> <a href='https://buildacademy.com/team'>Team</a> </li>
-<li class="compact_menu_list"> <a href='https://buildacademy.com/contact'>Contact</a> </li>
-<li class="compact_menu_list"> <a class="cta cta-register" href="/login${login_query()}">Login</a></li>
-
-</ul>
-
-</div>
 
 
 </header>
@@ -204,28 +182,5 @@ site_status_msg = get_site_status_msg(course_id)
 <div class="ie-banner" aria-hidden="true">${_('<strong>Warning:</strong> Your browser is not fully supported. We strongly recommend using {chrome_link} or {ff_link}.').format(chrome_link='<a href="https://www.google.com/chrome" target="_blank">Chrome</a>', ff_link='<a href="http://www.mozilla.org/firefox" target="_blank">Firefox</a>')}</div>
 <![endif]-->
 % endif
-<script>
-function showsearch(){
-
-$("#searchbox").slideToggle();
-}
-</script>
-<script type="text/javascript">
-<!--
-    function toggle_visibility(id) {
-       var e = document.getElementById(id);
-       if(e.style.display == 'block')
-          e.style.display = 'none';
-       else
-          e.style.display = 'block';
-    }
-//-->
-</script>
-
-<script>
-$( window ).resize(function() {
-  $( "#menulist" ).hide( );
-});
-</script>
 
 <%include file="help_modal.html"/>

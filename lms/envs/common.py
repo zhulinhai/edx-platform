@@ -294,7 +294,7 @@ FEATURES = {
     # When a logged in user goes to the homepage ('/') should the user be
     # redirected to the dashboard - this is default Open edX behavior. Set to
     # False to not redirect the user
-    'ALWAYS_REDIRECT_HOMEPAGE_TO_DASHBOARD_FOR_AUTHENTICATED_USER': True,
+    'ALWAYS_REDIRECT_HOMEPAGE_TO_DASHBOARD_FOR_AUTHENTICATED_USER': False,
 
     # When a user goes to the homepage ('/') the user see the
     # courses listed in the announcement dates order - this is default Open edX behavior.
@@ -2466,11 +2466,11 @@ COUNTRIES_OVERRIDE = {
 
 # which access.py permission name to check in order to determine if a course is visible in
 # the course catalog. We default this to the legacy permission 'see_exists'.
-COURSE_CATALOG_VISIBILITY_PERMISSION = 'see_exists'
+COURSE_CATALOG_VISIBILITY_PERMISSION = 'see_in_catalog'
 
 # which access.py permission name to check in order to determine if a course about page is
 # visible. We default this to the legacy permission 'see_exists'.
-COURSE_ABOUT_VISIBILITY_PERMISSION = 'see_exists'
+COURSE_ABOUT_VISIBILITY_PERMISSION = 'see_about_page'
 
 
 # Enrollment API Cache Timeout
@@ -2599,7 +2599,7 @@ PROFILE_IMAGE_MIN_BYTES = 100
 
 # Sets the maximum number of courses listed on the homepage
 # If set to None, all courses will be listed on the homepage
-HOMEPAGE_COURSE_MAX = None
+HOMEPAGE_COURSE_MAX = 9
 
 ################################ Settings for Credit Courses ################################
 # Initial delay used for retrying tasks.

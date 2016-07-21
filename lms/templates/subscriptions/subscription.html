@@ -1,0 +1,253 @@
+<%!
+from django.utils.translation import ugettext as _ 
+import requests
+%>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("Subscriptions")}</%block>
+
+<link href="/static/subscription/css/subscription.css" rel="stylesheet">
+
+<!-- style -->
+<style>
+.hide-for-small.sub-navigation{display:none !important}
+#desktop-nav .menu-right{display:none !important}
+#mobile-nav .hamburger,#mobile-nav .sign-in{display:none !important}
+</style>
+<!-- style -->
+
+<section class="subscribe-step1">
+
+    <div class="row push-up push-down">
+        <div class="large-33-48 columns">
+            <div class="subscribe-tracker text-center">
+                <div class="large-4 small-4 columns">
+                    <img src="/static/subscription/images/account-orange-v2.png">
+                </div>
+                <div class="large-4 small-4 columns ">
+                    <img src="/static/subscription/images/billing-gray-v2.png">
+                </div>
+                <div class="large-4 small-4 columns">
+                    <img src="/static/subscription/images/start-training-gray-v1.png">
+                </div>
+            </div>
+        </div>
+
+         % if conflicts!='':
+         <div class="large-33-48">
+		<div class="large-12 small-12 columns" style="color:red;">
+	          <br>
+        	  ${conflicts}
+	 	</div>
+	 </div>
+         % endif
+
+    </div>
+
+
+    <div ng-controller="SubscribeStep1Controller" class="row ng-scope">
+        <div class="small-12 large-33-48 columns">
+            <form novalidate="" name="subscribeForm" action="/subscription?m=${stype}" method="POST" class="reg ng-scope ng-pristine ng-invalid ng-invalid-required">
+<!--            <form novalidate="" name="register-form" action="/create_account" method="POST" class="reg ng-scope ng-pristine ng-invalid ng-invalid-required">-->
+             <input type="hidden" name="stype" value="${stype}">
+                <h4 class="underline">Create your account</h4>
+                <div class="signin-link subscribe-body-text">Already have an account? <a href="/login">Sign in</a>.</div>
+                <div>
+                </div>
+		<div class="row">
+                    <div class="large-6 columns">
+                        <label ng-class="labelClass('subscribeForm', 'FirstName')">
+                            First name
+                            <input type="text" value="${UserInfo['FirstName']}" validation="First Name" maxlength="50" required="required" 
+				autofocus="" name="FirstName" id="FirstName" 
+				class="ng-pristine ng-invalid ng-invalid-required">
+                                % if UserInfoError["FirstName"] == 1:
+				<small class="ng-scope ng-hide"><span style="color:red;">First Name is required</span></small>
+                                % endif
+                        </label>
+                    </div>
+                    <div class="large-6 columns">
+                        <label ng-class="labelClass('subscribeForm', 'LastName')">
+                            Last name
+                            <input type="text" value="${UserInfo['LastName']}" validation="Last Name" maxlength="50" required="required" 
+				name="LastName" id="LastName" 
+				class="ng-pristine ng-invalid ng-invalid-required">
+                                % if UserInfoError["LastName"] == 1:
+				<small class="ng-scope ng-hide"><span style="color:red;">Last Name is required</span></small>
+				% endif
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-6 columns">
+                        <label ng-class="labelClass('subscribeForm', 'Email')">
+                            Email
+                            <input type="text" value="${UserInfo['Email']}" required="required" validation="Email" 
+				name="Email" id="Email" maxlength="80"
+				class="ng-pristine ng-invalid ng-invalid-required ng-valid-pattern">
+                                % if UserInfoError["Email"] == 1:
+				<small class="ng-scope ng-hide"><span style="color:red;">Email is required</span></small>
+				% endif
+                        </label>
+                    </div>
+
+
+                    <div class="large-6 columns">
+                        <label ng-class="labelClass('subscribeForm', 'Username')">
+                            Username
+                            <input type="text" value="${UserInfo['Username']}" required="required" validation="Username" 
+                                name="Username" id="Username" maxlength="100"
+                                class="ng-pristine ng-invalid ng-invalid-required ng-valid-pattern">
+                                % if UserInfoError["Username"] == 1:
+				<small class="ng-scope ng-hide">The name that will identify you - (cannot be changed later)</small>
+				% endif
+                        </label>
+                    </div>
+
+                </div>
+                <div class="row">
+                        <div class="large-6 columns">
+                            <label ng-class="labelClass('subscribeForm', 'Password1')">
+                                Password
+                                <input type="password" validation="Password" maxlength="128" minlength="6" required="required" 
+				name="Password1" id="Password1" 
+				class="ng-pristine ng-invalid ng-invalid-required">
+                                % if UserInfoError["Password1"] == 1:
+				<small class="ng-scope ng-hide"><span style="color:red;">Password is required</span></small>
+				% endif
+                            </label>
+                        </div>
+                        <div class="large-6 columns">
+                            <label ng-class="labelClass('subscribeForm', 'Password2')">
+                                Confirm password
+                                <input type="password" validation="Confirm Password" password-matches="Password1" maxlength="128" minlength="6" required="required" 
+				name="Password2" id="Password2" 
+				class="ng-isolate-scope ng-pristine ng-valid ng-valid-password-matches">
+                                % if UserInfoError["Password2"] == 1:
+				<small class="ng-scope ng-hide"><span style="color:red;">Password is must match</span></small>
+				% endif
+                            </label>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                        <div class="subscribe-body-text disclaimer">
+                            We'll send you new courses, recommended courses, and special offers by email.  You can update your email preferences at any time.
+                        </div>
+                    </div>
+                </div>
+
+		<div class="row">
+			<div class="small-12 large-12 columns">
+				<input type="checkbox" value="false" 
+				data-errormsg-required="You must agree to the Build Academy &lt;a href=&quot;/honor&quot;&gt;Terms of Service and Honor Code&lt;/a&gt;." 
+				required="required" aria-required="true" aria-describedby="register-honor_code-desc" 
+				class="input-block checkbox pull-left" 
+				name="honor_code" id="register-honor_code">
+                	    	<label for="register-honor_code">I agree to the Build Academy <a href="https://buildacademy.com/terms" target='_blank'>Terms of Service</a>.*</label>
+			</div>
+		</div>
+
+
+                <div class="row">
+                    <div class="small-12 large-10-48 columns"><p><br></p>
+                        <input type="submit" value="Continue" class="orange button" id="submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <div ng-controller="SharedSubscribeController as sharedSub" class="large-15-48 columns ng-scope">
+            <div class="right-panel-version-a">
+                <div class="text-center">
+                    <img alt="BA logo" class="ps-icon" src="/static/subscription/images/ba-icon-hexagon-v1.png">
+                </div>
+
+                <div ng-show="analytics.isTrial" class="subscription bold">
+		% if stype == '1' or stype == '2' or stype == '3':
+			For individuals
+		% else:
+			For Enterprises
+		% endif
+		</div>
+
+                <div ng-hide="analytics.isTrial" class="subscription ng-hide">Subscription</div>
+                <div class="subscription-term ng-binding">
+                % if stype == '1': 
+			Free 
+		% elif stype == '2':
+			Basic $99 / Year
+		% elif stype == '3':
+			Plus $199 / Year
+		% elif stype == '4':
+			Free
+		% elif stype == '5':
+			Plus $199 / Year
+		% elif stype == '6':
+			Pro $499 / Year
+		% endif
+		</div>
+                <hr>
+                <div class="text-center">
+                    <h4>Real training. Real results.</h4>
+                    <div class="benefits">
+			% if stype == '1' or stype == '4':
+                            Introductory courses <br>
+                            Products courses + CEUs<br>
+                            Mobile compatibility<br>
+                            Unlimited viewing<br>
+                            Discussion forums<br>
+			% endif
+
+			% if stype == '2':
+				Free Features<br>
+				17+ courses<br>
+				New courses monthly<br>
+				Course certificates<br>
+				Professional community<br>
+			% endif
+
+			% if stype == '3':
+				Free + Basic Features<br>
+				AIA-CES/CEU credits<br>
+				Professor &amp; TA support<br>
+				Virtual meetings<br>
+			% endif
+
+			% if stype == '5':
+				Free Features<br>
+				17+ courses<br>
+				New courses monthly<br>
+				Professional community<br>
+				Course certificates<br>
+				AIA-CES/CEU credits<br>
+				Professor &amp; TA support<br>
+				Virtual meetings<br>
+			% endif
+
+			% if stype == '6':
+				Free + Plus Features<br>
+				Dedicated enterprise cohort<br>
+				Learning &amp; analytics reporting<br>
+				Easy member registration<br>
+				Company specific content<br>
+				Team organization tools<br>
+				Private networking events<br>
+				Facilitated introductions globally<br>
+			% endif
+
+                    </div>
+                </div>
+                <hr>
+                <div class="text-center">
+                    <div class="support-phone ng-scope">contact info</div>
+                    <div class="push-down">Mon-Fri 8:00am-5:00pm MT</div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

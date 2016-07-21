@@ -1,0 +1,43 @@
+<%!
+  from courseware.courses import get_course_about_section
+%>
+<%namespace name='static' file='static_content.html'/>
+
+<style>
+#intro-video-modal{width: 560px;height:338px}
+#intro-video-modal .inner-wrapper{padding: 0;border: 0;}
+</style>
+
+<section id="intro-video-modal" class="modal intro-video-modal">
+  <div class="inner-wrapper">
+    <button class="close-modal" tabindex="1">
+      <i class="icon fa fa-remove"></i>
+      <span class="sr">
+        Close
+      </span>
+    </button>
+  </div>
+</section>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".intro_video").on("click", function(e){
+			e.preventDefault();
+
+			$("#intro-video-modal").find("video").remove();
+			$("#intro-video-modal").find("iframe").remove();
+			
+			video_url = $(this).attr('data-url');
+			video_type = $(this).attr('data-video-type');
+			if(video_type=="youtube"){
+				$("#intro-video-modal .inner-wrapper").append("<iframe style='width:560px;height:315px;border:none;' src='"+video_url+"'></iframe>");
+			}
+			if(video_type=="html5"){
+				$("#intro-video-modal .inner-wrapper").append("<video style='width:560px;height:315px;' src='"+video_url+"' controls></video>");
+			}
+		});
+		$("#intro-video-modal .close-modal, #lean_overlay").on("click", function(e){
+			$("#intro-video-modal").find("video").remove();
+			$("#intro-video-modal").find("iframe").remove();
+		});
+	});
+</script>

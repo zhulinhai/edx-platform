@@ -1,0 +1,14 @@
+<%!
+from django.utils.translation import ugettext as _ 
+import requests
+%>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("Terms of Service")}</%block>
+
+<section class="container about">
+
+subscrition page, lib loaded<br>
+request subscription type: [${request.GET['m']}]<br>
+
+</section>

@@ -67,9 +67,3 @@ def render_404(request):
 
 def render_500(request):
     return HttpResponseServerError(render_to_string('static_templates/server-error.html', {}))
-
-
-@ensure_csrf_cookie
-@cache_if_anonymous()
-def rendersus(request, template):
-    return render_to_response('static_templates/' + template, {})

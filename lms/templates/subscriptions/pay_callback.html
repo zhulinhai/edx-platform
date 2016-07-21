@@ -1,0 +1,32 @@
+<%inherit file="../main.html" />
+<%!
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+%>
+
+<%block name="pagetitle">${_("Payment Result")}</%block>
+
+<section class="container">
+
+        <%block name="res_ok">
+        % if pay_ok == '1':
+          <p><h1>${_('Thank you for your purchase!')}</h1></p>
+        %endif
+        </%block>
+
+        <%block name="res_ko">
+        % if pay_ok != '1':
+          <p><h1>${_('There was an error processing your order!')}</h1></p>
+        %endif
+        </%block>
+
+    <p><b>DEBUG</b></p>
+    <p>pay_item:  ${pay_item}</p>
+    <p>pay_reference:  ${pay_reference}</p>
+    <p>pay_date:  ${pay_date}</p>
+    <p>pay_status:  ${pay_status}</p>
+    <p>edx_type_sus:  ${edx_type_sus}</p>
+    <p>edx_user_id:  ${edx_user_id}</p>
+
+
+</section>

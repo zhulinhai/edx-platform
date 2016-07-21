@@ -161,23 +161,11 @@ urlpatterns += (url(
     RedirectView.as_view(url=settings.STATIC_URL + favicon_path, permanent=True)
 ),)
 
-
-#subscription
-urlpatterns += ( url(r'^subscription$', 'subscriptions.views.render_subs', 
-		{'template': 'subscription.html'}, name="subscriptions"), )
-
-#pay subscription callback
-urlpatterns += ( url(r'^paysubscallback$', 'subscriptions.views.render_pay_callback', 
-		name="subscriptions"), )
-
-
 # Semi-static views only used by edX, not by themes
 if not settings.FEATURES["USE_CUSTOM_THEME"]:
     urlpatterns += (
-        #url(r'^subscription$', 'static_template_view.views.rendersus',
-        #    {'template': 'subscription.html'}, name="subscription"),
-        #url(r'^subscription$', 'subscriptions.views.render_subs',
-        #    {'template': 'subscription.html'}, name="subscription"),
+        url(r'^subscription$', 'static_template_view.views.render',
+            {'template': 'subscription.html'}, name="subscription"),
         url(r'^blog$', 'static_template_view.views.render',
             {'template': 'blog.html'}, name="blog"),
         url(r'^contact$', 'static_template_view.views.render',

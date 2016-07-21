@@ -3,7 +3,7 @@
 from microsite_configuration import microsite
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-from courseware.courses import get_course_about_section,get_course_syllabus_section
+from courseware.courses import get_course_about_section
 from django.conf import settings
 from edxmako.shortcuts import marketing_link
 from openedx.core.lib.courses import course_image_url
@@ -131,7 +131,7 @@ from student.models import CourseEnrollment
 .student_enrolled2{    font-family: "open sans"; font: normal normal normal 14px/1 "open sans"}
 .main_other_details{margin-top:30px;float: left;width: 100%;}
 .main_other_details .img_video_container{float:left;width:70%;}
-.main_other_details .img_video_container iframe{width:95%;min-height:450px; }
+.main_other_details .img_video_container iframe{width:100%; }
 .main_other_details .course-sidebar{width:30%;}
 .main_other_details .img_video_container img{width:95%;}
 .main-cta a{ width:87%; color: #fff; }
@@ -218,7 +218,7 @@ $(document).ready(function(){
 <div class="embed-responsive embed-responsive-16by9">
 
         % if get_course_about_section(request, course, "video"):
-           ${get_course_about_section(request, course, "video")}
+            ${get_course_about_section(request, course, "video")}
         %else:
             <img src="${course_image_url(course)}" alt="" />
         % endif
@@ -247,14 +247,7 @@ $(document).ready(function(){
                 ${_("Course is full")}
               </span>
             % elif invitation_only and not can_enroll:
-              <span class="register" style='margin-bottom:20px;'>Enrollment in this course is for paid subscriptions</span>
-
-              %if user.is_authenticated():
-              <div id="subs_action" class="button action action-primary" style="margin-top:10px; color:#fff;">
-               <a href="http://courses.buildacademy.com:4000/enroll/enroll.php?cid=${course.id | u}&uid=${user.id}">Click here to Enroll</a>
-              </div>
-             %endif
-
+              <span class="register disabled">${_("Enrollment in this course is by invitation only")}</span>
             ## Shib courses need the enrollment button to be displayed even when can_enroll is False,
             ## because AnonymousUsers cause can_enroll for shib courses to be False, but we need them to be able to click
             ## so that they can register and become a real user that can enroll.
@@ -275,15 +268,11 @@ $(document).ready(function(){
 
               </a>
               <div id="register_error"></div>
-            %elif  user.is_authenticated():
-	            <a href="/#subscr" class="register button">
+            %else:
+              <h1>${course_price}</h1>
+              <a href="#" class="register button">
                 ${_("Take this course").format(course_name=course.display_number_with_default) | h}
               </a>
-	    %else:
-		     <a href="/#subscr" class="button">
-                ${_("Take this course").format(course_name=course.display_number_with_default) | h}
-              </a>
-
               <div id="register_error"></div>
             %endif
           </div>
@@ -312,6 +301,13 @@ $(document).ready(function(){
 
             ##<li class="important-dates-item"><i class="icon fa fa-clock-o"></i><p class="important-dates-item-title">${_('Course Length')}</p><span class="important-dates-item-text course-length">${_('{number} weeks').format(number=15)}</span></li>
 
+            %if course_price and (can_add_course_to_cart or is_cosmetic_price_enabled):
+              <li class="important-dates-item">
+                <i class="icon fa fa-money"></i>
+                <p class="important-dates-item-title">${_("Price")}</p>
+                <span class="important-dates-item-text">${course_price}</span>
+              </li>
+            %endif
 
             % if pre_requisite_courses:
             <% prc_target = reverse('about_course', args=[unicode(pre_requisite_courses[0]['key'])]) %>
@@ -419,7 +415,7 @@ $(document).ready(function(){
                                     material_type[component.category] = material_type[component.category]+1
                             %>
                             % if is_first_unit:
-                                % if component.category == 'videoNUNPAAA':
+                                % if component.category == 'video':
                                     % if component.html5_sources:
                                         &#160;&#160;<a href="#intro-video-modal" rel="leanModal" class="intro_video" data-video-type="html5" data-url="${component.html5_sources[0]}"><span class="fa fa-video-camera"></span></a>
                                     % else:

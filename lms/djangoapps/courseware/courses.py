@@ -6,10 +6,11 @@ from datetime import datetime
 from collections import defaultdict
 from fs.errors import ResourceNotFoundError
 import logging
+import inspect
 
 from path import Path as path
 import pytz
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.conf import settings
 
 from edxmako.shortcuts import render_to_string
@@ -183,6 +184,8 @@ def get_course_about_section(request, course, section_key):
     # markup. This can change without effecting this interface when we find a
     # good format for defining so many snippets of text/html.
 
+    #new 20160720 : section_key university
+
     html_sections = {
         'short_description',
         'description',
@@ -238,6 +241,10 @@ def get_course_about_section(request, course, section_key):
                 section_key, course.location.to_deprecated_string()
             )
             return None
+
+    #20160720:sectionkey
+    elif section_key == "university":
+        return course.display_org_with_default
 
     raise KeyError("Invalid about key " + str(section_key))
 
@@ -372,8 +379,52 @@ def get_course_syllabus_section(course, section_key):
 
     raise KeyError("Invalid about key " + str(section_key))
 
+#new : 20150311
+def get_request_for_thread():
+    """Walk up the stack, return the nearest first argument named "request"."""
+    frame = None
+    try:
+        for f in inspect.stack()[1:]:
+            frame = f[0]
+            code = frame.f_code
+            if code.co_varnames[:1] == ("request",):
+                return frame.f_locals["request"]
+            elif code.co_varnames[:2] == ("self", "request",):
+                return frame.f_locals["request"]
+    finally:
+        del frame
+
+#new: 20150311
+def get_courses_by_university(user, domain=None):
+    '''
+    Returns dict of lists of courses available, keyed by course.org (ie university).
+    Courses are sorted by course.number.
+    '''
+    # TODO: Clean up how 'error' is done.
+    # filter out any courses that errored.
+    visible_courses = get_courses(user, domain)
+
+    universities = defaultdict(list)
+    for course in visible_courses:
+        universities[course.org].append(course)
+
+    return universities
+
+#new: 20150311 filter by param t=university
+def get_filter_university(request):
+	#query_string = request.META.get("QUERY_STRING",'')
+	filter_university = request.GET.get('t','')
+	return filter_university
 
 def get_courses(user, domain=None):
+
+    #new: 20150311 filter by param t=university
+    set_filter_university=0
+    request = get_request_for_thread()
+    filter_university = get_filter_university(request)
+    if filter_university!='':
+      set_filter_university=1
+
     '''
     Returns a list of courses available, sorted by course.number
     '''
@@ -384,7 +435,12 @@ def get_courses(user, domain=None):
         settings.COURSE_CATALOG_VISIBILITY_PERMISSION
     )
 
-    courses = [c for c in courses if has_access(user, permission_name, c)]
+    #new: 20150311
+    if set_filter_university ==1:
+        courses = [c for c in courses if has_access(user, permission_name, c)]
+        courses = [c for c in courses if get_course_about_section(request, c, "university") == filter_university ]
+    else:
+        courses = [c for c in courses if has_access(user, permission_name, c)]
 
     courses = sorted(courses, key=lambda course: course.number)
 

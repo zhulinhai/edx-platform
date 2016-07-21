@@ -3,13 +3,23 @@
   from django.utils.translation import ugettext as _
   from microsite_configuration import microsite
   from openedx.core.lib.js_utils import escape_json_dumps
+  from urlparse import urlparse, parse_qs
 %>
 <%inherit file="../main.html" />
 <%
+  getT = request.GET.get("t", "")
   course_discovery_enabled = settings.FEATURES.get('ENABLE_COURSE_DISCOVERY')
+
+url = 'https://vm1-cloud.iblstudios.com/courses?t=edX'
+o = urlparse(url)
+
 %>
 
 <%namespace name='static' file='../static_content.html'/>
+
+
+
+
 
 % if course_discovery_enabled:
 <%block name="header_extras">
