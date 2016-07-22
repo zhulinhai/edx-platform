@@ -417,14 +417,6 @@ def get_filter_university(request):
 	return filter_university
 
 def get_courses(user, domain=None):
-
-    #new: 20150311 filter by param t=university
-    set_filter_university=0
-    request = get_request_for_thread()
-    filter_university = get_filter_university(request)
-    if filter_university!='':
-      set_filter_university=1
-
     '''
     Returns a list of courses available, sorted by course.number
     '''
@@ -435,12 +427,7 @@ def get_courses(user, domain=None):
         settings.COURSE_CATALOG_VISIBILITY_PERMISSION
     )
 
-    #new: 20150311
-    if set_filter_university ==1:
-        courses = [c for c in courses if has_access(user, permission_name, c)]
-        courses = [c for c in courses if get_course_about_section(request, c, "university") == filter_university ]
-    else:
-        courses = [c for c in courses if has_access(user, permission_name, c)]
+    courses = [c for c in courses if has_access(user, permission_name, c)]
 
     courses = sorted(courses, key=lambda course: course.number)
 

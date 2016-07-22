@@ -346,6 +346,9 @@ urlpatterns += (
     url(r'^calculate$', 'util.views.calculate'),
 
     url(r'^courses/?$', 'branding.views.courses', name="courses"),
+
+    url(r'^faculties/(?P<faculty>\w+)/?$', 'branding.views.faculties', name='faculties'),
+    
     url(
         r'^change_enrollment$',
         'student.views.change_enrollment',

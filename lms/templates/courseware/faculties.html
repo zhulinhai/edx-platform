@@ -1,0 +1,34 @@
+<%!
+  import json
+  from django.utils.translation import ugettext as _
+%>
+<%inherit file="../main.html" />
+
+<%namespace name='static' file='../static_content.html'/>
+
+<%block name="pagetitle">${_("Courses")}</%block>
+
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="find-courses">
+      <section class="courses-container">
+        <div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">
+          % if courses:
+          <div id="discovery-message" class="search-status-label">Viewing '${ courses[0].org  }'</div>
+          % else:
+          <div id="discovery-message" class="search-status-label">No courses were found</div>
+          % endif
+        </div>
+
+        <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}">
+          <ul class="courses-listing">
+            %for course in courses:
+            <li class="courses-listing-item">
+              <%include file="../course.html" args="course=course" />
+            </li>
+            %endfor
+          </ul>
+        </div>
+
+      </section>
+    </section>
+</main>

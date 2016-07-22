@@ -151,6 +151,23 @@ def courses(request):
     )
 
 
+@ensure_csrf_cookie
+@cache_if_anonymous()
+def faculties(request, faculty):
+    # Get all courses regardless of the ones that the current user is logged into
+    # i.e. pass an AnonymousUser
+    courses_list = get_courses(AnonymousUser())
+    course_discovery_meanings = getattr(settings, 'COURSE_DISCOVERY_MEANINGS', {})
+
+    # Filter them by organization
+    courses_in_faculty = [c for c in courses_list if c.org.lower() == faculty]
+
+    return render_to_response(
+        "courseware/faculties.html",
+        {'courses': courses_in_faculty, 'course_discovery_meanings': course_discovery_meanings}
+    )
+
+
 def render_accordion(user, request, course, chapter, section, field_data_cache):
     """
     Draws navigation bar. Takes current position in accordion as
