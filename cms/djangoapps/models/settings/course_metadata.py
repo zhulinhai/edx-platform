@@ -94,6 +94,10 @@ class CourseMetadata(object):
         if not settings.FEATURES.get('CUSTOM_COURSES_EDX'):
             filtered_list.append('enable_ccx')
 
+        # Do not show course_landing if feature is not enabled.
+        if not settings.FEATURES.get('COURSE_HOME_REDIRECTION'):
+            filtered_list.append('course_landing')
+
         return filtered_list
 
     @classmethod

@@ -982,6 +982,19 @@ class CourseFields(object):
         scope=Scope.settings
     )
 
+    course_landing = String(
+        display_name=_("Course Landing Page"),
+        help=_(
+            'Enter the landing page where students will be redirect '
+            'to when entering course. By default students are '
+            'redirected to \"info\". '
+            'Valid values are \"courseware\", \"info\", \"forum\", '
+            '\"wiki\", and \"progress\".'
+        ),
+        default="info",
+        scope=Scope.settings
+    )
+
 
 class CourseModule(CourseFields, SequenceModule):  # pylint: disable=abstract-method
     """

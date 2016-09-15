@@ -3,7 +3,11 @@
 from microsite_configuration import microsite
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-from courseware.courses import course_image_url, get_course_about_section
+from courseware.courses import (
+  course_image_url,
+  get_course_about_section,
+  get_course_landing_url,
+)
 from django.conf import settings
 from edxmako.shortcuts import marketing_link
 %>
@@ -152,7 +156,12 @@ from edxmako.shortcuts import marketing_link
         <div class="main-cta">
         %if regularly_registered:
           %if show_courseware_link:
-            <a href="${course_target}">
+            <%
+              course_target_home = course_target
+              if settings.FEATURES.get('COURSE_HOME_REDIRECTION'):
+                course_target_home = get_course_landing_url(course.id, course.course_landing)
+            %>
+            <a href="${course_target_home}">
           %endif
 
           <span class="register disabled">${_("You are enrolled in this course")}</span>

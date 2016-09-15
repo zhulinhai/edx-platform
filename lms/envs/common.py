@@ -2863,3 +2863,12 @@ STUDENT_RESPONSES_REPORT_SUPPORTED_TYPES = set([
 TYPES_WITH_CHILD_PROBLEMS_LIST = [
     'library_content',
 ]
+
+# Custom course landing page settings
+COURSE_HOME_DISPATCHER = {
+    "courseware": "courseware",
+    "info": "info",
+    "forum": "forum_form_discussion",
+    "wiki": "course_wiki",
+    "progress": "progress"
+}

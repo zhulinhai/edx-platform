@@ -7,7 +7,10 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.core.urlresolvers import reverse
 from markupsafe import escape
-from courseware.courses import get_course_university_about_section
+from courseware.courses import (
+  get_course_university_about_section,
+  get_course_landing_url,
+)
 from course_modes.models import CourseMode
 from student.helpers import (
   VERIFY_STATUS_NEED_TO_VERIFY,
@@ -51,7 +54,11 @@ from student.helpers import (
   </div>
  % endif
 <article class="course${mode_class}">
-  <% course_target = reverse('info', args=[unicode(course_overview.id)]) %>
+  <%
+    course_target = reverse('info', args=[unicode(course_overview.id)])
+    if settings.FEATURES.get('COURSE_HOME_REDIRECTION'):
+      course_target = get_course_landing_url(course_overview.id)
+  %>
   <section class="details">
     <div class="wrapper-course-image" aria-hidden="true">
       % if show_courseware_link:

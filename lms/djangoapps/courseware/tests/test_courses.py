@@ -9,13 +9,15 @@ from nose.plugins.attrib import attr
 
 from django.conf import settings
 from django.test.utils import override_settings
+from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.test.client import RequestFactory
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 
 from courseware.courses import (
     get_course_by_id, get_cms_course_link, course_image_url,
-    get_course_info_section, get_course_about_section, get_cms_block_link
+    get_course_info_section, get_course_about_section, get_cms_block_link,
+    get_course_landing_url,
 )
 
 from courseware.courses import get_course_with_access
@@ -280,3 +282,30 @@ class CourseInstantiationTests(ModuleStoreTestCase):
                 for section in chapter.get_children():
                     for item in section.get_children():
                         self.assertTrue(item.graded)
+
+
+class CourseLandingTests(TestCase):
+    """Tests for course custom landing URL."""
+
+    @mock.patch('courseware.courses.reverse')
+    def test_get_course_landing_url(self, mock_reverse):
+
+        course_landing_cms_options = settings.COURSE_HOME_DISPATCHER.keys()
+        course_id = "edx-999"
+
+        for landing_option in course_landing_cms_options:
+            course_landing_view = settings.COURSE_HOME_DISPATCHER[
+                landing_option]
+            get_course_landing_url(course_id, landing_option)
+            mock_reverse.assert_called_with(
+                course_landing_view,
+                args=[unicode(course_id)])
+
+        # Test the case when course home landing setting on cms is not a valid
+        # option, in this case it should return "info" view url
+
+        landing_cms_option = "notvalid"
+        get_course_landing_url(course_id, landing_cms_option)
+        mock_reverse.assert_called_with(
+            "info",
+            args=[unicode(course_id)])

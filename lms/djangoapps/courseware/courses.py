@@ -12,6 +12,7 @@ from path import Path as path
 import pytz
 from django.http import Http404
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from edxmako.shortcuts import render_to_string
 from xmodule.modulestore import ModuleStoreEnum
@@ -42,6 +43,7 @@ import branding
 from student.models import CourseEnrollment
 
 from opaque_keys.edx.keys import UsageKey
+from opaque_keys.edx.locator import CourseLocator
 
 
 log = logging.getLogger(__name__)
@@ -544,3 +546,19 @@ def get_problems_in_section(section):
                     problem_descriptors[unicode(component.location)] = component
 
     return problem_descriptors
+
+
+def get_course_landing_url(course_id, course_landing=None):
+    """
+    Return the custom course landing url
+    """
+    if not course_landing:
+        course_locator = CourseLocator.from_string(unicode(course_id))
+        course = get_course_by_id(course_locator)
+        course_landing = course.course_landing
+
+    target_view = settings.COURSE_HOME_DISPATCHER.get(
+        course_landing, 'info')
+    course_target_url = reverse(target_view, args=[unicode(course_id)])
+
+    return course_target_url
