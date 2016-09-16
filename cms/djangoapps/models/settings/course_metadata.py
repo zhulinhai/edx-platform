@@ -94,6 +94,10 @@ class CourseMetadata(object):
         if not settings.FEATURES.get('CUSTOM_COURSES_EDX'):
             filtered_list.append('enable_ccx')
 
+        # Do not show credits if feature is not enabled.
+        if not settings.FEATURES.get('ENABLE_CUSTOM_FIELDS_ON_CERTIFICATES'):
+            filtered_list.append('credits')
+
         return filtered_list
 
     @classmethod

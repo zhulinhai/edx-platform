@@ -270,6 +270,7 @@ class XQueueCertInterface(object):
             mode_is_verified = enrollment_mode in GeneratedCertificate.VERIFIED_CERTS_MODES
             user_is_verified = SoftwareSecurePhotoVerification.user_is_verified(student)
             cert_mode = enrollment_mode
+            course_credits = course.credits or ''
 
             # For credit mode generate verified certificate
             if cert_mode == CourseMode.CREDIT_MODE:
@@ -359,6 +360,8 @@ class XQueueCertInterface(object):
                         'template_pdf': template_pdf,
                         'designation': designation,
                     }
+                    if settings.FEATURES.get('ENABLE_CUSTOM_FIELDS_ON_CERTIFICATES'):
+                        contents['course_credits'] = course_credits
                     if template_file:
                         contents['template_pdf'] = template_file
                     if generate_pdf:

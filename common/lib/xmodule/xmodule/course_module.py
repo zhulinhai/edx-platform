@@ -982,6 +982,13 @@ class CourseFields(object):
         scope=Scope.settings
     )
 
+    credits = String(
+        display_name=_("Course credits number"),
+        help=_("Enter course credits number that will appear in certificates"),
+        default=None,
+        scope=Scope.settings,
+    )
+
 
 class CourseModule(CourseFields, SequenceModule):  # pylint: disable=abstract-method
     """
