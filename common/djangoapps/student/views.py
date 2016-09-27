@@ -508,7 +508,7 @@ def complete_course_mode_info(course_id, enrollment, modes=None):
     if modes is None:
         modes = CourseMode.modes_for_course_dict(course_id)
 
-    mode_info = {'show_upsell': False, 'days_for_upsell': None}
+    mode_info = {'show_upsell': False, 'days_for_upsell': None, 'verified_upsell': False}
     # we want to know if the user is already enrolled as verified or credit and
     # if verified is an option.
     if CourseMode.VERIFIED in modes and enrollment.mode in CourseMode.UPSELL_TO_VERIFIED_MODES:
@@ -517,6 +517,18 @@ def complete_course_mode_info(course_id, enrollment, modes=None):
         if modes['verified'].expiration_datetime:
             today = datetime.datetime.now(UTC).date()
             mode_info['days_for_upsell'] = (modes['verified'].expiration_datetime.date() - today).days
+        mode_info['verified_upsell'] = True
+
+    if settings.FEATURES.get('USE_CME_UPGRADE_COURSE_TRACK'):
+        # we check if there is no-id-professional mode available
+        # if that's the case, prefer upsell for this mode
+        if CourseMode.NO_ID_PROFESSIONAL_MODE in modes and enrollment.mode in CourseMode.UPSELL_TO_VERIFIED_MODES:
+            mode_info['show_upsell'] = True
+            # if there is an expiration date, find out how long from now it is
+            if modes['no-id-professional'].expiration_datetime:
+                today = datetime.datetime.now(UTC).date()
+                mode_info['days_for_upsell'] = (modes['no-id-professional'].expiration_datetime.date() - today).days
+            mode_info['verified_upsell'] = False
 
     return mode_info
 

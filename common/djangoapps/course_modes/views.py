@@ -13,6 +13,7 @@ from django.views.generic.base import View
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.conf import settings
 
 from edxmako.shortcuts import render_to_response
 
@@ -75,24 +76,34 @@ class ChooseModeView(View):
         enrollment_mode, is_active = CourseEnrollment.enrollment_mode_for_user(request.user, course_key)
         modes = CourseMode.modes_for_course_dict(course_key)
 
-        # We assume that, if 'professional' is one of the modes, it is the *only* mode.
-        # If we offer more modes alongside 'professional' in the future, this will need to route
-        # to the usual "choose your track" page same is true for no-id-professional mode.
-        has_enrolled_professional = (CourseMode.is_professional_slug(enrollment_mode) and is_active)
-        if CourseMode.has_professional_mode(modes) and not has_enrolled_professional:
-            return redirect(
-                reverse(
-                    'verify_student_start_flow',
-                    kwargs={'course_id': unicode(course_key)}
-                )
-            )
+        if settings.FEATURES.get('USE_CME_UPGRADE_COURSE_TRACK'):
+            # If there isn't professional mode available, then there's nothing
+            # to do on this page.  The user has almost certainly been auto-registered
+            # in the "honor" track by this point, so we send the user
+            # to the dashboard.
 
-        # If there isn't a verified mode available, then there's nothing
-        # to do on this page.  The user has almost certainly been auto-registered
-        # in the "honor" track by this point, so we send the user
-        # to the dashboard.
-        if not CourseMode.has_verified_mode(modes):
-            return redirect(reverse('dashboard'))
+            if not CourseMode.has_professional_mode(modes) and not CourseMode.has_verified_mode(modes):
+                return redirect(reverse('dashboard'))
+        else:
+
+            # We assume that, if 'professional' is one of the modes, it is the *only* mode.
+            # If we offer more modes alongside 'professional' in the future, this will need to route
+            # to the usual "choose your track" page same is true for no-id-professional mode.
+            has_enrolled_professional = (CourseMode.is_professional_slug(enrollment_mode) and is_active)
+            if CourseMode.has_professional_mode(modes) and not has_enrolled_professional:
+                return redirect(
+                    reverse(
+                        'verify_student_start_flow',
+                        kwargs={'course_id': unicode(course_key)}
+                    )
+                )
+
+            # If there isn't a verified mode available, then there's nothing
+            # to do on this page.  The user has almost certainly been auto-registered
+            # in the "honor" track by this point, so we send the user
+            # to the dashboard.
+            if not CourseMode.has_verified_mode(modes):
+                return redirect(reverse('dashboard'))
 
         # If a user has already paid, redirect them to the dashboard.
         if is_active and (enrollment_mode in CourseMode.VERIFIED_MODES + [CourseMode.NO_ID_PROFESSIONAL_MODE]):
@@ -139,6 +150,17 @@ class ChooseModeView(View):
             context["verified_name"] = modes["verified"].name
             context["verified_description"] = modes["verified"].description
 
+        if settings.FEATURES.get('USE_CME_UPGRADE_COURSE_TRACK') and "no-id-professional" in modes:
+            context["suggested_prices"] = [
+                decimal.Decimal(x.strip())
+                for x in modes["no-id-professional"].suggested_prices.split(",")
+                if x.strip()
+            ]
+            context["currency"] = modes["no-id-professional"].currency.upper()
+            context["min_price"] = modes["no-id-professional"].min_price
+            context["verified_name"] = modes["no-id-professional"].name
+            context["verified_description"] = modes["no-id-professional"].description
+
         return render_to_response("course_modes/choose.html", context)
 
     @method_decorator(transaction.non_atomic_requests)
@@ -182,7 +204,7 @@ class ChooseModeView(View):
 
         mode_info = allowed_modes[requested_mode]
 
-        if requested_mode == 'verified':
+        if requested_mode == 'verified' or requested_mode == 'no-id-professional':
             amount = request.POST.get("contribution") or \
                 request.POST.get("contribution-other-amt") or 0
 
@@ -224,6 +246,8 @@ class ChooseModeView(View):
             return 'verified'
         if 'honor_mode' in request_dict:
             return 'honor'
+        if 'no_id_pro_mode' in request_dict:
+            return 'no-id-professional'
         else:
             return None
 

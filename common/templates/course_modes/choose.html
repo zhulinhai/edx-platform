@@ -135,6 +135,41 @@ from django.core.urlresolvers import reverse
                             </div>
                         % endif
 
+                        % if settings.FEATURES.get('USE_CME_UPGRADE_COURSE_TRACK') and "no-id-professional" in modes:
+                            <div class="register-choice register-choice-certificate">
+                                <div class="wrapper-copy">
+                                    <span class="deco-ribbon"></span>
+                                    <h4 class="title">${_("Pursue a CME Certificate")}</h4>
+                                    <div class="copy">
+                                        <p>${_("Highlight your new knowledge and skills with a CME certificate. Use this valuable credential to improve your job prospects and advance your career, or highlight your certificate in school applications.")}</p>
+                                        <p>
+                                            <div class="wrapper-copy-inline">
+                                                <div class="copy-inline">
+                                                    <h4>${_("Benefits of a CME Certificate")}</h4>
+                                                    <ul>
+                                                        <li>${_("{b_start}Official: {b_end}Receive an instructor-signed certificate with the institution's logo").format(**b_tag_kwargs)}</li>
+                                                        <li>${_("{b_start}Easily shareable: {b_end}Add the certificate to your CV or resume, or post it directly on LinkedIn").format(**b_tag_kwargs)}</li>
+                                                        <li>${_("{b_start}Motivating: {b_end}Give yourself an additional incentive to complete the course").format(**b_tag_kwargs)}</li>
+                                                        % if settings.FEATURES.get('IS_EDX_DOMAIN', False):
+                                                        <li>${_("{b_start}Support our Mission: {b_end} EdX, a non-profit, relies on verified certificates to help fund free education for everyone globally").format(**b_tag_kwargs)}</li>
+                                                        % endif
+                                                    </ul>
+                                                </div>
+                                                <div class="copy-inline list-actions">
+                                                    <ul class="list-actions">
+                                                        <li class="action action-select">
+                                                            <input type="hidden" name="contribution" value="${min_price}" />
+                                                            <input type="submit" name="no_id_pro_mode" value="${_('Pursue a CME Certificate')} ($${min_price} USD)" />
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        % endif
+
                         % if "honor" in modes:
                             <span class="deco-divider">
                                 <span class="copy">${_("or")}</span>

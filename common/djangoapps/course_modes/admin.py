@@ -123,17 +123,25 @@ class CourseModeForm(forms.ModelForm):
         upgrade_deadline = cleaned_data.get("expiration_datetime")
         verification_deadline = cleaned_data.get("verification_deadline")
 
-        # Allow upgrade deadlines ONLY for the "verified" mode
-        # This avoids a nasty error condition in which the upgrade deadline is set
-        # for a professional education course before the enrollment end date.
-        # When this happens, the course mode expires and students are able to enroll
-        # in the course for free.  To avoid this, we explicitly prevent admins from
-        # setting an upgrade deadline for any mode except "verified" (which has an upgrade path).
-        if upgrade_deadline is not None and mode_slug != CourseMode.VERIFIED:
-            raise forms.ValidationError(
-                'Only the "verified" mode can have an upgrade deadline.  '
-                'For other modes, please set the enrollment end date in Studio.'
-            )
+        if settings.FEATURES.get('USE_CME_UPGRADE_COURSE_TRACK'):
+            # Allow upgrade deadlines ONLY for the "verified" and "no-id-professional"
+            if upgrade_deadline is not None and mode_slug not in [CourseMode.VERIFIED, CourseMode.NO_ID_PROFESSIONAL_MODE] :
+                raise forms.ValidationError(
+                    'Only the "verified" or "no-id-professional" mode can have an upgrade deadline.  '
+                    'For other modes, please set the enrollment end date in Studio.'
+                )
+        else:
+            # Allow upgrade deadlines ONLY for the "verified" mode
+            # This avoids a nasty error condition in which the upgrade deadline is set
+            # for a professional education course before the enrollment end date.
+            # When this happens, the course mode expires and students are able to enroll
+            # in the course for free.  To avoid this, we explicitly prevent admins from
+            # setting an upgrade deadline for any mode except "verified" (which has an upgrade path).
+            if upgrade_deadline is not None and mode_slug != CourseMode.VERIFIED:
+                raise forms.ValidationError(
+                    'Only the "verified" mode can have an upgrade deadline.  '
+                    'For other modes, please set the enrollment end date in Studio.'
+                )
 
         # Verification deadlines are allowed only for verified modes
         if verification_deadline is not None and mode_slug not in CourseMode.VERIFIED_MODES:

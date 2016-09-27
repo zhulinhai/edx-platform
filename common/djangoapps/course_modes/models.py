@@ -9,6 +9,7 @@ from django.db import models
 from collections import namedtuple, defaultdict
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
+from django.conf import settings
 
 from xmodule_django.models import CourseKeyField
 
@@ -117,10 +118,11 @@ class CourseMode(models.Model):
         Object-level validation - implemented in this method so DRF serializers
         catch errors in advance of a save() attempt.
         """
-        if self.is_professional_slug(self.mode_slug) and self.expiration_datetime is not None:
-            raise ValidationError(
-                _(u"Professional education modes are not allowed to have expiration_datetime set.")
-            )
+        if not settings.FEATURES.get('USE_CME_UPGRADE_COURSE_TRACK'):
+            if self.is_professional_slug(self.mode_slug) and self.expiration_datetime is not None:
+                raise ValidationError(
+                    _(u"Professional education modes are not allowed to have expiration_datetime set.")
+                )
 
     def save(self, force_insert=False, force_update=False, using=None):
         # Ensure currency is always lowercase.
@@ -497,9 +499,14 @@ class CourseMode(models.Model):
         if modes_dict is None:
             modes_dict = cls.modes_for_course_dict(course_id)
 
-        # Professional and no-id-professional mode courses are always behind a paywall
-        if cls.has_professional_mode(modes_dict):
-            return False
+        if settings.FEATURES.get('USE_CME_UPGRADE_COURSE_TRACK'):
+            # In this case, only Professional  mode courses are always behind a paywall
+            if cls.PROFESSIONAL in modes_dict:
+                return False
+        else:
+            # Professional and no-id-professional mode courses are always behind a paywall
+            if cls.has_professional_mode(modes_dict):
+                return False
 
         # White-label uses course mode honor with a price
         # to indicate that the course is behind a paywall.

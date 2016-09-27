@@ -317,6 +317,7 @@ from student.helpers import (
           <div class="message message-upsell has-actions is-shown">
 
             <div class="wrapper-extended">
+              % if course_mode_info['verified_upsell']:
                 <p class="message-copy" align="justify">
                   <b class="message-copy-bold">
                     ${_("Pursue a {cert_name_long} to highlight the knowledge and skills you gain in this course.").format(cert_name_long=cert_name_long)}
@@ -331,6 +332,22 @@ from student.helpers import (
                     </span>
                   </a>
                 </div>
+              % elif settings.FEATURES.get('USE_CME_UPGRADE_COURSE_TRACK') and not course_mode_info['verified_upsell']:
+                <p class="message-copy" align="justify">
+                  <b class="message-copy-bold">
+                    ${_("Pursue a {cert_name_long} to highlight the knowledge and skills you gain in this course.").format(cert_name_long=cert_name_long)}
+                  </b><br>
+                    ${_("It's official. It's easily shareable. It's a proven motivator to complete the course.")}
+                </p>
+                <div class="action-upgrade-container">
+                  <a class="action action-upgrade" href="${reverse('verify_student_start_flow', kwargs={'course_id': unicode(course_overview.id)})}" data-course-id="${course_overview.id | h}" data-user="${user.username | h}">
+                      <i class="action-upgrade-icon"></i>
+                    <span class="wrapper-copy">
+                      <span class="copy">${_("Upgrade to XXXXX")}</span>
+                    </span>
+                  </a>
+                </div>
+              % endif:
             </div>
           </div>
         %endif
