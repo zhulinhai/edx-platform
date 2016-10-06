@@ -9,4 +9,5 @@ urlpatterns = [
     # Matches paths like 'programs/123/' and 'programs/123/foo/', but not 'programs/123/foo/bar/'.
     # Also accepts strings that look like UUIDs, to support retrieval of catalog-based MicroMasters.
     url(r'^programs/(?P<program_id>[0-9a-f-]+)/[\w\-]*/?$', views.program_details, name='program_details_view'),
+    url(r'^programs/(?P<category>[\w\-]*)/?$', views.explore_programs, name='explore_programs'),
 ]

@@ -1,0 +1,91 @@
+<%inherit file="../main.html" />
+<%!
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+%>
+<%! main_css = "style-learner-dashboard" %>
+
+<%block name="pagetitle">${_("Microsoft")}</%block>
+
+<%block name="bodyextra">
+<section class="promo-box">
+    <div class="promo-box_wrapper">
+        <img class="promo-box_img" src="https://www.edx.org/sites/default/files/product/banner/microsoft-logo_rgb_c-wht_copy_447_0.png" alt="">
+        <div class="promo-box_holder">
+            <h1 class="promo-box_heading">${ curriculum.title }</h1>
+            <p class="promo-box_text">${ curriculum.description }</p>
+            <a class="promo-box_button" href="#">See Courses</a>
+        </div>
+    </div>
+</section>
+<section class="details">
+    <aside class="details_aside">
+        <div class="details_box">
+            <h2 class="details_heading">Program Details</h2>
+            <ul class="info-list">
+                <li class="info-list_item">
+                    <strong class="info-list_heading">Effort</strong>
+                    <span class="info-list_text">9 courses (16-32 hours each)</span>
+                </li>
+                <li class="info-list_item">
+                    <strong class="info-list_heading">Final Project:</strong>
+                    <span class="info-list_text">Apply the knowledge and skills acquired (6-10 hours)</span>
+                </li>
+                <li class="info-list_item">
+                    <strong class="info-list_heading">Institution</strong>
+                    <span class="info-list_text">  <a class="info-list_link" href="#">Microsoft</a>, <a class="info-list_link" href="#">ColumbiaX</a></span>
+                </li>
+                <li class="info-list_item">
+                    <strong class="info-list_heading">Price</strong>
+                    <span class="info-list_text">$49-$99 per course</span>
+                </li>
+            </ul>
+            <hr class="details_divider">
+            <h2 class="details_heading">How To Complete The Program</h2>
+            <ul class="sidebar-list">
+                <li class="sidebar-list_item">Successfully earn a Verified Certificate for a course in all nine skill areas</li>
+                <li class="sidebar-list_item">Pass the final Capstone Project</li>
+            </ul>
+        </div>
+    </aside>
+    <div class="details_content">
+        % if curriculum.will_learn.all():
+        <h3 class="details_sub-heading">You'll Learn To</h3>
+        <ul class="details_list">
+            % for i in curriculum.will_learn.all():
+            <li class="details_list-item">${ i.text }</li>
+            % endfor
+        </ul>
+        % endif
+        % if curriculum.misc_sections.all():
+        % for i in curriculum.misc_sections.all():
+        <h2 class="details_header">${ i.title }</h2>
+        <p class="details_text">${ i.description }</p>
+        % endfor
+        % endif
+    </div>
+</section>
+<section class="unit-section">
+    <h1 class="unit-section_heading">Data Science Professional Program - Unit Overview</h1>
+
+    % for program in programs:
+    <article class="unit-section_box">
+        <img class="unit-section_img" width="279" height="157"  src="${ program.promo_image_url }" alt="course img">
+        <div class="unit-section_content">
+            <h1 class="unit-section_heading">Unit ${loop.index + 1} - ${ program.title }</h1>
+            <p class="unit-section_text">${ program.description }</p>
+            <ul class="unit-section_list">
+                % for i in programs_data[program.marketing_slug]:
+                <li class="unit-section_list-item">
+                    <div class="unit-section_list-cell">
+                        <span class="unit-section_list-span">Course ${loop.index + 1}:</span>
+                        <a class="unit-section_list-link" href="${ i[1] }">${ i[0] }</a>
+                    </div>
+                </li>
+                % endfor
+            </ul>
+        </div>
+    </article>
+    % endfor
+</section>
+</%block>

@@ -81,3 +81,39 @@ def program_details(request, program_id):
     }
 
     return render_to_response('learner_dashboard/program_details.html', context)
+
+
+@login_required
+@require_GET
+def explore_programs(request, category):
+    """Explore programs by MKTG_URLS."""
+    programs_config = ProgramsApiConfig.current()
+    if not programs_config.show_program_listing:
+        raise Http404
+
+    meter = utils.ProgramProgressMeter(request.user)
+    programs = meter.programs
+
+    # TODO: Pull 'xseries' string from configuration model.
+    marketing_root = urljoin(settings.MKTG_URLS.get('ROOT'), 'xseries').rstrip('/')
+
+    for program in programs:
+        program['detail_url'] = utils.get_program_detail_url(program, marketing_root)
+        program['display_category'] = utils.get_display_category(program)
+
+    programs_by_category = [i for i in programs if i['category'] == category]
+    if not programs_by_category:
+        raise Http404
+
+    context = {
+        'programs': programs_by_category,
+        'progress': meter.progress,
+        'xseries_url': marketing_root if programs_config.show_xseries_ad else None,
+        'nav_hidden': True,
+        'show_program_listing': programs_config.show_program_listing,
+        'credentials': get_programs_credentials(request.user, category='xseries'),
+        'disable_courseware_js': True,
+        'uses_pattern_library': True
+    }
+
+    return render_to_response('learner_dashboard/explore_programs.html', context)
