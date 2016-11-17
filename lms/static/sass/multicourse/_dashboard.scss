@@ -756,7 +756,12 @@
 
         @include clearfix();
 
+<<<<<<< HEAD
         position: inherit;
+=======
+                &.disabled {
+                  cursor: default;
+>>>>>>> remove all the css importants
 
         @include left($baseline/2);
         @include padding(($baseline * 0.4), 0, ($baseline * 0.4), ($baseline * 0.75));
@@ -1204,7 +1209,7 @@
 
   // CASE: is denied
   &.is-denied {
-    border-top: 3px solid $red !important;
+    border-top: 3px solid $red;
 
     .status-data-message {
       color: $error-color;
@@ -1231,7 +1236,7 @@
 
   // CASE: is accepted
   &.is-accepted {
-    border-top: 3px solid $green !important;
+    border-top: 3px solid $green;
 
     .status-data-message {
       color: $verified-color-lvl1;
@@ -1287,9 +1292,9 @@
 // status - verification
 .status--verification {
   .data {
-    white-space: normal !important;
-    text-overflow: no !important;
-    overflow: visible !important;
+    white-space: normal;
+    text-overflow: no;
+    overflow: visible;
   }
 
   .list--nav {
@@ -1299,7 +1304,7 @@
   // STATE: is denied
   &.is-denied {
     .data {
-      color: $error-color !important;
+      color: $error-color;
     }
   }
 }

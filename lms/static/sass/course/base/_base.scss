@@ -61,9 +61,14 @@ table {
 }
 
 a {
+<<<<<<< HEAD
   &:hover,
   &:focus {
     text-decoration: none !important;
+=======
+  &:hover, &:focus {
+    text-decoration: none;
+>>>>>>> remove all the css importants
   }
 
   @media print {
