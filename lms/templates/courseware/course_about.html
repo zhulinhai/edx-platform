@@ -218,7 +218,7 @@ from openedx.core.lib.courses import course_image_url
     <div class="course-sidebar">
       <div class="course-summary">
 
-        <%include file="course_about_sidebar_header.html" />
+        <%include file="course_about_sidebar_header.html" args="utec_show_social_buttons=utec_show_social_buttons"/>
 
         <ol class="important-dates">
           <li class="important-dates-item"><span class="icon fa fa-info-circle" aria-hidden="true"></span><p class="important-dates-item-title">${_("Course Number")}</p><span class="important-dates-item-text course-number">${course.display_number_with_default | h}</span></li>
