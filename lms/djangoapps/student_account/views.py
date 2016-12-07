@@ -436,7 +436,7 @@ def account_settings_context(request):
         'duplicate_provider': None,
         'fields': {
             'country': {
-                'options': list(countries),
+                'options': [['UY', 'Uruguay']],  # for all options use list(countries)
             }, 'gender': {
                 'options': [(choice[0], _(choice[1])) for choice in UserProfile.GENDER_CHOICES],  # pylint: disable=translation-of-non-string
             }, 'language': {
@@ -448,7 +448,7 @@ def account_settings_context(request):
             }, 'year_of_birth': {
                 'options': year_of_birth_options,
             }, 'preferred_language': {
-                'options': all_languages(),
+                'options': [[u'es', u'Espanol']],  # for all options use all_languages(),
             }, 'time_zone': {
                 'options': TIME_ZONE_CHOICES,
                 'enabled': settings.FEATURES.get('ENABLE_TIME_ZONE_PREFERENCE'),
