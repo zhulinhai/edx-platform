@@ -110,7 +110,7 @@ def login_and_registration_form(request, initial_mode="login"):
             'third_party_auth': _third_party_auth_context(request, redirect_to),
             'third_party_auth_hint': third_party_auth_hint or '',
             'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
-
+            'utec_third_party_auth_priority': settings.FEATURES['UTEC_THIRD_PARTY_AUTH_PRIORITY'],
             # Include form descriptions retrieved from the user API.
             # We could have the JS client make these requests directly,
             # but we include them in the initial page load to avoid
