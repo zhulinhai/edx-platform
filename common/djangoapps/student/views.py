@@ -402,6 +402,13 @@ def _cert_info(user, course_overview, cert_status, course_mode):  # pylint: disa
         else:
             status_dict['grade'] = cert_status['grade']
 
+            if settings.FEATURES['UTEC_CUSTOM_CERTS_GRADE']:
+                for key, val in settings.FEATURES['UTEC_GRADE'].iteritems():
+                    if float(val['min']) <= float(cert_status['grade']) <= float(val['max']):
+                        status_dict['utec_grade'] = val['label']
+            else:
+                status_dict['utec_grade'] = False
+
     return status_dict
 
 
@@ -1624,6 +1631,8 @@ def create_account_with_params(request, params):
             external_auth.views.SHIBBOLETH_DOMAIN_PREFIX
         )
     )
+
+    tos_required = settings.FEATURES.get("UTEC_TOS_REQUIRED", tos_required)
 
     form = AccountCreationForm(
         data=params,
