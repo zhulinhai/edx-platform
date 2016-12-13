@@ -205,6 +205,28 @@ def get_system_sass_dirs(system):
             ],
         })
 
+        edxapp_env = Env()
+        if edxapp_env.feature_flags.get('USE_CUSTOM_THEME', False):
+            # themed sass folders
+            themed_sass_dir = path(system) / "static" / "themed_sass"
+            themed_css_dir = path(system) / "static" / "css"
+            # Getting the sass path of the custom theme
+            theme_name = edxapp_env.env_tokens.get('THEME_NAME', '')
+            parent_dir = path(edxapp_env.REPO_ROOT).abspath().parent
+            theme_root = parent_dir / "themes" / theme_name
+            custom_theme_sass_dir = theme_root / "static" / "sass"
+
+            dirs.append({
+                "sass_source_dir": themed_sass_dir,
+                "css_destination_dir": themed_css_dir,
+                "lookup_paths": [
+                    sass_dir / "partials",
+                    sass_dir,
+                    custom_theme_sass_dir,
+                    themed_sass_dir
+                ],
+            })
+
     return dirs
 
 
