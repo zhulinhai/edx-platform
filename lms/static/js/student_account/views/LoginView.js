@@ -32,6 +32,8 @@
 
                 this.listenTo( this.model, 'sync', this.saveSuccess );
                 this.listenTo( this.resetModel, 'sync', this.resetEmail );
+                this.utecThirdPartyAuthPriority = data.utecThirdPartyAuthPriority;
+                this.autoSubmit = data.thirdPartyAuth.autoSubmitRegForm;
             },
 
             render: function( html ) {
@@ -46,7 +48,8 @@
                         errorMessage: this.errorMessage,
                         providers: this.providers,
                         hasSecondaryProviders: this.hasSecondaryProviders,
-                        platformName: this.platformName
+                        platformName: this.platformName,
+                        utecThirdPartyAuthPriority: this.utecThirdPartyAuthPriority
                     }
                 }));
 
@@ -124,6 +127,9 @@
                      this.currentProvider ) {
                     this.element.show( this.$authError );
                     this.element.hide( this.$errors );
+                    if ( this.autoSubmit ) {
+                        $('.form-toggle[data-type="register"]').trigger('click');
+                    }
                 } else {
                     this.element.hide( this.$authError );
                     this.element.show( this.$errors );
