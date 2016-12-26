@@ -1,0 +1,43 @@
+<%!
+  from django.utils.translation import ugettext as _
+  from django.core.urlresolvers import reverse
+%>
+<%inherit file="main.html" />
+
+<%namespace name='static' file='static_content.html'/>
+
+<%block name="pagetitle">${_("Courses")}</%block>
+
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="find-courses">
+      <header>
+        <div class="outer-wrapper">
+          <div class="title">
+            <div class="heading-group">
+              <ol class="category-breadcrumbs">
+               % for cat in category.get_ancestors():
+                <li><a href="${reverse('course_category', kwargs={'slug': cat.slug})}">${cat.name}</a><span>/</span></li> 
+               % endfor
+                <li><a href="${reverse('course_category', kwargs={'slug': category.slug})}">${category.name}</a></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+      </header>
+
+      <section class="courses-container">
+
+        <div class="courses" role="region" aria-label="${_('List of Courses')}">
+          <ul class="courses-listing">
+            %for course in courses:
+            <li class="courses-listing-item">
+              <%include file="course.html" args="course=course" />
+            </li>
+            %endfor
+          </ul>
+        </div>
+
+      </section>
+    </section>
+</main>
