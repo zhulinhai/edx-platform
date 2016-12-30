@@ -8,30 +8,31 @@
 
 <%block name="pagetitle">${_("Courses")}</%block>
 
-<main id="main" aria-label="Content" tabindex="-1">
+<div class="theme-content">
+<header class="theme-content_header">
+  <div class="theme-content_helper"></div>
+    <div class="outer-wrapper">
+      <div class="title">
+	<ol class="category-breadcrumbs">
+          % for cat in category.get_ancestors():
+            <li><a href="${reverse('course_category', kwargs={'slug': cat.slug})}">${cat.name}</a><span>/</span></li>
+          % endfor
+            <li><a href="${reverse('course_category', kwargs={'slug': category.slug})}">${category.name}</a></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</header>
+</div>
+
+<main id="main" aria-label="Content" class="theme-content" tabindex="-1">
     <section class="find-courses">
-      <header>
-        <div class="outer-wrapper">
-          <div class="title">
-            <div class="heading-group">
-              <ol class="category-breadcrumbs">
-               % for cat in category.get_ancestors():
-                <li><a href="${reverse('course_category', kwargs={'slug': cat.slug})}">${cat.name}</a><span>/</span></li> 
-               % endfor
-                <li><a href="${reverse('course_category', kwargs={'slug': category.slug})}">${category.name}</a></li>
-              </ol>
-            </div>
-          </div>
-        </div>
-
-      </header>
-
       <section class="courses-container">
 
         <div class="courses" role="region" aria-label="${_('List of Courses')}">
-          <ul class="courses-listing">
+          <ul class="theme-courses-list">
             %for course in courses:
-            <li class="courses-listing-item">
+            <li class="theme-courses-list_item">
               <%include file="course.html" args="course=course" />
             </li>
             %endfor

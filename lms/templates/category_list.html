@@ -8,43 +8,49 @@
 
 <%block name="pagetitle">${_("Course catalog")}</%block>
 
-<main id="main" aria-label="Content" tabindex="-1">
-    <section class="categories">
-      <header>
+<main id="main" class="theme-content" aria-label="Content" tabindex="-1">
+<div class="home theme-content_section">
+    <header class="theme-content_header">
+        <div class="theme-content_helper"></div>
         <div class="outer-wrapper">
           <div class="title">
             <div class="heading-group">
+                  <h1>Course Catalog</h1>
+                  <p>Lorem ipsum dolor sit amet enim, etiam ullamcorper.</p>
             </div>
-            % if settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
+
+            %if settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
               <div class="course-search">
                 <form method="get" action="/courses">
                   <label><span class="sr">${_("Search for a course")}</span>
                     <input class="search-input" name="search_query" type="text" placeholder="${_("Search for a course")}"></input>
                   </label>
                   <button class="search-button" type="submit">
-                    <span class="icon fa fa-search" aria-hidden="true"></span><span class="sr">${_("Search")}</span>
+                    <span class="sr">${_("Search")}</span>
                   </button>
                 </form>
               </div>
             % endif
-
           </div>
+
         </div>
 
       </header>
-
+    <section class="categories">
+    <h2 class="categories_heading">Select a course category below for more details.</h2>
+    <div class="categories_holder">
      % for category1, children1 in categories.iteritems():
-      <section class="category level-1">
-        <a href="${reverse('course_category', kwargs={'slug': category1.slug})}"><h2>${category1.name}</h2></a>
+      <section class="categories_section level-1">
+        <a class="categories_main-link" href="${reverse('course_category', kwargs={'slug': category1.slug})}">${category1.name}</a>
        % if children1:
-        <ol class="category level-2">
+        <ol class="categories_list level-2">
          % for category2, children2 in children1.iteritems():
-          <li>
-            <a href="${reverse('course_category', kwargs={'slug': category2.slug})}"><h3>${category2.name}</h3></a>
+          <li class="categories_item">
+            <a class="categories_link" href="${reverse('course_category', kwargs={'slug': category2.slug})}">${category2.name}</a>
            % if children2:
-            <ol class="category level-3">
+            <ol class="categories_list-inner level-3">
              % for category3 in children2:
-              <li><a href="${reverse('course_category', kwargs={'slug': category3.slug})}">${category3.name}</a></li>
+              <li class="categories_item-inner"><a class="categories_link-inner" href="${reverse('course_category', kwargs={'slug': category3.slug})}">${category3.name}</a></li>
              % endfor
             </ol>
            % endif
@@ -54,5 +60,7 @@
        % endif
       </section>
      % endfor 
+    </div>
     </section>
+  </div>
 </main>
