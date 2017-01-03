@@ -17,7 +17,14 @@ def course_category_list(request):
 
 def course_category(request, slug):
     category = get_object_or_404(CourseCategory, slug=slug, enabled=True)
-    courses = map(CourseOverview.get_from_id, category.get_course_ids())
+    base_courses_ids = set(category.get_course_ids())
+
+    descendants = category.get_descendants(include_self=False)
+    for descendant in descendants:
+        for course_id in descendant.get_course_ids():
+            base_courses_ids.add(course_id)
+
+    courses = map(CourseOverview.get_from_id, base_courses_ids)
 
     permission_name = configuration_helpers.get_value(
         'COURSE_CATALOG_VISIBILITY_PERMISSION',
