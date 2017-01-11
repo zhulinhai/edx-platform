@@ -19,6 +19,7 @@ from xmodule.graders import grader_from_conf
 from xmodule.mixin import LicenseMixin
 from xmodule.seq_module import SequenceDescriptor, SequenceModule
 from xmodule.tabs import CourseTabList, InvalidTabsException
+from course_category.models import CourseCategory
 from .fields import Date
 
 log = logging.getLogger(__name__)
@@ -1383,6 +1384,16 @@ class CourseDescriptor(CourseFields, SequenceDescriptor, LicenseMixin):
           bool: False if the course has already started, True otherwise.
         """
         return datetime.now(utc) <= self.start
+
+    @property
+    def course_category(self):
+        try:
+            category = CourseCategory.objects.select_related()\
+                       .get(coursecategorycourse__course_id=self.id)
+        except CourseCategory.DoesNotExist:
+            category = None
+
+        return category
 
 
 class CourseSummary(object):
