@@ -87,9 +87,10 @@ def program_details(request, program_id):
 @require_GET
 def explore_programs(request, category):
     """Explore programs by MKTG_URLS."""
+    error_msg = None
     programs_config = ProgramsApiConfig.current()
     if not programs_config.show_program_listing:
-        raise Http404
+        error_msg = 'Programs listing is disabled on {}'.format(settings.PLATFORM_NAME)
 
     meter = utils.ProgramProgressMeter(request.user)
     programs = meter.programs
@@ -103,7 +104,7 @@ def explore_programs(request, category):
 
     programs_by_category = [i for i in programs if i['category'] == category]
     if not programs_by_category:
-        raise Http404
+        error_msg = 'There are no programs found on {}'.format(settings.PLATFORM_NAME)
 
     context = {
         'programs': programs_by_category,
@@ -113,7 +114,12 @@ def explore_programs(request, category):
         'show_program_listing': programs_config.show_program_listing,
         'credentials': get_programs_credentials(request.user, category='xseries'),
         'disable_courseware_js': True,
-        'uses_pattern_library': True
+        'uses_pattern_library': True,
+        'error_msg': error_msg,
     }
 
-    return render_to_response('learner_dashboard/explore_programs.html', context)
+    template_to_render = (
+        'learner_dashboard/programs_error.html' if error_msg else
+        'learner_dashboard/explore_programs.html'
+    )
+    return render_to_response(template_to_render, context)
