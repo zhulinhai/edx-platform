@@ -29,6 +29,8 @@ import os
 from path import Path as path
 from xmodule.modulestore.modulestore_settings import convert_module_store_setting_if_needed
 
+from elasticsearch import Elasticsearch
+
 # SERVICE_VARIANT specifies name of the variant used, which decides what JSON
 # configuration files are read during startup.
 SERVICE_VARIANT = os.environ.get('SERVICE_VARIANT', None)
@@ -889,7 +891,21 @@ AFFILIATE_COOKIE_NAME = ENV_TOKENS.get('AFFILIATE_COOKIE_NAME', AFFILIATE_COOKIE
 ############## Settings for LMS Context Sensitive Help ##############
 
 DOC_LINK_BASE_URL = ENV_TOKENS.get('DOC_LINK_BASE_URL', DOC_LINK_BASE_URL)
+################ CUSTOM CONFIGURATIONS ################
 
 ############## Settings for the Enterprise App ######################
 
+##################### Raccoongang changes #####################
+ELASTIC_SEARCH_HOST = ENV_TOKENS.get('ELASTIC_SEARCH_HOST', 'localhost')
+
 ENTERPRISE_ENROLLMENT_API_URL = ENV_TOKENS.get('ENTERPRISE_ENROLLMENT_API_URL', ENTERPRISE_ENROLLMENT_API_URL)
+
+
+class ExtHostElasticsearch(Elasticsearch):
+    def __init__(self, *args, **kwargs):
+        kwargs['host'] = ELASTIC_SEARCH_HOST
+        super(ExtHostElasticsearch, self).__init__(*args, **kwargs)
+
+ELASTIC_SEARCH_IMPL = ExtHostElasticsearch
+
+SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True
