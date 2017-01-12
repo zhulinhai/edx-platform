@@ -1,0 +1,57 @@
+@import 'font';
+@import 'const';
+
+.certificates {
+    &_header{
+        background: #30363a;
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
+    }
+    &_holder {
+        width: 1170px;
+        margin: 0 auto;
+    }
+    &.wrapper-banner {
+        box-shadow: inset 0 0.07rem 0.07rem 0 rgba(0,0,0,0.5);
+        background: #84b727;
+        font-family: $font-regular;
+        margin-top: 0;
+        padding-top: 32px;
+        padding-bottom: 34px;
+
+        .banner {
+            width: 1170px;
+            margin: 0 auto;
+        }
+    }
+}
+.hd-1.emphasized,
+.hd-2.emphasized {
+    color: #e34619;
+    font-family: $font-bold;
+}
+.certificate .accomplishment-rendering .deco-corner-bl,
+.certificate .accomplishment-rendering .deco-corner-br,
+.certificate .accomplishment-rendering .deco-corner-tl,
+.certificate .accomplishment-rendering .deco-corner-tr {
+    display: none;
+}
+.accomplishment-rendering {
+    border-top: 0.4rem solid #3ba0da;
+    border-bottom: 0.4rem solid #3ba0da;
+}
+.certificate .accomplishment-rendering .accomplishment-type-label,
+.accomplishment-rendering .accomplishment-type-label {
+    font-family: $font-regular;
+}
+.accomplishment-rendering .accomplishment-type-symbol {
+    width: 12.3rem;
+}
+.accomplishment-rendering {
+    padding: 3.26rem 1.25rem;
+}
+.layout-accomplishment.certificate-honor .accomplishment-rendering .accomplishment-signatories .signatory-signature {
+    width: 264px;
+    height: auto;
+    max-height: none;
+}
