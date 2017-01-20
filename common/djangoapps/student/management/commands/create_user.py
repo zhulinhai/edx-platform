@@ -5,8 +5,16 @@ from django.contrib.auth.models import User
 from django.utils import translation
 
 from opaque_keys.edx.keys import CourseKey
+<<<<<<< HEAD
 from six import text_type
 
+=======
+<<<<<<< HEAD
+=======
+from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+>>>>>>> get LANGUAGE_CODE from configuration helper
+>>>>>>> get LANGUAGE_CODE from configuration helper
 from student.forms import AccountCreationForm
 from student.models import CourseEnrollment, create_comments_service_user
 from student.views import _do_create_account, AccountValidationError
@@ -72,8 +80,12 @@ class Command(TrackedCommand):
         # user's preferred language.  This line ensures that the result will
         # match this installation's default locale.  Otherwise, inside a
         # management command, it will always return "en-us".
+<<<<<<< HEAD
         translation.activate(settings.LANGUAGE_CODE)
 
+=======
+        translation.activate(configuration_helpers.get_value('LANGUAGE_CODE'))
+>>>>>>> get LANGUAGE_CODE from configuration helper
         try:
             user, _, reg = _do_create_account(form)
             if options['staff']:
