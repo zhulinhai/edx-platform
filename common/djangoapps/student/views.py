@@ -1346,6 +1346,22 @@ def login_user(request, error=""):  # pylint: disable=too-many-statements,unused
         )
 
     if user is not None and user.is_active:
+        course_creator_enabled = settings.FEATURES.get('ENABLE_CREATOR_GROUP', False)
+        lms_host = getattr(settings, 'LMS_BASE', None)
+        is_staff = user.is_staff or user.is_superuser
+
+        if not is_staff and course_creator_enabled and lms_host and request.META['HTTP_HOST'] != lms_host:
+            from course_creators.models import CourseCreator
+            _qs = CourseCreator.objects.filter(user=user, state=CourseCreator.GRANTED)
+
+            if not _qs.exists():
+                AUDIT_LOG.info('Login failed - "CourseCreator" role has not granted.')
+                log.info('Login failed - "CourseCreator" role has not granted.')
+
+                return JsonResponse({
+                    "success": False,
+                    "value": _('You do not have a "Course Creator" privileges.'),
+                })
         try:
             # We do not log here, because we have a handler registered
             # to perform logging on successful logins.
@@ -2182,6 +2198,15 @@ def activate_account(request, key):
                 'already_active': already_active
             }
         )
+
+        lms_host = getattr(settings, 'LMS_BASE', None)
+        log.error(lms_host)
+        log.error(request.META['HTTP_HOST'])
+        if lms_host and request.META['HTTP_HOST'] != lms_host:
+            from course_creators.views import user_requested_access
+            user_requested_access(request.user)
+            logout(request)
+
         return resp
     if len(regs) == 0:
         return render_to_response(
