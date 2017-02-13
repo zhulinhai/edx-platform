@@ -1,0 +1,34 @@
+<%page expression_filter="h"/>
+<%namespace name='static' file='static_content.html'/>
+<%! 
+from django.utils.translation import ugettext as _
+%>
+
+% if show_program_listing:
+
+<h1 class="theme-content_heading">${_("Featured programs")}</h1>
+
+<section class="programs">
+  <ul class="programs-listing">
+    % for program in programs:
+      <li class="program-listing-item">
+        <div aria-labelledby="program-${program['id']}" role="group" class="program-card">
+          <div class="text-section">
+            <h3 id="program-${program['id']}" class="title hd-3">${program['name']}</h3>
+            <div class="meta-info grid-container">
+            <div class="organization col">${', '.join(o['display_name'] for o in program['organizations'])}</div>
+            <div class="category col col-last">
+              <span class="category-text">${program['display_category']} Program</span>
+              <span class="xseries-icon" aria-hidden="true"></span>
+            </div>
+            <a href="${program['detail_url']}">
+              <img class="banner-image" srcset="${program['banner_image_urls'].get('w435h145', '')}" alt="${program['name']} Home Page.">
+            </a>
+          </div>
+        </div>
+      </li>
+    %endfor
+  </ul>
+</section>
+
+% endif

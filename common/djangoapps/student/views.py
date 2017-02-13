@@ -88,6 +88,8 @@ from openedx.core.djangoapps.external_auth.login_and_register import (
     register as external_auth_register
 )
 
+from lang_pref import LANGUAGE_KEY
+
 import track.views
 
 import dogstats_wrapper as dog_stats_api
@@ -123,10 +125,11 @@ from notification_prefs.views import enable_notifications
 from openedx.core.djangoapps.credit.email_utils import get_credit_provider_display_names, make_providers_strings
 from openedx.core.djangoapps.lang_pref import LANGUAGE_KEY
 from openedx.core.djangoapps.programs import utils as programs_utils
+from openedx.core.djangoapps.user_api.preferences import api as preferences_api
+from openedx.core.djangoapps.programs.utils import get_programs_for_dashboard, get_display_category, ProgramProgressMeter
 from openedx.core.djangoapps.programs.models import ProgramsApiConfig
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.theming import helpers as theming_helpers
-from openedx.core.djangoapps.user_api.preferences import api as preferences_api
 from openedx.core.djangoapps.catalog.utils import get_programs_data
 from openedx.core.djangoapps.models.course_details import CourseDetails
 
@@ -188,6 +191,30 @@ def index(request, extra_context=None, user=AnonymousUser()):
 
     context = {'courses': courses}
 
+    programs_config = ProgramsApiConfig.current()
+
+    if not request.user.is_authenticated():
+        user, _ = User.objects.get_or_create(
+            username='programs_dummy_user_for_api'
+        )
+    else:
+        user = request.user
+
+    meter = ProgramProgressMeter(user)
+    programs = filter(lambda p: p.get('featured'), meter.programs)
+
+    for program in programs:
+        program['detail_url'] = reverse(
+            'xseries:program_marketing',
+            kwargs={'program_id': program['id']}
+        ).rstrip('/')
+        program['display_category'] = get_display_category(program)
+
+    context.update({
+        'programs': programs,
+        'show_program_listing': programs_config.show_program_listing,
+    })
+
     context['homepage_overlay_html'] = configuration_helpers.get_value('homepage_overlay_html')
 
     # This appears to be an unused context parameter, at least for the master templates...
@@ -205,6 +232,8 @@ def index(request, extra_context=None, user=AnonymousUser()):
 
     # allow for theme override of the courses list
     context['courses_list'] = theming_helpers.get_template_path('courses_list.html')
+
+    context['programs_list'] = theming_helpers.get_template_path('programs_list.html')
 
     # Insert additional context for use in the template
     context.update(extra_context)
@@ -664,6 +693,8 @@ def dashboard(request):
     meter = programs_utils.ProgramProgressMeter(user, enrollments=course_enrollments)
     programs_by_run = meter.engaged_programs(by_run=True)
 
+    course_programs = _get_course_programs(user, [enrollment.course_id for enrollment in course_enrollments])
+
     # Construct a dictionary of course mode information
     # used to render the course list.  We re-use the course modes dict
     # we loaded earlier to avoid hitting the database.
@@ -788,6 +819,7 @@ def dashboard(request):
         'nav_hidden': True,
         'programs_by_run': programs_by_run,
         'show_program_listing': ProgramsApiConfig.current().show_program_listing,
+        'course_programs': course_programs,
         'disable_courseware_js': True,
         'display_course_modes_on_dashboard': enable_verified_certificates and display_course_modes_on_dashboard,
     }
