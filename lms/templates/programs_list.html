@@ -12,14 +12,15 @@ from django.utils.translation import ugettext as _
   <ul class="homepage-course-boxes-container">
     % for program in programs:
       <li class="homepage-course-boxes-item course-track">
-        <a href="${program['detail_url']}" class="homepage-course-boxes-image-holder">
+        <div class="homepage-course-boxes-image-holder">
           <img srcset="${program['banner_image_urls'].get('w435h145', '')}" alt="${program['name']} Home Page." >
-        </a>
+        </div>
         <div aria-labelledby="program-${program['id']}" role="group" class="homepage-course-boxes-description">
             <h3 id="program-${program['id']}">${program['name']}</h3>
             <h1>${', '.join(o['display_name'] for o in program['organizations'])}</h1>
             <p>${program['display_category']} Program</p>
         </div>
+        <a href="${program['detail_url']}"></a>
       </li>
     %endfor
   </ul>
