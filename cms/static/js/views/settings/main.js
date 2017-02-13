@@ -133,6 +133,14 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    }
                    this.$('#' + this.fieldToSelectorMap['entrance_exam_minimum_score_pct']).val(this.model.get('entrance_exam_minimum_score_pct'));
 
+
+                   if (this.model.get('featured') == true) {
+                       this.$('#' + this.fieldToSelectorMap['featured']).attr('checked', this.model.get('featured'));
+                   }
+                   else {
+                       this.$('#' + this.fieldToSelectorMap['featured']).removeAttr('checked');
+                   }
+
                    var selfPacedButton = this.$('#course-pace-self-paced'),
                        instructorPacedButton = this.$('#course-pace-instructor-paced'),
                        paceToggleTip = this.$('#course-pace-toggle-tip');
@@ -156,6 +164,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                },
                fieldToSelectorMap: {
                    'category' : 'course-category',
+                   'featured': 'featured',
                    'language': 'course-language',
                    'start_date': 'course-start',
                    'end_date': 'course-end',
@@ -301,6 +310,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        break;
                    case 'course-language':
                    case 'course-category':
+                   case 'featured':
                    case 'course-effort':
                    case 'course-title':
                    case 'course-subtitle':

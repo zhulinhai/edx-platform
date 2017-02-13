@@ -854,6 +854,12 @@ class CourseFields(object):
         scope=Scope.settings, default=False
     )
 
+    featured = Boolean(
+        display_name=_("Featured Course"),
+        help=_('Show course in "Featured Courses" section.'),
+        default=False,
+        scope=Scope.settings,
+    )
 
 class CourseModule(CourseFields, SequenceModule):  # pylint: disable=abstract-method
     """

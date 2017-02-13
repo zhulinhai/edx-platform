@@ -74,6 +74,7 @@ class CourseDetails(object):
         self.learning_info = []
         self.instructor_info = []
         self.category = ""
+        self.featured = None
 
     @classmethod
     def fetch_about_attribute(cls, course_key, attribute):
@@ -120,6 +121,7 @@ class CourseDetails(object):
         course_details.self_paced = course_descriptor.self_paced
         course_details.learning_info = course_descriptor.learning_info
         course_details.instructor_info = course_descriptor.instructor_info
+        course_details.featured = course_descriptor.featured
         try:
             course_details.category = CourseCategory.objects.select_related()\
                                       .get(coursecategorycourse__course_id=course_key).id
@@ -271,6 +273,11 @@ class CourseDetails(object):
         if 'language' in jsondict and jsondict['language'] != descriptor.language:
             descriptor.language = jsondict['language']
             dirty = True
+
+        if 'featured' in jsondict and jsondict['featured'] != descriptor.featured:
+            descriptor.featured = jsondict['featured']
+            dirty = True
+
 
         if (SelfPacedConfiguration.current().enabled
                 and descriptor.can_toggle_course_pacing
