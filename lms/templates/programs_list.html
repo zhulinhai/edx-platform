@@ -14,9 +14,8 @@ from django.utils.translation import ugettext as _
           <img srcset="${program['banner_image_urls'].get('w435h145', '')}" alt="${program['name']} Home Page." >
         </div>
         <div aria-labelledby="program-${program['id']}" role="group" class="homepage-course-boxes-description">
-            <h3 id="program-${program['id']}">${program['name']}</h3>
-            <h1>${', '.join(o['display_name'] for o in program['organizations'])}</h1>
-            <p>${program['display_category']} Program</p>
+            <h3 id="program-${program['id']}">${', '.join(o['display_name'] for o in program['organizations'])}</h3>
+            <h1>${program['name']}</h1>
         </div>
         <a href="${program['detail_url']}"></a>
       </li>
