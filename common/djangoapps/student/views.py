@@ -179,7 +179,7 @@ def index(request, extra_context=None, user=AnonymousUser()):
         extra_context = {}
 
     programs_list = []
-    courses = [course for course in get_courses(user) if CourseDetails.fetch(course.id).featured]
+    courses = list(course for course in get_courses(user) if CourseDetails.fetch(course.id).featured)
 
     if configuration_helpers.get_value(
             "ENABLE_COURSE_SORTING_BY_START_DATE",
@@ -188,6 +188,8 @@ def index(request, extra_context=None, user=AnonymousUser()):
         courses = sort_by_start_date(courses)
     else:
         courses = sort_by_announcement(courses)
+
+    courses.sort(key=lambda c: c.created, reverse=True)
 
     context = {'courses': courses}
 
@@ -209,6 +211,8 @@ def index(request, extra_context=None, user=AnonymousUser()):
             kwargs={'program_id': program['id']}
         ).rstrip('/')
         program['display_category'] = get_display_category(program)
+
+    programs.sort(key=lambda p: p['created'], reverse=True)
 
     context.update({
         'programs': programs,
