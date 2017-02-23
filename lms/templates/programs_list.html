@@ -2,6 +2,7 @@
 <%namespace name='static' file='static_content.html'/>
 <%! 
 from django.utils.translation import ugettext as _
+from django.template.defaultfilters import truncatechars
 %>
 
 % if show_program_listing:
@@ -16,6 +17,9 @@ from django.utils.translation import ugettext as _
         <div aria-labelledby="program-${program['id']}" role="group" class="homepage-course-boxes-description">
             <h3 id="program-${program['id']}">${', '.join(o['display_name'] for o in program['organizations'])}</h3>
             <h1>${program['name']}</h1>
+            <div class="program-description">
+                ${truncatechars(program['subtitle'], 156)}
+            </div>
         </div>
         <a href="${program['detail_url']}"></a>
       </li>
