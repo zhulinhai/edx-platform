@@ -37,8 +37,12 @@ FEATURES.update({
     'SEND_USERS_EMAILADDR_WITH_CODERESPONSE': False,
 })
 FORUM_MONGO_PARAMS = {
-    'host': 'localhost',
-    'port': 27017,
+    'hosts': [
+        {
+            'host': 'localhost',
+            'port': 27017,
+        },
+    ],
     'password': '',
     'user': '',
     'database': 'forum',
