@@ -847,12 +847,11 @@ def get_cosmetic_display_price(course, registration_price):
 
 
 @ensure_csrf_cookie
+@ensure_valid_course_key
 @cache_if_anonymous()
 def course_about(request, course_id):
     """
     Display the course's about page.
-
-    Assumes the course_id is in a valid format.
     """
 
     course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
