@@ -170,6 +170,10 @@ header.global.slim {
     img {
       height: 30px;
     }
+    
+    a {
+        line-height: 1em;
+    }
   }
 
   .nav-main,
@@ -179,7 +183,6 @@ header.global.slim {
 
   h2 {
     display: block;
-    width: 65%;
     @include float(left);
     font-size: 0.9em;
     font-weight: 600;
