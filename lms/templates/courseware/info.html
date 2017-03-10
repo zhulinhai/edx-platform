@@ -100,4 +100,7 @@ from openedx.core.djangoapps.self_paced.models import SelfPacedConfiguration
     </section>
     % endif
   </div>
+  % if sneakpeek_allowed and not regularly_registered:
+    <%include file="sneak_peek_tos_privacy.html" />
+  % endif
 </section>
