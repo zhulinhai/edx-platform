@@ -376,7 +376,7 @@ class Order(models.Model):
             # Send a unique email for each recipient. Don't put all email addresses in a single email.
             for recipient in recipient_list:
                 # Some of the names in the db end in white space.
-                name = self.user.profile.name.strip()
+                recipient_name = self.user.profile.name.strip()
                 message = render_to_string(
                     'emails/business_order_confirmation_email.txt' if is_order_type_business else 'emails/order_confirmation_email.txt',
                     {
@@ -395,7 +395,7 @@ class Order(models.Model):
                         'platform_name': microsite.get_value('platform_name', settings.PLATFORM_NAME),
                         'payment_support_email': microsite.get_value('payment_support_email', settings.PAYMENT_SUPPORT_EMAIL),
                         'payment_email_signature': microsite.get_value('payment_email_signature'),
-                        'name': name,
+                        'recipient_name': recipient_name,
                         'payment_support_phone': microsite.get_value('payment_support_phone', settings.PAYMENT_SUPPORT_PHONE),
                         'payment_platform_name': microsite.get_value('payment_platform_name', settings.PAYMENT_PLATFORM_NAME),
                     }
