@@ -278,6 +278,15 @@ div.problem {
         border-color: $incorrect;
       }
     }
+
+    &.choicegroup_submitted {
+      border: 2px solid $submitted;
+
+      // keep blue for submitted answers on hover.
+      &:hover {
+        border-color: $submitted;
+      }
+    }
   }
 
   .indicator-container {
@@ -353,6 +362,7 @@ div.problem {
         @include status-icon($incorrect, $cross-icon);
       }
 
+      &.submitted,
       &.unsubmitted,
       &.unanswered {
         .status-icon {
@@ -477,6 +487,12 @@ div.problem {
 
       input {
         border-color: $incorrect;
+      }
+    }
+
+    &.submitted, &.ui-icon-check {
+      input {
+        border-color: $submitted;
       }
     }
 
@@ -851,6 +867,18 @@ div.problem {
       }
     }
 
+    // CASE: submitted, correctness withheld
+    > .submitted {
+
+      input {
+        border: 2px solid $submitted;
+      }
+
+      .status {
+        content: '';
+      }
+    }
+
     // CASE: unanswered and unsubmitted
     > .unanswered, > .unsubmitted {
 
@@ -885,7 +913,11 @@ div.problem {
     .indicator-container {
       display: inline-block;
 
-      .status.correct:after, .status.partially-correct:after, .status.incorrect:after, .status.unanswered:after {
+      .status.correct:after,
+      .status.partially-correct:after,
+      .status.incorrect:after,
+      .status.submitted:after,
+      .status.unanswered:after {
         @include margin-left(0);
       }
     }
@@ -1588,6 +1620,10 @@ div.problem {
       @extend label.choicegroup_incorrect;
     }
 
+    label.choicetextgroup_submitted, section.choicetextgroup_submitted {
+      @extend label.choicegroup_submitted;
+    }
+
     label.choicetextgroup_show_correct, section.choicetextgroup_show_correct {
       &:after {
         @include margin-left($baseline*.75);
@@ -1626,6 +1662,10 @@ div.problem .imageinput.capa_inputtype {
   .partially-correct {
     @include status-icon($partially-correct, $asterisk-icon);
   }
+
+  .submitted {
+    content: '';
+  }
 }
 
 // +Problem - Annotation Problem Overrides
@@ -1652,6 +1692,10 @@ div.problem .annotation-input {
 
   .partially-correct {
     @include status-icon($partially-correct, $asterisk-icon);
+  }
+
+  .submitted {
+    content: '';
   }
 }
 

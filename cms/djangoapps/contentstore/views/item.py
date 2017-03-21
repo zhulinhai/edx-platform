@@ -997,6 +997,7 @@ def create_xblock_info(xblock, data=None, metadata=None, include_ancestor_info=F
     if xblock.category == 'sequential':
         xblock_info.update({
             "hide_after_due": xblock.hide_after_due,
+            'show_correctness': xblock.show_correctness,
         })
 
     # update xblock_info with special exam information if the feature flag is enabled

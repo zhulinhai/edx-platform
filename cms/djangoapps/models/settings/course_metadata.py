@@ -55,6 +55,7 @@ class CourseMetadata(object):
         'exam_review_rules',
         'hide_after_due',
         'self_paced',
+        'show_correctness',
         'chrome',
         'default_tab',
     ]

@@ -876,6 +876,7 @@ class SubsectionHiddenAfterDueDateTest(UniqueCourseTest):
 
         self.course_outline.select_advanced_tab('hide_after_due_date')
         self.course_outline.make_subsection_hidden_after_due_date()
+        self.course_outline.select_visibility_tab()
 
         self.logout_page.visit()
         auto_auth(self.browser, self.USERNAME, self.EMAIL, False, self.course_id)

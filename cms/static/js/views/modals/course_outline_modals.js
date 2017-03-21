@@ -15,7 +15,8 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
     'use strict';
     var CourseOutlineXBlockModal, SettingsXBlockModal, PublishXBlockModal, AbstractEditor, BaseDateEditor,
         ReleaseDateEditor, DueDateEditor, GradingEditor, PublishEditor, AbstractVisibilityEditor, StaffLockEditor,
-        ContentVisibilityEditor, VerificationAccessEditor, TimedExaminationPreferenceEditor, AccessEditor;
+        VerificationAccessEditor,
+        ContentVisibilityEditor, TimedExaminationPreferenceEditor, AccessEditor, ShowCorrectnessEditor;
 
     CourseOutlineXBlockModal = BaseModal.extend({
         events: _.extend({}, BaseModal.prototype.events, {
@@ -717,6 +718,50 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         }
     });
 
+    ShowCorrectnessEditor = AbstractEditor.extend({
+        templateName: 'show-correctness-editor',
+        className: 'edit-show-correctness',
+
+        afterRender: function() {
+            AbstractEditor.prototype.afterRender.call(this);
+            this.setValue(this.model.get('show_correctness') || 'always');
+        },
+
+        setValue: function(value) {
+            this.$('input[name=show-correctness][value=' + value + ']').prop('checked', true);
+        },
+
+        currentValue: function() {
+            return this.$('input[name=show-correctness]:checked').val();
+        },
+
+        hasChanges: function() {
+            return this.model.get('show_correctness') !== this.currentValue();
+        },
+
+        getRequestData: function() {
+            if (this.hasChanges()) {
+                return {
+                    publish: 'republish',
+                    metadata: {
+                        show_correctness: this.currentValue()
+                    }
+                };
+            } else {
+                return {};
+            }
+        },
+        getContext: function() {
+            return $.extend(
+                {},
+                AbstractEditor.prototype.getContext.call(this),
+                {
+                    self_paced: course.get('self_paced') === true
+                }
+            );
+        }
+    });
+
     VerificationAccessEditor = AbstractEditor.extend({
         templateName: 'verification-access-editor',
         className: 'edit-verification-access',
@@ -832,6 +877,11 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         getEditModal: function(xblockInfo, options) {
             var tabs = [];
             var editors = [];
+            var advancedTab = {
+                name: 'advanced',
+                displayName: gettext('Advanced'),
+                editors: []
+            };
             if (xblockInfo.isVertical()) {
                 editors = [StaffLockEditor];
 
@@ -846,8 +896,8 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
                         editors: []
                     },
                     {
-                        name: 'advanced',
-                        displayName: gettext('Advanced'),
+                        name: 'visibility',
+                        displayName: gettext('Visibility'),
                         editors: []
                     }
                 ];
@@ -856,14 +906,19 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
                     tabs[1].editors = [StaffLockEditor];
                 } else if (xblockInfo.isSequential()) {
                     tabs[0].editors = [ReleaseDateEditor, GradingEditor, DueDateEditor];
-                    tabs[1].editors = [ContentVisibilityEditor];
+                    tabs[1].editors = [ContentVisibilityEditor, ShowCorrectnessEditor];
 
                     if (options.enable_proctored_exams || options.enable_timed_exams) {
-                        tabs[1].editors.push(TimedExaminationPreferenceEditor);
+                        advancedTab.editors.push(TimedExaminationPreferenceEditor);
                     }
 
                     if (typeof(xblockInfo.get('is_prereq')) !== 'undefined') {
-                        tabs[1].editors.push(AccessEditor);
+                        advancedTab.editors.push(AccessEditor);
+                    }
+
+                    // Show the Advanced tab iff it has editors to display
+                    if (advancedTab.editors.length > 0) {
+                        tabs.push(advancedTab);
                     }
                 }
             }
