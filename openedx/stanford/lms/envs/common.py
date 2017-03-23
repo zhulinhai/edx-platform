@@ -76,6 +76,8 @@ ORA2_RESPONSES_DOWNLOAD = {
 }
 ORA2_RESPONSES_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
 PAYMENT_CONFIRM_EMAIL = PAYMENT_SUPPORT_EMAIL
+PAYMENT_SUPPORT_PHONE = '1112223344'
+PAYMENT_PLATFORM_NAME = 'PAYMENT PLATFORM NAME'
 ######################## PROGRESS SUCCESS BUTTON ##############################
 # The following fields are available in the URL: {course_id} {student_id}
 PROGRESS_SUCCESS_BUTTON_URL = 'http://<domain>/<path>/{course_id}'
