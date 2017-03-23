@@ -2329,6 +2329,9 @@ def password_reset_confirm_wrapper(
                 entry = PasswordHistory()
                 entry.create(updated_user)
 
+            updated_user.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, updated_user)
+
             return result
         else:
             return password_reset_confirm(
