@@ -8,6 +8,7 @@ from xmodule.modulestore.django import modulestore
 
 from courseware.model_data import FieldDataCache
 from courseware.module_render import get_module
+from json import loads, dumps
 from util.query import get_read_replica_cursor_if_available
 from pymongo.errors import PyMongoError
 from pymongo import MongoClient
@@ -17,6 +18,7 @@ from django.conf import settings
 from django_comment_client.management_utils import get_mongo_connection_string
 
 FORUMS_MONGO_PARAMS = settings.FORUM_MONGO_PARAMS
+ORA2_ANSWER_PART_SEPARATOR = '\n-----\n'
 
 
 class DummyRequest(object):
@@ -186,7 +188,26 @@ def collect_ora2_data(course_id, include_email=False):
     cursor.execute(raw_queries[0])
     cursor.execute(raw_queries[1], [course_id])
     header = [item[0] for item in cursor.description]
-    return header, cursor.fetchall()
+    header.append('formatted_answer')
+    raw_answer_index = header.index('raw_answer')
+    data = cursor.fetchall()
+    data_rows = []
+    for row in data:
+        raw_answer = row[raw_answer_index]
+        cleaned_answer = dumps(loads(raw_answer), ensure_ascii=False)
+        formatted_answer = extract_answer(loads(cleaned_answer))
+        data_rows.append(list(row) + [formatted_answer])
+    return header, data_rows
+
+
+def extract_answer(raw_answer):
+    parts = raw_answer.get('parts', [])
+    answer = [
+        part.get('text', '')
+        for part in parts
+    ]
+    answer = ORA2_ANSWER_PART_SEPARATOR.join(answer)
+    return answer
 
 
 # pylint: disable=invalid-name
