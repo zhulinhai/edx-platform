@@ -425,3 +425,20 @@ class ProgramDataExtender(object):
                 run_mode['upgrade_url'] = None
         else:
             run_mode['upgrade_url'] = None
+
+def get_display_category(program):
+    """ Given the program, return the category of the program for display
+    Arguments:
+        program (Program): The program to get the display category string from
+    Returns:
+        string, the category for display to the user.
+        Empty string if the program has no category or is null.
+    """
+    display_candidate = ''
+    if program and program.get('category'):
+        if program.get('category') == 'xseries':
+            display_candidate = 'XSeries'
+        else:
+            display_candidate = program.get('category', '').capitalize()
+    return display_candidate
+

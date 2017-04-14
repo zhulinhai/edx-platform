@@ -88,8 +88,6 @@ from openedx.core.djangoapps.external_auth.login_and_register import (
     register as external_auth_register
 )
 
-from lang_pref import LANGUAGE_KEY
-
 import track.views
 
 import dogstats_wrapper as dog_stats_api
@@ -126,7 +124,7 @@ from openedx.core.djangoapps.credit.email_utils import get_credit_provider_displ
 from openedx.core.djangoapps.lang_pref import LANGUAGE_KEY
 from openedx.core.djangoapps.programs import utils as programs_utils
 from openedx.core.djangoapps.user_api.preferences import api as preferences_api
-from openedx.core.djangoapps.programs.utils import get_programs_for_dashboard, get_display_category, ProgramProgressMeter
+from openedx.core.djangoapps.programs.utils import get_programs, get_programs_by_run, get_display_category, ProgramProgressMeter
 from openedx.core.djangoapps.programs.models import ProgramsApiConfig
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.theming import helpers as theming_helpers
@@ -697,7 +695,7 @@ def dashboard(request):
     meter = programs_utils.ProgramProgressMeter(user, enrollments=course_enrollments)
     programs_by_run = meter.engaged_programs(by_run=True)
 
-    course_programs = _get_course_programs(user, [enrollment.course_id for enrollment in course_enrollments])
+    course_programs = _get_course_programs(user, course_enrollments)
 
     # Construct a dictionary of course mode information
     # used to render the course list.  We re-use the course modes dict
@@ -2670,7 +2668,7 @@ def change_email_settings(request):
     return JsonResponse({"success": True})
 
 
-def _get_course_programs(user, user_enrolled_courses):  # pylint: disable=invalid-name
+def _get_course_programs(user, course_enrollments):  # pylint: disable=invalid-name
     """Build a dictionary of program data required for display on the student dashboard.
 
     Given a user and an iterable of course keys, find all programs relevant to the
@@ -2684,7 +2682,7 @@ def _get_course_programs(user, user_enrolled_courses):  # pylint: disable=invali
     Returns:
         dict, containing programs keyed by course.
     """
-    course_programs = get_programs_for_dashboard(user, user_enrolled_courses)
+    course_programs, course_ids = get_programs_by_run(get_programs(user), course_enrollments)
     programs_data = {}
 
     for course_key, programs in course_programs.viewitems():
