@@ -60,6 +60,12 @@
         </div>
 
         <div class="field">
+            <span class="js-model-value copy copy-base subtitle">Featured</span>
+            <label for="program-featured" class="sr-only"><%= gettext('Featured') %></label>
+            <input type="checkbox" id="program-featured" class="js-checkbox program-featured" name="featured" data-field="featured">
+        </div>
+
+        <div class="field">
             <button class="btn btn-brand btn-base js-create-program"><%- gettext('Create') %></button>
             <button class="btn btn-neutral btn-base js-abort-view"><%- gettext('Cancel') %></button>
         </div>

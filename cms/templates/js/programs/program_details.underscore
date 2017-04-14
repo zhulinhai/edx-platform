@@ -39,6 +39,12 @@
                     <span class="field-message-content"></span>
                 </div>
             </div>
+
+            <div class="field">
+                <span class="js-model-value copy copy-base subtitle">Featured</span>
+                <label for="program-featured" class="sr-only"><%= gettext('Featured') %></label>
+                <input type="checkbox" <% if (featured) { %>checked<% } %>  id="program-featured" class="js-checkbox program-featured" name="featured" data-field="featured">
+            </div>
         </div>
 
         <div class="layout-col layout-col-a">

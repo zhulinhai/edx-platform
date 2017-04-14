@@ -90,7 +90,8 @@ define([
                     marketing_slug: this.$el.find('.program-marketing-slug').val(),
                     organizations: [{
                         key: this.$el.find('.program-org').val()
-                    }]
+                    }],
+                    featured: this.$el.find('.program-featured').prop("checked")
                 };
             },
 
