@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import mptt.fields
-import xmodule_django.models
+import openedx.core.djangoapps.xmodule_django.models
 
 
 class Migration(migrations.Migration):
@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
             name='CourseCategoryCourse',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('course_id', xmodule_django.models.CourseKeyField(unique=True, max_length=255, verbose_name='Course', db_index=True)),
+                ('course_id', openedx.core.djangoapps.xmodule_django.models.CourseKeyField(unique=True, max_length=255, verbose_name='Course', db_index=True)),
                 ('course_category', models.ForeignKey(to='course_category.CourseCategory')),
             ],
         ),
