@@ -176,7 +176,6 @@ def index(request, extra_context=None, user=AnonymousUser()):
     if extra_context is None:
         extra_context = {}
 
-    programs_list = []
     courses = list(course for course in get_courses(user) if CourseDetails.fetch(course.id).featured)
 
     if configuration_helpers.get_value(
@@ -248,7 +247,7 @@ def index(request, extra_context=None, user=AnonymousUser()):
                                        settings.FEATURES.get("DISPLAY_PROGRAMS_ON_MARKETING_PAGES")):
         programs_list = get_programs_data(user)
 
-    context["programs_list"] = programs_list
+    context["programs"] = programs
 
     return render_to_response('index.html', context)
 
