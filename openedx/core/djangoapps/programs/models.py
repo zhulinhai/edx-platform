@@ -143,3 +143,11 @@ class ProgramsApiConfig(ConfigurationModel):
         Indicates whether we want to show program details pages
         """
         return self.enabled and self.program_details_enabled
+
+    @property
+    def show_xseries_ad(self):
+        """
+        Indicates whether we should show xseries add
+        """
+        return self.enabled and self.xseries_ad_enabled
+
