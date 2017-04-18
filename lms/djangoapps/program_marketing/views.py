@@ -112,7 +112,7 @@ def explore_programs(request):
         'xseries_url': marketing_root if programs_config.show_xseries_ad else None,
         'nav_hidden': True,
         'show_program_listing': programs_config.show_program_listing,
-        'credentials': get_programs_credentials(request.user, category='xseries'),
+        'credentials': get_programs_credentials(request.user),
         'disable_courseware_js': True,
         'uses_pattern_library': True
     }
