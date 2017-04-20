@@ -95,8 +95,7 @@ def explore_programs(request, category):
     meter = utils.ProgramProgressMeter(request.user)
     programs = meter.programs
 
-    # TODO: Pull 'xseries' string from configuration model.
-    marketing_root = urljoin(settings.MKTG_URLS.get('ROOT'), 'xseries').rstrip('/')
+    marketing_root = utils.get_program_marketing_url(programs_config)
 
     for program in programs:
         program['detail_url'] = utils.get_program_detail_url(program, marketing_root)
@@ -112,7 +111,7 @@ def explore_programs(request, category):
         'xseries_url': marketing_root if programs_config.show_xseries_ad else None,
         'nav_hidden': True,
         'show_program_listing': programs_config.show_program_listing,
-        'credentials': get_programs_credentials(request.user, category='xseries'),
+        'credentials': get_programs_credentials(request.user),
         'disable_courseware_js': True,
         'uses_pattern_library': True,
         'error_msg': error_msg,

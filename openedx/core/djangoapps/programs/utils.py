@@ -133,6 +133,24 @@ def get_program_marketing_url(programs_config):
     return urljoin(settings.MKTG_URLS.get('ROOT'), programs_config.marketing_path).rstrip('/')
 
 
+def get_program_detail_url(program, marketing_root):
+    """Construct the URL to be used when linking to program details.
+    Arguments:
+        program (dict): Representation of a program.
+        marketing_root (str): Root URL used to build links to XSeries marketing pages.
+    Returns:
+        str, a link to program details
+    """
+    if ProgramsApiConfig.current().show_program_details:
+        base = reverse('program_details_view', kwargs={'program_id': program['id']}).rstrip('/')
+        slug = slugify(program['name'])
+    else:
+        base = marketing_root.rstrip('/')
+        slug = program['marketing_slug']
+
+    return '{base}/{slug}'.format(base=base, slug=slug)
+
+
 def attach_program_detail_url(programs):
     """Extend program representations by attaching a URL to be used when linking to program details.
 
