@@ -50,7 +50,8 @@ def marketing(request, program_id):
 
     marketing_data = {'description': marketing.description}
 
-    program_data = utils.supplement_program_data(program_data, user)
+    program_data = utils.ProgramDataExtender(program_data, user).extend()
+    #program_data = utils.supplement_program_data(program_data, user)
 
     urls = {
         'program_listing_url': reverse('program_listing_view'),
