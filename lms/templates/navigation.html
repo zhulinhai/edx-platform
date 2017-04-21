@@ -88,9 +88,12 @@ site_status_msg = get_site_status_msg(course_id)
        <li>
        <a href="https://buildacademy.com/">Home</a>
 	</li>
+ <li>
+       <a href="https://courses.buildacademy.com/">Courses</a>
+        </li>
 	
           <li class="nav-global-01">
-            <a href="${marketing_link('COURSES')}">${_('Find Courses')}</a>
+            <a href="${marketing_link('COURSES')}">Catalog</a>
           </li>
         
 
@@ -179,14 +182,14 @@ site_status_msg = get_site_status_msg(course_id)
     % endif
 
 <div id='compatmenu'>
-<img src='/static/images/menuicon.png' height=25 onclick="toggle_visibility('menulist');">
+<img src='/static/images/menuicon.png' height=20 onclick="toggle_visibility('menulist');">
 </div>
 
   </nav>
 
 <div id='menulist'>
 
-<ul>
+<ul id='menulist-items'>
 <li class="compact_menu_list"> <a href='https://buildacademy.com/'>Home</a> </li>
 <li class="compact_menu_list"> <a href='/courses'>Catalog</a> </li>
 <li class="compact_menu_list"> <a href='https://buildacademy.com/team'>Team</a> </li>

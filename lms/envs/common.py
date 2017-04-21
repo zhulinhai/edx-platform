@@ -51,8 +51,8 @@ CC_MERCHANT_NAME = PLATFORM_NAME
 # Shows up in the platform footer, eg "(c) COPYRIGHT_YEAR"
 COPYRIGHT_YEAR = "2015"
 
-PLATFORM_FACEBOOK_ACCOUNT = "http://www.facebook.com/YourPlatformFacebookAccount"
-PLATFORM_TWITTER_ACCOUNT = "@YourPlatformTwitterAccount"
+PLATFORM_FACEBOOK_ACCOUNT = "http://www.facebook.com/BuildAcademyNY"
+PLATFORM_TWITTER_ACCOUNT = "@BuildAcademyNY"
 
 ENABLE_JASMINE = False
 

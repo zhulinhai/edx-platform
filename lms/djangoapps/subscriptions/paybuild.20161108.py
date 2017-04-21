@@ -39,7 +39,7 @@ def build_cb_payment(typesus, studentid, studentemail, debug_mode='0'):
     #
 	# Params and return form
 	#
-	#url_pay = 'https://www.sandbox.paypal.com/cgi-bin/webscr'  # url payment develop
+	##url_pay = 'https://www.sandbox.paypal.com/cgi-bin/webscr'  # url payment develop
 	#merchan_id = "calzada-facilitator@iblstudios.com"  # merchan_id or merchan_email
 	url_pay='https://www.paypal.com/cgi-bin/webscr' #url payment production
 	merchan_id = "sales@buildacademy.com"  # merchan_id or merchan_email
@@ -69,8 +69,7 @@ def build_cb_payment(typesus, studentid, studentemail, debug_mode='0'):
 	arr_data_to_send.update({ 'amount' : amount })
 	arr_data_to_send.update({ 'currency_code' : currency_code })
 	arr_data_to_send.update({ 'lc' : locale_code })
-	#arr_data_to_send.update({ 'login_email' : studentemail })
-	arr_data_to_send.update({ 'email' : studentemail })
+	arr_data_to_send.update({ 'login_email' : studentemail })
 	arr_data_to_send.update({ 'user_id' : studentid })
 	arr_data_to_send.update({ 'type_sus' : typesus })
 	arr_data_to_send.update({ 'no_note' : 1 })

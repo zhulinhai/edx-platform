@@ -10,6 +10,7 @@ from openedx.core.lib.courses import course_image_url
 from datetime import datetime
 from django.utils import timezone
 from student.models import CourseEnrollment
+import urllib2
 %>
 
 <%inherit file="../main.html" />
@@ -208,10 +209,6 @@ $(document).ready(function(){
         ${course.display_name_with_default}
       </h1>
       <p class="short_description">${get_course_about_section(request, course, 'short_description')}</p>
-      % if CourseEnrollment.objects.enrollment_counts(course.id)['total']:
-      <p class="student_enrolled"><span class="fa fa-users" />&nbsp;</span>
-        ${CourseEnrollment.objects.enrollment_counts(course.id)['total']} students enrolled</p>
-      % endif
     </div>
     <div class="main_other_details row">
       <div class="img_video_container col-md-9">
@@ -352,6 +349,7 @@ $(document).ready(function(){
                   site_domain = microsite.get_value('site_domain', settings.SITE_NAME)
                   platform_name = microsite.get_value('platform_name', settings.PLATFORM_NAME)
 
+		  ##shareme_nunpa = urllib2.quote(shareme_nunpa)
                   ## Translators: This text will be automatically posted to the student's
                   ## Twitter account. {url} should appear at the end of the text.
                   tweet_text = _("I just enrolled in {number} {title} through {account}: {url}").format(
@@ -363,9 +361,13 @@ $(document).ready(function(){
                           path=reverse('about_course', args=[course.id.to_deprecated_string()])
                       )
                   ).replace(u" ", u"+")
+
+		  shareme_nunpa = "https://"+site_domain+reverse('about_course', args=[course.id.to_deprecated_string()])
+
                   tweet_action = u"http://twitter.com/intent/tweet?text={tweet_text}".format(tweet_text=tweet_text)
 
                   facebook_link = microsite.get_value('course_about_facebook_link', settings.PLATFORM_FACEBOOK_ACCOUNT)
+
 
                   email_subject = u"mailto:?subject={subject}&body={body}".format(
                       subject=_("Take a course with {platform} online").format(platform=platform_name),
@@ -387,6 +389,7 @@ $(document).ready(function(){
                 <a href="${facebook_link}" class="share">
                   <i class="icon fa fa-thumbs-up"></i><span class="sr">${_("Post a Facebook message to say you've enrolled in this course")}</span>
                 </a>
+
                 <a href="${email_subject}" class="share">
                   <i class="icon fa fa-envelope"></i><span class="sr">${_("Email someone to say you've enrolled in this course")}</span>
                 </a>

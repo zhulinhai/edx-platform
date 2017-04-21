@@ -403,6 +403,6 @@ class LocalFSReportStore(ReportStore):
         files.sort(key=lambda (filename, full_path): os.path.getmtime(full_path), reverse=True)
 
         return [
-            (filename, ("file://" + urllib.quote(full_path)))
+	    (filename, ("https://courses.buildacademy.com/downloads/" + str.replace(urllib.quote(full_path),"/tmp/edx-s3/","")))
             for filename, full_path in files
         ]

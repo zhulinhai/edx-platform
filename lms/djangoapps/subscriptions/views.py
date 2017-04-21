@@ -176,6 +176,17 @@ def render_subs(request, template):
                 pay_status = u"{0}".format( params.get( 'payment_status' , '') )
                 if pay_status =='Completed' or pay_status =='Processed':
                     pay_ok = '1'
+                else:
+                    import datetime
+                    now = datetime.datetime.now()
+                    date_sus = now.strftime("%Y-%m-%d")
+                    if pay_params=='':
+                        pay_params = 'User Return to platform'
+                    if pay_status =='':
+                        pay_status = 'Pending'
+                    set_enabled=0
+                    q = "INSERT INTO aux_subscriptions (user_id,email,type_sus,date_sus,pay_params,pay_status,enabled) VALUES('%s','%s','%s','%s','%s','%s','%s')" % (user_id,edx_email,stype,date_sus,pay_params,pay_status,set_enabled)
+                    db.query(q)
             else:
                 #check aux_subs type_sus individual or enterprises
                 if stype==2 or stype==3:

@@ -7,6 +7,7 @@ import json
 import textwrap
 import urllib
 
+
 from collections import OrderedDict
 from datetime import datetime
 from django.utils.translation import ugettext as _
@@ -682,7 +683,7 @@ def course_info(request, course_id):
                 return redirect('{0}?{1}'.format(reverse('dashboard'), params))
             # Otherwise, give a 404 to avoid leaking info about access
             # control.
-            raise Http404("Course not found.")
+            raise Http404("Course not founds.")
 
         staff_access = has_access(request.user, 'staff', course)
         masquerade, user = setup_masquerade(request, course_key, staff_access, reset_masquerade_data=True)
@@ -820,7 +821,7 @@ def course_about(request, course_id):
 
     Assumes the course_id is in a valid format.
     """
-
+    #course_id = course_id.replace("+", "%20")
     course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
 
     with modulestore().bulk_operations(course_key):
