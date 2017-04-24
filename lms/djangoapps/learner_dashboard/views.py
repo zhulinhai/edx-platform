@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.views.decorators.http import require_GET
+from django.conf import settings
 
 from edxmako.shortcuts import render_to_response
 from lms.djangoapps.learner_dashboard.utils import strip_course_id, FAKE_COURSE_KEY
@@ -101,7 +102,7 @@ def explore_programs(request, category):
         program['detail_url'] = utils.get_program_detail_url(program, marketing_root)
         program['display_category'] = utils.get_display_category(program)
 
-    programs_by_category = [i for i in programs if i['category'] == category]
+    programs_by_category = [i for i in programs if i['category'].lower() == category]
     if not programs_by_category:
         error_msg = 'There are no programs found on {}'.format(settings.PLATFORM_NAME)
 
