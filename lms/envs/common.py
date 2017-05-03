@@ -1941,6 +1941,9 @@ INSTALLED_APPS = (
     'openedx.core.djangoapps.self_paced',
 
     'sorl.thumbnail',
+
+    # Custom session time tracker
+    'openedx_session_time',
 )
 
 # Migrations which are not in the standard module "migrations"
