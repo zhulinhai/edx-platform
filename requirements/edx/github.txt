@@ -100,3 +100,6 @@ git+https://github.com/edx/xblock-lti-consumer.git@v1.0.0#egg=xblock-lti-consume
 # Third Party XBlocks
 -e git+https://github.com/mitodl/edx-sga@172a90fd2738f8142c10478356b2d9ed3e55334a#egg=edx-sga
 -e git+https://github.com/open-craft/xblock-poll@e7a6c95c300e95c51e42bfd1eba70489c05a6527#egg=xblock-poll
+
+# Openedx session time tracker
+git+https://github.com/eduNEXT/openedx-session-time-tracker.git@521dc30a0cff542be8e0e62c7962285636d8ebfe#egg=openedx-session-time-tracker==0.1.0
