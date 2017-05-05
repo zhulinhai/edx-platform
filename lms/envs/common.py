@@ -2686,3 +2686,10 @@ DEPRECATED_ADVANCED_COMPONENT_TYPES = []
 # Cutoff date for granting audit certificates
 
 AUDIT_CERT_CUTOFF_DATE = None
+
+# Credentials for custom database connection used for subscription
+
+SUBSCRIPTION_MYSQL_HOST = "172.31.23.49"
+SUBSCRIPTION_MYSQL_DB_NAME = "edxapp"
+SUBSCRIPTION_MYSQL_USER = "edxapp001"
+SUBSCRIPTION_MYSQL_PASSWORD = "password"

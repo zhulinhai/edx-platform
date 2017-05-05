@@ -1,6 +1,5 @@
-
-
 import MySQLdb
+
 
 class mysql:
     """
@@ -19,8 +18,15 @@ class mysql:
         """
         Connect to the database
         """
-        if self.dbh == None:
-            self.dbh = MySQLdb.connect(host=self.db_host, user=self.db_user, passwd=self.db_pass, db=self.db_name, charset='utf8', use_unicode=1)
+        if self.dbh is None:
+            self.dbh = MySQLdb.connect(
+                host=self.db_host,
+                user=self.db_user,
+                passwd=self.db_pass,
+                db=self.db_name,
+                charset='utf8',
+                use_unicode=1
+            )
             self.dbh.autocommit(True)
 
     def query(self, query):
