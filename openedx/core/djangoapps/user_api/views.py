@@ -333,7 +333,13 @@ class RegistrationView(APIView):
         try:
             user = create_account_with_params(request, data)
         except AccountValidationError as err:
-            errors = { err.field: [{"user_message": err.message}] }
+            errors = {
+                err.field: [
+                    {
+                        'user_message': err.message,
+                    },
+                ],
+            }
             return JsonResponse(errors, status=409)
         except ValidationError as err:
             # Should only get non-field errors from this function
