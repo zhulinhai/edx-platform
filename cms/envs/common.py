@@ -1036,6 +1036,9 @@ ADVANCED_COMPONENT_TYPES = [
 
     # Peer instruction tool
     'ubcpi',
+
+    # SCORM xblock
+    'scormxblock',
 ]
 
 # Adding components in this list will disable the creation of new problem for
