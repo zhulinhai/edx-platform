@@ -534,6 +534,7 @@ PHYSICIAN_STATUS_CHOICES = (
     ('Resident', 'Resident'),
     ('Fellow', 'Fellow'),
     ('Retired', 'Retired'),
+    ('Inactive', 'Inactive'),
 )
 PROFESSIONAL_DESIGNATION_CHOICES = (
     ('AuD', 'AuD'),
