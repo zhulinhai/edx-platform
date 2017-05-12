@@ -5,7 +5,8 @@ label.required:after
 .select-sub_affiliation,
 .select-stanford_department,
 .text-sunet_id,
-.select-sub_specialty
+.select-sub_specialty,
+.text-other_affiliation
 {
     display: none;
 }

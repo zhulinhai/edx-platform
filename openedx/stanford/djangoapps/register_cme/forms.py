@@ -58,6 +58,9 @@ class ExtraInfoForm(forms.ModelForm):
             'middle_initial': {
                 'invalid': u'Your middle initial must be at most 1 character.',
             },
+            'other_affiliation': {
+                'required': u'Please enter your Other Affiliation.',
+            },
             'patient_population': {
                 'required': u'Please enter your Patient Population.',
             },
@@ -92,7 +95,7 @@ class ExtraInfoForm(forms.ModelForm):
             'specialty',
             'sub_specialty',
             'affiliation',
-            # 'other_affiliation', not used?
+            'other_affiliation',
             'stanford_department',
             'sunet_id',
             'address_1',

@@ -20,6 +20,16 @@ $(function () {
         var isStanford = (affiliation === 'Stanford University');
         updateRequirements('.select-stanford_department', isStanford);
         updateRequirements('.text-sunet_id', isStanford);
+        var $other = $('.text-other_affiliation');
+        if (affiliation === 'Not affiliated with Stanford Medicine') {
+            $other.show();
+            $other.find('INPUT').attr('required', true);
+            $other.find('INPUT').prev('LABEL').addClass('required');
+        } else {
+            $other.hide();
+            $other.find('INPUT').attr('required', false);
+            $other.find('INPUT').prev('LABEL').removeClass('required');
+        }
     });
     $('body').on('change', '#register-specialty', function() {
         var select = $('#register-sub_specialty');
