@@ -98,9 +98,6 @@ def login_and_registration_form(request, initial_mode="login"):
 
     # Otherwise, render the combined login/registration page
 
-    # Flag for including registration disclaimer
-    stanford_theme_enabled = settings.FEATURES.get("USE_CUSTOM_THEME", False) and not microsite.is_request_in_microsite()
-
     context = {
         'data': {
             'login_redirect_url': redirect_to,
@@ -108,7 +105,7 @@ def login_and_registration_form(request, initial_mode="login"):
             'third_party_auth': _third_party_auth_context(request, redirect_to),
             'third_party_auth_hint': third_party_auth_hint or '',
             'platform_name': settings.PLATFORM_NAME,
-            'stanford_theme_enabled': stanford_theme_enabled,
+            'theme_name': settings.THEME_NAME,
 
             # Include form descriptions retrieved from the user API.
             # We could have the JS client make these requests directly,
