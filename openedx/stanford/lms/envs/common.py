@@ -1,5 +1,9 @@
 from lms.envs.common import *
+from glob import glob
 
+STANFORD_ROOT = REPO_ROOT / 'openedx/stanford'
+for path in glob(STANFORD_ROOT / 'djangoapps/*/'):
+    sys.path.append(path)
 
 # Email to give anonymous users.  Should be a black-hole email address, but not cause errors when email is sent there
 # This is actually just a base email.  We'll make it 'noreply+<username>@example.com' to ensure uniqueness
@@ -65,6 +69,7 @@ INSTALLED_APPS += (
     'settings_context_processor',
     'sneakpeek_deeplink',
 )
+MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / '*/templates')
 MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
 MIDDLEWARE_CLASSES += (
     'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
@@ -104,6 +109,7 @@ TEMPLATE_VISIBLE_SETTINGS = [
     # These settings' values will be exposed to all templates
     'FEATURES',
 ]
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / '*/templates')
 TEMPLATES[0]['OPTIONS']['context_processors'] += [
     # Include TEMPLATE_VISIBLE_SETTINGS in templates
     'settings_context_processor.context_processors.settings',
