@@ -86,6 +86,7 @@ class ExtraInfoForm(forms.ModelForm):
             'middle_initial',
             'birth_date',
             'gender',
+            'dummy_header_professional_information',
             'professional_designation',
             'license_number',
             'license_country',
@@ -99,6 +100,7 @@ class ExtraInfoForm(forms.ModelForm):
             'job_title',
             'stanford_department',
             'sunet_id',
+            'dummy_header_professional_contact_information',
             'address_1',
             'address_2',
             'city',
@@ -288,4 +290,12 @@ class ExtraInfoForm(forms.ModelForm):
         ),
         label='Sub-Specialty',
         required=False,
+    )
+    dummy_header_professional_information = forms.CharField(
+        required=False,
+        label='Professional Information',
+    )
+    dummy_header_professional_contact_information = forms.CharField(
+        required=False,
+        label='Professional Contact Information',
     )

@@ -18,9 +18,17 @@ label.required:after
 {
     content: '\2020';
 }
-label.required
+.login-register .form-field.text-dummy_header_professional_information input,
+.login-register .form-field.text-dummy_header_professional_contact_information input
+{
+    display: none;
+}
+.login-register .form-field.text-dummy_header_professional_information label,
+.login-register .form-field.text-dummy_header_professional_contact_information label
 {
     font-weight: bold;
+    margin-left: -10px;
+    font-size: 1.1em;
 }
 fieldset
 {
