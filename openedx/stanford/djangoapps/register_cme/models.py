@@ -35,6 +35,10 @@ class ExtraInfo(models.Model):
     birth_date = models.CharField(
         max_length=5,
     )
+    job_title = models.CharField(
+        blank=True,
+        max_length=50,
+    )
     professional_designation = models.CharField(
         choices=PROFESSIONAL_DESIGNATION_CHOICES,
         max_length=7,
