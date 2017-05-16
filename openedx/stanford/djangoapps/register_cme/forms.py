@@ -108,6 +108,7 @@ class ExtraInfoForm(forms.ModelForm):
             'county_province': 'International Province or Territory',
             'full_name': 'CANNOT BE CHANGED LATER',
             'postal_code': 'Postal/Zip Code',
+            'professional_designation': 'Medical Designation or Professional Title',
             'sunet_id': 'SUnet ID',
         }
         model = ExtraInfo
