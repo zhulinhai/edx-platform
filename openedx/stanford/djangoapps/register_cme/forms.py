@@ -104,6 +104,7 @@ class ExtraInfoForm(forms.ModelForm):
             'postal_code',
         )
         labels = {
+            'affiliation': 'Stanford Medicine Affiliation',
             'birth_date': 'Month and Day of Birth',
             'county_province': 'International Province or Territory',
             'full_name': 'CANNOT BE CHANGED LATER',
