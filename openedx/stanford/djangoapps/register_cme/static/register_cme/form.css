@@ -14,11 +14,20 @@ label.required:after
 {
     width: 100%;
 }
-.login-register .form-type
+.form-field.select-professional_designation LABEL:after
 {
-    max-width: 655px;
+    content: '\2020';
 }
 label.required
 {
     font-weight: bold;
+}
+fieldset
+{
+    border: 1px dashed #ccc;
+    padding: 10px;
+}
+fieldset label
+{
+    padding: 5px;
 }
