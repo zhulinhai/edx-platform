@@ -1,0 +1,23 @@
+label.required:after
+{
+    content: '*';
+}
+.select-sub_affiliation,
+.select-stanford_department,
+.text-sunet_id,
+.select-sub_specialty
+{
+    display: none;
+}
+.login-register .form-field.select-gender
+{
+    width: 100%;
+}
+.login-register .form-type
+{
+    max-width: 655px;
+}
+label.required
+{
+    font-weight: bold;
+}
