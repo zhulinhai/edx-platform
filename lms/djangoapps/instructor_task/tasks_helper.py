@@ -755,7 +755,7 @@ def upload_grades_csv(_xmodule_instance_args, _entry_id, course_id, _task_input,
             if not header:
                 header = [section['label'] for section in gradeset[u'section_breakdown']]
                 rows.append(
-                    ["id", "email", "username", "first_name", "last_name", "grade"] + header + cohorts_header +
+                    ["id", "email", "username", "fullname", "grade"] + header + cohorts_header +
                     group_configs_header + teams_header +
                     ['Enrollment Track', 'Verification Status'] + certificate_info_header
                 )
@@ -808,8 +808,7 @@ def upload_grades_csv(_xmodule_instance_args, _entry_id, course_id, _task_input,
                 student.id,
                 student.email,
                 student.username,
-                student.first_name,
-                student.last_name,
+                student.profile.name,
                 gradeset['percent'],
             ] + row_percents + cohorts_group_name + group_configs_group_names + team_name +
                 [enrollment_mode] + [verification_status] + certificate_info
