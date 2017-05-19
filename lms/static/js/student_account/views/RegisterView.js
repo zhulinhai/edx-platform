@@ -30,7 +30,7 @@
                 this.errorMessage = data.thirdPartyAuth.errorMessage || '';
                 this.platformName = data.platformName;
                 this.autoSubmit = data.thirdPartyAuth.autoSubmitRegForm;
-                this.isNonMicrositeTheme = data.isNonMicrositeTheme;
+                this.themeName = data.themeName;
 
                 this.listenTo( this.model, 'sync', this.saveSuccess );
             },
@@ -48,7 +48,7 @@
                         errorMessage: this.errorMessage,
                         providers: this.providers,
                         hasSecondaryProviders: this.hasSecondaryProviders,
-                        isNonMicrositeTheme: this.isNonMicrositeTheme,
+                        themeName: this.themeName,
                         platformName: this.platformName
                     }
                 }));
