@@ -8,5 +8,5 @@ INSTALLED_APPS += (
 # Remove sneakpeek during tests to prevent unwanted redirect
 MIDDLEWARE_CLASSES = tuple([
     mwc for mwc in MIDDLEWARE_CLASSES
-    if mwc != 'sneakpeek.middleware.SneakPeekLogoutMiddleware'
+    if mwc != 'openedx.stanford.djangoapps.sneakpeek.middleware.SneakPeekLogoutMiddleware'
 ])
