@@ -4,6 +4,7 @@ data in a Django ORM model.
 """
 
 import itertools
+import logging
 from operator import attrgetter
 from time import time
 
@@ -18,6 +19,8 @@ from django.db.utils import IntegrityError
 from xblock.fields import Scope, ScopeBase
 from courseware.models import StudentModule, StudentModuleHistory
 from edx_user_state_client.interface import XBlockUserStateClient, XBlockUserState
+
+log = logging.getLogger(__name__)
 
 
 class DjangoXBlockUserStateClient(XBlockUserStateClient):
