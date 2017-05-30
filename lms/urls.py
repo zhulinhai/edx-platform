@@ -64,6 +64,9 @@ urlpatterns = [
     url(r'^dashboard/?$', student_views.student_dashboard, name='dashboard'),
     url(r'^change_enrollment$', student_views.change_enrollment, name='change_enrollment'),
 
+	# Submissions api
+    url(r'^api/submissions/', include('submissions.urls')),
+	
     # Event tracking endpoints
     url(r'', include('track.urls')),
 
