@@ -68,6 +68,10 @@ urlpatterns = [
     url(r'^api/submissions/', include('submissions.urls')),
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> Proversity/staging (#380)
     # Event tracking endpoints
 =======
 	# Event tracking endpoints
