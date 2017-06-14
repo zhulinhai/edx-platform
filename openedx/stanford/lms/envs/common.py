@@ -69,6 +69,10 @@ MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
 MIDDLEWARE_CLASSES += (
     'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
 )
+OPTIONAL_APPS += (
+    # Added here to allow translations
+    'freetextresponse',
+)
 ORA2_RESPONSES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
     'BUCKET': 'edx-grades',
