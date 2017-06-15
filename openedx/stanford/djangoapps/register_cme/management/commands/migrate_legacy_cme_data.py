@@ -45,6 +45,12 @@ class Command(BaseCommand):
                 info_old = CmeUserProfile.objects.get(pk=user.profile.id)
             except (UserProfile.DoesNotExist, CmeUserProfile.DoesNotExist):
                 info_old = CmeUserProfile()
+                log.info(
+                    "CmeUserProfile not found for user_id: %(user_id)s",
+                    {
+                        'user_id': user.id,
+                    }
+                )
             info_new = ExtraInfo()
             info_new.id = user.id
             info_new.user_id = user.id
