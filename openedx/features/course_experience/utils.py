@@ -105,8 +105,16 @@ def get_course_outline_block_tree(request, course_id):
 
         last_accessed_child_position = student_module_dict.get('position')
         if last_accessed_child_position and block.get('children'):
+<<<<<<< HEAD
             block['resume_block'] = True
+=======
+            block['last_accessed'] = True
+<<<<<<< HEAD
+>>>>>>> fix bad last accessed conditional
             if last_accessed_child_position <= len(block['children']):
+=======
+            if len(block['children']) >= last_accessed_child_position:
+>>>>>>> fix bad last accessed conditional
                 last_accessed_child_block = block['children'][last_accessed_child_position - 1]
                 last_accessed_child_block['resume_block'] = True
                 mark_last_accessed(user, course_key, last_accessed_child_block)
