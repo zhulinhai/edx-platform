@@ -67,15 +67,13 @@ INSTALLED_APPS += (
     'instructor_email_widget',
     'settings_context_processor',
     'sneakpeek_deeplink',
+    # Added here to allow translations
+    'freetextresponse',
 )
 MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
 MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
 MIDDLEWARE_CLASSES += (
     'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
-)
-OPTIONAL_APPS += (
-    # Added here to allow translations
-    'freetextresponse',
 )
 ORA2_RESPONSES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
