@@ -76,8 +76,15 @@ class ExtraInfoForm(forms.ModelForm):
             'specialty': {
                 'required': u'Please select your Specialty.',
             },
+            'stanford_department': {
+                'required': u'Please select your Stanford Department.',
+            },
             'state': {
                 'required': u'Please select your State.',
+            },
+            'sunet_id': {
+                'required': u'Please enter your SunetID.',
+                'invalid': u'Your SunetID must be 3 to 8 characters in length.',
             },
         }
         fields = (
@@ -139,22 +146,24 @@ class ExtraInfoForm(forms.ModelForm):
         affiliation = self.cleaned_data['affiliation']
         if affiliation != 'Stanford University':
             return affiliation
-        fields = [
-            {
-                'sunet_id': self.fields['sunet_id'].error_messages['invalid'],
-            },
-            {
-                'stanford_department': self.fields['stanford_department'].error_messages['invalid'],
-            },
-        ]
-        for field in fields:
-            for key, value in field.iteritems():
-                if len(data.get(key)) < 2:
-                    self.add_error(key, value)
-                    raise forms.ValidationError(
-                        value,
-                        code='invalid',
-                    )
+        errors = []
+        sunet_id = self.data['sunet_id']
+        stanford_department = self.data['stanford_department']
+        if not(sunet_id):
+            errors.append({'sunet_id', 'required'})
+        # SunetIDs can only be 3-8 characters
+        elif not(3 <= len(sunet_id) <= 8):
+            errors.append({'sunet_id', 'invalid'})
+        if not(stanford_department):
+            errors.append({'stanford_department', 'required'})
+        for error in errors:
+            for key, error_type in error.iteritems():
+                message = self.fields[key].error_messages[error_type]
+                self.add_error(key, message)
+                raise forms.ValidationError(
+                    message,
+                    code=error_type,
+                )
         return affiliation
 
     def clean_birth_date(self):
