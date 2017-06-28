@@ -157,12 +157,11 @@ class ExtraInfoForm(forms.ModelForm):
         if not(stanford_department):
             errors.append({'stanford_department': 'required'})
         for error in errors:
-            for key, error_type in error.iteritems():
-                message = self.fields[key].error_messages[error_type]
-                self.add_error(key, message)
+            for key in error:
+                message = self.fields[key].error_messages[error[key]]
                 raise forms.ValidationError(
                     message,
-                    code=error_type,
+                    code=error[key],
                 )
         return affiliation
 
