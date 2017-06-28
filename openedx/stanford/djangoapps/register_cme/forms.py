@@ -260,7 +260,6 @@ class ExtraInfoForm(forms.ModelForm):
         postal_code = self.cleaned_data['postal_code']
         if len(postal_code) < 2:
             raise forms.ValidationError(
-                'Enter your postal code',
                 self.fields['postal_code'].error_messages['required'],
                 code='required',
             )
