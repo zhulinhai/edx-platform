@@ -150,20 +150,16 @@ class ExtraInfoForm(forms.ModelForm):
         sunet_id = self.data['sunet_id']
         stanford_department = self.data['stanford_department']
         if not(sunet_id):
-            errors.append({'sunet_id', 'required'})
+            errors.append({'sunet_id': 'required'})
         # SunetIDs can only be 3-8 characters
         elif not(3 <= len(sunet_id) <= 8):
-            errors.append({'sunet_id', 'invalid'})
+            errors.append({'sunet_id': 'invalid'})
         if not(stanford_department):
-            errors.append({'stanford_department', 'required'})
+            errors.append({'stanford_department': 'required'})
         for error in errors:
-            for key, error_type in error.iteritems():
-                message = self.fields[key].error_messages[error_type]
+            for key in error:
+                message = self.fields[key].error_messages[error[key]]
                 self.add_error(key, message)
-                raise forms.ValidationError(
-                    message,
-                    code=error_type,
-                )
         return affiliation
 
     def clean_birth_date(self):
@@ -260,7 +256,6 @@ class ExtraInfoForm(forms.ModelForm):
         postal_code = self.cleaned_data['postal_code']
         if len(postal_code) < 2:
             raise forms.ValidationError(
-                'Enter your postal code',
                 self.fields['postal_code'].error_messages['required'],
                 code='required',
             )
