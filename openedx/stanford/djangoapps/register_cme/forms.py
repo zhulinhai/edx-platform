@@ -159,10 +159,7 @@ class ExtraInfoForm(forms.ModelForm):
         for error in errors:
             for key in error:
                 message = self.fields[key].error_messages[error[key]]
-                raise forms.ValidationError(
-                    message,
-                    code=error[key],
-                )
+                self.add_error(key, message)
         return affiliation
 
     def clean_birth_date(self):
