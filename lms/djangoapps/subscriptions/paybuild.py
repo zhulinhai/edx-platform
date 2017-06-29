@@ -60,7 +60,7 @@ def build_cb_payment(typesus, studentid, studentemail, debug_mode='0'):
 	arr_data_to_send = collections.OrderedDict()
 	arr_data_to_send.update({ 'business' : merchan_id })
 	arr_data_to_send.update({ 'cmd' : '_ext-enter' })
-	arr_data_to_send.update({ 'redirect_cmd' : '_xclick' })
+	arr_data_to_send.update({ 'redirect_cmd' : '_xclick-subscriptions' })
 	arr_data_to_send.update({ 'display' : '0' })
 	arr_data_to_send.update({ 'no_shipping' : '1' })
 	arr_data_to_send.update({ 'item_name' : item_name })
@@ -80,6 +80,10 @@ def build_cb_payment(typesus, studentid, studentemail, debug_mode='0'):
 	arr_data_to_send.update({ 'rm' : 2 })
 	arr_data_to_send.update({ 'cbt' : 'Back To Build Academy' })
 	arr_data_to_send.update({ 'return' : return_url })
+	arr_data_to_send.update({'a3': amount})
+	arr_data_to_send.update({'t3': 'Y'})
+	arr_data_to_send.update({'p3': '1'})
+	arr_data_to_send.update({'src': '1'})
 
 	# create form
 	if debug_mode != '0':
