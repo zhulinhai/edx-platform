@@ -71,7 +71,7 @@ class ExtraInfoForm(forms.ModelForm):
                 'required': u'Please enter your Postal Code.',
             },
             'professional_designation': {
-                'required': u'Please select your Professional Designation.',
+                'required': u'Please select your Medical Designation or Professional Title.',
             },
             'specialty': {
                 'required': u'Please select your Specialty.',
