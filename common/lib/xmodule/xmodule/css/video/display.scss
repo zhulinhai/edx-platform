@@ -719,6 +719,10 @@ html:not('.afontgarde') .icon-fallback-img {
       .closed-captions {
           width: 60%;
       }
+
+      &.closed .closed-captions {
+          width: 85%;
+      }
   }
 
   .subtitles {
