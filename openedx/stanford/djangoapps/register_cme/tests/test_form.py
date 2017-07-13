@@ -171,3 +171,10 @@ class ExtraInfoFormTest(TestCase):
         form = ExtraInfoForm(data)
         is_valid = form.is_valid()
         self.assertFalse(is_valid)
+
+    def test_postal_code_too_short(self):
+        data = self.data
+        data['postal_code'] = '1'
+        form = ExtraInfoForm(data)
+        is_valid = form.is_valid()
+        self.assertFalse(is_valid)
