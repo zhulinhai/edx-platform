@@ -417,7 +417,7 @@ function (VideoPlayer) {
                         // That's why we have to do this tick(300).
                         jasmine.Clock.tick(300);
                         expect(state.videoPlayer.currentTime).toBe(30);
-                        expect(state.videoPlayer.updatePlayTime).toHaveBeenCalledWith(30, true);
+                        expect(state.videoPlayer.updatePlayTime).toHaveBeenCalledWith(30, 120);
                     });
                 });
             });
@@ -526,7 +526,7 @@ function (VideoPlayer) {
 
                 it('trigger updatePlayTime event', function () {
                     expect(state.videoPlayer.updatePlayTime)
-                        .toHaveBeenCalledWith(60);
+                        .toHaveBeenCalledWith(60, undefined);
                 });
             });
         });
@@ -602,7 +602,7 @@ function (VideoPlayer) {
 
                 runs(function () {
                     state.videoPlayer.goToStartTime = false;
-                    state.videoPlayer.updatePlayTime(60);
+                    state.videoPlayer.updatePlayTime(60, duration);
 
                     expect($('.vidtime')).toHaveHtml('1:00 / 1:00');
                 });
@@ -633,7 +633,7 @@ function (VideoPlayer) {
 
                 runs(function () {
                     state.videoPlayer.goToStartTime = false;
-                    state.videoPlayer.updatePlayTime(60);
+                    state.videoPlayer.updatePlayTime(60, duration);
 
                     expect(state.videoProgressSlider.updatePlayTime)
                         .toHaveBeenCalledWith({
