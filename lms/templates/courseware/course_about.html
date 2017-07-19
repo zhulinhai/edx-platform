@@ -241,7 +241,7 @@ from openedx.core.lib.courses import course_image_url
       % if sneakpeek_allowed and not regularly_registered:
         <%include file="sneak_peek_tos_privacy.html" />
       % endif
-    </section>
+    </div>
 
     <div class="course-sidebar">
       <div class="course-summary">
@@ -355,7 +355,7 @@ from openedx.core.lib.courses import course_image_url
   </div>
 
   </div>
-</div>
+</section>
 
 ## Need to put this hidden form on the page so that the registration button works.
 ## Since it's no harm to display a hidden form, we display it with the most permissive conditional
