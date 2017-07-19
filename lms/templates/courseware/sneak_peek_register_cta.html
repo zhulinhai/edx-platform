@@ -4,6 +4,8 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
+from openedx.core.djangolib.markup import HTML, Text
+
 from student.models import UserProfile
 %>
 % if course and user.is_authenticated() and not UserProfile.has_registered(user):
