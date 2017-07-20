@@ -62,7 +62,7 @@
 
     %if settings.FEATURES.get('ENABLE_INSTRUCTOR_BACKGROUND_TASKS'):
         <h5 class="hd hd-5">${_("Rescore")}</h5>
-        <label for="rescore-actions-single">${_("For the specified problem, rescore the learner's responses. The 'Rescore Only If Score Improves' option updates the learner's score only if it improves in the learner's favor.")}</label>
+        <label for="rescore-actions-single">${_("For the specified problem, rescore the learner's responses.")}</label>
         <br>
         <span name="rescore-actions-single">
             <input type="button" name="rescore-problem-single" value="${_('Rescore Learner\'s Submission')}" data-endpoint="${ section_data['rescore_problem_url'] }">
