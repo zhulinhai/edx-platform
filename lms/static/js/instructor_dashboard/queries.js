@@ -10,10 +10,10 @@ such that the value can be defined later than this assignment (file load order).
 
 
 (function() {
-  var EmailSelectors, EmailWidget, Queries, std_ajax_err;
+  var EmailSelectors, EmailWidget, Queries, statusAjaxError;
 
-  std_ajax_err = function() {
-    return window.InstructorDashboard.util.std_ajax_err.apply(this, arguments);
+  statusAjaxError = function() {
+    return window.InstructorDashboard.util.statusAjaxError.apply(this, arguments);
   };
 
   EmailSelectors = (function() {
@@ -76,7 +76,7 @@ such that the value can be defined later than this assignment (file load order).
         success: function(data) {
           return typeof cb === "function" ? cb(null, data['data']) : void 0;
         },
-        error: std_ajax_err(function() {
+        error: statusAjaxError(function() {
           return typeof cb === "function" ? cb(gettext('Error fetching problem or section data')) : void 0;
         })
       });
@@ -238,7 +238,7 @@ such that the value can be defined later than this assignment (file load order).
         success: function(data) {
           return typeof cb === "function" ? cb(null, data) : void 0;
         },
-        error: std_ajax_err(function() {
+        error: statusAjaxError(function() {
           return typeof cb === "function" ? cb(gettext('Error getting saved temp queries')) : void 0;
         })
       });
@@ -294,7 +294,7 @@ such that the value can be defined later than this assignment (file load order).
         success: function(data) {
           return typeof cb === "function" ? cb(null, data) : void 0;
         },
-        error: std_ajax_err(function() {
+        error: statusAjaxError(function() {
           return typeof cb === "function" ? cb(gettext('Error getting saved queries')) : void 0;
         })
       });
@@ -495,7 +495,7 @@ such that the value can be defined later than this assignment (file load order).
           url: $('.emailWidget.savedQueriesTable').data('group-name-endpoint'),
           data: send_data,
           success: $('#send_email select option[value="' + groupId + '"]').text(newGroupName),
-          error: std_ajax_err(function() {
+          error: statusAjaxError(function() {
             return typeof cb === "function" ? cb(gettext('Error saving group name')) : void 0;
           })
         });
@@ -635,7 +635,7 @@ such that the value can be defined later than this assignment (file load order).
         success: function(data) {
           return typeof cb === "function" ? cb(null, data) : void 0;
         },
-        error: std_ajax_err(function() {
+        error: statusAjaxError(function() {
           return typeof cb === "function" ? cb(gettext('Error getting students')) : void 0;
         })
       });
@@ -823,7 +823,7 @@ such that the value can be defined later than this assignment (file load order).
         success: function(data) {
           return typeof cb === "function" ? cb(null, data) : void 0;
         },
-        error: std_ajax_err(function() {
+        error: statusAjaxError(function() {
           return typeof cb === "function" ? cb(gettext('Error saving query')) : void 0;
         })
       });
@@ -859,7 +859,7 @@ such that the value can be defined later than this assignment (file load order).
         success: function(data) {
           return typeof cb === "function" ? cb(null, data) : void 0;
         },
-        error: std_ajax_err(function() {
+        error: statusAjaxError(function() {
           return typeof cb === "function" ? cb(gettext('Error getting estimated')) : void 0;
         })
       });
