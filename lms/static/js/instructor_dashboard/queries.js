@@ -71,6 +71,7 @@ such that the value can be defined later than this assignment (file load order).
 
     EmailSelectors.prototype.get_list = function(cb) {
       return $.ajax({
+        type: 'POST',
         dataType: 'json',
         url: this.listEndpoint,
         success: function(data) {
@@ -233,6 +234,7 @@ such that the value can be defined later than this assignment (file load order).
 
     EmailWidget.prototype.get_saved_temp_queries = function(cb) {
       return $.ajax({
+        type: 'POST',
         dataType: 'json',
         url: $('.email-lists-management').data('temp-queries-endpoint'),
         success: function(data) {
@@ -289,6 +291,7 @@ such that the value can be defined later than this assignment (file load order).
 
     EmailWidget.prototype.get_saved_queries = function(cb) {
       return $.ajax({
+        type: 'POST',
         dataType: 'json',
         url: $('.emailWidget.savedQueriesTable').data('endpoint'),
         success: function(data) {
@@ -438,12 +441,12 @@ such that the value can be defined later than this assignment (file load order).
         _this = this;
       $saveCancelEditButton = $(_.template('<div class="emailWidget saveEditName"><i class="icon fa fa-floppy-o"></i>\
           <%= labelSave %></div> <div class="emailWidget cancelEditName"><i class="icon fa fa-times-circle">\
-          </i> <%= labelCancel %></div>', {
+          </i> <%= labelCancel %></div>')({
         labelSave: 'Save',
         labelCancel: 'Cancel'
       }));
       $renameBtn = $(_.template('<div class="emailWidget editName"><i class="icon fa fa-pencil">\
-      </i> <%= label %></div>', {
+      </i> <%= label %></div>')({
         label: 'Rename'
       }));
       targ = event.target;
@@ -517,7 +520,7 @@ such that the value can be defined later than this assignment (file load order).
       row = table[0].insertRow(rows);
       row.setAttribute('groupQuery', id);
       $renameBtn = $(_.template('<div class="emailWidget editName"><i class="icon fa fa-pencil">\
-      </i> <%= label %></div>', {
+      </i> <%= label %></div>')({
         label: 'Rename'
       }));
       for (num = _i = 0; _i <= 1; num = ++_i) {
@@ -535,7 +538,7 @@ such that the value can be defined later than this assignment (file load order).
         return _this.rename_button_click(event);
       });
       $loadBtn = $(_.template('<div class="loadQuery"><i class="icon fa fa-upload">\
-      </i> <%= label %></div>', {
+      </i> <%= label %></div>')({
         label: 'Load'
       }));
       $loadBtn.click(function(event) {
@@ -584,7 +587,7 @@ such that the value can be defined later than this assignment (file load order).
       $td.append($loadBtn);
       row.appendChild($td[0]);
       $deleteBtn = $(_.template('<div class="deleteSaved">\
-      <i class="icon fa fa-times-circle"></i> <%= label %></div>', {
+      <i class="icon fa fa-times-circle"></i> <%= label %></div>')({
         label: 'Delete'
       }));
       $deleteBtn.click(function(event) {
@@ -629,6 +632,7 @@ such that the value can be defined later than this assignment (file load order).
         entityName: this.entityName
       };
       return $.ajax({
+        type: 'POST',
         dataType: 'json',
         url: this.useQueryEndpoint,
         data: send_data,
@@ -653,7 +657,7 @@ such that the value can be defined later than this assignment (file load order).
         var $broken_icon;
         if (error) {
           $broken_icon = $(_.template('<div class="done">\
-          <i class="icon fa fa-exclamation-triangle"></i> <%= label %></div>', {
+          <i class="icon fa fa-exclamation-triangle"></i> <%= label %></div>')({
             label: gettext("Sorry, we're having a problem with this query.            Please delete this row and try again.")
           }));
           tr.children()[4].innerHTML = $broken_icon[0].outerHTML;
@@ -755,15 +759,15 @@ such that the value can be defined later than this assignment (file load order).
       }
       progressCell = row.insertCell(4);
       $progress_icon = $(_.template('<div class="Working">\
-      <i class="fa fa-spinner fa-pulse"></i><%= label %></div>', {
+      <i class="fa fa-spinner fa-pulse"></i><%= label %></div>')({
         label: 'Working'
       }));
       $done_icon = $(_.template('<div class="done"><i class="icon fa fa-check">\
-      </i> <%= label %></div>', {
+      </i> <%= label %></div>')({
         label: 'Done'
       }));
       $broken_icon = $(_.template('<div class="done">\
-      <i class="icon fa fa-exclamation-triangle"></i> <%= label %></div>', {
+      <i class="icon fa fa-exclamation-triangle"></i> <%= label %></div>')({
         label: gettext("Sorry, we're having a problem with this query.        Please delete this row and try again.")
       }));
       if (arr.length === 4) {
@@ -779,7 +783,7 @@ such that the value can be defined later than this assignment (file load order).
         }
       }
       $removeBtn = $(_.template('<div class="remove"><i class="icon fa fa-times-circle">\
-      </i> <%= label %></div>', {
+      </i> <%= label %></div>')({
         label: 'Remove'
       }));
       $removeBtn.click(function(event) {
@@ -853,6 +857,7 @@ such that the value can be defined later than this assignment (file load order).
         existing: curQueries.join(',')
       };
       return $.ajax({
+        type: 'POST',
         dataType: 'json',
         url: this.$totalEndpoint,
         data: send_data,
@@ -882,7 +887,7 @@ such that the value can be defined later than this assignment (file load order).
           return _this.show_errors(error);
         }
         selected_text = gettext('approx <%= numStudents %> students selected');
-        full_selected_text = _.template(selected_text, {
+        full_selected_text = _.template(selected_text)({
           numStudents: studentsList.length
         });
         return $('.emailWidget.estimated').html(full_selected_text);
