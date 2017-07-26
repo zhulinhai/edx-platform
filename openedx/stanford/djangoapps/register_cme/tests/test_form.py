@@ -151,3 +151,30 @@ class ExtraInfoFormTest(TestCase):
         form = ExtraInfoForm(data)
         is_valid = form.is_valid()
         self.assertFalse(is_valid)
+
+    @data(None, '', 'ab', 'longsunet')
+    def test_affiliation_sunet_id(self, sunet_id):
+        data = self.data
+        data['affiliation'] = 'Stanford University'
+        data['stanford_department'] = 'Medicine'
+        data['sunet_id'] = sunet_id
+        form = ExtraInfoForm(data)
+        is_valid = form.is_valid()
+        self.assertFalse(is_valid)
+
+    @data(None, '', 'invalid_department')
+    def test_affiliation_stanford_department(self, stanford_department):
+        data = self.data
+        data['affiliation'] = 'Stanford University'
+        data['stanford_department'] = stanford_department
+        data['sunet_id'] = 'sunet_id'
+        form = ExtraInfoForm(data)
+        is_valid = form.is_valid()
+        self.assertFalse(is_valid)
+
+    def test_postal_code_too_short(self):
+        data = self.data
+        data['postal_code'] = '1'
+        form = ExtraInfoForm(data)
+        is_valid = form.is_valid()
+        self.assertFalse(is_valid)
