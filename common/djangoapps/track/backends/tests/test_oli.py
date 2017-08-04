@@ -48,12 +48,10 @@ class TestOLIBackend(TestCase):
         self.user = UserFactory.create()
         self.user.save()
 
-    @patch('track.backends.oli.OLIAnalyticsBackend.get_problem_text')
-    def test_oli_backend_correct_event_type(self, mock_get_problem_text):
+    def test_oli_backend_correct_event_type(self):
         """
-        Assert that problem_check events are sent
+        Assert that events are sent without any errors.
         """
-        mock_get_problem_text.return_value = None
 
         # pylint: disable=line-too-long
         event = {
