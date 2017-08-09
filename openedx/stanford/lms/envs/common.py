@@ -65,7 +65,6 @@ INLINE_ANALYTICS_SUPPORTED_TYPES = {
 INSTALLED_APPS += (
     'branding_stanford',
     'cme_registration',
-    'instructor_email_widget',
     'settings_context_processor',
     'sneakpeek_deeplink',
     # Added here to allow translations
