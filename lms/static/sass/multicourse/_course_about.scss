@@ -406,6 +406,9 @@
       }
       
       &.about-sidebar-html {
+        position: relative;
+        clear: both;
+        margin-top: 50px;
         box-shadow: none;
         border: none;
       }
