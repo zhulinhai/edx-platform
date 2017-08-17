@@ -171,7 +171,7 @@ def render_subs(request, template):
                 # print post_vars
                 user = create_account_with_params(request, post_vars)
                 if user.is_authenticated():
-                    redirect_to = "/subscription?m=%s" % (stype)
+                    redirect_to = "/membership?m=%s" % (stype)
                     return redirect(redirect_to)
 
     # step2 or step3

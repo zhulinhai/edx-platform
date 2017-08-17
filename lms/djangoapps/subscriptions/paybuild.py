@@ -50,7 +50,7 @@ def build_cb_payment(typesus, studentid, studentemail, debug_mode='0'):
 	locale_code = "en_US"
 	btn_txt = 'Pay with PayPal'
 	notify_url = "https://courses.buildacademy.com/paysubscallback"  # post process
-	return_url = "https://courses.buildacademy.com/subscription?m=%s&pay=done" % (typesus) # back url user
+	return_url = "https://courses.buildacademy.com/membership?m=%s&pay=done" % (typesus) # back url user
 	custom = '%s|%s' % (studentid, typesus)
 
 

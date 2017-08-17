@@ -38,6 +38,48 @@ o = urlparse(url)
 % endif
 
 <%block name="pagetitle">${_("Courses")}</%block>
+<section class="home">
+  <header>
+    <div class="outer-wrapper">
+      <div class="title">
+        <hgroup>
+          % if homepage_overlay_html:
+            ${homepage_overlay_html}
+          % else:
+              <h1>Professional Education for the Building Industry</h1>
+<center><a href='#subscr' class='homebut1'>Subscribe</a></center>
+          % endif
+        </hgroup>
+      </div>
+
+      % if show_homepage_promo_video:
+        <a href="#video-modal" class="media" rel="leanModal">
+          <div class="hero">
+            <div class="play-intro"></div>
+          </div>
+        </a>
+      % endif
+    </div>
+<div id='flylogo'><img src='/static/images/BUILD-ball.jpg' class='flyimage'></div>
+
+  </header>
+  <section class="courses-container">
+<div id='facontainer'>
+
+
+
+<div id='fac1' class='faculty1 colo1'><a href='/faculties/architecture' onmouseover='$("#fai1").css("transform","rotateY( 180deg )")' onmouseout='$("#fai1").css("transform","rotateY( 0 )")'><img src='/static/images/architecture.png' class='faimg' border=0 id='fai1'><br>Architecture</a></div>
+<div id='fac2' class='faculty1 colo2'><a href='/faculties/engineering'  onmouseover='$("#fai3").css("transform","rotateY( 180deg )")' onmouseout='$("#fai3").css("transform","rotateY( 0 )")'><img src='/static/images/engineering.png' class='faimg' border=0 id='fai3'><br>Engineering</a></div>
+<div id='fac3' class='faculty1 colo3'><a href='/faculties/realestate'  onmouseover='$("#fai4").css("transform","rotateY( 180deg )")' onmouseout='$("#fai4").css("transform","rotateY( 0 )")'><img src='/static/images/realstate.png' class='faimg' border=0 id=fai4><br>Real Estate</a></div>
+<div id='fac4' class='faculty2 colo4'><a href='/faculties/products'  onmouseover='$("#fai2").css("transform","rotateY( 180deg )")' onmouseout='$("#fai2").css("transform","rotateY( 0 )")' ><img src='/static/images/sustainability.png' class='faimg' border=0 id='fai2'><br>Products</a></div>
+</div>
+
+</center>
+
+</center>
+
+
+  </section>
 
 <section class="find-courses">
   <section class="courses-container">
