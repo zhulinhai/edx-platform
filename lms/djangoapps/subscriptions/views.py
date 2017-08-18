@@ -61,10 +61,10 @@ def render_subs(request, template):
 
     user = request.user
     if user.is_authenticated():
-        if stype == '1' or stype == '4':
+        if stype == '1':
             step_pos = 3
         else:
-            if stype == '2' or stype == '3' or stype == '5' or stype == '6':
+            if stype == '2' or stype == '3' or stype == '6':
                 step_pos = 2
             else:
                 return redirect('/dashboard')
