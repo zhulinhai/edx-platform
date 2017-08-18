@@ -25,7 +25,7 @@ if settings.DEBUG or settings.FEATURES.get('ENABLE_DJANGO_ADMIN_SITE'):
 urlpatterns = (
     '',
 
-    url(r'^$',RedirectView.as_view(pattern_name='courses', permanent=False),name='root'),   # Main marketing page, or redirect to courseware
+    url(r'^$',RedirectView.as_view(pattern_name='courses', permanent=False,query_string = True),name='root'),   # Main marketing page, or redirect to courseware
     url(r'^dashboard$', 'student.views.dashboard', name="dashboard"),
     url(r'^login_ajax$', 'student.views.login_user', name="login"),
     url(r'^login_ajax/(?P<error>[^/]*)$', 'student.views.login_user'),
