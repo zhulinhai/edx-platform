@@ -346,15 +346,11 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 <li class="field text" id="field-course-about-sidebar-html">
                     <label for="course-about-sidebar-html">${_("Course About Sidebar HTML")}</label>
                     <textarea class="tinymce text-editor" id="course-about-sidebar-html"></textarea>
-                    <%def name='about_sidebar_html()'><%
-                        anchor = u"<a class='link-courseURL' rel='external' href='{href_url}'>{href_text}</a>"
-                        anchor = anchor.format(
-                            href_url=lms_link_for_about_page,
-                            href_text=_("your course summary page"),
-                        )
-                        html_sidebar = _("Custom sidebar content for {link} (formatted in HTML)").format(link=anchor)
-                    %>${html_sidebar}</%def>
-                    <span class="tip tip-stacked">${about_sidebar_html()}</span>
+                    <span class="tip tip-stacked">${
+                    Text(_("Custom sidebar content for {a_link_start}your course summary page{a_link_end} (formatted in HTML)")).format(
+                      a_link_start=HTML("<a class='link-courseURL' rel='external' href='{lms_link_for_about_page}'>").format(lms_link_for_about_page=lms_link_for_about_page),
+                      a_link_end=HTML("</a>")
+                    )}</span>
                 </li>
                 % endif
 
