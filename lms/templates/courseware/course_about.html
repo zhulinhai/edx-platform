@@ -244,12 +244,14 @@ $(document).ready(function(){
                 ${_("Course is full")}
               </span>
             % elif invitation_only and not can_enroll:
-              <span class="register" style='margin-bottom:20px;'>Enrollment in this course is for paid subscriptions</span>
 
               %if user.is_authenticated():
-              <div id="subs_action" class="button action action-primary" style="margin-top:10px; color:#fff;">
-               <a href="http://courses.buildacademy.com:4000/enroll/enroll.php?cid=${course.id | u}&uid=${user.id}">Click here to Enroll</a>
-              </div>
+              <span class="register" style='margin-bottom:20px;'>Enrollment in this course is for paid subscriptions</span>
+               <a href="http://buildacademy.com/membership" class="button">Upgrade membership</a>
+              %else:
+                       <a href="https://buildacademy.com/membership/" class="button">
+                ${_("Join").format(course_name=course.display_number_with_default) | h}
+                    </a>
              %endif
 
             ## Shib courses need the enrollment button to be displayed even when can_enroll is False,
@@ -273,12 +275,12 @@ $(document).ready(function(){
               </a>
               <div id="register_error"></div>
             %elif  user.is_authenticated():
-	            <a href="/#subscr" class="register button">
-                ${_("Take this course").format(course_name=course.display_number_with_default) | h}
+	            <a href="https://buildacademy.com/membership/" class="register button">
+                ${_("Enroll").format(course_name=course.display_number_with_default) | h}
               </a>
 	    %else:
-		     <a href="/#subscr" class="button">
-                ${_("Take this course").format(course_name=course.display_number_with_default) | h}
+		     <a href="https://buildacademy.com/membership/" class="button">
+                ${_("Join ").format(course_name=course.display_number_with_default) | h}
               </a>
 
               <div id="register_error"></div>

@@ -49,8 +49,11 @@ o = urlparse(url)
               <h1>BUILD WHAT YOU LOVE</h1>
               <h3>Professional Solutions and Education for the Building Industry</h3>
               <div id='flylogo'><img src='/static/images/Sticker_circle_02.png' class='flyimage'></div>
-
-<center><a href='https://buildacademy.com/membership/' class='homebut1'>Join</a></center>
+              %if user.is_authenticated():
+                  <center><a href='https://buildacademy.com/membership/' class='homebut1'>Membership</a></center>
+              % else:
+                <center><a href='https://buildacademy.com/membership/' class='homebut1'>Join</a></center>
+              %endif
           % endif
         </hgroup>
       </div>
@@ -107,7 +110,7 @@ o = urlparse(url)
     </div>
     % endif
 
-    <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}">
+    <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}" >
       <ul class="courses-listing">
         %for course in courses:
         <li class="courses-listing-item">
@@ -119,7 +122,7 @@ o = urlparse(url)
 
 
     % if course_discovery_enabled:
-    <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
+    <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu" style="float: right;">
       <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
       <section class="search-facets-lists">
       </section>

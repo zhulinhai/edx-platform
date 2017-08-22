@@ -65,18 +65,17 @@ import requests
                 </div>
 
 
-                <div class="subscription-term ng-binding">
-                % if stype == '1': 
+              <div class="subscription-term ng-binding text-center">
+                % if stype == '1':
             Basic Membership
         % elif stype == '2':
-            Plus Membership $99 / Year <br> <center>or<center/><br>$19 / Month
+            Plus Membership <h4>$99 / Year </h4> <center><h6>or</h6><center/><h4>$19 / Month</h4>
         % elif stype == '3':
-            Pro Membership $199 / Year <br> <center>or<center/><br>$39 / Month
+            Pro Membership <h4> $199 / Year </h4> <center><h6>or</h6><center/> <h4>$39 / Month</h4>
         % elif stype == '6':
-            Premium Membership $499 / Year <br> <center>or<center/><br> $99 / Month
-        % endif $499 / Year <br> $99 / Month
+            Premium Membership <h4>$499 / Year</h4>  <center><h6>or</h6><center/> <h4>$99 / Month</h4>
         % endif
-		</div>
+        </div>
                 <hr>
                 <div class="text-center">
                     <h4>Real training. Real results.</h4>
