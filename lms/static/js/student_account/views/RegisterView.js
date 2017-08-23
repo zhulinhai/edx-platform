@@ -30,6 +30,7 @@
                     this.platformName = data.platformName;
                     this.autoSubmit = data.thirdPartyAuth.autoSubmitRegForm;
                     this.themeName = data.themeName;
+                    this.privacyPolicyUrl = data.privacyPolicyUrl;
 
                     this.listenTo(this.model, 'sync', this.saveSuccess);
                 },
@@ -48,6 +49,7 @@
                             providers: this.providers,
                             hasSecondaryProviders: this.hasSecondaryProviders,
                             themeName: this.themeName,
+                            privacyPolicyUrl: this.privacyPolicyUrl,
                             platformName: this.platformName
                         }
                     }));

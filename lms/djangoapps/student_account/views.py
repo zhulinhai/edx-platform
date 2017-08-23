@@ -19,6 +19,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods
 from django_countries import countries
 from edxmako.shortcuts import render_to_response
+from edxmako.shortcuts import marketing_link
 import pytz
 
 from commerce.models import CommerceConfiguration
@@ -119,6 +120,7 @@ def login_and_registration_form(request, initial_mode="login"):
             'theme_name': settings.THEME_NAME,
             'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
             'support_link': configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK),
+            'privacy_policy_url': marketing_link('PRIVACY'),
 
             # Include form descriptions retrieved from the user API.
             # We could have the JS client make these requests directly,
