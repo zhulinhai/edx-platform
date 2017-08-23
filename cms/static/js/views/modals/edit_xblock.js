@@ -42,6 +42,11 @@ define(['jquery', 'underscore', 'gettext', 'js/views/modals/base_modal', 'common
                 this.editOptions = options;
                 this.render();
                 this.show();
+
+                // Display the xblock after the modal is shown as there are some xblocks
+                // that depend upon being visible when they initialize, e.g. the problem xmodule.
+                this.displayXBlock();
+
                 if (this.options.modalType === 'html') {
                     this.$('.editor-modes a[rel="modal"]').attr('title', gettext('This link will open in a modal window')).leanModal({
                         overlay: 0.50,
@@ -54,10 +59,6 @@ define(['jquery', 'underscore', 'gettext', 'js/views/modals/base_modal', 'common
 
                 // Hide the action bar until we know which buttons we want
                 this.getActionBar().hide();
-
-                // Display the xblock after the modal is shown as there are some xblocks
-                // that depend upon being visible when they initialize, e.g. the problem xmodule.
-                this.displayXBlock();
             },
 
             getContentHtml: function() {

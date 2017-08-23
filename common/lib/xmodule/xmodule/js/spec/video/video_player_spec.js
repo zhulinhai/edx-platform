@@ -410,7 +410,7 @@ function(VideoPlayer) {
                         jQuery.Event('slide'), {value: 30}
                     );
                     expect(state.videoPlayer.currentTime).toBe(30);
-                    expect(state.videoPlayer.updatePlayTime).toHaveBeenCalledWith(30, true);
+                    expect(state.videoPlayer.updatePlayTime).toHaveBeenCalledWith(30, 120);
                 });
             });
 
@@ -512,7 +512,7 @@ function(VideoPlayer) {
 
                     it('trigger updatePlayTime event', function() {
                         expect(state.videoPlayer.updatePlayTime)
-                        .toHaveBeenCalledWith(60);
+                        .toHaveBeenCalledWith(60, undefined);
                     });
                 });
         });
@@ -583,7 +583,7 @@ function(VideoPlayer) {
                     return false;
                 }).then(function() {
                     state.videoPlayer.goToStartTime = false;
-                    state.videoPlayer.updatePlayTime(60);
+                    state.videoPlayer.updatePlayTime(60, duration);
 
                     expect($('.vidtime')).toHaveHtml('1:00 / 1:00');
                 }).always(done);
@@ -610,7 +610,7 @@ function(VideoPlayer) {
                     return duration > 0;
                 }, 1000).then(function() {
                     state.videoPlayer.goToStartTime = false;
-                    state.videoPlayer.updatePlayTime(60);
+                    state.videoPlayer.updatePlayTime(60, duration);
 
                     expect(state.videoProgressSlider.updatePlayTime)
                         .toHaveBeenCalledWith({

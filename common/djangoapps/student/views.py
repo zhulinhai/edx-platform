@@ -2335,8 +2335,7 @@ def password_reset(request):
     if form.is_valid():
         form.save(use_https=request.is_secure(),
                   from_email=configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL),
-                  request=request,
-                  domain_override=request.get_host())
+                  request=request)
         # When password change is complete, a "edx.user.settings.changed" event will be emitted.
         # But because changing the password is multi-step, we also emit an event here so that we can
         # track where the request was initiated.
@@ -2459,7 +2458,7 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
             # policy. Use the existing Django template to communicate that
             # back to the user.
             context = {
-                'validlink': False,
+                'validlink': True,
                 'form': None,
                 'title': _('Password reset unsuccessful'),
                 'err_msg': password_err_msg,
@@ -2490,8 +2489,8 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
         if updated_user.password != old_password_hash:
             entry = PasswordHistory()
             entry.create(updated_user)
-            updated_user.backend = 'django.contrib.auth.backends.ModelBackend'
-            login(request, updated_user)
+        updated_user.backend = 'django.contrib.auth.backends.ModelBackend'
+        login(request, updated_user)
     else:
         response = password_reset_confirm(
             request, uidb64=uidb64, token=token, extra_context=platform_name

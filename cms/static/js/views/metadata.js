@@ -42,7 +42,7 @@ function(BaseView, _, MetadataModel, AbstractEditor, FileUpload, UploadDialog,
                         type = conversions[type];
                     }
 
-                    if (options.warning) {
+                    if (options && options.warning) {
                         type = "NumberWithWarning";
                     }
 

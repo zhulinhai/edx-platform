@@ -184,7 +184,7 @@ class TestPasswordHistory(LoginEnrollmentTestCase):
             'new_password2': 'foo'
         }, follow=True)
 
-        self.assertPasswordResetError(resp, err_msg)
+        self.assertPasswordResetError(resp, err_msg, valid_link=True)
 
         # now retry with a different password
         resp = self.client.post('/password_reset_confirm/{0}-{1}/'.format(uidb36, token), {
@@ -214,7 +214,7 @@ class TestPasswordHistory(LoginEnrollmentTestCase):
             'new_password2': 'foo',
         }, follow=True)
 
-        self.assertPasswordResetError(resp, err_msg)
+        self.assertPasswordResetError(resp, err_msg, valid_link=True)
 
         # now use different one
         user = User.objects.get(email=staff_email)
@@ -238,7 +238,7 @@ class TestPasswordHistory(LoginEnrollmentTestCase):
             'new_password2': 'foo',
         }, follow=True)
 
-        self.assertPasswordResetError(resp, err_msg)
+        self.assertPasswordResetError(resp, err_msg, valid_link=True)
 
         # now use different one
         user = User.objects.get(email=staff_email)
