@@ -5,9 +5,11 @@ define(['codemirror',
         'js/views/course_info_helper',
         'js/views/validation',
         'js/models/course_update',
+        'common/js/components/utils/view_utils',
         'common/js/components/views/feedback_prompt',
         'common/js/components/views/feedback_notification'],
     function(CodeMirror, ModalUtils, DateUtils, HtmlUtils, CourseInfoHelper, ValidatingView, CourseUpdateModel,
+             ViewUtils,
              PromptView, NotificationView) {
         'use strict';
         var CourseInfoUpdateView = ValidatingView.extend({
