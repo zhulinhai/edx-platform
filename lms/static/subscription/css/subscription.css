@@ -5421,7 +5421,6 @@ a.th {
     background: #fafafa;
 }
 .slate-cube-bg {
-    /*background: #58585B url(../img/css/slate-cube-v1.png) repeat top center !important;*/
 }
 .green-br-transparent {
     background: rgba(152, 199, 65, 0.65);
@@ -6189,7 +6188,6 @@ label select, label textarea {
     color: inherit;
 }
 .laptop-bg {
-    /*background: url(../img/home/large-background-v1.jpg) center center;*/
     color: #FFF;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -6200,7 +6198,6 @@ label select, label textarea {
     color: inherit;
 }
 .mac-laptop-bg {
-    /*background: url(../img/business/mac-laptop-v1.jpg) center center;*/
     color: #FFF;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -6211,14 +6208,12 @@ label select, label textarea {
     color: inherit;
 }
 .homepage-a .laptop-bg {
-    /*background: url(../img/home/tablet-background-v1.jpg) center 55%;*/
     -moz-background-size: cover;
     -o-background-size: cover;
     -webkit-background-size: cover;
     background-size: cover;
 }
 .hero-goverment {
-    /*background: url(../img/government/government-header-v1.jpg) 50% 84%;*/
     color: #FFF;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -6232,7 +6227,6 @@ label select, label textarea {
     border-width: 1px;
 }
 .hero-video-container .frame {
-    /*background: url(../img/video/vid-still-v1.jpg) no-repeat 0 0;*/
     padding-bottom: 56.25%;
     position: relative;
     text-align: center;
@@ -6394,7 +6388,6 @@ section.strip .button, section.strip select, section.identify .button, section.i
     height: 100%}
 .lt-ie10 section.business.band {
     padding-bottom: 300px;
-    /*background: #FFF url(../img/home/buildings-colored-v1.svg) repeat-x center bottom;*/
     margin-bottom: -1.875em;
 }
 .lt-ie10 .panel.large {
@@ -7399,7 +7392,6 @@ th {
 }
 .section-container div.content ul.tab-list li.playing {
     padding-left: 80px;
-    /*background: url(../images/play-symbol.svg) no-repeat left center;*/
 }
 .section-container div.content ul.tab-list li p {
     color: #58585B;
@@ -8596,7 +8588,6 @@ h4.img-header a:hover img {
     font-size: 1em;
 }
 .academic-landing .header-bg {
-    /*background: url(../img/academic/education-header-v1.jpg) center center;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -9031,7 +9022,6 @@ section.hero h5.authors-invite-to-teach {
     list-style: none;
 }
 .social-icons li {
-    /*background-image: url("../img/contactus/social-sprite-v1.png");*/
     background-size: 218px 23px;
     background-position: top left;
     background-repeat: none;
@@ -9555,7 +9545,6 @@ section.light-hero h4, section.light-hero h1 {
     top: -10px;
     right: -10px;
     z-index: 100;
-    /*background-image: url(../img/signup/popular-banner.png);*/
     background-repeat: no-repeat;
     background-position: 50% 50%;
     height: 67px;
@@ -10300,34 +10289,28 @@ section.paths .blocks {
     padding: 35px 0 45px 0;
 }
 section.paths .blocks .software-developer {
-    /*background: #5e9aa2 url(../img/home/software-developer-v1.jpg) center center no-repeat;*/
 }
 section.paths .blocks .spotlight {
-    /*background: #e2e2e2 url(../img/home/spotlight-v1.jpg) center center;*/
     -moz-background-size: cover;
     -o-background-size: cover;
     -webkit-background-size: cover;
     background-size: cover;
 }
 section.paths .blocks .author-spotlight {
-    /*background: #e2e2e2 url(../img/home/author-spotlight-v1.jpg) center center;*/
     -moz-background-size: cover;
     -o-background-size: cover;
     -webkit-background-size: cover;
     background-size: cover;
 }
 section.paths .blocks .it-administrator {
-    /*background: #e2e2e2 url(../img/home/it-administrator-v1.jpg) center center;*/
     -moz-background-size: cover;
     -o-background-size: cover;
     -webkit-background-size: cover;
     background-size: cover;
 }
 section.paths .blocks .learning-paths {
-    /*background: #B5B4B0 url(../img/home/learning-paths-v2.jpg) center center no-repeat;*/
 }
 section.paths .blocks .creative-professional {
-    /*background: #e2e2e2 url(../img/home/creative-professional-v1.jpg) center center;*/
     -moz-background-size: cover;
     -o-background-size: cover;
     -webkit-background-size: cover;
@@ -10663,7 +10646,6 @@ section.hero.empty-subscribe-header {
     line-height: 1.3;
 }
 .subscribe-tracker {
-    /*background: url("../images/steps-gray-line-v1.png") no-repeat center;*/
     height: 46px;
 }
 .subscribe-step2 hr {
@@ -10986,7 +10968,6 @@ section.hero.empty-subscribe-header {
     text-align: left;
 }
 .koins-container .hero-koins-for-kenya {
-    /*background: #999 url(../img/koins/hero-bg-v1.jpg) center center;*/
     -moz-background-size: cover;
     -o-background-size: cover;
     -webkit-background-size: cover;
@@ -11122,7 +11103,6 @@ section.hero.empty-subscribe-header {
     padding-top: 5px;
 }
 }.careers-video-hero {
-    /*background: #000 url("../img/careers/hero-bg.jpg") no-repeat center;*/
     background-size: cover;
 }
 .careers-video-hero .video-container {
@@ -11137,7 +11117,6 @@ section.hero.empty-subscribe-header {
     display: block;
     width: 128px;
     height: 128px;
-    /*background: url("../img/careers/play-btn.png") no-repeat center;*/
     margin: 136px auto;
     cursor: pointer;
 }
