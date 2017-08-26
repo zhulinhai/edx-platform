@@ -1,3 +1,7 @@
+"""
+Admin site customizations for register_cme and linking from
+auth_user to register_cme/extrainfo
+"""
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
@@ -31,6 +35,9 @@ class ExtraInfoAdmin(admin.ModelAdmin):
     )
 
     def get_email(self, obj):
+        """
+        Returns the email of the user object
+        """
         return obj.user.email
     get_email.short_description = 'Email address'
 
@@ -40,7 +47,8 @@ class ExtraInfoAdmin(admin.ModelAdmin):
 
 class NewUserAdmin(UserAdmin):
     """
-    Modifies admin interface for User model to display additional ExtraInfo link.
+    Modifies admin interface for User model to display additional
+    ExtraInfo link.
     """
 
     def __init__(self, *args, **kwargs):
@@ -60,6 +68,9 @@ class NewUserAdmin(UserAdmin):
     )
 
     def extrainfo_link(self, obj):
+        """
+        Returns a link to the ExtraInfo detail page for users with one
+        """
         return format_html(
             '<a href="/admin/register_cme/extrainfo/{extrainfo_id}">ExtraInfo</a>',
             extrainfo_id=obj.extrainfo.id,
