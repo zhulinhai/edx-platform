@@ -656,10 +656,18 @@ font-size:10px;
 }
 
 
+.find-courses .courses-container .courses:not(.no-course-discovery),
+.university-profile .courses-container .courses:not(.no-course-discovery) {
+    width: 70%;
+}
 
+@media screen and (max-width: 979px) {
+    .find-courses .courses-container .courses:not(.no-course-discovery),
+    .university-profile .courses-container .courses:not(.no-course-discovery) {
+        width: 100%;
+    }
 
-
-
-.find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(4n), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(4n){
-    margin-right: 2.35765%;
+    .find-courses .search-facets.phone-menu {
+        width: 100%;
+    }
 }

@@ -52,7 +52,7 @@ def build_cb_payment(typesus, studentid, studentemail, debug_mode='0'):
 	item_number = uuid.uuid4().hex  # uniqueid
 	currency_code = "USD"
 	locale_code = "en_US"
-	btn_txt = 'Pay with PayPal Year'
+	btn_txt = 'Pay with PayPal Yearly'
 	btn_txt_monthly = 'Pay with PayPal Monthly'
 	notify_url = "https://courses.buildacademy.com/paysubscallback"  # post process
 	return_url = "https://courses.buildacademy.com/membership?m=%s&pay=done" % (typesus) # back url user
