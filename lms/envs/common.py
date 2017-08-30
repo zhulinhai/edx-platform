@@ -405,7 +405,6 @@ FEATURES = {
     # Whether to display account activation notification on dashboard.
     'DISPLAY_ACCOUNT_ACTIVATION_MESSAGE_ON_SIDEBAR': False,
 
-<<<<<<< HEAD
     # Allow users to change their email address.
     'ALLOW_EMAIL_ADDRESS_CHANGE': True,
 
@@ -415,6 +414,7 @@ FEATURES = {
 
     # Whether the bulk enrollment view is enabled.
     'ENABLE_BULK_ENROLLMENT_VIEW': False,
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     # Whether course goals is enabled.
@@ -440,8 +440,20 @@ FEATURES = {
     'ENABLE_COOKIE_CONSENT': False,
 >>>>>>> add cookie consent popup banner feature
 >>>>>>> add cookie consent popup banner feature
+<<<<<<< HEAD
 >>>>>>> add cookie consent popup banner feature
+<<<<<<< HEAD
 >>>>>>> add cookie consent popup banner feature
+=======
+=======
+=======
+    
+    # Enable footer banner for cookie consent.
+    # See https://cookieconsent.insites.com/ for more.
+    'ENABLE_COOKIE_CONSENT': False,
+>>>>>>> merge fixes
+>>>>>>> merge fixes
+>>>>>>> merge fixes
 }
 
 # Settings for the course reviews tool template and identification key, set either to None to disable course reviews
