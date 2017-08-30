@@ -13,7 +13,6 @@ import textwrap
 import unittest
 
 import ddt
-import flaky
 from lxml import etree
 from mock import Mock, patch, DEFAULT
 import webob
@@ -82,14 +81,7 @@ class CapaFactory(object):
         )
 
     @classmethod
-    def create(cls,
-               attempts=None,
-               problem_state=None,
-               correct=False,
-               xml=None,
-               override_get_score=True,
-               **kwargs
-               ):
+    def create(cls, attempts=None, problem_state=None, correct=False, xml=None, override_get_score=True, **kwargs):
         """
         All parameters are optional, and are added to the created problem if specified.
 
@@ -229,7 +221,6 @@ class CapaModuleTest(unittest.TestCase):
         useful as unit-code coverage for this current implementation.  I don't see a layer where LoncapaProblem
         is tested directly
         """
-        from capa.correctmap import CorrectMap
         student_answers = {'1_2_1': 'abcd'}
         correct_map = CorrectMap(answer_id='1_2_1', correctness="correct", npoints=0.9)
         module = CapaFactory.create(correct=True, override_get_score=False)
@@ -731,6 +722,7 @@ class CapaModuleTest(unittest.TestCase):
 
         module.submit_problem(get_request_dict)
 
+        # pylint: disable=line-too-long
         # _http_post is called like this:
         #   _http_post(
         #       'http://example.com/xqueue/xqueue/submit/',
@@ -747,9 +739,10 @@ class CapaModuleTest(unittest.TestCase):
         #               <open file u'/home/ned/edx/edx-platform/common/test/data/uploads/textbook.pdf', mode 'r' at 0x49c5a50>,
         #       },
         #   )
+        # pylint: enable=line-too-long
 
         self.assertEqual(xqueue_interface._http_post.call_count, 1)
-        _, kwargs = xqueue_interface._http_post.call_args
+        _, kwargs = xqueue_interface._http_post.call_args  # pylint: disable=unpacking-non-sequence
         self.assertItemsEqual(fpaths, kwargs['files'].keys())
         for fpath, fileobj in kwargs['files'].iteritems():
             self.assertEqual(fpath, fileobj.name)
@@ -782,7 +775,7 @@ class CapaModuleTest(unittest.TestCase):
         module.handle('xmodule_handler', request, 'problem_check')
 
         self.assertEqual(xqueue_interface._http_post.call_count, 1)
-        _, kwargs = xqueue_interface._http_post.call_args
+        _, kwargs = xqueue_interface._http_post.call_args  # pylint: disable=unpacking-non-sequence
         self.assertItemsEqual(fnames, kwargs['files'].keys())
         for fpath, fileobj in kwargs['files'].iteritems():
             self.assertEqual(fpath, fileobj.name)
@@ -1556,7 +1549,6 @@ class CapaModuleTest(unittest.TestCase):
         RANDOMIZATION.ALWAYS,
         RANDOMIZATION.ONRESET
     )
-    @flaky.flaky  # TNL-6041
     def test_random_seed_with_reset(self, rerandomize):
         """
         Run the test for each possible rerandomize value
@@ -1614,13 +1606,13 @@ class CapaModuleTest(unittest.TestCase):
         # to another valid seed
         else:
 
-            # Since there's a small chance we might get the
-            # same seed again, give it 5 chances
+            # Since there's a small chance (expected) we might get the
+            # same seed again, give it 10 chances
             # to generate a different seed
-            success = _retry_and_check(5, lambda: _reset_and_get_seed(module) != seed)
+            success = _retry_and_check(10, lambda: _reset_and_get_seed(module) != seed)
 
             self.assertIsNotNone(module.seed)
-            msg = 'Could not get a new seed from reset after 5 tries'
+            msg = 'Could not get a new seed from reset after 10 tries'
             self.assertTrue(success, msg)
 
     @ddt.data(
@@ -2725,18 +2717,15 @@ class CapaDescriptorTest(unittest.TestCase):
 
     def test_invalid_xml_handling(self):
         """
-        Tests to confirm that invalid XML does not throw a wake-up-ops level error.
-        See TNL-5057 for quick fix, TNL-5245 for full resolution.
+        Tests to confirm that invalid XML throws errors during xblock creation,
+        so as not to allow bad data into modulestore.
         """
         sample_invalid_xml = textwrap.dedent("""
             <problem>
             </proble-oh no my finger broke and I can't close the problem tag properly...
         """)
-        descriptor = self._create_descriptor(sample_invalid_xml, name="Invalid XML")
-        try:
-            descriptor.has_support(None, "multi_device")
-        except etree.XMLSyntaxError:
-            self.fail("Exception raised during XML parsing, this method should be resilient to such errors")
+        with self.assertRaises(etree.XMLSyntaxError):
+            self._create_descriptor(sample_invalid_xml, name="Invalid XML")
 
 
 class ComplexEncoderTest(unittest.TestCase):

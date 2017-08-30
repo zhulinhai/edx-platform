@@ -7,7 +7,7 @@
     "backbone-validation": "~0.11.5",
     "coffee-script": "1.6.1",
     "edx-pattern-library": "git://github.com/Stanford-Online/ux-pattern-library.git#merge-upstream-2016-12-15",
-    "edx-ui-toolkit": "1.5.0",
+    "edx-ui-toolkit": "1.5.1",
     "jquery": "~2.2.0",
     "jquery-migrate": "^1.4.1",
     "jquery.scrollto": "~2.1.2",
@@ -37,7 +37,7 @@
     "pa11y": "4.0.1",
     "pa11y-reporter-json-oldnode": "1.0.0",
     "plato": "1.2.2",
-    "sinon": "1.17.3 || >1.17.4",
+    "sinon": "1.17.3 || >1.17.4 <2.0.0",
     "squirejs": "^0.1.0"
   }
 }

@@ -76,15 +76,16 @@ class IntegrationTestMixin(object):
         self.assertEqual(form_fields['email']['defaultValue'], self.USER_EMAIL)
         self.assertEqual(form_fields['name']['defaultValue'], self.USER_NAME)
         self.assertEqual(form_fields['username']['defaultValue'], self.USER_USERNAME)
+        registration_values = {
+            'email': 'email-edited@tpa-test.none',
+            'name': 'My Customized Name',
+            'username': 'new_username',
+            'honor_code': True,
+        }
         # Now complete the form:
         ajax_register_response = self.client.post(
             reverse('user_api_registration'),
-            {
-                'email': 'email-edited@tpa-test.none',
-                'name': 'My Customized Name',
-                'username': 'new_username',
-                'honor_code': True,
-            }
+            registration_values
         )
         self.assertEqual(ajax_register_response.status_code, 200)
         # Then the AJAX will finish the third party auth:
@@ -411,8 +412,10 @@ class IntegrationTest(testutil.TestCase, test.TestCase):
     def assert_redirect_to_dashboard_looks_correct(self, response):
         """Asserts a response would redirect to /dashboard."""
         self.assertEqual(302, response.status_code)
+        # NOTE: Ideally we should use assertRedirects(), however it errors out due to the hostname, testserver,
+        # not being properly set. This may be an issue with the call made by PSA, but we are not certain.
         # pylint: disable=protected-access
-        self.assertEqual(auth_settings._SOCIAL_AUTH_LOGIN_REDIRECT_URL, response.get('Location'))
+        self.assertTrue(response.get('Location').endswith(django_settings.SOCIAL_AUTH_LOGIN_REDIRECT_URL))
 
     def assert_redirect_to_login_looks_correct(self, response):
         """Asserts a response would redirect to /login."""

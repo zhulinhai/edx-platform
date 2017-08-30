@@ -56,7 +56,7 @@
             'squire': 'common/js/vendor/Squire',
             'jasmine-imagediff': 'xmodule_js/common_static/js/vendor/jasmine-imagediff',
             'domReady': 'xmodule_js/common_static/js/vendor/domReady',
-            mathjax: '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_SVG&delayStartupUntil=configured',  // eslint-disable-line max-len
+            mathjax: '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_SVG&delayStartupUntil=configured',  // eslint-disable-line max-len
             'youtube': '//www.youtube.com/player_api?noext',
             'coffee/src/ajax_prefix': 'xmodule_js/common_static/coffee/src/ajax_prefix',
             'js/instructor_dashboard/student_admin': 'js/instructor_dashboard/student_admin',
@@ -647,7 +647,7 @@
                 ],
                 exports: 'ThreadResponseView'
             },
-            'common/js/discussion/discussion_module_view': {
+            'common/js/discussion/views/discussion_inline_view': {
                 deps: [
                     'jquery',
                     'underscore',
@@ -671,7 +671,7 @@
                     'common/js/discussion/views/thread_response_show_view',
                     'common/js/discussion/views/thread_response_view'
                 ],
-                exports: 'DiscussionModuleView'
+                exports: 'DiscussionInlineView'
             },
             'common/js/spec_helpers/discussion_spec_helper': {
                 deps: [

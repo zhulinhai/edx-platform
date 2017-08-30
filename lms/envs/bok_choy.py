@@ -142,6 +142,7 @@ FEATURES['ENABLE_SPECIAL_EXAMS'] = True
 
 # Point the URL used to test YouTube availability to our stub YouTube server
 YOUTUBE_PORT = 9080
+YOUTUBE['TEST_TIMEOUT'] = 5000
 YOUTUBE['API'] = "http://127.0.0.1:{0}/get_youtube_api/".format(YOUTUBE_PORT)
 YOUTUBE['METADATA_URL'] = "http://127.0.0.1:{0}/test_youtube/".format(YOUTUBE_PORT)
 YOUTUBE['TEXT_API']['url'] = "127.0.0.1:{0}/test_transcripts_youtube/".format(YOUTUBE_PORT)
@@ -210,6 +211,7 @@ ECOMMERCE_API_URL = 'http://localhost:8043/api/v2/'
 ECOMMERCE_API_SIGNING_KEY = 'ecommerce-key'
 
 LMS_ROOT_URL = "http://localhost:8000"
+DOC_LINK_BASE_URL = 'http://edx.readthedocs.io/projects/open-edx-learner-guide'
 
 #####################################################################
 # Lastly, see if the developer has any local overrides.
