@@ -309,9 +309,9 @@ def _can_enroll_courselike(user, courselike):
     if _has_staff_access_to_descriptor(user, courselike, course_key):
         return ACCESS_GRANTED
 
-    if courselike.invitation_only:
-        debug("Deny: invitation only")
-        return ACCESS_DENIED
+    if courselike.invitation_only and not user.is_anonymous():
+        debug("Invitation only")
+        return user_has_membership(user)
 
     now = datetime.now(UTC())
     enrollment_start = courselike.enrollment_start or datetime.min.replace(tzinfo=pytz.UTC)
@@ -851,3 +851,30 @@ def get_user_role(user, course_key):
         return 'staff'
     else:
         return 'student'
+
+
+def user_has_membership(user):
+    """
+    Returns whether the given user has any non free membership
+    """
+    from subscriptions import appmysqldb
+    mysql_host = getattr(settings, "SUBSCRIPTION_MYSQL_HOST", "localhost")
+    mysql_database = getattr(settings, "SUBSCRIPTION_MYSQL_DB_NAME", "edxapp")
+    mysql_user = getattr(settings, "SUBSCRIPTION_MYSQL_USER", "edxapp001")
+    mysql_pwd = getattr(settings, "SUBSCRIPTION_MYSQL_PASSWORD", "password")
+    db = appmysqldb.mysql(mysql_host, 3306, mysql_database, mysql_user, mysql_pwd)
+    q = "SELECT id,email FROM auth_user WHERE username='%s' LIMIT 1" % (user)
+    db.query(q)
+    res = db.fetchall()
+    for row in res:
+        user_id = row[0]
+        edx_email = row[1]
+    q = "SELECT aux_subscription_id,type_sus FROM aux_subscriptions WHERE user_id='%s' LIMIT 1" % (user_id)
+    db.query(q)
+    res = db.fetchall()
+    for row in res:
+        check_sus_id = row[0]
+        get_type = row[1]
+    if get_type != 1 and get_type != 4:
+        return ACCESS_GRANTED
+    return ACCESS_DENIED
