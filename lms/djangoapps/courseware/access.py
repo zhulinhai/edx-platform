@@ -18,7 +18,6 @@ from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.utils.timezone import UTC
 
-from raven.contrib.django.raven_compat.models import client
 
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
@@ -868,21 +867,21 @@ def user_has_membership(user):
     mysql_user = getattr(settings, "SUBSCRIPTION_MYSQL_USER", "edxapp001")
     mysql_pwd = getattr(settings, "SUBSCRIPTION_MYSQL_PASSWORD", "password")
 
+    user_id = 0
     db = appmysqldb.mysql(mysql_host, 3306, mysql_database, mysql_user, mysql_pwd)
     q = "SELECT id FROM auth_user WHERE username='%s' LIMIT 1" % (user)
     db.query(q)
     res = db.fetchall()
     for row in res:
         user_id = row[0]
-        client.captureMessage(user_id)
 
-    q = "SELECT type_sus FROM aux_subscriptions WHERE user_id='%s' LIMIT 1" % (user_id)
-    db.query(q)
-    res = db.fetchall()
-    for row in res:
-        get_type = row[0]
-        client.captureMessage(get_type)
-
-    if get_type != 1 and get_type != 4:
-        return ACCESS_GRANTED
+    get_type = 0
+    if user_id != 0:
+        q = "SELECT type_sus FROM aux_subscriptions WHERE user_id='%s' AND pay_ok='1' AND (type_sus!='1' OR type_sus!='4') LIMIT 1" % (user_id)
+        db.query(q)
+        res = db.fetchall()
+        for row in res:
+            get_type = row[0]
+        if get_type != 1 and get_type != 4:
+            return ACCESS_GRANTED
     return ACCESS_DENIED
