@@ -2706,7 +2706,6 @@ SUBSCRIPTION_MYSQL_PASSWORD = "password"
 #    RAVEN_RELEASE = "unknown"
 #RAVEN_CONFIG = {
 #    'dsn': 'https://b6649eca5d334447aa3d0106e029101a:26bb0fe89eed44f5a97d070c527a5d83@sentry.io/211634',
-
     # If you are using git, you can also automatically configure the
     # release based on the git info.
 #    'release': RAVEN_RELEASE,
