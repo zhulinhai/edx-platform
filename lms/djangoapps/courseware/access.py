@@ -874,9 +874,8 @@ def user_has_membership(user):
     res = db.fetchall()
     for row in res:
         user_id = row[0]
-        client.captureMessage(user_id)
 
-    q = "SELECT type_sus FROM aux_subscriptions WHERE user_id='%s' LIMIT 1" % (user_id)
+    q = "SELECT type_sus FROM aux_subscriptions WHERE user_id='%s' AND pay_ok='1' AND (type_sus!='1' OR type_sus!='4') LIMIT 1" % (user_id)
     db.query(q)
     res = db.fetchall()
     for row in res:
