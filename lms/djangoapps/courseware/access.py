@@ -312,7 +312,7 @@ def _can_enroll_courselike(user, courselike):
     if courselike.invitation_only and not user.is_anonymous():
         debug("Invitation only")
         return user_has_membership(user)
-
+  
     now = datetime.now(UTC())
     enrollment_start = courselike.enrollment_start or datetime.min.replace(tzinfo=pytz.UTC)
     enrollment_end = courselike.enrollment_end or datetime.max.replace(tzinfo=pytz.UTC)
@@ -853,10 +853,12 @@ def get_user_role(user, course_key):
         return 'student'
 
 
+
 def user_has_membership(user):
     """
     Returns whether the given user has any non free membership
     """
+
 
     from subscriptions import appmysqldb
     mysql_host = getattr(settings, "SUBSCRIPTION_MYSQL_HOST", "localhost")
@@ -878,6 +880,7 @@ def user_has_membership(user):
     for row in res:
         check_sus_id = row[0]
         get_type = row[1]
+
 
     if get_type != 1 and get_type != 4:
         return ACCESS_GRANTED
