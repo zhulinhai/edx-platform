@@ -884,4 +884,5 @@ def user_has_membership(user):
             get_type = row[0]
         if get_type != 1 and get_type != 4:
             return ACCESS_GRANTED
+
     return ACCESS_DENIED
