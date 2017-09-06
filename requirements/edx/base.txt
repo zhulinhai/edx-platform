@@ -107,10 +107,14 @@ mongoengine==0.10.0
 MySQL-python==1.2.5
 networkx==1.7
 <<<<<<< HEAD
+<<<<<<< HEAD
 nltk==3.2.5
 =======
 nltk==3.2.2
 >>>>>>> adding nltk as straigt dependency
+=======
+#nltk==3.2.2
+>>>>>>> FIX: nltk update, version conlicting badly due to edx changes and forking
 nose-xunitmp==0.3.2
 oauthlib==1.0.3
 path.py==8.2.1
