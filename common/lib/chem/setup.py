@@ -10,6 +10,7 @@ setup(
         "scipy==0.14.0",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         "nltk==3.2.5",
 =======
         "nltk==3.2.2",
@@ -17,5 +18,8 @@ setup(
 =======
         "nltk==2.0.6",
 >>>>>>> FIX: nltk update, version conlicting badly due to edx changes and forking
+=======
+        "nltk==3.2.2",
+>>>>>>> reverting nltk change
     ],
 )

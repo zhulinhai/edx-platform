@@ -108,6 +108,7 @@ MySQL-python==1.2.5
 networkx==1.7
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 nltk==3.2.5
 =======
 nltk==3.2.2
@@ -115,6 +116,9 @@ nltk==3.2.2
 =======
 #nltk==3.2.2
 >>>>>>> FIX: nltk update, version conlicting badly due to edx changes and forking
+=======
+nltk==3.2.2
+>>>>>>> reverting nltk change
 nose-xunitmp==0.3.2
 oauthlib==1.0.3
 path.py==8.2.1
