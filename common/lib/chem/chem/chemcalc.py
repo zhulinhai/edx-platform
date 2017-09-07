@@ -57,6 +57,7 @@ grammar = """
 """
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 parser = nltk.ChartParser(nltk.CFG.fromstring(grammar))
 =======
 parser = nltk.ChartParser(CFG.fromstring(grammar))
@@ -64,6 +65,9 @@ parser = nltk.ChartParser(CFG.fromstring(grammar))
 =======
 parser = nltk.ChartParser(nltk.parse_cfg(grammar))
 >>>>>>> FIX: nltk update, version conlicting badly due to edx changes and forking
+=======
+parser = nltk.ChartParser(CFG.fromstring(grammar))
+>>>>>>> reverting nltk change
 
 
 def _clean_parse_tree(tree):
