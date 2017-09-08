@@ -8,6 +8,7 @@ from ..constants import DENIED_COUNTRIES
 from ..constants import PROFESSIONAL_DESIGNATIONS_EXTRA_REQUIREMENTS
 from ..constants import PROFESSIONAL_DESIGNATIONS_WITH_EXTRA_REQUIREMENTS
 from ..forms import ExtraInfoForm
+from ..models import SUB_SPECIALTY_CHOICES
 
 
 FORM_DATA_REQUIRED = {
@@ -178,3 +179,30 @@ class ExtraInfoFormTest(TestCase):
         form = ExtraInfoForm(data)
         is_valid = form.is_valid()
         self.assertFalse(is_valid)
+
+    @data(None, '')
+    def test_sub_specialty_empty(self, sub_specialty):
+        data = self.data
+        data['specialty'] = 'Cardiovascular_Health'
+        data['sub_specialty'] = sub_specialty
+        form = ExtraInfoForm(data)
+        is_valid = form.is_valid()
+        self.assertTrue(is_valid)
+
+    def test_sub_specialty_invalid(self):
+        data = self.data
+        data['specialty'] = 'Cardiovascular_Health'
+        data['sub_specialty'] = 'invalid'
+        form = ExtraInfoForm(data)
+        is_valid = form.is_valid()
+        self.assertFalse(is_valid)
+
+    @data(*SUB_SPECIALTY_CHOICES['Cardiovascular_Health'])
+    @unpack
+    def test_sub_specialty_valid(self, sub_specialty_id, sub_specialty_name):
+        data = self.data
+        data['specialty'] = 'Cardiovascular_Health'
+        data['sub_specialty'] = sub_specialty_id
+        form = ExtraInfoForm(data)
+        is_valid = form.is_valid()
+        self.assertTrue(is_valid)
