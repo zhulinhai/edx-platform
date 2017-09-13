@@ -7,6 +7,18 @@ from django import forms
 
 from .constants import *
 from .models import ExtraInfo
+from .models import SUB_SPECIALTY_CHOICES
+
+
+ALL_SUB_SPECIALTY_CHOICES = [
+    ('', '---------'),
+]
+ALL_SUB_SPECIALTY_CHOICES.extend(
+    sub_specialty
+    for sub_list in SUB_SPECIALTY_CHOICES.values()
+    for sub_specialty in sub_list
+)
+ALL_SUB_SPECIALTY_CHOICES = tuple(ALL_SUB_SPECIALTY_CHOICES)
 
 
 class ExtraInfoForm(forms.ModelForm):
@@ -289,9 +301,7 @@ class ExtraInfoForm(forms.ModelForm):
     )
     required_css_class = 'required'
     sub_specialty = forms.ChoiceField(
-        choices=(
-            ('', '---------'),
-        ),
+        choices=ALL_SUB_SPECIALTY_CHOICES,
         label='Sub-Specialty',
         required=False,
     )
