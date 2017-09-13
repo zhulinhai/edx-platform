@@ -10,6 +10,7 @@ ANONYMOUS_USER_EMAIL = 'noreply@example.com'
 API_DATE_FORMAT = '%Y-%m-%d'
 COURSE_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
 COURSE_MODE_DEFAULTS = {
+    'bulk_sku': None,
     'currency': 'usd',
     'description': None,
     'expiration_datetime': None,
@@ -64,7 +65,6 @@ INLINE_ANALYTICS_SUPPORTED_TYPES = {
 INSTALLED_APPS += (
     'branding_stanford',
     'cme_registration',
-    'instructor_email_widget',
     'settings_context_processor',
     'sneakpeek_deeplink',
     # Added here to allow translations

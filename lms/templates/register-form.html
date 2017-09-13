@@ -4,8 +4,12 @@ from third_party_auth import pipeline, provider
 from django.utils.translation import ugettext as _
 from django_countries import countries
 from student.models import UserProfile
+from microsite_configuration import microsite
 %>
-<%namespace file='main.html' import="stanford_theme_enabled"/>
+<%def name="theme_enabled()"><% return settings.FEATURES.get("USE_CUSTOM_THEME", False) %></%def>
+<%def name="is_microsite()"><% return microsite.is_request_in_microsite() %></%def>
+<%def name="stanford_theme_enabled()"><% return theme_enabled() and not is_microsite() %></%def>
+<%namespace name='static' file='static_content.html'/>
 
 <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
 
@@ -25,9 +29,16 @@ from student.models import UserProfile
 
   <div class="form-actions form-third-party-auth">
 
-  % for enabled in provider.Registry.accepting_logins():
+  % for enabled in provider.Registry.displayed_for_login():
     ## Translators: provider_name is the name of an external, third-party user authentication service (like Google or LinkedIn).
-    <button type="submit" class="button button-primary button-${enabled.provider_id} register-${enabled.provider_id}" onclick="thirdPartySignin(event, '${pipeline_urls[enabled.provider_id]}');"><span class="icon fa ${enabled.icon_class}"></span>${_('Sign up with {provider_name}').format(provider_name=enabled.name)}</button>
+    <button type="submit" class="button button-primary button-${enabled.provider_id} register-${enabled.provider_id}" onclick="thirdPartySignin(event, '${pipeline_urls[enabled.provider_id]}');">
+      % if enabled.icon_class:
+      <span class="icon fa ${enabled.icon_class}" aria-hidden="true"></span>
+      % else:
+      <span class="icon" aria-hidden="true"><img class="icon-image" src="${enabled.icon_image.url}" alt="${enabled.name} icon" /></span>
+      % endif
+      ${_('Sign up with {provider_name}').format(provider_name=enabled.name)}
+    </button>
   % endfor
 
   </div>
@@ -223,9 +234,7 @@ from student.models import UserProfile
     % endif
   </ol>
 </div>
-% if stanford_theme_enabled():
-  <%include file='theme-register_extra.html' />
-% endif
+<%static:optional_include_mako file="register_extra.html" is_theming_enabled="True" />
 <div class="group group-form group-form-accountacknowledgements">
   <h2 class="sr">${_("Account Acknowledgements")}</h2>
 
@@ -245,7 +254,7 @@ from student.models import UserProfile
 
       % if settings.REGISTRATION_EXTRA_FIELDS['honor_code'] != 'hidden':
       ## If the stanford theme isn't enabled, check if we have an Honor Code link in our marketing map
-      % if stanford_theme_enabled() or (marketing_link('HONOR') and marketing_link('HONOR') != '#'):
+      % if stanford_theme_enabled() or marketing_link('HONOR') and marketing_link('HONOR') != '#':
       <div class="field ${settings.REGISTRATION_EXTRA_FIELDS['honor_code']} checkbox" id="field-honorcode">
         <input id="honorcode-yes" type="checkbox" name="honor_code" value="true" />
         <%

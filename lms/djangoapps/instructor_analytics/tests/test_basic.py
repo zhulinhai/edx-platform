@@ -6,6 +6,7 @@ import datetime
 import json
 import pytz
 from mock import MagicMock, Mock, patch
+from nose.plugins.attrib import attr
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 
@@ -20,7 +21,6 @@ from instructor_analytics.basic import (
 )
 from instructor_analytics.basic import student_responses
 from opaque_keys.edx.keys import CourseKey
-from opaque_keys.edx.locations import Location
 from opaque_keys.edx.locator import UsageKey
 from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
 from student.models import CourseEnrollment, CourseEnrollmentAllowed
@@ -31,13 +31,13 @@ from shoppingcart.models import (
     Invoice, Coupon, CourseRegCodeItem, CouponRedemption, CourseRegistrationCodeInvoiceItem
 )
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.django_utils import TEST_DATA_MIXED_GRADED_MODULESTORE
 from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
 from edx_proctoring.api import create_exam
 from edx_proctoring.models import ProctoredExamStudentAttempt
 from xmodule.modulestore.django import modulestore
 
 
+@attr(shard=3)
 class TestAnalyticsBasic(ModuleStoreTestCase):
     """ Test basic analytics functions. """
 
@@ -97,8 +97,8 @@ class TestAnalyticsBasic(ModuleStoreTestCase):
                 # Check if list_problem_responses returned expected results:
                 self.assertEqual(len(problem_responses), len(mock_results))
                 for mock_result in mock_results:
-                    self.assertTrue(
-                        {'username': mock_result.student.username, 'state': mock_result.state} in
+                    self.assertIn(
+                        {'username': mock_result.student.username, 'state': mock_result.state},
                         problem_responses
                     )
 
@@ -111,17 +111,35 @@ class TestAnalyticsBasic(ModuleStoreTestCase):
             self.assertIn(userreport['username'], [user.username for user in self.users])
 
     def test_enrolled_students_features_keys(self):
-        query_features = ('username', 'name', 'email')
+        query_features = ('username', 'name', 'email', 'city', 'country',)
+        for user in self.users:
+            user.profile.city = "Mos Eisley {}".format(user.id)
+            user.profile.country = "Tatooine {}".format(user.id)
+            user.profile.save()
         for feature in query_features:
             self.assertIn(feature, AVAILABLE_FEATURES)
         with self.assertNumQueries(1):
             userreports = enrolled_students_features(self.course_key, query_features)
         self.assertEqual(len(userreports), len(self.users))
-        for userreport in userreports:
+
+        userreports = sorted(userreports, key=lambda u: u["username"])
+        users = sorted(self.users, key=lambda u: u.username)
+        for userreport, user in zip(userreports, users):
             self.assertEqual(set(userreport.keys()), set(query_features))
-            self.assertIn(userreport['username'], [user.username for user in self.users])
-            self.assertIn(userreport['email'], [user.email for user in self.users])
-            self.assertIn(userreport['name'], [user.profile.name for user in self.users])
+            self.assertEqual(userreport['username'], user.username)
+            self.assertEqual(userreport['email'], user.email)
+            self.assertEqual(userreport['name'], user.profile.name)
+            self.assertEqual(userreport['city'], user.profile.city)
+            self.assertEqual(userreport['country'], user.profile.country)
+
+    def test_enrolled_student_with_no_country_city(self):
+        userreports = enrolled_students_features(self.course_key, ('username', 'city', 'country',))
+        for userreport in userreports:
+            # This behaviour is somewhat inconsistent: None string fields
+            # objects are converted to "None", but non-JSON serializable fields
+            # are converted to an empty string.
+            self.assertEqual(userreport['city'], "None")
+            self.assertEqual(userreport['country'], "")
 
     def test_enrolled_students_meta_features_keys(self):
         """
@@ -135,6 +153,34 @@ class TestAnalyticsBasic(ModuleStoreTestCase):
             self.assertEqual(set(userreport.keys()), set(query_features))
             self.assertIn(userreport['meta.position'], ["edX expert {}".format(user.id) for user in self.users])
             self.assertIn(userreport['meta.company'], ["Open edX Inc {}".format(user.id) for user in self.users])
+
+    def test_enrolled_students_enrollment_verification(self):
+        """
+        Assert that we can get enrollment mode and verification status
+        """
+        query_features = ('enrollment_mode', 'verification_status')
+        userreports = enrolled_students_features(self.course_key, query_features)
+        self.assertEqual(len(userreports), len(self.users))
+        # by default all users should have "audit" as their enrollment mode
+        # and "N/A" as their verification status
+        for userreport in userreports:
+            self.assertEqual(set(userreport.keys()), set(query_features))
+            self.assertIn(userreport['enrollment_mode'], ["audit"])
+            self.assertIn(userreport['verification_status'], ["N/A"])
+        # make sure that the user report respects whatever value
+        # is returned by verification and enrollment code
+        with patch("student.models.CourseEnrollment.enrollment_mode_for_user") as enrollment_patch:
+            with patch(
+                "lms.djangoapps.verify_student.models.SoftwareSecurePhotoVerification.verification_status_for_user"
+            ) as verify_patch:
+                enrollment_patch.return_value = ["verified"]
+                verify_patch.return_value = "dummy verification status"
+                userreports = enrolled_students_features(self.course_key, query_features)
+                self.assertEqual(len(userreports), len(self.users))
+                for userreport in userreports:
+                    self.assertEqual(set(userreport.keys()), set(query_features))
+                    self.assertIn(userreport['enrollment_mode'], ["verified"])
+                    self.assertIn(userreport['verification_status'], ["dummy verification status"])
 
     def test_enrolled_students_features_keys_cohorted(self):
         course = CourseFactory.create(org="test", course="course1", display_name="run1")
@@ -574,46 +620,16 @@ class TestCourseRegistrationCodeAnalyticsBasic(ModuleStoreTestCase):
 
 class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
     """ Test basic student responses analytics function. """
-    MODULESTORE = TEST_DATA_MIXED_GRADED_MODULESTORE
+
+    def setUp(self):
+        super(TestStudentResponsesAnalyticsBasic, self).setUp()
+        self.course = CourseFactory.create()
 
     def create_student(self):
         self.student = UserFactory()
         CourseEnrollment.enroll(self.student, self.course.id)
 
-    def test_empty_course(self):
-        self.course = CourseFactory.create()
-        self.create_student()
-
-        datarows = list(student_responses(self.course))
-        self.assertEqual(datarows, [])
-
-    def test_full_course_no_students(self):
-        self.course = get_course(CourseKey.from_string('edX/graded/2012_Fall'))
-
-        datarows = list(student_responses(self.course))
-        self.assertEqual(datarows, [])
-
-    def test_invalid_module_state(self):
-        self.course = get_course(CourseKey.from_string('edX/graded/2012_Fall'))
-        self.problem_location = Location("edX", "graded", "2012_Fall", "problem", "H1P2")
-
-        self.create_student()
-        StudentModuleFactory.create(
-            course_id=self.course.id,
-            module_state_key=self.problem_location,
-            student=self.student,
-            grade=0,
-            state=u'{"student_answers":{"fake-problem":"No idea"}}}'
-        )
-
-        datarows = list(student_responses(self.course))
-        #Invalid module state response will be skipped, so datarows should be empty
-        self.assertEqual(len(datarows), 0)
-
-    def test_problem_with_student_answer_and_answers(self):
-        self.course = CourseFactory.create(
-            display_name=u'test course',
-        )
+    def create_course_structure(self):
         section = ItemFactory.create(
             parent_location=self.course.location,
             category='chapter',
@@ -635,6 +651,34 @@ class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
             category='problem',
             display_name=u'test problem',
         )
+        return section, sub_section, unit, problem
+
+    def test_empty_course(self):
+        self.create_student()
+        datarows = list(student_responses(self.course))
+        self.assertEqual(datarows, [])
+
+    def test_full_course_no_students(self):
+        datarows = list(student_responses(self.course))
+        self.assertEqual(datarows, [])
+
+    def test_invalid_module_state(self):
+        section, sub_section, unit, problem = self.create_course_structure()
+        self.create_student()
+        StudentModuleFactory.create(
+            course_id=self.course.id,
+            module_state_key=problem.location,
+            student=self.student,
+            grade=0,
+            state=u'{"student_answers":{"fake-problem":"No idea"}}}'
+        )
+        course_with_children = modulestore().get_course(self.course.id, depth=4)
+        datarows = list(student_responses(course_with_children))
+        #Invalid module state response will be skipped, so datarows should be empty
+        self.assertEqual(len(datarows), 0)
+
+    def test_problem_with_student_answer_and_answers(self):
+        section, sub_section, unit, problem = self.create_course_structure()
         submit_and_compare_valid_state = ItemFactory.create(
             parent_location=unit.location,
             category='submit-and-compare',
@@ -654,9 +698,7 @@ class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
             parent_location=content_library.location,
             category='problem',
         )
-
         self.create_student()
-
         StudentModuleFactory.create(
             course_id=self.course.id,
             module_state_key=problem.location,
@@ -685,7 +727,6 @@ class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
             grade=0,
             state=u'{"student_answers":{"problem_id":"content library response1"}}',
         )
-
         course_with_children = modulestore().get_course(self.course.id, depth=4)
         datarows = list(student_responses(course_with_children))
         self.assertEqual(datarows[0][-1], u'problem_id=student response1')
@@ -694,17 +735,15 @@ class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
         self.assertEqual(datarows[3][-1], u'problem_id=content library response1')
 
     def test_problem_with_no_answer(self):
-        self.course = get_course(CourseKey.from_string('edX/graded/2012_Fall'))
-        problem_location = Location('edX', 'graded', '2012_Fall', 'problem', 'H2P1')
-
+        section, sub_section, unit, problem = self.create_course_structure()
         self.create_student()
         StudentModuleFactory.create(
             course_id=self.course.id,
-            module_state_key=problem_location,
+            module_state_key=problem.location,
             student=self.student,
             grade=0,
             state=u'{"answer": {"problem_id": "123"}}',
         )
-
-        datarows = list(student_responses(self.course))
+        course_with_children = modulestore().get_course(self.course.id, depth=4)
+        datarows = list(student_responses(course_with_children))
         self.assertEqual(datarows[0][-1], None)

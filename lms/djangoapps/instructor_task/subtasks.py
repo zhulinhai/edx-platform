@@ -14,7 +14,7 @@ import dogstats_wrapper as dog_stats_api
 from django.db import transaction, DatabaseError
 from django.core.cache import cache
 
-from instructor_task.models import InstructorTask, PROGRESS, QUEUING
+from lms.djangoapps.instructor_task.models import InstructorTask, PROGRESS, QUEUING
 from util.db import outer_atomic
 
 TASK_LOG = logging.getLogger('edx.celery.task')
@@ -305,19 +305,6 @@ def queue_subtasks_for_query(
 
     """
     task_id = entry.task_id
-
-    if total_num_items == 0:
-        TASK_LOG.info("Task %s: 0 items to process, no subtasks to queue", task_id)
-        return {
-            'action_name': action_name,
-            'attempted': 0,
-            'failed': 0,
-            'skipped': 0,
-            'succeeded': 0,
-            'total': total_num_items,
-            'duration_ms': 0,
-            'start_time': time(),
-        }
 
     # Calculate the number of tasks that will be created, and create a list of ids for each task.
     total_num_subtasks = _get_number_of_subtasks(total_num_items, items_per_task)

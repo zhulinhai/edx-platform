@@ -101,10 +101,10 @@ class ExtraInfo(models.Model):
     )
     sunet_id = models.CharField(
         blank=True,
-        max_length=33,
+        max_length=21,
     )
     address_1 = models.CharField(
-        max_length=250
+        max_length=225
     )
     address_2 = models.CharField(
         blank=True,

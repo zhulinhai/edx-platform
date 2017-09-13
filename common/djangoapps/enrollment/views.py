@@ -10,7 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from opaque_keys import InvalidKeyError
 from course_modes.models import CourseMode
-from lms.djangoapps.commerce.utils import audit_log
+from openedx.core.lib.log_utils import audit_log
 from openedx.core.djangoapps.user_api.preferences.api import update_email_opt_in
 from openedx.core.lib.api.permissions import ApiKeyHeaderPermission, ApiKeyHeaderPermissionIsAuthenticated
 from rest_framework import status
@@ -19,9 +19,9 @@ from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 from rest_framework_oauth.authentication import OAuth2Authentication
 from opaque_keys.edx.keys import CourseKey
-from embargo import api as embargo_api
-from cors_csrf.authentication import SessionAuthenticationCrossDomainCsrf
-from cors_csrf.decorators import ensure_csrf_cookie_cross_domain
+from openedx.core.djangoapps.embargo import api as embargo_api
+from openedx.core.djangoapps.cors_csrf.authentication import SessionAuthenticationCrossDomainCsrf
+from openedx.core.djangoapps.cors_csrf.decorators import ensure_csrf_cookie_cross_domain
 from openedx.core.lib.api.authentication import (
     SessionAuthenticationAllowInactiveUser,
     OAuth2AuthenticationAllowInactiveUser,
@@ -101,6 +101,7 @@ class EnrollmentView(APIView, ApiKeyPermissionMixIn):
                 * course_end: The date and time when the course closes. If
                   null, the course never ends.
                 * course_id: The unique identifier for the course.
+                * course_name: The name of the course.
                 * course_modes: An array of data about the enrollment modes
                   supported for the course. If the request uses the parameter
                   include_expired=1, the array also includes expired
@@ -218,6 +219,7 @@ class EnrollmentCourseDetailView(APIView):
                 * course_end: The date and time when the course closes. If
                   null, the course never ends.
                 * course_id: The unique identifier for the course.
+                * course_name: The name of the course.
                 * course_modes: An array of data about the enrollment modes
                   supported for the course. If the request uses the parameter
                   include_expired=1, the array also includes expired
@@ -431,6 +433,8 @@ class EnrollmentListView(APIView, ApiKeyPermissionMixIn):
                   null, the course never ends.
 
                 * course_id: The unique identifier for the course.
+
+                * course_name: The name of the course.
 
                 * course_modes: An array of data about the enrollment modes
                   supported for the course. If the request uses the parameter
@@ -648,13 +652,14 @@ class EnrollmentListView(APIView, ApiKeyPermissionMixIn):
                 org = course_id.org
                 update_email_opt_in(request.user, org, email_opt_in)
 
+            log.info('The user [%s] has already been enrolled in course run [%s].', username, course_id)
             return Response(response)
         except CourseModeNotFoundError as error:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
                     "message": (
-                        u"The course mode '{mode}' is not available for course '{course_id}'."
+                        u"The [{mode}] course mode is expired or otherwise unavailable for course run [{course_id}]."
                     ).format(mode=mode, course_id=course_id),
                     "course_details": error.data
                 })
@@ -666,8 +671,11 @@ class EnrollmentListView(APIView, ApiKeyPermissionMixIn):
                 }
             )
         except CourseEnrollmentExistsError as error:
+            log.warning('An enrollment already exists for user [%s] in course run [%s].', username, course_id)
             return Response(data=error.enrollment)
         except CourseEnrollmentError:
+            log.exception("An error occurred while creating the new course enrollment for user "
+                          "[%s] in course run [%s]", username, course_id)
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
