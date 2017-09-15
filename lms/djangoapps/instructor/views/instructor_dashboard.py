@@ -102,6 +102,11 @@ def instructor_dashboard_2(request, course_id):
         return HttpResponseServerError()
 
     course = get_course_by_id(course_key, depth=0)
+    countries = CourseEnrollment.objects.select_related().filter(
+        course_id=course_key,
+        is_active=True
+    ).values_list('user__profile__country', flat=True)
+    countries = set(map(lambda c: c or '' , countries))
 
     access = {
         'admin': request.user.is_staff,
@@ -225,6 +230,7 @@ def instructor_dashboard_2(request, course_id):
         'generate_bulk_certificate_exceptions_url': generate_bulk_certificate_exceptions_url,
         'certificate_exception_view_url': certificate_exception_view_url,
         'certificate_invalidation_view_url': certificate_invalidation_view_url,
+        'student_countries': list(countries),
     }
 
     return render_to_response('instructor/instructor_dashboard_2/instructor_dashboard_2.html', context)

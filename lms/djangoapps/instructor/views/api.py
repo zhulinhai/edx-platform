@@ -1197,7 +1197,7 @@ def get_students_features(request, course_id, csv=False):  # pylint: disable=red
     course_key = CourseKey.from_string(course_id)
     course = get_course_by_id(course_key)
 
-    available_features = instructor_analytics.basic.AVAILABLE_FEATURES
+    available_features = instructor_analytics.basic.AVAILABLE_FEATURES + ('enrolled_courses', 'course_complete')
 
     # Allow for sites to be able to define additional columns.
     # Note that adding additional columns has the potential to break
@@ -1213,7 +1213,8 @@ def get_students_features(request, course_id, csv=False):  # pylint: disable=red
         query_features = [
             'id', 'username', 'name', 'email', 'language', 'location',
             'year_of_birth', 'gender', 'level_of_education', 'mailing_address',
-            'goals', 'enrollment_mode', 'verification_status',
+            'goals', 'enrollment_mode', 'verification_status', 'enrolled_courses',
+            'course_complete'
         ]
 
     # Provide human-friendly and translatable names for these features. These names
@@ -1233,6 +1234,8 @@ def get_students_features(request, course_id, csv=False):  # pylint: disable=red
         'goals': _('Goals'),
         'enrollment_mode': _('Enrollment Mode'),
         'verification_status': _('Verification Status'),
+        'enrolled_courses': _('Enrolled Courses'),
+        'course_complete': _("Course Complete"),
     }
 
     if is_course_cohorted(course.id):
@@ -1266,7 +1269,7 @@ def get_students_features(request, course_id, csv=False):  # pylint: disable=red
             lms.djangoapps.instructor_task.api.submit_calculate_students_features_csv(
                 request,
                 course_key,
-                query_features
+                query_features,
             )
             success_status = _("The enrolled learner profile report is being created."
                                " To view the status of the report, see Pending Tasks below.")

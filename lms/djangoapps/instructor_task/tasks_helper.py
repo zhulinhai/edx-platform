@@ -1043,9 +1043,14 @@ def upload_students_csv(_xmodule_instance_args, _entry_id, course_id, task_input
     current_step = {'step': 'Calculating Profile Info'}
     task_progress.update_task_state(extra_meta=current_step)
 
+    _filter = {}
+    country = _xmodule_instance_args['request_info']['get_params'].get('country', 'all')
+    if country != 'all':
+        _filter['profile__country'] = country != 'None' and country or None
+
     # compute the student features table and format it
     query_features = task_input
-    student_data = enrolled_students_features(course_id, query_features)
+    student_data = enrolled_students_features(course_id, query_features, _filter)
     header, rows = format_dictlist(student_data, query_features)
 
     task_progress.attempted = task_progress.succeeded = len(rows)

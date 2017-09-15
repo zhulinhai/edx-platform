@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 from opaque_keys.edx.keys import UsageKey
 import xmodule.graders as xmgraders
 from student.models import CourseEnrollmentAllowed, CourseEnrollment
@@ -23,7 +24,11 @@ from courseware.models import StudentModule
 from certificates.models import GeneratedCertificate
 from django.db.models import Count
 from certificates.models import CertificateStatuses
+from xmodule.modulestore.django import modulestore
+
+from lms.djangoapps.courseware.views.views import is_course_passed
 from lms.djangoapps.grades.context import grading_context_for_course
+from lms.djangoapps.grades.new.course_grade import CourseGradeFactory
 from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
@@ -201,7 +206,7 @@ def issued_certificates(course_key, features):
     return generated_certificates
 
 
-def enrolled_students_features(course_key, features):
+def enrolled_students_features(course_key, features, _filter=None):
     """
     Return list of student features as dictionaries.
 
@@ -212,14 +217,20 @@ def enrolled_students_features(course_key, features):
         {'username': 'username3', 'first_name': 'firstname3'}
     ]
     """
+    _filter = _filter or {}
     include_cohort_column = 'cohort' in features
     include_team_column = 'team' in features
     include_enrollment_mode = 'enrollment_mode' in features
     include_verification_status = 'verification_status' in features
+    include_enrolled_courses = 'enrolled_courses' in features
+    include_course_complete = 'course_complete' in features
+
+    course = modulestore().get_course(course_key, depth=2)
 
     students = User.objects.filter(
         courseenrollment__course_id=course_key,
         courseenrollment__is_active=1,
+        **_filter
     ).order_by('username').select_related('profile')
 
     if include_cohort_column:
@@ -289,6 +300,18 @@ def enrolled_students_features(course_key, features):
                 )
             if include_enrollment_mode:
                 student_dict['enrollment_mode'] = enrollment_mode
+
+        if include_enrolled_courses:
+            qs = CourseEnrollment.objects.filter(user=student, is_active=True)
+            list_courses = ', '.join(map(str, qs.values_list('course_id', flat=True)))
+            student_dict['enrolled_courses'] = list_courses
+
+        if include_course_complete:
+            student = User.objects.prefetch_related("groups").get(id=student.id)
+            try:
+                student_dict['course_complete'] = is_course_passed(course, None, student) and _('Yes') or _('No')
+            except:
+                student_dict['course_complete'] = _('No')
 
         return student_dict
 
