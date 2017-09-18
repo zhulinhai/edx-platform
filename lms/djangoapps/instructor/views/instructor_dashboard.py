@@ -55,6 +55,7 @@ from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 from openedx.core.djangolib.markup import HTML, Text
+from django_countries import countries as all_countries
 
 log = logging.getLogger(__name__)
 
@@ -101,12 +102,13 @@ def instructor_dashboard_2(request, course_id):
         log.error(u"Unable to find course with course key %s while loading the Instructor Dashboard.", course_id)
         return HttpResponseServerError()
 
+    _all_countries = dict(all_countries)
     course = get_course_by_id(course_key, depth=0)
     countries = CourseEnrollment.objects.select_related().filter(
         course_id=course_key,
         is_active=True
     ).values_list('user__profile__country', flat=True)
-    countries = set(map(lambda c: c or '' , countries))
+    countries = map(lambda c: (c, _all_countries.get(c)), set(filter(bool, countries)))
 
     access = {
         'admin': request.user.is_staff,

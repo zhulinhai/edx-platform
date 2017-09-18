@@ -26,9 +26,7 @@ from django.db.models import Count
 from certificates.models import CertificateStatuses
 from xmodule.modulestore.django import modulestore
 
-from lms.djangoapps.courseware.views.views import is_course_passed
 from lms.djangoapps.grades.context import grading_context_for_course
-from lms.djangoapps.grades.new.course_grade import CourseGradeFactory
 from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
@@ -217,6 +215,8 @@ def enrolled_students_features(course_key, features, _filter=None):
         {'username': 'username3', 'first_name': 'firstname3'}
     ]
     """
+    from lms.djangoapps.courseware.views.views import is_course_passed
+
     _filter = _filter or {}
     include_cohort_column = 'cohort' in features
     include_team_column = 'team' in features

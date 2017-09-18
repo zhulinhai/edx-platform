@@ -34,8 +34,8 @@ from openedx.core.djangolib.markup import HTML, Text
         <input type="button" name="list-profiles-csv" value="${_("Download profile information as a CSV")}" data-endpoint="${ section_data['get_students_features_url'] }" data-csv="true">
         <select id="country-filter">
             <option value="all">${_("All")}</option>
-          % for country in student_countries:
-            <option value="${country}">${country.title()}</option>
+          % for country, country_title in student_countries:
+            <option value="${country}">${country_title.title()}</option>
           % endfor
         </select>
     </p>
