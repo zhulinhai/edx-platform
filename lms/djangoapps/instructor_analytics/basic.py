@@ -315,6 +315,7 @@ def enrolled_students_features(course_key, features, _filter=None):
                 student_dict['course_complete'] = _('No')
 
         if 'country' in student_dict:
+            _all_countries = dict(all_countries)
             student_dict['country'] = _all_countries.get(student_dict['country'], student_dict['country'])
 
         return student_dict
