@@ -29,6 +29,7 @@ from xmodule.modulestore.django import modulestore
 from lms.djangoapps.grades.context import grading_context_for_course
 from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from django_countries import countries as all_countries
 
 
 STUDENT_FEATURES = ('id', 'username', 'first_name', 'last_name', 'is_staff', 'email')
@@ -312,6 +313,9 @@ def enrolled_students_features(course_key, features, _filter=None):
                 student_dict['course_complete'] = is_course_passed(course, None, student) and _('Yes') or _('No')
             except:
                 student_dict['course_complete'] = _('No')
+
+        if 'country' in student_dict:
+            student_dict['country'] = _all_countries.get(student_dict['country'], student_dict['country'])
 
         return student_dict
 
