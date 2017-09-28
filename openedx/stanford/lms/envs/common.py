@@ -75,6 +75,7 @@ MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
 MIDDLEWARE_CLASSES += (
     'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
 )
+MKTG_URL_LINK_MAP['COPYRIGHT'] = 'copyright'
 ORA2_RESPONSES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
     'BUCKET': 'edx-grades',
