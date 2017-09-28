@@ -2,11 +2,11 @@
 """
 Script to update old score overrides to match upstream overrides.
 """
+import datetime
 import itertools
 import os
 import django
 from django.db import transaction
-from django.utils.timezone import now
 from opaque_keys.edx.keys import CourseKey
 from openedx.core.djangoapps.monkey_patch import django_db_models_options
 
@@ -16,32 +16,40 @@ def main():
     from openassessment.assessment.models import Assessment, AssessmentPart, StaffWorkflow
     from openassessment.workflow.models import AssessmentWorkflow, AssessmentWorkflowStep
     from student.models import anonymous_id_for_user
-    from submissions.models import Score, ScoreAnnotation, Submission
+    from submissions.models import Score, ScoreSummary, ScoreAnnotation
 
     old_scores = Score.objects.filter(submission__isnull=True, reset=False).order_by('id')
     for score in old_scores:
         try:
             with transaction.atomic():
-                points_override = score.points_earned
-                points_possible = score.points_possible
+                # ScoreSummary is updated on Score saves but for this script we don't want that.
+                # Correct way is to disconnect post_save signal, but since the receiver function
+                # is defined in the class, we can't reference it. Workaround here is to just
+                # prefetch the score summary and resave it to maintain its original field values.
+                score_summary = ScoreSummary.objects.get(student_item=score.student_item)
 
-                # Update old override with new reset
-                score.points_earned = 0
-                score.points_possible = 0
-                score.reset = True
+                # Offset override by 1 second for convenience when sorting db
+                override_date = score.created_at - datetime.timedelta(seconds=1)
+                # Create reset score
+                Score.objects.create(
+                    student_item=score.student_item,
+                    submission=None,
+                    points_earned=0,
+                    points_possible=0,
+                    created_at=override_date,
+                    reset=True,
+                )
+
+                # Update old override with submission from the score preceding it
+                submission = Score.objects.filter(
+                    student_item=score.student_item,
+                    created_at__lt=score.created_at,
+                ).order_by('-created_at')[:1].get().submission
+                score.submission = submission
                 score.save()
 
-                #Grab latest submission with matching student_item
-                submission = Submission.objects.filter(student_item=score.student_item)[:1].get()
-
-                # Create new staff override score
-                new_score = Score(
-                    student_item=score.student_item,
-                    submission=submission,
-                    points_earned=points_override,
-                    points_possible=points_possible,
-                )
-                new_score.save()
+                # Restore original score summary values
+                score_summary.save()
 
                 # Fetch staff id from score course for ScoreAnnotation
                 course_id = CourseKey.from_string(score.student_item.course_id)
@@ -53,7 +61,7 @@ def main():
 
                 # Create ScoreAnnotation
                 score_annotation = ScoreAnnotation(
-                    score=new_score,
+                    score=score,
                     annotation_type="staff_defined",
                     creator=staff_id,
                     reason="A staff member has defined the score for this submission",
@@ -70,6 +78,7 @@ def main():
                     scorer_id=staff_id,
                     submission_uuid=submission.uuid,
                     score_type="ST",
+                    scored_at=override_date,
                 )
 
                 # Fake criterion selections
@@ -120,42 +129,44 @@ def main():
                 try:
                     staff_workflow = StaffWorkflow.objects.get(submission_uuid=submission.uuid)
                     staff_workflow.assessment = staff_assessment.id
-                    staff_workflow.grading_completed_at = now()
+                    staff_workflow.grading_completed_at = override_date
                 except StaffWorkflow.DoesNotExist:
                     staff_workflow = StaffWorkflow(
                         scorer_id=staff_id,
                         course_id=score.student_item.course_id,
                         item_id=score.student_item.item_id,
                         submission_uuid=submission.uuid,
-                        grading_completed_at=now(),
+                        created_at=override_date,
+                        grading_completed_at=override_date,
                         assessment=staff_assessment.id,
                     )
                 staff_workflow.save()
 
                 workflow = AssessmentWorkflow.get_by_submission_uuid(submission.uuid)
-                common_now = now()
                 try:
                     staff_step = workflow.steps.get(name='staff')
-                    staff_step.assessment_completed_at = common_now
-                    staff_step.submitter_completed_at = common_now
+                    staff_step.assessment_completed_at = score.created_at
+                    staff_step.submitter_completed_at = score.created_at
                     staff_step.save()
                 except AssessmentWorkflowStep.DoesNotExist:
                     for step in workflow.steps.all():
-                        step.assessment_completed_at = common_now
-                        step.submitter_completed_at = common_now
+                        step.assessment_completed_at = score.created_at
+                        step.submitter_completed_at = score.created_at
                         step.order_num += 1
                         step.save()
                     workflow.steps.add(
                         AssessmentWorkflowStep(
                             name='staff',
                             order_num=0,
-                            assessment_completed_at=common_now,
-                            submitter_completed_at=common_now,
+                            assessment_completed_at=score.created_at,
+                            submitter_completed_at=score.created_at,
                         )
                     )
 
-                workflow.status = 'done'
-                workflow.save()
+                # Update workflow status to done if it wasn't subsequently cancelled
+                if workflow.status != 'cancelled':
+                    workflow.status = 'done'
+                    workflow.save()
 
         except Exception as err:
             print("An error occurred updating score {}: {}".format(score.id, err))
