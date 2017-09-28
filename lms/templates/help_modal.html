@@ -133,15 +133,13 @@ from student.models import UserProfile
         close_time = "22:00"
     %>
     <p>
-    ${_(
-        'Thank you for your inquiry or feedback. We typically respond to a request within three '
-    'business days. In the meantime, please review our {link_start}Help Center articles{link_end}, '
-    'where answers to many common questions have been posted.'
-    ).format(
-        open_time=open_time,
-        close_time=close_time,
-        link_start='<a href="{}" target="_blank" id="feedback-faq-link" tabindex="0">'.format('https://stanfordonline.zendesk.com/hc/en-us'),
-        link_end='</a>'
+    ${Text(_(
+      'Thank you for your inquiry or feedback. We typically respond to a request within three '
+      'business days. In the meantime, please review our {link_start}Help Center articles{link_end}, '
+      'where answers to many common questions have been posted.'
+    )).format(
+        link_start=HTML(u'<a href="{}" target="_blank" id="feedback-faq-link" tabindex="0">').format('https://stanfordonline.zendesk.com/hc/en-us'),
+        link_end=HTML(u'</a>')
     )}
     </p>
   </div>
