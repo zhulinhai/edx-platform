@@ -45,7 +45,6 @@ class CourseModeForm(forms.ModelForm):
         
 
     mode_slug = forms.ChoiceField(choices=COURSE_MODE_SLUG_CHOICES, label=_("Mode"))
-    course_id = forms.ChoiceField(choices=[(course.id, course.display_name) for course in CourseOverview.objects.all().order_by('display_name')], label=("Course"))
 
     # The verification deadline is stored outside the course mode in the verify_student app.
     # (we used to use the course mode expiration_datetime as both an upgrade and verification deadline).
@@ -103,10 +102,24 @@ class CourseModeForm(forms.ModelForm):
             )
 
     def clean_course_id(self):
+<<<<<<< HEAD
         """
         Validate the course id
         """
         return clean_course_id(self)
+=======
+        course_id = self.cleaned_data['course']
+        try:
+            course_key = CourseKey.from_string(course_id)
+        except InvalidKeyError:
+            raise forms.ValidationError("Cannot make a valid CourseKey from id {}!".format(course_id))
+
+        if not modulestore().has_course(course_key):
+            print("if")
+            raise forms.ValidationError("Cannot find course with id {} in the modulestore".format(course_id))
+
+        return course_key
+>>>>>>> remove overwrite of course id
 
     def clean__expiration_datetime(self):
         """
@@ -161,31 +174,27 @@ class CourseModeForm(forms.ModelForm):
         return cleaned_data
 
     def save(self, commit=True):
-        log.error('getting to the save method in course mode')
         """
         Save the form data.
         """
         # Trigger validation so we can access cleaned data
-        try:
-            if self.is_valid():
-                course = self.cleaned_data.get("course")
-                verification_deadline = self.cleaned_data.get("verification_deadline")
-                mode_slug = self.cleaned_data.get("mode_slug")
+        if self.is_valid():
+            print("is valid")
+            course = self.cleaned_data.get("course")
+            verification_deadline = self.cleaned_data.get("verification_deadline")
+            mode_slug = self.cleaned_data.get("mode_slug")
 
-                # Since the verification deadline is stored in a separate model,
-                # we need to handle saving this ourselves.
-                # Note that verification deadline can be `None` here if
-                # the deadline is being disabled.
-                if course is not None and mode_slug in CourseMode.VERIFIED_MODES:
-                    verification_models.VerificationDeadline.set_deadline(
-                        course.id,
-                        verification_deadline
-                    )
+            # Since the verification deadline is stored in a separate model,
+            # we need to handle saving this ourselves.
+            # Note that verification deadline can be `None` here if
+            # the deadline is being disabled.
+            if course is not None and mode_slug in CourseMode.VERIFIED_MODES:
+                verification_models.VerificationDeadline.set_deadline(
+                    course.id,
+                    verification_deadline
+                )
 
-            return super(CourseModeForm, self).save(commit=commit)
-        except Exception as e:
-            log.error(e);
-            raise forms.ValidationError(e)
+        return super(CourseModeForm, self).save(commit=commit)
 
 
 @admin.register(CourseMode)
@@ -227,4 +236,16 @@ class CourseModeAdmin(admin.ModelAdmin):
     expiration_datetime_custom.short_description = "Upgrade Deadline"
 
 
+<<<<<<< HEAD
 admin.site.register(CourseModeExpirationConfig)
+=======
+class CourseModeExpirationConfigAdmin(admin.ModelAdmin):
+    """Admin interface for the course mode auto expiration configuration. """
+
+    class Meta(object):
+        model = CourseModeExpirationConfig
+
+admin.site.register(CourseMode, CourseModeAdmin)
+# admin.site.register(CourseMode)
+admin.site.register(CourseModeExpirationConfig, CourseModeExpirationConfigAdmin)
+>>>>>>> remove overwrite of course id
