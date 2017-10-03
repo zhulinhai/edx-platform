@@ -10,6 +10,7 @@ from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 
+from badges.utils import badges_enabled
 from badges.events.course_complete import get_completion_badge
 from xmodule.modulestore.django import modulestore
 from certificates.api import regenerate_user_certificates
@@ -135,7 +136,7 @@ class Command(BaseCommand):
                 course_id
             )
 
-            if course.issue_badges:
+            if badges_enabled() and course.issue_badges:
                 badge_class = get_completion_badge(course_id, student)
                 badge = badge_class.get_for_user(student)
 
