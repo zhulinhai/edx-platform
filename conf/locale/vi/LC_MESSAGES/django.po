@@ -9950,6 +9950,10 @@ msgstr "Tìm hiểu thêm"
 msgid "Starts"
 msgstr "Bắt đầu"
 
+#: lms/templates/course.html
+msgid "Starts: {date}"
+msgstr "Bắt đầu: {date}"
+
 #: lms/templates/courses_list.html:22 lms/templates/courses_list.html:21
 msgid "View all Courses"
 msgstr "Xem tất cả khóa học"
@@ -16692,18 +16696,17 @@ msgstr "Xin chúc mừng, bạn đã đạt yêu cầu để được cấp ch�
 msgid "{category} Program Course"
 msgstr "{category} Chương trình Khóa học"
 
-#: lms/templates/dashboard/_dashboard_course_listing.html:105
-msgid "Ended - {end_date}"
-msgstr "Kết thúc - {end_date}"
+#: lms/templates/dashboard/_dashboard_course_listing.html
+msgid "Ended - {date}"
+msgstr "Kết thúc - {date}"
 
-#: lms/templates/dashboard/_dashboard_course_listing.html:107
-msgid "Started - {start_date}"
-msgstr "Bắt đầu - {start_date}"
+#: lms/templates/dashboard/_dashboard_course_listing.html
+msgid "Started - {date}"
+msgstr "Bắt đầu - {date}"
 
-#: lms/templates/dashboard/_dashboard_course_listing.html:111
-#: lms/templates/dashboard/_dashboard_course_listing.html:113
-msgid "Starts - {start_date}"
-msgstr "Bắt đầu - {start_date}"
+#: lms/templates/dashboard/_dashboard_course_listing.html
+msgid "Starts - {date}"
+msgstr "Bắt đầu - {date}"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html:182
 msgid "Course options dropdown"
