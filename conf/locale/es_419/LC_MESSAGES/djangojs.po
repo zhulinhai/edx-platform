@@ -4655,10 +4655,17 @@ msgid ""
 "time zone, course dates, including assignment deadlines, will be displayed "
 "in your browser's local time zone."
 msgstr ""
+"Selecciona la zona horaria para exponer las fechas del curso. Si no "
+"especificas una zona horaria, las fechas del curso, incluidas las fechas "
+"límites de tareas, serán expuestas en la zona horaria local de tu navegador."
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid "All Time Zones"
 msgstr "Todas las zonas horarias"
+
+#: lms/static/js/student_account/views/account_settings_factory.js
+msgid "Default (Local Time Zone)"
+msgstr "Por defecto (Zona horaria local)"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid "Additional Information"

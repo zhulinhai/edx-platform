@@ -68,10 +68,6 @@
     ], 
     "%(type)s Component Template Menu": "Plantilla de men\u00fa de componentes %(type)s", 
     "%(university_name)s pursues the science of learning. Online learners are important participants in that pursuit. The information we gather from your engagement with our instructional offerings makes it possible for faculty, researchers, designers and engineers to continuously improve their work and, in that process, build learning science.": "%(university_name)s est\u00e1 dedicada a la ciencia del aprendizaje. Los estudiantes en l\u00ednea son una parte importante de ese objetivo. La informaci\u00f3n que reunimos a partir de su participaci\u00f3n en nuestras ofertas de capacitaci\u00f3n hace posible que nuestros docentes, investigadores, dise\u00f1adores e ingenieros mejoren continuamente su trabajo y, a trav\u00e9s de ese proceso, puedan desarrollar la ciencia del aprendizaje.", 
-    "%(unread_count)s new comment": [
-      "%(unread_count)s nuevo comentario", 
-      "%(unread_count)s nuevos comentarios"
-    ], 
     "%(value)s hour": [
       "%(value)s hora", 
       "%(value)s horas"
@@ -289,8 +285,6 @@
     "Bullet list": "Lista con vi\u00f1etas", 
     "Bulleted List (Ctrl+U)": "Vi\u00f1etas (Ctrl+U)", 
     "By registering as an online learner, you are also participating in research intended to enhance Stanford's instructional offerings as well as the quality of learning and related sciences worldwide. In the interest of research, you may be exposed to some variations in the course materials. Stanford does not use learner data for any purpose beyond the University's stated missions of education and research. For purposes of research, we may share information we collect from online learning activities, including %(link_start)sPersonally Identifiable Information%(link_end)s, with researchers beyond Stanford. However, your Personally Identifiable Information will only be shared as permitted by applicable law, will be limited to what is necessary to perform the research, and will be subject to an agreement to protect the data. We may also share with the public or third parties aggregated information that does not personally identify you. Similarly, any research findings will be reported at the aggregate level and will not expose your personal identity.": "Al inscribirse como estudiante en l\u00ednea, usted tambi\u00e9n formar\u00e1 parte de las investigaciones que buscan mejorar las ofertas de educaci\u00f3n de Stanford, as\u00ed como la calidad de la ense\u00f1anza y las ciencias relacionadas en todo el mundo. Con el objetivo de fomentar la investigaci\u00f3n, es posible que se le exponga a algunas variaciones en los materiales de los cursos. Stanford no utiliza los datos de los estudiantes para ning\u00fan otro fin m\u00e1s que las misiones de la Universidad, a saber, la educaci\u00f3n y la investigaci\u00f3n. A los efectos de la investigaci\u00f3n, es posible que compartamos la informaci\u00f3n que reunamos a partir de las actividades de aprendizaje en l\u00ednea (lo que incluye %(link_start)sinformaci\u00f3n de identificaci\u00f3n personal%(link_end)s) con investigadores que no forman parte de Stanford. Sin embargo, su informaci\u00f3n de identificaci\u00f3n personal ser\u00e1 compartida \u00fanicamente en la medida que lo permita la ley aplicable, su divulgaci\u00f3n se limitar\u00e1 a lo que sea necesario para realizar la investigaci\u00f3n, y dichas acciones se regir\u00e1n por un acuerdo de protecci\u00f3n de datos. Es posible que tambi\u00e9n compartamos con el p\u00fablico o con terceros informaci\u00f3n global que no lo identifique de forma personal. De manera similar, cualquier resultado de las investigaciones se divulgar\u00e1 a nivel global, y no revelar\u00e1 su identidad personal.", 
-    "By: Community TA": "Por: Tutor", 
-    "By: Staff": "Por: Moderador", 
     "Can we match the photo you took with the one on your ID?": "\u00bfPodemos verificar la foto que usted acaba de tomar contra la foto en su documento de identificaci\u00f3n?", 
     "Cancel": "Cancelar", 
     "Cancel enrollment code": "Cancelar c\u00f3digo de inscripci\u00f3n", 
@@ -478,6 +472,7 @@
     "Deactivate": "Desactivar", 
     "Decrease indent": "Reducir sagr\u00eda", 
     "Default": "Por defecto", 
+    "Default (Local Time Zone)": "Por defecto (Zona horaria local)", 
     "Default Timed Transcript": "Transcripci\u00f3n con tiempos por defecto", 
     "Delete": "Borrar", 
     "Delete \"<%= signatoryName %>\" from the list of signatories?": "\u00bfDesea borrar \"<%= signatoryName %>\" de la lista de signatarios?", 
@@ -1065,8 +1060,8 @@
     "Please print this page for your records; it serves as your receipt. You will also receive an email with the same information.": "Por favor imprima esta p\u00e1gina para sus registros; la misma es v\u00e1lida como su recibo. Tambi\u00e9n recibir\u00e1 un correo electr\u00f3nico con la esta informaci\u00f3n.", 
     "Please provide a description of the link destination.": "Por favor, proveer una descripci\u00f3n de la destinaci\u00f3n del v\u00ednculo.", 
     "Please provide a valid URL.": "Por favor, provea un URL v\u00e1lido.", 
-    "Please select a Course Run": "Por favor seleccione una versi\u00f3n del curso.", 
     "Please read our %(link_start)sPrivacy Policy%(link_end)s for more information regarding the processing, transmission and use of data collected through the Stanford Online website and Stanford's Lagunita platform.": "S\u00edrvase leer nuestra %(link_start)sPol\u00edtica de privacidad%(link_end)s si desea m\u00e1s informaci\u00f3n con respecto a las tareas de procesamiento, transmisi\u00f3n y uso de los datos reunidos a trav\u00e9s del sitio web Stanford Online y la plataforma Lagunita de Stanford.", 
+    "Please select a Course Run": "Por favor seleccione una versi\u00f3n del curso.", 
     "Please select a PDF file to upload.": "Por favor seleccione un archivo PDF para subir.", 
     "Please select a course date": "Por favor seleccione una fecha para el curso.", 
     "Please select a file in .srt format.": "Por favor seleccione un archivo en formato .srt", 
@@ -1224,6 +1219,7 @@
     "Select all": "Selecionar todo", 
     "Select an organization": "Seleccione una organizaci\u00f3n", 
     "Select the course-wide discussion topics that you want to divide by cohort.": "Seleccione los temas de discusi\u00f3n de todo el curso que desea dividir por cohorte.", 
+    "Select the time zone for displaying course dates. If you do not specify a time zone, course dates, including assignment deadlines, will be displayed in your browser's local time zone.": "Selecciona la zona horaria para exponer las fechas del curso. Si no especificas una zona horaria, las fechas del curso, incluidas las fechas l\u00edmites de tareas, ser\u00e1n expuestas en la zona horaria local de tu navegador.", 
     "Selected tab": "Opci\u00f3n seleccionada", 
     "Send notification to mobile apps": "Enviar notificaciones a las aplicaciones m\u00f3viles", 
     "Send push notification to mobile apps": "Enviar notificaciones PUSH a las aplicaciones m\u00f3viles", 

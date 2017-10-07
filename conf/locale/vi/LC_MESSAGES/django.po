@@ -9135,12 +9135,12 @@ msgstr ""
 
 #. Translators: 'None' refers to the student's level of education
 #: common/djangoapps/student/models.py:268
-msgid "No Formal Education"
+msgid "No formal education"
 msgstr "Không được đào tạo chính quy"
 
 #. Translators: 'Other' refers to the student's level of education
 #: common/djangoapps/student/models.py:270
-msgid "Other Education"
+msgid "Other education"
 msgstr "Các đào tạo khác"
 
 #: common/djangoapps/student/views.py:1453
@@ -9766,7 +9766,7 @@ msgstr "Tài khoản"
 #: lms/templates/static_templates/help.html:9
 #: themes/edx.org/lms/templates/header.html:109
 #: cms/templates/widgets/header.html:200 cms/templates/widgets/header.html:243
-#: lms/templates/help_modal.html:17 lms/templates/static_templates/help.html:4
+#: lms/templates/static_templates/help.html:4
 #: lms/templates/static_templates/help.html:7
 msgid "Help"
 msgstr "Trợ giúp"
@@ -9949,6 +9949,10 @@ msgstr "Tìm hiểu thêm"
 #: lms/templates/course.html:27
 msgid "Starts"
 msgstr "Bắt đầu"
+
+#: lms/templates/course.html
+msgid "Starts: {date}"
+msgstr "Bắt đầu: {date}"
 
 #: lms/templates/courses_list.html:22 lms/templates/courses_list.html:21
 msgid "View all Courses"
@@ -16538,9 +16542,13 @@ msgstr "Tìm kiếm khoá học!"
 msgid "Grade required to pass this course:"
 msgstr "Điểm cần đạt được:"
 
-#: lms/templates/help_modal.html:20 lms/templates/help_modal.html:33
-msgid "{platform_name} Help"
-msgstr "{platform_name} Trợ giúp"
+#: lms/templates/help_modal.html:19
+msgid "Support"
+msgstr "Hỗ trợ"
+
+#: lms/templates/help_modal.html:22 lms/templates/help_modal.html:36
+msgid "{platform_name} Support"
+msgstr "{platform_name} Hỗ trợ"
 
 #: lms/templates/help_modal.html:100
 msgid "Include error messages, steps which lead to the issue, etc"
@@ -16688,18 +16696,17 @@ msgstr "Xin chúc mừng, bạn đã đạt yêu cầu để được cấp ch�
 msgid "{category} Program Course"
 msgstr "{category} Chương trình Khóa học"
 
-#: lms/templates/dashboard/_dashboard_course_listing.html:105
-msgid "Ended - {end_date}"
-msgstr "Kết thúc - {end_date}"
+#: lms/templates/dashboard/_dashboard_course_listing.html
+msgid "Ended - {date}"
+msgstr "Kết thúc - {date}"
 
-#: lms/templates/dashboard/_dashboard_course_listing.html:107
-msgid "Started - {start_date}"
-msgstr "Bắt đầu - {start_date}"
+#: lms/templates/dashboard/_dashboard_course_listing.html
+msgid "Started - {date}"
+msgstr "Bắt đầu - {date}"
 
-#: lms/templates/dashboard/_dashboard_course_listing.html:111
-#: lms/templates/dashboard/_dashboard_course_listing.html:113
-msgid "Starts - {start_date}"
-msgstr "Bắt đầu - {start_date}"
+#: lms/templates/dashboard/_dashboard_course_listing.html
+msgid "Starts - {date}"
+msgstr "Bắt đầu - {date}"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html:182
 msgid "Course options dropdown"
