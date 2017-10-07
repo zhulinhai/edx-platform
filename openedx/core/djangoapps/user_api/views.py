@@ -834,14 +834,6 @@ class RegistrationView(APIView):
         terms_link = marketing_link("TOS")
         terms_text = _(u"Review the Terms of Service")
 
-        # Translators: This is a legal document users must agree to
-        # in order to register a new account.
-        privacy_text = _(u"Privacy Policy")
-        privacy_link = u"<a href=\"{url}#privacy\">{privacy_text}</a>".format(
-            url=marketing_link("TOS"),
-            privacy_text=privacy_text,
-        )
-
         # Translators: "Terms of service" is a legal document users must agree to
         # in order to register a new account.
         label = _(u"I agree to the {platform_name} {terms_of_service}").format(
@@ -885,7 +877,7 @@ class RegistrationView(APIView):
         privacy_link = marketing_link("PRIVACY")
         privacy_text = _(u"Review the Privacy Policy")
 
-        # Translators: "Terms of service" is a legal document users must agree to
+        # Translators: "Privacy Policy" is a legal document users must agree to
         # in order to register a new account.
         label = _(u"I agree to the {platform_name} {privacy}").format(
             platform_name=configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME),
