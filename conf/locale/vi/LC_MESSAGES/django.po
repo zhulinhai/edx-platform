@@ -9072,12 +9072,39 @@ msgstr "Cho chúng tôi biết lý do bạn đến với {platform_name}"
 msgid "Please select your Country."
 msgstr "Làm ơn chọn đất nước của bạn"
 
+#: openedx/core/djangoapps/user_api/views.py:784
+msgid "Review the Honor Code"
+msgstr "Kiểm tra Cam Kết Danh Dự"
+
 #. Translators: This is a legal document users must agree to
 #. in order to register a new account.
-#: openedx/core/djangoapps/user_api/views.py:770
-#: openedx/core/djangoapps/user_api/views.py:657
+#: openedx/core/djangoapps/user_api/views.py:790
 msgid "Terms of Service and Honor Code"
 msgstr "Điều khoản sử dụng và Cam kết danh dự"
+
+#. Translators: "Terms of Service" is a legal document users must agree to
+#. in order to register a new account.
+#. Translators: "Terms of service" is a legal document users must agree to
+#. in order to register a new account.
+#: openedx/core/djangoapps/user_api/views.py:796
+#: openedx/core/djangoapps/user_api/views.py:839
+#, python-brace-format
+msgid "I agree to the {platform_name} {terms_of_service}"
+msgstr "Tôi đồng ý với {platform_name} {terms_of_service}"
+
+#. Translators: "Terms of Service" is a legal document users must agree to
+#. in order to register a new account.
+#. Translators: "Terms of service" is a legal document users must agree to
+#. in order to register a new account.
+#: openedx/core/djangoapps/user_api/views.py:803
+#: openedx/core/djangoapps/user_api/views.py:846
+#, python-brace-format
+msgid "You must agree to the {platform_name} {terms_of_service}"
+msgstr "Bạn phải đồng ý với {platform_name} {terms_of_service}"
+
+#: openedx/core/djangoapps/user_api/views.py:835
+msgid "Review the Terms of Service"
+msgstr "Xem lại các Điều khoản Dịch vụ"
 
 #: openedx/core/lib/api/view_utils.py:119
 #: openedx/core/lib/api/view_utils.py:150
