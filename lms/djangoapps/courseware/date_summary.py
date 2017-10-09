@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.utils.translation import to_locale, get_language
+from django.conf import settings
 from lazy import lazy
 
 from course_modes.models import CourseMode
@@ -173,6 +174,9 @@ class CourseEndDate(DateSummary):
 
     @property
     def description(self):
+        # Stanford is short circuiting the description because we don't care for this text
+        if settings.HIDE_COURSE_INFO_CERTS_TEXT:
+            return ''
         if datetime.now(utc) <= self.date:
             mode, is_active = CourseEnrollment.enrollment_mode_for_user(self.user, self.course.id)
             if is_active and CourseMode.is_eligible_for_certificate(mode):
