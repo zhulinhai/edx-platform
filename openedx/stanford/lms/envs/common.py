@@ -54,6 +54,7 @@ FORUM_MONGO_PARAMS = {
 HELP_MODAL_LINKS = [
     # {'url': 'https://help.com', 'text': 'How to register an account'}
 ]
+HIDE_COURSE_INFO_CERTS_TEXT = True
 INLINE_ANALYTICS_SUPPORTED_TYPES = {
     'MultipleChoiceResponse': 'radio',
     'ChoiceResponse': 'checkbox',
