@@ -36,13 +36,20 @@ CATALOG_VISIBILITY_CATALOG_AND_ABOUT = "both"
 CATALOG_VISIBILITY_ABOUT = "about"
 CATALOG_VISIBILITY_NONE = "none"
 
+<<<<<<< HEAD
 DEFAULT_COURSE_VISIBILITY_IN_CATALOG = getattr(
     settings,
     'DEFAULT_COURSE_VISIBILITY_IN_CATALOG',
     'both'
 )
 
+=======
+<<<<<<< HEAD
+>>>>>>> FIX: setting in xmodule and adding chaching
 DEFAULT_MOBILE_AVAILABLE = getattr(settings, 'DEFAULT_MOBILE_AVAILABLE', False)
+=======
+DEFAULT_COURSE_VISIBILITY_IN_CATALOG = getattr(settings, 'DEFAULT_COURSE_VISIBILITY_IN_CATALOG', 'both')
+>>>>>>> FIX: setting in xmodule and adding chaching
 
 
 class StringOrDate(Date):
@@ -697,10 +704,14 @@ class CourseFields(object):
             "to about page), 'none' (do not show in catalog and do not allow access to an about page)."
         ),
 <<<<<<< HEAD
+<<<<<<< HEAD
         default=DEFAULT_COURSE_VISIBILITY_IN_CATALOG,
 =======
         default=settings.DEFAULT_COURSE_VISIBILITY_IN_CATALOG,
 >>>>>>> change catalog visibility default to none
+=======
+        default=DEFAULT_COURSE_VISIBILITY_IN_CATALOG,
+>>>>>>> FIX: setting in xmodule and adding chaching
         scope=Scope.settings,
         values=[
             {"display_name": _("Both"), "value": CATALOG_VISIBILITY_CATALOG_AND_ABOUT},
