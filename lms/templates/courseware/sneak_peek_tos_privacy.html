@@ -10,7 +10,7 @@ from student.models import UserProfile
 % if course and not UserProfile.has_registered(user):
   <%
     tos_link = u"<a href='{}'>".format(marketing_link('TOS'))
-    privacy_link = u"<a href='{}#privacy'>".format(marketing_link('TOS'))
+    privacy_link = u"<a href='{}'>".format(marketing_link('PRIVACY'))
   %>
 
   <p class="sneakpeek-warning">

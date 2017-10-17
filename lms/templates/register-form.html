@@ -247,7 +247,7 @@ from microsite_configuration import microsite
         <label for="tos-yes">${_('I agree to the {link_start1}Terms of Service{link_end} and {link_start2}Privacy Policy{link_end}').format(
           link_start1='<a href="{url}" class="new-vp" tabindex="-1">'.format(url=marketing_link('TOS')),
           link_end='</a>',
-          link_start2='<a href="{url}#privacy" class="new-vp" tabindex="-1">'.format(url=marketing_link('TOS')),
+          link_start2='<a href="{url}" class="new-vp" tabindex="-1">'.format(url=marketing_link('PRIVACY')),
           )}</label>
       </div>
       % endif
@@ -259,7 +259,7 @@ from microsite_configuration import microsite
         <input id="honorcode-yes" type="checkbox" name="honor_code" value="true" />
         <%
           ## TODO: provide a better way to override these links
-          self.register_honor_link = marketing_link('TOS') + '#honor'
+          self.register_honor_link = marketing_link('HONOR')
           if self.register_honor_link:
             honor_code_path = self.register_honor_link
           else:
