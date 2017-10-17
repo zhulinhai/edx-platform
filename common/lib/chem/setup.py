@@ -11,6 +11,7 @@ setup(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         "nltk==3.2.5",
 =======
         "nltk==3.2.2",
@@ -21,5 +22,8 @@ setup(
 =======
         "nltk==3.2.2",
 >>>>>>> reverting nltk change
+=======
+        "nltk==2.0.6",
+>>>>>>> reverting nltk back to v2.0.6
     ],
 )
