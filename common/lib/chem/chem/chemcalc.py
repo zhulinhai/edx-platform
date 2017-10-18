@@ -5,8 +5,6 @@ from fractions import Fraction
 import nltk
 from nltk.tree import Tree
 from pyparsing import Literal, OneOrMore, ParseException, StringEnd
-from nltk import CFG
-
 
 ARROWS = ('<->', '->')
 
@@ -58,6 +56,7 @@ grammar = """
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 parser = nltk.ChartParser(nltk.CFG.fromstring(grammar))
 =======
 parser = nltk.ChartParser(CFG.fromstring(grammar))
@@ -68,6 +67,9 @@ parser = nltk.ChartParser(nltk.parse_cfg(grammar))
 =======
 parser = nltk.ChartParser(CFG.fromstring(grammar))
 >>>>>>> reverting nltk change
+=======
+parser = nltk.ChartParser(nltk.parse_cfg(grammar))
+>>>>>>> [ci skip] CFG fix
 
 
 def _clean_parse_tree(tree):
