@@ -1,7 +1,6 @@
 """
 This file exposes a number of password complexity validators which can be optionally added to
 account creation
-
 This file was inspired by the django-passwords project at https://github.com/dstufft/django-passwords
 authored by dstufft (https://github.com/dstufft)
 """
@@ -13,7 +12,10 @@ import string
 from nltk.metrics.distance import edit_distance
 =======
 import nltk
+<<<<<<< HEAD
 from nltk.metrics import distance
+>>>>>>> test fixes
+=======
 >>>>>>> test fixes
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -24,10 +26,8 @@ def validate_password_strength(value):
     """
     This function loops through each validator defined in this file
     and applies it to a user's proposed password
-
     Args:
         value: a user's proposed password
-
     Returns: None, but raises a ValidationError if the proposed password
         fails any one of the validators in password_validators
     """
@@ -112,9 +112,13 @@ def validate_password_dictionary(value):
     if password_max_edit_distance and password_dictionary:
         for word in password_dictionary:
 <<<<<<< HEAD
+<<<<<<< HEAD
             distance = edit_distance(value, word)
 =======
             distance = distance.edit_distance(value, word)
+>>>>>>> test fixes
+=======
+            distance = nltk.metrics.distance.edit_distance(value, word)
 >>>>>>> test fixes
             if distance <= password_max_edit_distance:
                 raise ValidationError(_("Too similar to a restricted dictionary word."), code="dictionary_word")
