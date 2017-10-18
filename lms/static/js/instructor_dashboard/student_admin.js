@@ -60,6 +60,7 @@
             this.$btn_rescore_problem_if_higher_all = this.$section.find("input[name='rescore-problem-all-if-higher']");
             this.$btn_task_history_all = this.$section.find("input[name='task-history-all']");
             this.$table_task_history_all = this.$section.find('.task-history-all-table');
+            this.$btn_download_blank_lti = this.$section.find("input[name='lti-blank-grades']");
             this.instructor_tasks = new (PendingInstructorTasks())(this.$section);
             this.$request_err = findAndAssert(this.$section, '.student-specific-container .request-response-error');
             this.$request_err_grade = findAndAssert(this.$section, '.student-grade-container .request-response-error');
@@ -359,6 +360,11 @@
                         return studentadmin.$request_err_ee.text(fullErrorMessage);
                     })
                 });
+            });
+            this.$btn_download_blank_lti.click(function() {
+                var url;
+                url = _this.$btn_download_blank_lti.data('endpoint');
+                return window.location.href = url;
             });
             this.$btn_reset_attempts_all.click(function() {
                 var confirmMessage, errorMessage, fullConfirmMessage,
