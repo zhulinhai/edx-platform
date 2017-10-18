@@ -137,31 +137,6 @@
                 },
 
                 saveError: function(error) {
-                    var url;
-                    var queryParameters = (function getUrlVars() {
-                        // http://stackoverflow.com/a/4656873
-                        var vars = [], hash;
-                        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-                        for(var i = 0; i < hashes.length; i++)
-                        {
-                            hash = hashes[i].split('=');
-                            vars.push(hash[0]);
-                            vars[hash[0]] = hash[1];
-                        }
-                        return vars;
-                    }());
-                    if(error.status === 418) {
-                        // Hijack the response for Shibboleth redirects
-                        url = error.responseText;
-                        if(url) {
-                            if(queryParameters['next']) {
-                                url = url + '?next=' + queryParameters['next'];
-                            }
-                            window.location = url;
-                            return;
-                        }
-                    }
-                    
                     var msg = error.responseText;
                     if (error.status === 0) {
                         msg = gettext('An error has occurred. Check your Internet connection and try again.');
