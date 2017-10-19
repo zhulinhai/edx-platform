@@ -603,7 +603,7 @@ class LoginSessionViewTest(UserAPITestCase):
                 "name": "password",
                 "defaultValue": "",
                 "type": "password",
-                "required": False,
+                "required": True,
                 "label": "Password",
                 "placeholder": "",
                 "instructions": "",
