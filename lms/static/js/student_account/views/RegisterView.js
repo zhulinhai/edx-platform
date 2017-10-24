@@ -62,6 +62,9 @@
                         }
                     }));
 
+                    var regExtra = $('#register-extra-tpl').html();
+                    $('#register-extra').html(regExtra);
+
                     this.postRender();
 
                     // Must be called after postRender, since postRender sets up $formFeedback.
