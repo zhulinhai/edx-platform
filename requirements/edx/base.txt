@@ -122,6 +122,7 @@ nltk==3.2.2
 =======
 >>>>>>> Second try test fices
 nose-xunitmp==0.3.2
+oauth2==1.9.0.post1
 oauthlib==1.0.3
 path.py==8.2.1
 piexif==1.0.2
