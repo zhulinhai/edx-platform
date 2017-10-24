@@ -69,21 +69,21 @@
                                 persistChanges: true
                             })
                         },
-                        {
-                            view: new AccountSettingsFieldViews.PasswordFieldView({
-                                model: userAccountModel,
-                                title: gettext('Password'),
-                                screenReaderTitle: gettext('Reset Your Password'),
-                                valueAttribute: 'password',
-                                emailAttribute: 'email',
-                                linkTitle: gettext('Reset Your Password'),
-                                linkHref: fieldsData.password.url,
-                                helpMessage: StringUtils.interpolate(
-                                    gettext('When you select "Reset Your Password", a message will be sent to the email address for your {platform_name} account. Click the link in the message to reset your password.'),  // eslint-disable-line max-len
-                                    {platform_name: platformName}
-                                )
-                            })
-                        },
+                        // {
+                        //     view: new AccountSettingsFieldViews.PasswordFieldView({
+                        //         model: userAccountModel,
+                        //         title: gettext('Password'),
+                        //         screenReaderTitle: gettext('Reset Your Password'),
+                        //         valueAttribute: 'password',
+                        //         emailAttribute: 'email',
+                        //         linkTitle: gettext('Reset Your Password'),
+                        //         linkHref: fieldsData.password.url,
+                        //         helpMessage: StringUtils.interpolate(
+                        //             gettext('When you select "Reset Your Password", a message will be sent to the email address for your {platform_name} account. Click the link in the message to reset your password.'),  // eslint-disable-line max-len
+                        //             {platform_name: platformName}
+                        //         )
+                        //     })
+                        // },
                         {
                             view: new AccountSettingsFieldViews.LanguagePreferenceFieldView({
                                 model: userPreferencesModel,
@@ -247,7 +247,7 @@
                 el: accountSettingsElement,
                 tabSections: {
                     aboutTabSections: aboutSectionsData,
-                    accountsTabSections: accountsSectionData,
+                    // accountsTabSections: accountsSectionData,
                     ordersTabSections: ordersSectionData
                 },
                 userPreferencesModel: userPreferencesModel
