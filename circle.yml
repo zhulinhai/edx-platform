@@ -8,6 +8,8 @@ general:
     - "test_root/log"
 
 dependencies:
+  pre:
+    - sudo apt-get update; sudo apt-get install libxml2-dev libxmlsec1-dev swig -y
   override:
     - npm install
 
