@@ -417,11 +417,10 @@ FEATURES = {
 
     # Whether the bulk enrollment view is enabled.
     'ENABLE_BULK_ENROLLMENT_VIEW': False,
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     # Whether course goals is enabled.
     'ENABLE_COURSE_GOALS': True,
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     # Set to enable Enterprise integration
@@ -456,7 +455,17 @@ FEATURES = {
     'ENABLE_COOKIE_CONSENT': False,
 >>>>>>> merge fixes
 >>>>>>> merge fixes
+<<<<<<< HEAD
 >>>>>>> merge fixes
+=======
+=======
+
+    # Enable footer banner for cookie consent.
+    # See https://cookieconsent.insites.com/ for more.
+    'ENABLE_COOKIE_CONSENT': False,
+
+>>>>>>> upstream master merge
+>>>>>>> upstream master merge
 }
 
 # Settings for the course reviews tool template and identification key, set either to None to disable course reviews
@@ -3057,6 +3066,7 @@ COURSE_ABOUT_VISIBILITY_PERMISSION = 'see_about_page'
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 DEFAULT_COURSE_VISIBILITY_IN_CATALOG = "both"
 =======
 <<<<<<< HEAD
@@ -3067,6 +3077,9 @@ DEFAULT_COURSE_VISIBILITY_IN_CATALOG = "both"
 =======
 <<<<<<< HEAD
 >>>>>>> set default course visibility in catalog
+=======
+<<<<<<< HEAD
+>>>>>>> upstream master merge
 DEFAULT_MOBILE_AVAILABLE = True
 =======
 DEFAULT_COURSE_VISIBILITY_IN_CATALOG = "none"
@@ -3086,6 +3099,11 @@ DEFAULT_COURSE_VISIBILITY_IN_CATALOG = "both"
 
 >>>>>>> set default course visibility in catalog
 >>>>>>> set default course visibility in catalog
+=======
+# Set default course visibility in catalog
+DEFAULT_COURSE_VISIBILITY_IN_CATALOG = "both"
+
+>>>>>>> upstream master merge
 
 # Enrollment API Cache Timeout
 ENROLLMENT_COURSE_DETAILS_CACHE_TIMEOUT = 60

@@ -132,9 +132,9 @@ from lms.envs.common import (
     DISABLE_ACCOUNT_ACTIVATION_REQUIREMENT_SWITCH,
     # Video Image settings
     VIDEO_IMAGE_SETTINGS,
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     VIDEO_TRANSCRIPTS_SETTINGS,
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     # Methods to derive settings
@@ -162,6 +162,9 @@ from lms.envs.common import (
 >>>>>>> ENH: adding setting for datadog and removing log suppresion
 =======
 =======
+=======
+
+>>>>>>> upstream master merge
 
     # Setting for PAID_COURSE_REGISTRATION, DOES NOT AFFECT VERIFIED STUDENTS
     PAID_COURSE_REGISTRATION_CURRENCY,
@@ -174,8 +177,11 @@ from lms.envs.common import (
     ANALITICA_ACTIVE,
     ANALITICA_TOKEN
 
+<<<<<<< HEAD
 >>>>>>> merge fixes
 >>>>>>> merge fixes
+=======
+>>>>>>> upstream master merge
 )
 from path import Path as path
 

@@ -74,7 +74,6 @@ def assets_handler(request, course_key_string=None, asset_key_string=None):
     if _request_response_format_is_json(request, response_format):
         if request.method == 'GET':
             return _assets_json(request, course_key)
-<<<<<<< HEAD
 
         asset_key = AssetKey.from_string(asset_key_string) if asset_key_string else None
         return _update_asset(request, course_key, asset_key)
@@ -87,15 +86,6 @@ def assets_handler(request, course_key_string=None, asset_key_string=None):
 
 def _get_response_format(request):
     return request.GET.get('format') or request.POST.get('format') or 'html'
-=======
-        else:
-            asset_key = AssetKey.from_string(asset_key_string) if asset_key_string else None
-            return _update_asset(request, course_key, asset_key)
-    elif request.method == 'GET' or request.method == 'POST':  # assume html
-        return _asset_index(request, course_key)
-    else:
-        return HttpResponseNotFound()
->>>>>>> add filter to assets library in studio
 
 
 def _request_response_format_is_json(request, response_format):
@@ -109,7 +99,6 @@ def _asset_index(course_key):
     Supports start (0-based index into the list of assets) and max query parameters.
     '''
     course_module = modulestore().get_course(course_key)
-    filter_criteria = request.POST.get("filter_criteria", "")
 
     return render_to_response('asset_index.html', {
         'waffle_flag_enabled': NewAssetsPageFlag.feature_enabled(course_key),
@@ -117,8 +106,7 @@ def _asset_index(course_key):
         'max_file_size_in_mbs': settings.MAX_ASSET_UPLOAD_FILE_SIZE_IN_MB,
         'chunk_size_in_mbs': settings.UPLOAD_CHUNK_SIZE_IN_MB,
         'max_file_size_redirect_url': settings.MAX_ASSET_UPLOAD_FILE_SIZE_URL,
-        'asset_callback_url': reverse_course_url('assets_handler', course_key),
-        'filter_criteria': filter_criteria
+        'asset_callback_url': reverse_course_url('assets_handler', course_key)
     })
 
 
@@ -127,7 +115,6 @@ def _assets_json(request, course_key):
     Display an editable asset library.
 
     Supports start (0-based index into the list of assets) and max query parameters.
-<<<<<<< HEAD
     '''
     request_options = _parse_request_to_dictionary(request)
 
@@ -135,6 +122,7 @@ def _assets_json(request, course_key):
     filter_parameters = {}
 =======
     filter_parameters = None
+<<<<<<< HEAD
 =======
     """
     requested_page = int(request.GET.get('page', 0))
@@ -174,6 +162,8 @@ def _assets_json(request, course_key):
         sort_direction = ASCENDING
 >>>>>>> add filter to assets library in studio
 >>>>>>> add filter to assets library in studio
+=======
+>>>>>>> upstream master merge
 
     if request_options['requested_asset_type']:
         filters_are_invalid_error = _get_error_if_invalid_parameters(request_options['requested_asset_type'])

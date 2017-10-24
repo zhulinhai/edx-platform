@@ -75,6 +75,7 @@
 
             .button-org {
 <<<<<<< HEAD
+<<<<<<< HEAD
               @include margin-left($baseline*0.75);
 
               background: transparent !important;
@@ -85,11 +86,9 @@
               font-size: $body-font-size;
               color: $body-color !important;
               letter-spacing: 0 !important;
-
-              &:hover, &:focus {
-                color: $link-color;
-              }
 =======
+>>>>>>> upstream master merge
+
                 @include margin-left($baseline*0.75);
                 background: transparent;
                 border: none;
@@ -103,7 +102,6 @@
                 &:hover, &:focus {
                     color: $link-color;
                 }
->>>>>>> remove all the css importants
             }
           }
 

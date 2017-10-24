@@ -940,10 +940,6 @@ def create_new_course(user, org, number, run, fields):
     """
     org_data = get_organization_by_short_name(org)
     if not org_data and organizations_enabled():
-<<<<<<< HEAD
-        raise ValidationError(_('You must link this course to an organization in order to continue. Organization '
-                                'you selected does not exist in the system, you will need to add it to the system'))
-=======
         return JsonResponse(
             {'error': _('You must link this course to an organization in order to continue. '
                         'Organization you selected does not exist in the system, '
@@ -951,7 +947,6 @@ def create_new_course(user, org, number, run, fields):
             status=400
         )
 
->>>>>>> Added organization field to student profile model
     store_for_new_course = modulestore().default_modulestore.get_modulestore_type()
     new_course = create_new_course_in_store(store_for_new_course, user, org, number, run, fields)
     add_organization_course(org_data, new_course.id)
@@ -1018,14 +1013,6 @@ def rerun_course(user, source_course_key, org, number, run, fields, async=True):
     json_fields = json.dumps(fields, cls=EdxJSONEncoder)
     args = [unicode(source_course_key), unicode(destination_course_key), user.id, json_fields]
 
-<<<<<<< HEAD
-    if async:
-        rerun_course_task.delay(*args)
-    else:
-        rerun_course_task(*args)
-
-    return destination_course_key
-=======
     org_data = get_organization_by_short_name(org)
     if not org_data and organizations_enabled():
         return JsonResponse(
@@ -1042,7 +1029,6 @@ def rerun_course(user, source_course_key, org, number, run, fields, async=True):
         'url': reverse_url('course_handler'),
         'destination_course_key': unicode(destination_course_key)
     })
->>>>>>> Added organization field to student profile model
 
 
 # pylint: disable=unused-argument
