@@ -37,6 +37,7 @@
                     this.errorMessage = data.thirdPartyAuth.errorMessage || '';
                     this.platformName = data.platformName;
                     this.autoSubmit = data.thirdPartyAuth.autoSubmitRegForm;
+                    this.utecThirdPartyAuthPriority = data.utecThirdPartyAuthPriority;
 
                     this.listenTo(this.model, 'sync', this.saveSuccess);
                 },
@@ -54,7 +55,8 @@
                             currentProvider: this.currentProvider,
                             providers: this.providers,
                             hasSecondaryProviders: this.hasSecondaryProviders,
-                            platformName: this.platformName
+                            platformName: this.platformName,
+                            utecThirdPartyAuthPriority: this.utecThirdPartyAuthPriority
                         }
                     }));
 
