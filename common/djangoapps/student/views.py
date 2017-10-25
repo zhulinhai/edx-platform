@@ -416,12 +416,25 @@ def _cert_info(user, course_overview, cert_status, course_mode):  # pylint: disa
                     cert_status['download_url']
                 )
 
+    def get_utec_grade_from_standard_grade(standard_grade):
+        """
+        This method receives a float standard grade and returns the corresponding utec grade label
+        """
+        if settings.FEATURES['UTEC_CUSTOM_CERTS_GRADE']:
+            for key, val in settings.FEATURES['UTEC_GRADE'].iteritems():
+                if float(val['min']) <= standard_grade <= float(val['max']):
+                    return val['label']
+        else:
+            return False
+
     if status in {'generating', 'ready', 'notpassing', 'restricted', 'auditing', 'unverified'}:
         persisted_grade = CourseGradeFactory().get_persisted(user, course_overview)
         if persisted_grade is not None:
             status_dict['grade'] = unicode(persisted_grade.percent)
+            status_dict['utec_grade'] = get_utec_grade_from_standard_grade(persisted_grade.percent)
         elif 'grade' in cert_status:
             status_dict['grade'] = cert_status['grade']
+            status_dict['utec_grade'] = get_utec_grade_from_standard_grade(float(cert_status['grade']))
         else:
             # Note: as of 11/20/2012, we know there are students in this state-- cs169.1x,
             # who need to be regraded (we weren't tracking 'notpassing' at first).
@@ -1694,6 +1707,8 @@ def create_account_with_params(request, params):
         not do_external_auth or
         not eamap.external_domain.startswith(openedx.core.djangoapps.external_auth.views.SHIBBOLETH_DOMAIN_PREFIX)
     )
+
+    tos_required = settings.FEATURES.get("UTEC_TOS_REQUIRED", tos_required)
 
     form = AccountCreationForm(
         data=params,
