@@ -6,12 +6,13 @@ from django.conf import settings
 %>
 
 <header>
-  % if static.get_value('course_about_show_social_links', True):
-  <div class="social-sharing">
-    <div class="sharing-message">${_("Share with friends and family!")}</div>
-    ## TODO: this should probably be an overrideable block,
-    ##       or something allowing themes to do whatever they
-    ##       want here (and on this whole page, really).
+  % if utec_show_social_buttons:
+    % if static.get_value('course_about_show_social_links', True):
+    <div class="social-sharing">
+      <div class="sharing-message">${_("Share with friends and family!")}</div>
+      ## TODO: this should probably be an overrideable block,
+      ##       or something allowing themes to do whatever they
+      ##       want here (and on this whole page, really).
       <%
         site_domain = static.get_value('site_domain', settings.SITE_NAME)
         platform_name = static.get_platform_name()
@@ -53,6 +54,7 @@ from django.conf import settings
       <a href="${email_subject}" class="share">
         <span class="icon fa fa-envelope" aria-hidden="true"></span><span class="sr">${_("Email someone to say you've enrolled in this course")}</span>
       </a>
-  </div>
+    </div>
+    % endif
   % endif
 </header>
