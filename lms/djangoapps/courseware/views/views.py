@@ -665,6 +665,7 @@ def course_about(request, course_id):
             'cart_link': reverse('shoppingcart.views.show_cart'),
             'pre_requisite_courses': pre_requisite_courses,
             'course_image_urls': overview.image_urls,
+            'utec_show_social_buttons': settings.FEATURES.get('UTEC_SHOW_SOCIAL_BUTTONS', True),
         }
         inject_coursetalk_keys_into_context(context, course_key)
 
