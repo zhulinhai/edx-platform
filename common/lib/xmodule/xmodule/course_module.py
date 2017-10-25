@@ -12,6 +12,7 @@ from lxml import etree
 from path import Path as path
 from pytz import utc
 from xblock.fields import Scope, List, String, Dict, Boolean, Integer, Float
+from django.conf import settings
 
 from xmodule import course_metadata_utils
 from xmodule.course_metadata_utils import DEFAULT_START_DATE
@@ -1086,6 +1087,12 @@ class CourseDescriptor(CourseFields, SequenceDescriptor, LicenseMixin):
     @property
     def lowest_passing_grade(self):
         return min(self._grading_policy['GRADE_CUTOFFS'].values())
+
+    @property
+    def utec_lowest_passing_grade(self):
+        for key, val in settings.FEATURES['UTEC_GRADE'].iteritems():
+            if float(val['min']) <= float(min(self._grading_policy['GRADE_CUTOFFS'].values())) <= float(val['max']):
+                return val['label']
 
     @property
     def is_cohorted(self):

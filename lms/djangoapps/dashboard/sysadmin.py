@@ -84,6 +84,7 @@ class SysadminDashboardView(TemplateView):
         writer = csv.writer(csv_file, dialect='excel', quotechar='"',
                             quoting=csv.QUOTE_ALL)
 
+        header = [x.encode('utf-8') for x in header]
         writer.writerow(header)
 
         # Setup streaming of the data
@@ -402,7 +403,7 @@ class Courses(SysadminDashboardView):
         try:
             git_import.add_repo(gitloc, None, branch)
         except GitImportError as ex:
-            error_msg = str(ex)
+            error_msg = unicode(ex)
         ret = output.getvalue()
 
         # Remove handler hijacks
