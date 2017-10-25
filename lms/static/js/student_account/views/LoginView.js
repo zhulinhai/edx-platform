@@ -40,6 +40,8 @@
 
                     this.listenTo(this.model, 'sync', this.saveSuccess);
                     this.listenTo(this.resetModel, 'sync', this.resetEmail);
+                    this.utecThirdPartyAuthPriority = data.utecThirdPartyAuthPriority;
+                    this.autoSubmit = data.thirdPartyAuth.autoSubmitRegForm;
                 },
 
                 render: function(html) {
@@ -53,7 +55,8 @@
                             currentProvider: this.currentProvider,
                             providers: this.providers,
                             hasSecondaryProviders: this.hasSecondaryProviders,
-                            platformName: this.platformName
+                            platformName: this.platformName,
+                            utecThirdPartyAuthPriority: this.utecThirdPartyAuthPriority
                         }
                     }));
 
@@ -157,6 +160,9 @@
                      this.currentProvider) {
                         this.clearFormErrors();
                         this.renderAuthWarning();
+                        if ( this.autoSubmit ) {
+                            $('.form-toggle[data-type="register"]').trigger('click');
+                        }
                     } else {
                         this.renderErrors(this.defaultFormErrorsTitle, this.errors);
                     }
