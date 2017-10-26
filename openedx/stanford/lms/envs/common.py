@@ -118,7 +118,6 @@ TEMPLATES[0]['OPTIONS']['context_processors'] += [
     # Include TEMPLATE_VISIBLE_SETTINGS in templates
     'settings_context_processor.context_processors.settings',
 ]
-THEME_NAME = 'lagunita'
 TYPES_WITH_CHILD_PROBLEMS_LIST = [
     # These types are children of children of units.
     'library_content',

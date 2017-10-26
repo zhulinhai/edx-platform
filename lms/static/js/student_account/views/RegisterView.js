@@ -37,7 +37,6 @@
                     this.errorMessage = data.thirdPartyAuth.errorMessage || '';
                     this.platformName = data.platformName;
                     this.autoSubmit = data.thirdPartyAuth.autoSubmitRegForm;
-                    this.themeName = data.themeName;
                     this.privacyPolicyUrl = data.privacyPolicyUrl;
 
                     this.listenTo(this.model, 'sync', this.saveSuccess);
@@ -56,11 +55,13 @@
                             currentProvider: this.currentProvider,
                             providers: this.providers,
                             hasSecondaryProviders: this.hasSecondaryProviders,
-                            themeName: this.themeName,
                             privacyPolicyUrl: this.privacyPolicyUrl,
                             platformName: this.platformName
                         }
                     }));
+
+                    var regExtra = $('#register-extra-tpl').html();
+                    $('#register-extra').html(regExtra);
 
                     this.postRender();
 
