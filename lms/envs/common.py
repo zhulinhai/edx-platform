@@ -349,6 +349,8 @@ FEATURES = {
     # Show Language selector.
     'SHOW_LANGUAGE_SELECTOR': False,
 
+    'SHOW_ABOUT_LINK': True,
+
     # Write new CSM history to the extended table.
     # This will eventually default to True and may be
     # removed since all installs should have the separate
