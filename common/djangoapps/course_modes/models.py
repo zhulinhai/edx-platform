@@ -13,6 +13,12 @@ from django.db.models import Q
 from django.dispatch import receiver
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+<<<<<<< HEAD
+=======
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+
+>>>>>>> [ci skip] ENH: usage of site_configuration for settings
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.django.models import CourseKeyField
 
@@ -232,7 +238,7 @@ class CourseMode(models.Model):
 
     @classmethod
     def get_default_course_mode(cls):
-        default_currency = settings.PAID_COURSE_REGISTRATION_CURRENCY[0]
+        default_currency = configuration_helpers.get_value('PAID_COURSE_REGISTRATION_CURRENCY', settings.PAID_COURSE_REGISTRATION_CURRENCY)[0]
         return Mode(cls.AUDIT, _('Audit'), 0, '', default_currency, None, None, None, None)
 
     @classmethod
@@ -758,12 +764,12 @@ def get_course_prices(course, verified_only=False):
     if verified_only:
         registration_price = CourseMode.min_course_price_for_verified_for_currency(
             course.id,
-            settings.PAID_COURSE_REGISTRATION_CURRENCY[0]
+            configuration_helpers.get_value('PAID_COURSE_REGISTRATION_CURRENCY', settings.PAID_COURSE_REGISTRATION_CURRENCY)[0]
         )
     else:
         registration_price = CourseMode.min_course_price_for_currency(
             course.id,
-            settings.PAID_COURSE_REGISTRATION_CURRENCY[0]
+            configuration_helpers.get_value('PAID_COURSE_REGISTRATION_CURRENCY', settings.PAID_COURSE_REGISTRATION_CURRENCY)[0]
         )
 
     if registration_price > 0:
@@ -781,7 +787,7 @@ def format_course_price(price):
     """
     Return a formatted price for a course (a string preceded by correct currency, or 'Free').
     """
-    currency_symbol = settings.PAID_COURSE_REGISTRATION_CURRENCY[1]
+    currency_symbol = configuration_helpers.get_value('PAID_COURSE_REGISTRATION_CURRENCY', settings.PAID_COURSE_REGISTRATION_CURRENCY)[1]
 
     if price:
         # Translators: This will look like '$50', where {currency_symbol} is a symbol such as '$' and {price} is a
