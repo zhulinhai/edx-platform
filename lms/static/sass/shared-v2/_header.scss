@@ -102,6 +102,49 @@
                 border-bottom: 4px solid $black-t3 !important;
             }
         }
+
+        .user {
+            @include float(right);
+            margin-top: 0;
+
+            > .primary {
+                display: block;
+                @include float(left);
+                margin: 0;
+                margin-top: $baseline/2;
+                position: relative;
+
+                > a {
+                      margin: 0;
+                      @include border-right-radius(0);
+                      background-image: none;
+                }
+
+                &:last-child {
+                    > a {
+                        @include border-radius(0, 4px, 4px, 0);
+                        @include border-left(none);
+                        padding: ($baseline/2) ($baseline/2);
+                        color: $base-font-color;
+                        text-decoration: none;
+                        text-transform: uppercase;
+                        text-shadow: 0 1px rgba(255,255,255, 0.6);
+                        vertical-align: middle;
+
+                        &.shopping-cart {
+                            border-radius: 4px;
+                            border: 1px solid $border-color-2;
+                            margin-right: ($baseline/2);
+                            padding-bottom: 6px;
+                        }
+
+                        &:hover, &:focus, &:active {
+                            background: $button-bg-hover-color;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // Style the courseware's slim version of the header
