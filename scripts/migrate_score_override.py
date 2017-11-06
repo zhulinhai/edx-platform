@@ -15,10 +15,11 @@ def main():
     from django.contrib.auth.models import User
     from openassessment.assessment.models import Assessment, AssessmentPart, StaffWorkflow
     from openassessment.workflow.models import AssessmentWorkflow, AssessmentWorkflowStep
-    from student.models import anonymous_id_for_user
+    from student.models import anonymous_id_for_user, user_by_anonymous_id
     from submissions.models import Score, ScoreSummary, ScoreAnnotation
 
     old_scores = Score.objects.filter(submission__isnull=True, reset=False).order_by('id')
+    updated_count = 0
     for score in old_scores:
         try:
             with transaction.atomic():
@@ -28,7 +29,16 @@ def main():
                 # prefetch the score summary and resave it to maintain its original field values.
                 score_summary = ScoreSummary.objects.get(student_item=score.student_item)
 
-                # Offset override by 1 second for convenience when sorting db
+                # Update old override with submission from the score preceding it
+                submission = Score.objects.filter(
+                    student_item=score.student_item,
+                    created_at__lte=score.created_at,
+                    submission__isnull=False,
+                ).order_by('-created_at')[:1].get().submission
+                score.submission = submission
+                score.save()
+
+                # Offset override reset by 1 second for convenience when sorting db
                 override_date = score.created_at - datetime.timedelta(seconds=1)
                 # Create reset score
                 Score.objects.create(
@@ -39,14 +49,6 @@ def main():
                     created_at=override_date,
                     reset=True,
                 )
-
-                # Update old override with submission from the score preceding it
-                submission = Score.objects.filter(
-                    student_item=score.student_item,
-                    created_at__lt=score.created_at,
-                ).order_by('-created_at')[:1].get().submission
-                score.submission = submission
-                score.save()
 
                 # Restore original score summary values
                 score_summary.save()
@@ -92,7 +94,7 @@ def main():
                 # Just take the first combination of options which add up to the override point score
                 for selection in itertools.product(*criteria_options):
                     total = sum(option.points for option in selection)
-                    if total == points_override:
+                    if total == score.points_earned:
                         for option in selection:
                             assessment_parts.append({
                                 'criterion': option.criterion,
@@ -168,12 +170,23 @@ def main():
                     workflow.status = 'done'
                     workflow.save()
 
+            updated_count += 1
+            user = user_by_anonymous_id(score.student_item.student_id)
+            print(
+                "Successfully updated score {} for user {} with email {} in course {} for item: {}".format(
+                    score.id,
+                    user.username,
+                    user.email,
+                    score.student_item.course_id,
+                    score.student_item.item_id,
+                )
+            )
         except Exception as err:
             print("An error occurred updating score {}: {}".format(score.id, err))
             print("Please update this score manually and retry script.")
             break
 
-    print("Script finished.")
+    print("Script finished, number of scores updated: {}.".format(updated_count))
 
 
 if __name__ == "__main__":
