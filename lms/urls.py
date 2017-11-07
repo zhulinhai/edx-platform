@@ -122,13 +122,15 @@ if settings.FEATURES["ENABLE_COMBINED_LOGIN_REGISTRATION"]:
         url(r'^login$', 'student_account.views.login_and_registration_form',
             {'initial_mode': 'login'}, name="signin_user"),
         url(r'^register$', 'student_account.views.login_and_registration_form',
-            {'initial_mode': 'register'}, name="register_user"),
+            {'initial_mode': 'login'}, name="register_user"),
+        url(r'^login-admision$', 'student_account.views.login_and_registration_form',
+            {'initial_mode': 'register'}, name="register_user_admision"),
     )
 else:
     # Serve the old views
     urlpatterns += (
         url(r'^login$', 'student.views.signin_user', name="signin_user"),
-        url(r'^register$', 'student.views.register_user', name="register_user"),
+        url(r'^register$', 'student.views.signin_user', name="register_user"),
     )
 
 if settings.FEATURES["ENABLE_MOBILE_REST_API"]:
@@ -801,6 +803,7 @@ if settings.FEATURES.get('AUTH_USE_CAS'):
     urlpatterns += (
         url(r'^cas-auth/login/$', 'openedx.core.djangoapps.external_auth.views.cas_login', {'next_page': '/'}, name="cas-login"),
         url(r'^cas-auth/logout/$', 'django_cas.views.logout', {'next_page': '/'}, name="cas-logout"),
+        url(r'^loginext$', 'student.views.signin_ext_user', name="signin_ext_user"),
     )
 
 if settings.FEATURES.get('RESTRICT_ENROLL_BY_REG_METHOD'):

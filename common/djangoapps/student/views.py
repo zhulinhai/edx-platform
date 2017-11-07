@@ -464,6 +464,40 @@ def signin_user(request):
 
 
 @ensure_csrf_cookie
+def signin_ext_user(request):
+    """
+    This function is required only at espol to handle its custom signin flow
+    It is the same as signin_user, but skips the external_auth_response part
+    """
+    redirect_to = get_next_url_for_login_page(request)
+    if request.user.is_authenticated():
+        return redirect(redirect_to)
+
+    third_party_auth_error = None
+    for msg in messages.get_messages(request):
+        if msg.extra_tags.split()[0] == "social-auth":
+            # msg may or may not be translated. Try translating [again] in case we are able to:
+            third_party_auth_error = _(unicode(msg))  # pylint: disable=translation-of-non-string
+            break
+
+    context = {
+        'login_redirect_url': redirect_to,  # This gets added to the query string of the "Sign In" button in the header
+        # Bool injected into JS to submit form if we're inside a running third-
+        # party auth pipeline; distinct from the actual instance of the running
+        # pipeline, if any.
+        'pipeline_running': 'true' if pipeline.running(request) else 'false',
+        'pipeline_url': auth_pipeline_urls(pipeline.AUTH_ENTRY_LOGIN, redirect_url=redirect_to),
+        'platform_name': configuration_helpers.get_value(
+            'platform_name',
+            settings.PLATFORM_NAME
+        ),
+        'third_party_auth_error': third_party_auth_error
+    }
+
+    return render_to_response('login.html', context)
+
+
+@ensure_csrf_cookie
 def register_user(request, extra_context=None):
     """Deprecated. To be replaced by :class:`student_account.views.login_and_registration_form`."""
     # Determine the URL to redirect to following login:
