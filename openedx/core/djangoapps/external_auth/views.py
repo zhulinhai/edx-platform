@@ -457,7 +457,7 @@ def ssl_login(request):
 # -----------------------------------------------------------------------------
 # CAS (Central Authentication Service)
 # -----------------------------------------------------------------------------
-def cas_login(request, next_page=None, required=False):
+def cas_login(request, next_page='/', required=False):
     """
         Uses django_cas for authentication.
         CAS is a common authentcation method pioneered by Yale.
@@ -473,9 +473,11 @@ def cas_login(request, next_page=None, required=False):
 
     if request.user.is_authenticated():
         user = request.user
+        user.email = user.username + '@espol.edu.ec'
+        user.save()
         UserProfile.objects.get_or_create(
             user=user,
-            defaults={'name': user.username}
+            defaults={'name': user.username, 'email': user.email}
         )
 
     return ret
