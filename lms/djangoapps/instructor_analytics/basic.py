@@ -5,6 +5,7 @@ Serve miscellaneous course and student data
 """
 import datetime
 import json
+import unicodedata
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -402,14 +403,30 @@ def list_problem_responses(course_key, problem_location):
     list_problem_responses(course_key, problem_location)
 
     would return [
-        {'username': u'user1', 'state': u'...'},
-        {'username': u'user2', 'state': u'...'},
-        {'username': u'user3', 'state': u'...'},
+        {'username': u'user1', 'submission_state': u'...', 'save_state': u'...', 'text': u'...'},
+        {'username': u'user2', 'submission_state': u'...', 'save_state': u'...', 'text': u'...'},
+        {'username': u'user3', 'submission_state': u'...', 'save_state': u'...', 'text': u'...'},
     ]
 
     where `state` represents a student's response to the problem
     identified by `problem_location`.
     """
+    def remove_spanish_accents(input_str):
+        """
+        This function removes some of the spanish accents that may cause errors
+        on badly handled python 2 strings
+
+        This is a custom function created by espol.
+        It was migrated to ginkgo by edunext.
+        """
+        input_str = input_str.replace( u'\u2018', '')
+        input_str = input_str.replace( u'\u2019', '')
+        input_str = input_str.replace( u'\u201c', '')
+        input_str = input_str.replace( u'\u201d', '')
+        input_str = input_str.replace( u'\xaa','')
+        s = ''.join((c for c in unicodedata.normalize('NFD',unicode(input_str)) if unicodedata.category(c) != 'Mn'))
+        return s.decode()
+
     problem_key = UsageKey.from_string(problem_location)
     # Are we dealing with an "old-style" problem location?
     run = problem_key.run
@@ -424,10 +441,35 @@ def list_problem_responses(course_key, problem_location):
     )
     smdat = smdat.order_by('student')
 
-    return [
-        {'username': response.student.username, 'state': response.state}
-        for response in smdat
-    ]
+    # This was modified by edunext during the ginkgo migration to accomodate
+    # the custom changes made by espol
+    result = []
+    for response in smdat:
+        state_json = json.loads(response.state)
+        submission_state = True
+        try:
+           submission_uuid = state_json['submission_uuid']
+        except:
+           submission_state = False
+        save_state = True
+        try:
+           save = state_json['has_saved']
+        except:
+           save = False
+        text = ''
+        try:
+            text = remove_spanish_accents(unicode(str(state_json['saved_response']),'unicode-escape'))
+        except:
+           text = response.state
+        result.append({
+            'username': response.student.username,
+            'submission_state': submission_state,
+            'save_state': save_state,
+            'text': text,
+            'grade': response.grade,
+            'max_grade': response.max_grade,
+            })
+    return result
 
 
 def course_registration_features(features, registration_codes, csv_type):

@@ -538,7 +538,7 @@ class ProblemResponses(object):
         # Compute result table and format it
         problem_location = task_input.get('problem_location')
         student_data = list_problem_responses(course_id, problem_location)
-        features = ['username', 'state']
+        features = ['username', 'submission_state','save_state','text','grade','max_grade']
         header, rows = format_dictlist(student_data, features)
 
         task_progress.attempted = task_progress.succeeded = len(rows)
