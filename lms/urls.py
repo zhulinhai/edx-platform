@@ -125,7 +125,7 @@ if settings.FEATURES["ENABLE_COMBINED_LOGIN_REGISTRATION"]:
         url(r'^register$', 'student_account.views.login_and_registration_form',
             {'initial_mode': 'login'}, name="register_user"),
         url(r'^login-admision$', 'student_account.views.login_and_registration_form',
-            {'initial_mode': 'register'}, name="register_user_admision"),
+            {'initial_mode': 'login', 'ext_intercept': False}, name="register_user_admision"),
     )
 else:
     # Serve the old views

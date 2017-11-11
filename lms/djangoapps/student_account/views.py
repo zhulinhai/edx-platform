@@ -51,7 +51,7 @@ User = get_user_model()  # pylint:disable=invalid-name
 @require_http_methods(['GET'])
 @ensure_csrf_cookie
 @xframe_allow_whitelisted
-def login_and_registration_form(request, initial_mode="login"):
+def login_and_registration_form(request, initial_mode="login", ext_intercept=True):
     """Render the combined login/registration form, defaulting to login
 
     This relies on the JS to asynchronously load the actual form from
@@ -107,7 +107,7 @@ def login_and_registration_form(request, initial_mode="login"):
 
     # Allow external auth to intercept and handle the request
     ext_auth_response = _external_auth_intercept(request, initial_mode)
-    if ext_auth_response is not None:
+    if ext_auth_response is not None and ext_intercept:
         return ext_auth_response
 
     # Account activation message
