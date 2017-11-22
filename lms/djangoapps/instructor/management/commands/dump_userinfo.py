@@ -107,7 +107,8 @@ ORDER_FIELDS = [
 CERTIFICATE_FIELDS = [
     ('credits_special_case', 'Credits Issued'),
     ('modified_date', 'Credit Date'),
-    ('has_certificate_special_case', 'Certif'),
+    ('has_attested_special_case', 'Attested'),
+    ('status', 'Certificate'),
 ]
 
 CME_SPECIFIC_ORDER = (
@@ -123,6 +124,10 @@ CME_SPECIFIC_ORDER = (
     REGISTRATION_FIELDS[4:] +
     CERTIFICATE_FIELDS
 )
+
+CERTIFICATE_STATUSES = [
+    'downloadable',
+]
 
 
 class Command(BaseCommand):
@@ -235,7 +240,7 @@ class Command(BaseCommand):
 
             student_dict = {
                 'Credits Issued': 0.0,  # XXX should be revisited when credit count functionality implemented
-                'Certif': False,
+                'Attested': False,
             }
 
             for field, label in PROFILE_FIELDS:
@@ -257,12 +262,20 @@ class Command(BaseCommand):
             if 'Date Registered' not in student_dict:
                 student_dict['Date Registered'] = unpaid_registration_table[user_id].created
 
+            # self.add_fields_to adds fields to student_dict if they are not already present
+            # including student_dict['Certificate']
             certificate = self.add_fields_to(student_dict, CERTIFICATE_FIELDS, certificate_table, user_id)
 
-            # If the user has received a certificate, adjust their credits issued and course completion flag.
+            # Record whether the student clicked the 'Grade Me' button.
             if student_dict['Credit Date']:
+                student_dict['Attested'] = True
+
+            # If the student has received a certificate, adjust their credits issued and certificate flag.
+            if student_dict['Certificate'] in CERTIFICATE_STATUSES:
                 student_dict['Credits Issued'] = num_credits
-                student_dict['Certif'] = True
+                student_dict['Certificate'] = True
+            else:
+                student_dict['Certificate'] = False
 
             student_dict['System ID'] = course_code
 
