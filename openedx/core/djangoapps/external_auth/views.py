@@ -457,7 +457,7 @@ def ssl_login(request):
 # -----------------------------------------------------------------------------
 # CAS (Central Authentication Service)
 # -----------------------------------------------------------------------------
-def cas_login(request, next_page='/', required=False):
+def cas_login(request, next_page=None, required=False):
     """
         Uses django_cas for authentication.
         CAS is a common authentcation method pioneered by Yale.
@@ -468,6 +468,7 @@ def cas_login(request, next_page='/', required=False):
         maintained by the central service, and thus an empty user profile
         is appropriate.
     """
+    next_page = get_next_url_for_login_page(request)  # The next_page arg is never used
 
     ret = django_cas_login(request, next_page, required)
 

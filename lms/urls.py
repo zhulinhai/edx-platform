@@ -802,7 +802,7 @@ if settings.FEATURES.get('AUTH_USE_SHIB'):
 
 if settings.FEATURES.get('AUTH_USE_CAS'):
     urlpatterns += (
-        url(r'^cas-auth/login/$', 'openedx.core.djangoapps.external_auth.views.cas_login', {'next_page': '/'}, name="cas-login"),
+        url(r'^cas-auth/login/$', 'openedx.core.djangoapps.external_auth.views.cas_login', name="cas-login"),
         url(r'^cas-auth/logout/$', 'django_cas.views.logout', {'next_page': '/'}, name="cas-logout"),
         url(r'^loginext$', 'student.views.signin_ext_user', name="signin_ext_user"),
     )
