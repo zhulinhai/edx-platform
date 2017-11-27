@@ -1005,3 +1005,11 @@ ICP_LICENSE = ENV_TOKENS.get('ICP_LICENSE', None)
 
 ############## Settings for CourseGraph ############################
 COURSEGRAPH_JOB_QUEUE = ENV_TOKENS.get('COURSEGRAPH_JOB_QUEUE', LOW_PRIORITY_QUEUE)
+
+
+############## Extra Settings ESPOL ############################
+
+ORA2_FILEUPLOAD_BACKEND = ENV_TOKENS.get("ORA2_FILEUPLOAD_BACKEND", "filesystem")
+ORA2_FILEUPLOAD_ROOT = ENV_TOKENS.get("ORA2_FILEUPLOAD_ROOT", '/edx/var/edxapp/shared-data/edxapp-uploads/submissions_attachments')
+ORA2_FILEUPLOAD_CACHE_NAME = ENV_TOKENS.get("ORA2_FILEUPLOAD_CACHE_NAME", "general")
+
