@@ -495,6 +495,7 @@ def _section_course_info(course, access):
         'course_name': course.display_name,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         'course_display_name': course.display_name,
 <<<<<<< HEAD
 >>>>>>> show correct course info on instructor dashboard
@@ -508,7 +509,13 @@ def _section_course_info(course, access):
 =======
         'course_display_name': course.display_name_with_default,
 >>>>>>> Proversity/development (#581)
+<<<<<<< HEAD
 >>>>>>> Proversity/development (#581)
+=======
+=======
+        'course_display_name': course.display_name_with_default,
+>>>>>>> Proversity/development (#581) (#582)
+>>>>>>> Proversity/development (#581) (#582)
         'has_started': course.has_started(),
         'has_ended': course.has_ended(),
         'start_date': course.start,
