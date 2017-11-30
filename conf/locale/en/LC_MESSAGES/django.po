@@ -106,6 +106,7 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "POT-Creation-Date: 2018-02-06 08:43+0000\n"
 "PO-Revision-Date: 2018-02-06 08:43:43.282230\n"
 =======
@@ -113,6 +114,8 @@ msgstr ""
 >>>>>>> Returning work we wissed due to upgrade
 =======
 >>>>>>> [ci skip] reverting conftest
+=======
+>>>>>>> Proversity/development (#587)
 <<<<<<< HEAD
 "POT-Creation-Date: 2018-01-10 10:50+0000\n"
 "PO-Revision-Date: 2018-01-10 10:50:56.384997\n"
@@ -134,7 +137,14 @@ msgstr ""
 "POT-Creation-Date: 2017-10-31 05:35-0400\n"
 "PO-Revision-Date: 2017-10-31 09:35:17.857828\n"
 >>>>>>> [ci skip] reverting conftest
+<<<<<<< HEAD
 >>>>>>> [ci skip] reverting conftest
+=======
+=======
+"POT-Creation-Date: 2017-11-14 03:01-0500\n"
+"PO-Revision-Date: 2017-11-14 08:01:07.831389\n"
+>>>>>>> Proversity/development (#587)
+>>>>>>> Proversity/development (#587)
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -304,7 +314,6 @@ msgstr ""
 #: common/lib/xmodule/xmodule/word_cloud_module.py
 #: common/lib/xmodule/xmodule/x_module.py
 #: openedx/core/lib/xblock_builtin/xblock_discussion/xblock_discussion.py
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
 #: src/xblock-google-drive/google_drive/templates/html/google_calendar_edit.html
 #: src/xblock-google-drive/google_drive/templates/html/google_docs_edit.html
 #: cms/templates/container.html cms/templates/library.html
@@ -857,7 +866,15 @@ msgstr ""
 
 #: common/djangoapps/student/views/dashboard.py
 #, python-brace-format
+<<<<<<< HEAD
 msgid "The course you are looking for is closed for enrollment as of {date}."
+=======
+msgid ""
+"In order to sign in, you need to activate your account.<br /><br />We just "
+"sent an activation link to <strong>{email}</strong>.  If you do not receive "
+"an email, check your spam folders or <a href=\"{support_url}\">contact "
+"{platform_name} Support</a>."
+>>>>>>> Proversity/development (#587)
 msgstr ""
 
 #: common/djangoapps/student/views/login.py
@@ -1820,7 +1837,7 @@ msgstr ""
 msgid "Incorrect:"
 msgstr ""
 
-#: common/lib/capa/capa/responsetypes.py src/xblock-poll/poll/poll.py
+#: common/lib/capa/capa/responsetypes.py
 msgid "Answer"
 msgstr ""
 
@@ -3765,7 +3782,6 @@ msgid ""
 msgstr ""
 
 #: common/lib/xmodule/xmodule/lti_module.py
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
 msgid "Weight"
 msgstr ""
 
@@ -11488,145 +11504,6 @@ msgstr ""
 msgid "Thank you!"
 msgstr ""
 
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Display Correctness?"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid ""
-"This is a flag that indicates if the indicator icon should be displayed "
-"after a student enters their response"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "This is the title for this question type"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Free-text Response"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Full-Credit Key Phrases"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid ""
-"This is a list of words or phrases, one of which must be present in order "
-"for the student's answer to receive full credit"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Half-Credit Key Phrases"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid ""
-"This is a list of words or phrases, one of which must be present in order "
-"for the student's answer to receive half credit"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Maximum Number of Attempts"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid ""
-"This is the maximum number of times a student is allowed to attempt the "
-"problem"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Maximum Word Count"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "This is the maximum number of words allowed for this question"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Minimum Word Count"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "This is the minimum number of words required for this question"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Prompt"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid ""
-"This is the prompt students will see when asked to enter their response"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Please enter your response within this text area"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Submission Received Message"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "This is the message students will see upon submitting their response"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Your submission has been received"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "This assigns an integer value representing the weight of this problem"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "Draft Received Message"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid "This is the message students will see upon submitting a draft response"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-msgid ""
-"Your answers have been saved but not graded. Click \"Submit\" to grade them."
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-#, python-brace-format
-msgid "Your response must be between {min} and {max} word."
-msgid_plural "Your response must be between {min} and {max} words."
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-#, python-brace-format
-msgid "Invalid Word Count. {word_count_message}"
-msgstr ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-#, python-brace-format
-msgid "{weight} point possible"
-msgid_plural "{weight} points possible"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-#, python-brace-format
-msgid "{score_string}/{weight} point"
-msgid_plural "{score_string}/{weight} points"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/xblock-free-text-response/freetextresponse/freetextresponse.py
-#, python-brace-format
-msgid "You have used {count_attempts} of {max_attempts} submission"
-msgid_plural "You have used {count_attempts} of {max_attempts} submissions"
-msgstr[0] ""
-msgstr[1] ""
-
 #: src/xblock-google-drive/google_drive/templates/html/google_calendar_edit.html
 msgid "Invalid Google Calendar"
 msgstr ""
@@ -11686,6 +11563,7 @@ msgid ""
 "Alternative text describes an image and appears if the image is unavailable."
 msgstr ""
 
+<<<<<<< HEAD
 #: src/xblock-poll/poll/poll.py
 msgid "Whether or not to display results to the user."
 msgstr ""
@@ -11954,10 +11832,15 @@ msgid "Question"
 >>>>>>> [ci skip] reverting conftest
 msgstr ""
 
+<<<<<<< HEAD
 #: cms/djangoapps/api/v1/serializers/course_runs.py
 msgid "Course team user does not exist"
 msgstr ""
 
+=======
+=======
+>>>>>>> Proversity/development (#587)
+>>>>>>> Proversity/development (#587)
 #: cms/djangoapps/contentstore/course_group_config.py
 msgid ""
 "The groups in this configuration can be mapped to cohorts in the Instructor "
@@ -15772,6 +15655,16 @@ msgid "Are you {min_age} years or older?"
 msgstr ""
 
 #: lms/templates/courseware/course_about.html
+#: lms/templates/instructor/instructor_dashboard_2/course_info.html
+msgid "Yes"
+msgstr ""
+
+#: lms/templates/courseware/course_about.html
+#: lms/templates/instructor/instructor_dashboard_2/course_info.html
+msgid "No"
+msgstr ""
+
+#: lms/templates/courseware/course_about.html
 msgid "You are enrolled in this course"
 msgstr ""
 
@@ -16903,6 +16796,10 @@ msgstr ""
 
 #: lms/templates/dashboard/_reason_survey.html
 msgid "Something was broken"
+msgstr ""
+
+#: lms/templates/dashboard/_reason_survey.html
+msgid "Other"
 msgstr ""
 
 #: lms/templates/dashboard/_reason_survey.html
