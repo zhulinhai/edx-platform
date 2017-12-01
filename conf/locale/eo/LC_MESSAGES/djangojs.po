@@ -29,6 +29,7 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "POT-Creation-Date: 2018-02-06 08:37+0000\n"
 "PO-Revision-Date: 2018-02-06 08:43:43.668350\n"
 =======
@@ -36,6 +37,8 @@ msgstr ""
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 <<<<<<< HEAD
 "POT-Creation-Date: 2018-01-10 10:44+0000\n"
 "PO-Revision-Date: 2018-01-10 10:50:56.873858\n"
@@ -57,7 +60,14 @@ msgstr ""
 "POT-Creation-Date: 2017-11-14 02:56-0500\n"
 "PO-Revision-Date: 2017-11-14 08:01:09.055399\n"
 >>>>>>> Proversity/staging (#589)
+<<<<<<< HEAD
 >>>>>>> Proversity/staging (#589)
+=======
+=======
+"POT-Creation-Date: 2017-11-14 02:56-0500\n"
+"PO-Revision-Date: 2017-11-14 08:01:09.055399\n"
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -70,11 +80,14 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 <<<<<<< HEAD
 #: cms/static/cms/js/main.js cms/static/js/views/active_video_upload_list.js
 #: cms/static/js/views/video_transcripts.js common/static/bundles/Import.js
@@ -83,6 +96,8 @@ msgstr ""
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: cms/static/cms/js/main.js cms/static/coffee/src/main.js
 #: cms/static/js/views/active_video_upload_list.js
 #: common/static/bundles/Import.js
@@ -200,6 +215,7 @@ msgstr "ÖK Ⱡ'σя#"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: lms/templates/learner_dashboard/verification_popover.underscore
 #: test_root/staticfiles/common/templates/discussion/new-post.underscore
 #: test_root/staticfiles/common/templates/discussion/response-comment-edit.underscore
@@ -218,6 +234,8 @@ msgstr "ÖK Ⱡ'σя#"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 msgid "Cancel"
 msgstr "Çänçél Ⱡ'σяєм ιρѕυ#"
 
@@ -363,6 +381,7 @@ msgstr "Çhöösé Fïlé Ⱡ'σяєм ιρѕυм ∂σłσя #"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
@@ -391,6 +410,8 @@ msgstr "Nöné Ⱡ'σяєм ι#"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: cms/static/js/views/course_video_settings.js
 #: cms/static/js/views/metadata.js
 #: cms/static/js/views/previous_video_upload.js
@@ -2236,11 +2257,14 @@ msgstr "Türn öff tränsçrïpts Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт α�
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 <<<<<<< HEAD
 #: common/static/bundles/AssetsPage.bace7aaf2adb48c51598.js
 msgid "end"
@@ -2253,12 +2277,15 @@ msgstr "énd Ⱡ'σяєм#"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/CourseGoals.js
 msgid "Thank you for setting your course goal to "
 msgstr ""
 "Thänk ýöü för séttïng ýöür çöürsé göäl tö  Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, "
 "¢σηѕє¢тєтυя #"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2269,6 +2296,8 @@ msgstr ""
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/CourseGoals.js
 msgid ""
 "There was an error in setting your goal, please reload the page and try "
@@ -2280,6 +2309,7 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: common/static/bundles/CourseHome.8f43ec4ffa54018648ac.js
 =======
 >>>>>>> Proversity/development (#587)
@@ -2287,6 +2317,8 @@ msgstr ""
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/CourseHome.js
 #: openedx/features/course_experience/static/course_experience/js/CourseHome.js
 msgid "You have successfully updated your goal."
@@ -2297,6 +2329,7 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: common/static/bundles/CourseHome.8f43ec4ffa54018648ac.js
 =======
 >>>>>>> Proversity/development (#587)
@@ -2304,6 +2337,8 @@ msgstr ""
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/CourseHome.js
 #: openedx/features/course_experience/static/course_experience/js/CourseHome.js
 msgid "There was an error updating your goal."
@@ -2314,6 +2349,7 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: common/static/bundles/CourseHome.8f43ec4ffa54018648ac.js
 =======
 >>>>>>> Proversity/development (#587)
@@ -2321,6 +2357,8 @@ msgstr ""
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/CourseHome.js
 msgid "Show more"
 msgstr "Shöw möré Ⱡ'σяєм ιρѕυм ∂σł#"
@@ -2328,6 +2366,7 @@ msgstr "Shöw möré Ⱡ'σяєм ιρѕυм ∂σł#"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: common/static/bundles/CourseHome.8f43ec4ffa54018648ac.js
 =======
 >>>>>>> Proversity/development (#587)
@@ -2335,10 +2374,13 @@ msgstr "Shöw möré Ⱡ'σяєм ιρѕυм ∂σł#"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/CourseHome.js
 msgid "Show less"
 msgstr "Shöw léss Ⱡ'σяєм ιρѕυм ∂σł#"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2510,6 +2552,8 @@ msgstr "Çänçél üplöäd Ⱡ'σяєм ιρѕυм ∂σłσя ѕι#"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/StudioIndex.js
 msgid "Organization:"
 msgstr "Örgänïzätïön: Ⱡ'σяєм ιρѕυм ∂σłσя ѕι#"
@@ -2517,6 +2561,7 @@ msgstr "Örgänïzätïön: Ⱡ'σяєм ιρѕυм ∂σłσя ѕι#"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
 =======
 >>>>>>> Proversity/development (#587)
@@ -2524,6 +2569,8 @@ msgstr "Örgänïzätïön: Ⱡ'σяєм ιρѕυм ∂σłσя ѕι#"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/StudioIndex.js
 msgid "Course Number:"
 msgstr "Çöürsé Nümßér: Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт#"
@@ -2531,6 +2578,7 @@ msgstr "Çöürsé Nümßér: Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт#"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
 =======
 >>>>>>> Proversity/development (#587)
@@ -2538,6 +2586,8 @@ msgstr "Çöürsé Nümßér: Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт#"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/StudioIndex.js
 msgid "Course Run:"
 msgstr "Çöürsé Rün: Ⱡ'σяєм ιρѕυм ∂σłσя #"
@@ -2545,6 +2595,7 @@ msgstr "Çöürsé Rün: Ⱡ'σяєм ιρѕυм ∂σłσя #"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
 =======
 >>>>>>> Proversity/development (#587)
@@ -2552,6 +2603,8 @@ msgstr "Çöürsé Rün: Ⱡ'σяєм ιρѕυм ∂σłσя #"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/StudioIndex.js
 msgid "(Read-only)"
 msgstr "(Réäd-önlý) Ⱡ'σяєм ιρѕυм ∂σłσя #"
@@ -2559,6 +2612,7 @@ msgstr "(Réäd-önlý) Ⱡ'σяєм ιρѕυм ∂σłσя #"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
 =======
 >>>>>>> Proversity/development (#587)
@@ -2566,6 +2620,8 @@ msgstr "(Réäd-önlý) Ⱡ'σяєм ιρѕυм ∂σłσя #"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/StudioIndex.js
 msgid "Re-run Course"
 msgstr "Ré-rün Çöürsé Ⱡ'σяєм ιρѕυм ∂σłσя ѕι#"
@@ -2573,6 +2629,7 @@ msgstr "Ré-rün Çöürsé Ⱡ'σяєм ιρѕυм ∂σłσя ѕι#"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
 =======
 >>>>>>> Proversity/development (#587)
@@ -2580,6 +2637,8 @@ msgstr "Ré-rün Çöürsé Ⱡ'σяєм ιρѕυм ∂σłσя ѕι#"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: common/static/bundles/StudioIndex.js
 #: cms/templates/js/show-textbook.underscore
 msgid "View Live"
@@ -8485,6 +8544,7 @@ msgstr "Érrör pöstïng ýöür méssägé. Ⱡ'σяєм ιρѕυм ∂σłσ�
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: test_root/staticfiles/common/templates/discussion/new-post-visibility.underscore
 #: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post-visibility.underscore
 =======
@@ -8493,6 +8553,8 @@ msgstr "Érrör pöstïng ýöür méssägé. Ⱡ'σяєм ιρѕυм ∂σłσ�
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #, python-format
 msgid "This post will be visible only to %(group_name)s."
 msgstr ""
@@ -8503,6 +8565,7 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: test_root/staticfiles/common/templates/discussion/new-post-visibility.underscore
 #: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post-visibility.underscore
 =======
@@ -8511,6 +8574,8 @@ msgstr ""
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 msgid "This post will be visible to everyone."
 msgstr ""
 "Thïs pöst wïll ßé vïsïßlé tö évérýöné. Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, "
@@ -8548,6 +8613,7 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: test_root/staticfiles/common/templates/discussion/new-post.underscore
 #: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post.underscore
 =======
@@ -8555,6 +8621,8 @@ msgstr ""
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 msgid "Your question or idea (required)"
 msgstr ""
 "Ýöür qüéstïön ör ïdéä (réqüïréd) Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, ¢σηѕє¢тє#"
@@ -8562,11 +8630,14 @@ msgstr ""
 #: common/static/common/templates/discussion/new-post.underscore
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Proversity/development (#587)
 =======
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 msgid "follow this post"
 msgstr "föllöw thïs pöst Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αм#"
 
@@ -8587,6 +8658,10 @@ msgid "post privately to staff"
 msgstr "pöst prïvätélý tö stäff Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, ¢σ#"
 
 >>>>>>> Proversity/development (#587)
+#: common/static/common/templates/discussion/new-post.underscore
+msgid "post privately to staff"
+msgstr "pöst prïvätélý tö stäff Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, ¢σ#"
+
 #: common/static/common/templates/discussion/new-post.underscore
 msgid "post privately to staff"
 msgstr "pöst prïvätélý tö stäff Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, ¢σ#"
@@ -9023,6 +9098,7 @@ msgstr "Läst mödïfïéd ßý Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αм#
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: lms/templates/ccx/schedule.underscore
 #: test_root/staticfiles/support/templates/enrollment.underscore
 #: test_root/staticfiles/templates/ccx/schedule.underscore
@@ -9037,6 +9113,8 @@ msgstr "N/À Ⱡ'σяєм#"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 msgid "Change Enrollment"
 msgstr "Çhängé Énröllmént Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмє#"
 
@@ -9889,6 +9967,7 @@ msgstr "Fïnäl Grädé Ⱡ'σяєм ιρѕυм ∂σłσя #"
 #: lms/templates/learner_dashboard/course_enroll.underscore
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: test_root/staticfiles/templates/learner_dashboard/course_enroll.underscore
 msgid "for {courseName}"
 msgstr "för {courseName} Ⱡ'σяєм ιρѕυм #"
@@ -9898,6 +9977,8 @@ msgstr "för {courseName} Ⱡ'σяєм ιρѕυм #"
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 msgid "View Archived Course"
 msgstr "Vïéw Àrçhïvéd Çöürsé Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, #"
 
@@ -9909,6 +9990,7 @@ msgstr "Vïéw Çöürsé Ⱡ'σяєм ιρѕυм ∂σłσя #"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 msgid "Select a session:"
 msgstr "Séléçt ä séssïön: Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмє#"
 =======
@@ -9916,6 +9998,8 @@ msgstr "Séléçt ä séssïön: Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αм
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 msgid "Choose a course run:"
 msgstr "Çhöösé ä çöürsé rün: Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, #"
 >>>>>>> Proversity/development (#587)
@@ -10125,6 +10209,7 @@ msgstr "Förgöt pässwörd? Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αм#"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: lms/templates/student_account/login.underscore
 #: test_root/staticfiles/templates/student_account/hinted_login.underscore
 #: test_root/staticfiles/templates/student_account/login.underscore
@@ -10141,12 +10226,17 @@ msgstr "Sïgn ïn Ⱡ'σяєм ιρѕυм #"
 =======
 <<<<<<< HEAD
 >>>>>>> Proversity/staging (#589)
+=======
+<<<<<<< HEAD
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: test_root/staticfiles/templates/student_account/hinted_login.underscore
 =======
 =======
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: lms/templates/student_account/login.underscore
 msgid "Sign in"
 msgstr "Sïgn ïn Ⱡ'σяєм ιρѕυм #"
@@ -10154,11 +10244,14 @@ msgstr "Sïgn ïn Ⱡ'σяєм ιρѕυм #"
 #: lms/templates/student_account/hinted_login.underscore
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Proversity/development (#587)
 =======
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #, python-format
 msgid "Would you like to sign in using your %(providerName)s credentials?"
 msgstr ""
@@ -10215,6 +10308,7 @@ msgstr "Çréäté än Àççöünt. Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт 
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 msgid "Sign in to continue learning as {email}"
 msgstr ""
 "Sïgn ïn tö çöntïnüé léärnïng äs {email} Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, "
@@ -10261,6 +10355,8 @@ msgstr ""
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 msgid "Sign In"
 msgstr "Sïgn Ìn Ⱡ'σяєм ιρѕυм #"
 
@@ -10329,16 +10425,20 @@ msgstr "Sïgn ïn. Ⱡ'σяєм ιρѕυм ∂#"
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: test_root/staticfiles/templates/student_account/register.underscore
 =======
 =======
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 msgid "Create an Account"
 msgstr "Çréäté än Àççöünt Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмє#"
 
 #: lms/templates/student_account/register.underscore
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> Proversity/development (#587)
@@ -10346,6 +10446,8 @@ msgstr "Çréäté än Àççöünt Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт �
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 msgid "Create an account using"
 msgstr "Çréäté än äççöünt üsïng Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, ¢σ#"
 
@@ -11152,6 +11254,7 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: test_root/staticfiles/proctoring/templates/add-new-allowance.underscore
 msgid "Add a New Allowance"
 msgstr "Àdd ä Néw Àllöwänçé Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт,#"
@@ -11231,6 +11334,8 @@ msgstr "Çhöösé ä çöürsé rün: Ⱡ'σяєм ιρѕυм ∂σłσя ѕι�
 >>>>>>> master merge (#588)
 =======
 >>>>>>> Proversity/staging (#589)
+=======
+>>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 #: cms/templates/js/access-editor.underscore
 msgid "Limit Access"
 msgstr "Lïmït Àççéss Ⱡ'σяєм ιρѕυм ∂σłσя ѕ#"
