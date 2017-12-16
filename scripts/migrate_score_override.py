@@ -16,7 +16,7 @@ def main():
     from openassessment.assessment.models import Assessment, AssessmentPart, StaffWorkflow
     from openassessment.workflow.models import AssessmentWorkflow, AssessmentWorkflowStep
     from student.models import anonymous_id_for_user, user_by_anonymous_id
-    from submissions.models import Score, ScoreSummary, ScoreAnnotation
+    from submissions.models import Score, ScoreSummary, ScoreAnnotation, Submission
 
     old_scores = Score.objects.filter(submission__isnull=True, reset=False).order_by('id')
     updated_count = 0
@@ -29,12 +29,21 @@ def main():
                 # prefetch the score summary and resave it to maintain its original field values.
                 score_summary = ScoreSummary.objects.get(student_item=score.student_item)
 
-                # Update old override with submission from the score preceding it
-                submission = Score.objects.filter(
+                # Update old override with submission from the score preceding it.
+                # If none exists, look for it in the submissions table.
+                preceding_score = Score.objects.filter(
                     student_item=score.student_item,
                     created_at__lte=score.created_at,
                     submission__isnull=False,
-                ).order_by('-created_at')[:1].get().submission
+                ).order_by('-created_at')[:1]
+                if preceding_score.count():
+                    submission = preceding_score.get().submission
+                else:
+                    submission_qset = Submission.objects.filter(student_item=score.student_item)
+                    if submission_qset.count() > 1:
+                        raise Exception("MULTIPLE SUBMISSIONS FOR STUDENT_ITEM {}".format(score.student_item))
+                    else:
+                        submission = submission_qset[:1].get()
                 score.submission = submission
                 score.save()
 
