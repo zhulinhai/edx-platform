@@ -67,8 +67,6 @@
                         hinted_login: null
                     };
 
-                    this.themeName = options.theme_name
-
                     this.platformName = options.platform_name;
                     this.supportURL = options.support_link;
                     this.privacyPolicyUrl = options.privacy_policy_url;
@@ -158,7 +156,6 @@
                             fields: data.fields,
                             model: model,
                             thirdPartyAuth: this.thirdPartyAuth,
-                            themeName: this.themeName,
                             privacyPolicyUrl: this.privacyPolicyUrl,
                             platformName: this.platformName
                         });

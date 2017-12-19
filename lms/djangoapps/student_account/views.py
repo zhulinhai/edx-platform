@@ -28,9 +28,6 @@ from openedx.core.djangoapps.external_auth.login_and_register import (
     login as external_auth_login,
     register as external_auth_register
 )
-
-from openedx.core.djangoapps.external_auth.models import ExternalAuthMap
-
 from openedx.core.djangoapps.commerce.utils import ecommerce_api_client
 from openedx.core.djangoapps.lang_pref.api import released_languages, all_languages
 from openedx.core.djangoapps.programs.models import ProgramsApiConfig
@@ -119,7 +116,6 @@ def login_and_registration_form(request, initial_mode="login"):
             'initial_mode': initial_mode,
             'third_party_auth': _third_party_auth_context(request, redirect_to),
             'third_party_auth_hint': third_party_auth_hint or '',
-            'theme_name': settings.THEME_NAME,
             'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
             'support_link': configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK),
             'privacy_policy_url': marketing_link('PRIVACY'),
@@ -505,10 +501,9 @@ def account_settings_context(request):
             # in with, or if the user is already authenticated with them.
         } for state in auth_states if state.provider.display_for_login or state.has_account]
 
-    try:
-        external_auth_map = ExternalAuthMap.objects.get(user=user)
-    except:
-        external_auth_map = None
-    context['is_shib_auth'] = 'shib' in external_auth_map.external_domain if external_auth_map else False
+        if any(state.provider.provider_id == 'saml-sunet' for state in auth_states if state.has_account):
+            context['is_shib_auth'] = True
+        else:
+            context['is_shib_auth'] = False
 
     return context

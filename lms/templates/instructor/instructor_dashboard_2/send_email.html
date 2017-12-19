@@ -61,9 +61,10 @@ from openedx.core.djangolib.markup import HTML
                 <span class="tip">${_("(Maximum 128 characters)")}</span>
             </label>
         </li>
-        <li>
+        <li class="field">
             <label>
                 ${_("Message:")}
+                <span class="tip"><a href="#keyword-sub-modal" class="keyword-sub-link" rel="leanModal">${_("Supports keyword substitutions")}</a></span>
                 <div class="email-editor">
                     ${ HTML(section_data['editor']) }
                 </div>

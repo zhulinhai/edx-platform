@@ -108,8 +108,18 @@ urlpatterns = (
 # Stanford SHIB_ONLY urls
 if settings.SHIB_ONLY_SITE:
     urlpatterns += (
-        url(r'^backup_login$', 'student.views.signin_user', name="backup_signin_user"),
-        url(r'^backup_register$', 'student.views.register_user', name="backup_register_user"),
+        url(
+            r'^backup_login$',
+            'student_account.views.login_and_registration_form',
+            {'initial_mode': 'login'},
+            name='backup_signin_user',
+        ),
+        url(
+            r'^backup_register$',
+            'student_account.views.login_and_registration_form',
+            {'initial_mode': 'register'},
+            name='backup_register_user',
+        ),
     )
 # / Stanford SHIB_ONLY urls
 

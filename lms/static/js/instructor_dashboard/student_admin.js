@@ -433,6 +433,12 @@
                     })
                 });
             });
+            var $btn_download_blank_lti = this.$section.find("input[name='lti-blank-grades']");
+            $btn_download_blank_lti.click(function() {
+                var url;
+                url = $btn_download_blank_lti.data('endpoint');
+                return window.location.href = url;
+            });
         }
 
         StudentAdmin.prototype.rescore_problem_single = function(onlyIfHigher) {

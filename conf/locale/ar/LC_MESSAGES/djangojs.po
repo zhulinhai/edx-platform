@@ -4737,6 +4737,10 @@ msgid "All Time Zones"
 msgstr "جميع المناطق الزمنية"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
+msgid "Default (Local Time Zone)"
+msgstr "الافتراضي (منطقة التوقيت المحلي)"
+
+#: lms/static/js/student_account/views/account_settings_factory.js
 msgid "Additional Information"
 msgstr "معلومات إضافية"
 

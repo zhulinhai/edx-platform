@@ -32,6 +32,10 @@
 % endfor
 </%block>
 
+<div id="register-extra-tpl" style="display:none">
+    <%static:optional_include_mako file="/student_account/register-extra.html" is_theming_enabled="True" />
+</div>
+
 <div class="section-bkg-wrapper">
     <main id="main" aria-label="Content" tabindex="-1">
         <div id="login-and-registration-container" class="login-register" />
