@@ -2163,6 +2163,9 @@ INSTALLED_APPS = (
 
     'course_category',
 
+    # global-statistics application
+    'openedx.core.djangoapps.edx_global_analytics',
+
     'django_mptt_admin',
     'program_marketing',
 )
