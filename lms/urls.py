@@ -970,3 +970,15 @@ urlpatterns += (
     url(r'^category/', include('course_category.urls')),
 )
 
+# Include edX global analytics application urls.
+EDX_GLOBAL_ANALYTICS_APP_URL = 'edx_global_analytics_app/'
+
+urlpatterns += (
+    url(
+        r'^{0}'.format(EDX_GLOBAL_ANALYTICS_APP_URL),
+        include(
+            'openedx.core.djangoapps.edx_global_analytics.urls',
+            namespace='global-analytics'
+        )
+    ),
+)
