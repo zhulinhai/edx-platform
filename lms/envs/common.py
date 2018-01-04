@@ -3548,7 +3548,7 @@ COURSE_ENROLLMENT_MODES = {
 # This set the user course enrollment api order by
 #
 # Options:
-# created: order by course creation 
+# created: order by course creation
 # created_reverse: order by course creation and then reverse
 # course_name: order by course display name
 # course_name_reverse: order by course display name and then reverse
@@ -3564,6 +3564,24 @@ COURSES_API_CACHE_TIMEOUT = 3600  # Value is in seconds
 COURSEGRAPH_JOB_QUEUE = LOW_PRIORITY_QUEUE
 
 
+<<<<<<< HEAD
+=======
+############## Settings for ACE ####################################
+ACE_ENABLED_CHANNELS = [
+    'file_email'
+]
+ACE_ENABLED_POLICIES = [
+    'bulk_email_optout'
+]
+ACE_CHANNEL_SAILTHRU_DEBUG = True
+ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME = 'Automated Communication Engine Email'
+ACE_CHANNEL_SAILTHRU_API_KEY = None
+ACE_CHANNEL_SAILTHRU_API_SECRET = None
+
+ACE_ROUTING_KEY = LOW_PRIORITY_QUEUE
+
+<<<<<<< HEAD
+>>>>>>> Proversity/subscription (#614)
 # Initialize to 'unknown', but read from JSON in aws.py
 EDX_PLATFORM_REVISION = 'unknown'
 
@@ -3575,6 +3593,7 @@ COMPLETION_VIDEO_COMPLETE_PERCENTAGE = 0.95
 
 ############### Settings for Django Rate limit #####################
 RATELIMIT_ENABLE = True
+<<<<<<< HEAD
 RATELIMIT_RATE = '120/m'
 
 ############### Settings for django-fernet-fields ##################
@@ -3587,3 +3606,30 @@ FERNET_KEYS = [
 from openedx.core.djangoapps.plugins import plugin_apps, plugin_settings, constants as plugin_constants
 INSTALLED_APPS.extend(plugin_apps.get_apps(plugin_constants.ProjectType.LMS))
 plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.LMS, plugin_constants.SettingsType.COMMON)
+=======
+RATELIMIT_RATE = '30/m'
+<<<<<<< HEAD
+
+############## Plugin Django Apps #########################
+
+from openedx.core.djangolib.django_plugins import DjangoAppRegistry, ProjectType, SettingsType
+INSTALLED_APPS.extend(DjangoAppRegistry.get_plugin_apps(ProjectType.LMS))
+DjangoAppRegistry.add_plugin_settings(__name__, ProjectType.LMS, SettingsType.COMMON)
+=======
+=======
+############## Settings for Bibblio ####################################
+
+BIBBLIO_CLIENT_ID = 'bibblio_client_id'
+BIBBLIO_CLIENT_SECRET = 'bibblio_client_secret'
+
+EDX_PLATFORM_REVISION = os.environ.get('EDX_PLATFORM_REVISION')
+if not EDX_PLATFORM_REVISION:
+    try:
+        # Get git revision of the current file
+        EDX_PLATFORM_REVISION = dealer.git.Backend(path=REPO_ROOT).revision
+    except TypeError:
+        # Not a git repository
+        EDX_PLATFORM_REVISION = 'unknown'
+>>>>>>> Proversity/subscription (#614)
+>>>>>>> Proversity/subscription (#614)
+>>>>>>> Proversity/subscription (#614)

@@ -66,7 +66,7 @@ urlpatterns = [
 
 	# Submissions api
     url(r'^api/submissions/', include('submissions.urls')),
-	
+
     # Event tracking endpoints
     url(r'', include('track.urls')),
 
@@ -1089,6 +1089,7 @@ if settings.FEATURES.get('ENABLE_FINANCIAL_ASSISTANCE_FORM'):
             courseware_views.financial_assistance_request,
             name='submit_financial_assistance_request'
         )
+<<<<<<< HEAD
     ]
 
 # Branch.io Text Me The App
@@ -1096,5 +1097,21 @@ if settings.BRANCH_IO_KEY:
     urlpatterns += [
         url(r'^text-me-the-app', student_views.text_me_the_app, name='text_me_the_app'),
     ]
+<<<<<<< HEAD
 
+<<<<<<< HEAD
 urlpatterns.extend(plugin_urls.get_patterns(plugin_constants.ProjectType.LMS))
+=======
+
+from openedx.core.djangolib.django_plugins import DjangoAppRegistry, ProjectType
+urlpatterns.extend(DjangoAppRegistry.get_plugin_url_patterns(ProjectType.LMS))
+=======
+=======
+    )
+
+urlpatterns += (
+    url(r'^subscription/', include('subscription_content.urls')),
+)
+>>>>>>> Proversity/subscription (#614)
+>>>>>>> Proversity/subscription (#614)
+>>>>>>> Proversity/subscription (#614)
