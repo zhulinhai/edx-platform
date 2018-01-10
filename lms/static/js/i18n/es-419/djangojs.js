@@ -1631,6 +1631,10 @@
     "View all errors": "Ver todos los errores", 
     "View child items": "Ver items hijos", 
     "View discussion": "Ver discusi\u00f3n", 
+    "Viewing %s course": [
+      "Mostrando %s curso", 
+      "Mostrando %s cursos"
+    ], 
     "Visibility": "Visibilidad", 
     "Visible to": "Visible para", 
     "Visible to Staff Only": "Visible solo para el equipo del curso", 

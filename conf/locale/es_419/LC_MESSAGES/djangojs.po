@@ -88,7 +88,7 @@ msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
 "POT-Creation-Date: 2017-08-18 20:38+0000\n"
-"PO-Revision-Date: 2017-11-10 16:37-0500\n"
+"PO-Revision-Date: 2018-01-09 18:38-0500\n"
 "Last-Translator: Diego Rojas <diego.rojas@edunext.co>, 2017\n"
 "Language-Team: Spanish (Latin America) (https://www.transifex.com/open-edx/"
 "teams/6205/es_419/)\n"
@@ -3362,8 +3362,8 @@ msgstr "Ocurrió un error. Por favor intenta nuevamente más tarde."
 #, javascript-format
 msgid "Viewing %s course"
 msgid_plural "Viewing %s courses"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Mostrando %s curso"
+msgstr[1] "Mostrando %s cursos"
 
 #: lms/static/js/discovery/views/search_form.js
 #, javascript-format
