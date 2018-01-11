@@ -84,7 +84,7 @@ def _get_authorization_header(request, client_key, client_secret):
         sha1.digest()  # pylint: disable=too-many-function-args
     ))
     client = Client(client_key, client_secret)
-    params = client.get_oauth_params(None)
+    params = client.get_oauth_params(request)
     params.append((u'oauth_body_hash', oauth_body_hash))
 
     blank_request = Request(urllib.unquote(request.url), http_method=request.method, body='', headers=request.headers, encoding='utf_8')
