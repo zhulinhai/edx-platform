@@ -4370,11 +4370,28 @@ msgstr ""
 "Địa chỉ email đăng nhập. Các email từ {platform_name} và các khóa học của "
 "bạn sẽ được gửi đến địa chỉ này."
 
+#: lms/static/js/student_account/views/account_settings_factory.js:36
+#: lms/static/js/student_account/views/account_settings_factory.js:214
+msgid "Basic Account Information"
+msgstr "Thông tin tài khoản cơ bản"
+
 #: lms/static/js/student_account/views/account_settings_factory.js:75
 #: lms/static/js/student_account/views/account_settings_factory.js:107
 #: lms/templates/student_account/account.underscore:6
 msgid "Password"
 msgstr "Mật khẩu"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:124
+#: lms/static/js/student_account/views/account_settings_factory.js:127
+msgid "Reset Your Password"
+msgstr "Đặt lại mật khẩu"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:130
+msgid ""
+"When you select \"Reset Your Password\", a message will be sent to the email"
+" address for your {platform_name} account. Click the link in the message to "
+"reset your password."
+msgstr "Khi bạn chọn \"Đặt lại Mật khẩu\", một thông báo sẽ được gửi đến địa chỉ email cho tài khoản {platform_name} của bạn. Nhấp vào liên kết trong thông báo để đặt lại mật khẩu."
 
 #: lms/static/js/student_account/views/account_settings_factory.js:95
 #: lms/static/js/student_account/views/account_settings_factory.js:151
@@ -4387,6 +4404,29 @@ msgstr "Hiện nay Kiến Học chỉ hỗ trợ tiếng Việt."
 #: lms/static/js/student_account/views/account_settings_factory.js:161
 msgid "Country or Region"
 msgstr "Quốc gia hoặc vùng lãnh thổ"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:194
+msgid "Time Zone"
+msgstr "Múi giờ"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:196
+msgid ""
+"Select the time zone for displaying course dates. If you do not specify a "
+"time zone, course dates, including assignment deadlines, will be displayed "
+"in your browser's local time zone."
+msgstr "Chọn múi giờ để hiển thị ngày khóa học. Nếu bạn không chỉ định múi giờ, ngày bắt đầu khoá học, thời hạn khoá học, sẽ được hiển thị trong múi giờ địa phương của trình duyệt."
+
+#: lms/static/js/student_account/views/account_settings_factory.js:198
+msgid "All Time Zones"
+msgstr "Tất cả Múi Giờ"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:200
+msgid "Default (Local Time Zone)"
+msgstr "Mặc định (Múi giờ địa phương)"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:53
+msgid "Additional Information"
+msgstr "Thông tin thêm"
 
 #: lms/static/js/student_account/views/account_settings_factory.js:135
 #: lms/static/js/student_account/views/account_settings_factory.js:45
@@ -4410,6 +4450,43 @@ msgstr "Năm sinh"
 msgid "Preferred Language"
 msgstr "Ngôn ngữ ưa thích"
 
+#: lms/static/js/student_account/views/account_settings_factory.js:222
+#: lms/static/js/student_account/views/account_settings_view.js:29
+msgid "Linked Accounts"
+msgstr "Những tài khoản đã Liên kết"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:246
+msgid "ORDER NAME"
+msgstr "TÊN ĐƠN HÀNG"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:247
+msgid "ORDER PLACED"
+msgstr "ĐÃ ĐẶT HÀNG"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:248
+msgid "TOTAL"
+msgstr "TỔNG CỘNG"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:249
+msgid "ORDER NUMBER"
+msgstr "SỐ ĐƠN HÀNG"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:255
+msgid "My Orders"
+msgstr "Những đơn hàng của tôi"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:257
+msgid ""
+"This page contains information about orders that you have placed with "
+"{platform_name}."
+msgstr "Trang này chứa thông tin về những đơn hàng mà bạn đã đặt với {platform_name}."
+
+#: lms/static/js/student_account/views/account_settings_fields.js:46
+msgid ""
+"We've sent a confirmation message to {new_email_address}. Click the link in "
+"the message to update your email address."
+msgstr "Chúng tôi đã gửi một thông báo xác nhận đến {new_email_address}. Nhấp vào liên kết trong thông báo đó để cập nhật địa chỉ email của bạn."
+
 #: lms/static/js/student_account/views/account_settings_fields.js:72
 #: lms/static/js/student_account/views/account_settings_fields.js:41
 msgid ""
@@ -4418,20 +4495,59 @@ msgstr ""
 "Bạn cần đăng xuất và đăng nhập lại để lựa chọn ngôn ngữ được đưa vào hiệu "
 "lực."
 
+#: lms/static/js/student_account/views/account_settings_fields.js:193
+msgid ""
+"We've sent a message to {email_address}. Click the link in the message to "
+"reset your password."
+msgstr "Chúng tôi đã gửi một thông báo đến {emaili_address}. Bấm vào liên kết trong thông báo để đặt lại mật khẩu."
+
+#: lms/static/js/student_account/views/account_settings_fields.js:233
+msgid "Link your {accountName} account"
+msgstr "Liên kết tài khoản của bạn {accountName}"
+
+#: lms/static/js/student_account/views/account_settings_fields.js:237
+msgid "Unlink This Account"
+msgstr "Bỏ liên kết Tài khoản này"
+
+#: lms/static/js/student_account/views/account_settings_fields.js:240
+msgid ""
+"You can use your {accountName} account to sign in to your {platformName} "
+"account."
+msgstr "Bạn có thể sử dụng tài khoản {accountName} để đăng nhập vào tài khoản {platformName} của mình."
+
+#: lms/static/js/student_account/views/account_settings_fields.js:244
+msgid "Unlink your {accountName} account"
+msgstr "Bỏ liên kết tài khoản của bạn {accountName}"
+
+#: lms/static/js/student_account/views/account_settings_fields.js:248
+msgid "Link Your Account"
+msgstr "Liên kết tài khoản của bạn"
+
+#: lms/static/js/student_account/views/account_settings_fields.js:251
+msgid ""
+"Link your {accountName} account to your {platformName} account and use "
+"{accountName} to sign in to {platformName}."
+msgstr "Liên kết tài khoản {accountName} với tài khoản {platformName} của bạn và sử dụng {accountName} để đăng nhập vào {platformName}."
+
 #: lms/static/js/student_account/views/account_settings_fields.js:308
-#: lms/static/js/student_account/views/account_settings_fields.js:180
 msgid "Unlinking"
 msgstr "Bỏ kết nối"
 
 #: lms/static/js/student_account/views/account_settings_fields.js:308
-#: lms/static/js/student_account/views/account_settings_fields.js:180
 msgid "Linking"
 msgstr "Đang kết nối"
 
 #: lms/static/js/student_account/views/account_settings_fields.js:312
-#: lms/static/js/student_account/views/account_settings_fields.js:184
 msgid "Successfully unlinked."
 msgstr "Đã bỏ kết nối."
+
+#: lms/static/js/student_account/views/account_settings_view.js:20
+msgid "Account Information"
+msgstr "Thông tin Tài khoản"
+
+#: lms/static/js/student_account/views/account_settings_view.js:37
+msgid "Order History"
+msgstr "Lịch sử hóa đơn"
 
 #: lms/static/js/student_profile/views/learner_profile_factory.js:55
 #: lms/static/js/student_profile/views/learner_profile_factory.js:49
@@ -5046,62 +5162,9 @@ msgid ""
 msgstr ""
 "Có lỗi kỹ thuật. Hãy thử làm mới lại trang, hoặc kiểm tra kết nối internet."
 
-#: lms/static/js/student_account/views/account_settings_factory.js:25
-msgid "Basic Account Information (required)"
-msgstr "Thông tin cơ bản về tài khoản (bắt buộc)"
-
-#: lms/static/js/student_account/views/account_settings_factory.js:40
-msgid "Additional Information (optional)"
-msgstr "Các thông tin khác (không bắt buộc)"
-
-#: lms/static/js/student_account/views/account_settings_factory.js:108
-msgid "Reset your Password"
-msgstr "Cài đặt lại mật khẩu của bạn"
-
-#: lms/static/js/student_account/views/account_settings_factory.js:111
 #: lms/templates/student_account/account.underscore:16
 msgid "Reset Password"
 msgstr "Đặt Lại Mật Khẩu"
-
-#: lms/static/js/student_account/views/account_settings_factory.js:113
-msgid ""
-"When you click \"Reset Password\", a message will be sent to your email "
-"address. Click the link in the message to reset your password."
-msgstr ""
-"Khi bạn chọn nút \"Cài lại mật khẩu\", chúng tôi sẽ gửi tin nhắn tới địa chỉ "
-"email của bạn. Hãy nhấn vào đường dẫn trong tin nhắn để cài lại mật khẩu."
-
-#: lms/static/js/student_account/views/account_settings_factory.js:171
-msgid "Connected Accounts"
-msgstr "Tài khoản đã kết nối."
-
-#: lms/static/js/student_account/views/account_settings_factory.js:177
-msgid "Connect your {accountName} account"
-msgstr "Kết nối tới {accountName} tài khoản"
-
-#: lms/static/js/student_account/views/account_settings_fields.js:15
-msgid ""
-"We've sent a confirmation message to {new_email_address}. Click the link in "
-"the message to update your email address."
-msgstr ""
-"Đã gửi email khẳng định tới {new_email_address}. Hãy bấm vào đường dẫn trong "
-"email để cập nhật địa chỉ email của bạn."
-
-#: lms/static/js/student_account/views/account_settings_fields.js:83
-msgid ""
-"We've sent a message to {email_address}. Click the link in the message to "
-"reset your password."
-msgstr ""
-"Đã gửi email tới địa chỉ {email_address}. Hãy bấm vào đường dẫn trong email "
-"để cài đặt lại mật khẩu."
-
-#: lms/static/js/student_account/views/account_settings_fields.js:121
-msgid "Unlink"
-msgstr "Huỷ kết nối"
-
-#: lms/static/js/student_account/views/account_settings_fields.js:123
-msgid "Link"
-msgstr "Kết nối"
 
 #: cms/templates/js/asset-library.underscore:26
 #: lms/djangoapps/support/static/support/templates/certificates_results.underscore:7

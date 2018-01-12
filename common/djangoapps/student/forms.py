@@ -17,9 +17,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.template import loader
 
 from django.conf import settings
-from microsite_configuration import microsite
 from student.models import CourseEnrollmentAllowed
 from util.password_policy_validators import validate_password_strength
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 
 class PasswordResetFormNoActive(PasswordResetForm):
@@ -52,7 +52,7 @@ class PasswordResetFormNoActive(PasswordResetForm):
             email_template_name='registration/password_reset_email.html',
             use_https=False,
             token_generator=default_token_generator,
-            from_email=settings.DEFAULT_FROM_EMAIL,
+            from_email=configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL),
             request=None
     ):
         """
@@ -63,7 +63,7 @@ class PasswordResetFormNoActive(PasswordResetForm):
         # django.contrib.auth.forms.PasswordResetForm directly, which has this import in this place.
         from django.core.mail import send_mail
         for user in self.users_cache:
-            site_name = microsite.get_value(
+            site_name = configuration_helpers.get_value(
                 'SITE_NAME',
                 settings.SITE_NAME
             )
@@ -74,7 +74,7 @@ class PasswordResetFormNoActive(PasswordResetForm):
                 'user': user,
                 'token': token_generator.make_token(user),
                 'protocol': 'https' if use_https else 'http',
-                'platform_name': microsite.get_value('platform_name', settings.PLATFORM_NAME)
+                'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
             }
             subject = loader.render_to_string(subject_template_name, context)
             # Email subject *must not* contain newlines
@@ -116,13 +116,14 @@ class AccountCreationForm(forms.Form):
         max_length=30,
         error_messages={
             "required": _USERNAME_TOO_SHORT_MSG,
-            "invalid": _("Usernames must contain only letters, numbers, underscores (_), and hyphens (-)."),
+            "invalid": _("Usernames can only contain Roman letters, western numerals (0-9), underscores (_), and "
+                         "hyphens (-)."),
             "min_length": _USERNAME_TOO_SHORT_MSG,
             "max_length": _("Username cannot be more than %(limit_value)s characters long"),
         }
     )
     email = forms.EmailField(
-        max_length=75,  # Limit per RFCs is 254, but User's email field in django 1.4 only takes 75
+        max_length=254,  # Limit per RFCs is 254
         error_messages={
             "required": _EMAIL_INVALID_MSG,
             "invalid": _EMAIL_INVALID_MSG,
@@ -182,6 +183,19 @@ class AccountCreationForm(forms.Form):
                             error_messages={
                                 "required": _("To enroll, you must follow the honor code.")
                             }
+                        )
+                elif field_name == 'data_sharing_consent':
+                    if field_value == "required":
+                        self.fields[field_name] = TrueField(
+                            error_messages={
+                                "required": _(
+                                    "You must consent to data sharing to register."
+                                )
+                            }
+                        )
+                    elif field_value == 'optional':
+                        self.fields[field_name] = forms.BooleanField(
+                            required=False
                         )
                 else:
                     required = field_value == "required"

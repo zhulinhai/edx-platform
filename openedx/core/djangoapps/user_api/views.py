@@ -29,9 +29,11 @@ from edxmako.shortcuts import marketing_link
 from student.forms import get_registration_extension_form
 from student.views import create_account_with_params, AccountValidationError
 from student.cookies import set_logged_in_cookies
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.lib.api.authentication import SessionAuthenticationAllowInactiveUser
 from util.json_request import JsonResponse
-from .preferences.api import update_email_opt_in
+from util.enterprise_helpers import insert_enterprise_fields
+from .preferences.api import get_country_time_zones, update_email_opt_in
 from .helpers import FormDescription, shim_student_view, require_post_params
 from .models import UserPreference, UserProfile
 from .accounts import (
@@ -39,7 +41,7 @@ from .accounts import (
     USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH
 )
 from .accounts.api import check_account_exists
-from .serializers import UserSerializer, UserPreferenceSerializer
+from .serializers import CountryTimeZoneSerializer, UserSerializer, UserPreferenceSerializer
 
 
 class LoginSessionView(APIView):
@@ -77,7 +79,7 @@ class LoginSessionView(APIView):
         # Translators: These instructions appear on the login form, immediately
         # below a field meant to hold the user's email address.
         email_instructions = _("The email address you used to register with {platform_name}").format(
-            platform_name=settings.PLATFORM_NAME
+            platform_name=configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
         )
 
         form_desc.add_field(
@@ -98,7 +100,6 @@ class LoginSessionView(APIView):
 
         form_desc.add_field(
             "password",
-            required=False,
             label=password_label,
             field_type="password",
             restrictions={
@@ -165,15 +166,21 @@ class RegistrationView(APIView):
     DEFAULT_FIELDS = ["email", "name", "username", "password"]
 
     EXTRA_FIELDS = [
+        "first_name",
+        "last_name",
         "city",
+        "state",
         "country",
         "gender",
         "year_of_birth",
         "level_of_education",
+        "company",
+        "title",
         "mailing_address",
         "goals",
         "honor_code",
         "terms_of_service",
+        "privacy_policy",
     ]
 
     # This end-point is available to anonymous users,
@@ -193,7 +200,9 @@ class RegistrationView(APIView):
 
         # Backwards compatibility: Honor code is required by default, unless
         # explicitly set to "optional" in Django settings.
-        self._extra_fields_setting = copy.deepcopy(settings.REGISTRATION_EXTRA_FIELDS)
+        self._extra_fields_setting = copy.deepcopy(configuration_helpers.get_value('REGISTRATION_EXTRA_FIELDS'))
+        if not self._extra_fields_setting:
+            self._extra_fields_setting = copy.deepcopy(settings.REGISTRATION_EXTRA_FIELDS)
         self._extra_fields_setting["honor_code"] = self._extra_fields_setting.get("honor_code", "required")
 
         # Check that the setting is configured correctly
@@ -276,6 +285,9 @@ class RegistrationView(APIView):
                     form_desc,
                     required=self._is_field_required(field_name)
                 )
+
+        # Add any Enterprise fields if the app is enabled
+        insert_enterprise_fields(request, form_desc)
 
         return HttpResponse(form_desc.to_json(), content_type="application/json")
 
@@ -597,7 +609,7 @@ class RegistrationView(APIView):
         # Translators: This phrase appears above a field on the registration form
         # meant to hold the user's reasons for registering with edX.
         goals_label = _(u"Tell us why you're interested in {platform_name}").format(
-            platform_name=settings.PLATFORM_NAME
+            platform_name=configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME)
         )
 
         form_desc.add_field(
@@ -624,6 +636,106 @@ class RegistrationView(APIView):
         form_desc.add_field(
             "city",
             label=city_label,
+            required=required
+        )
+
+    def _add_state_field(self, form_desc, required=False):
+        """Add a State/Province/Region field to a form description.
+
+        Arguments:
+            form_desc: A form description
+
+        Keyword Arguments:
+            required (bool): Whether this field is required; defaults to False
+
+        """
+        # Translators: This label appears above a field on the registration form
+        # which allows the user to input the State/Province/Region in which they live.
+        state_label = _(u"State/Province/Region")
+
+        form_desc.add_field(
+            "state",
+            label=state_label,
+            required=required
+        )
+
+    def _add_company_field(self, form_desc, required=False):
+        """Add a Company field to a form description.
+
+        Arguments:
+            form_desc: A form description
+
+        Keyword Arguments:
+            required (bool): Whether this field is required; defaults to False
+
+        """
+        # Translators: This label appears above a field on the registration form
+        # which allows the user to input the Company
+        company_label = _(u"Company")
+
+        form_desc.add_field(
+            "company",
+            label=company_label,
+            required=required
+        )
+
+    def _add_title_field(self, form_desc, required=False):
+        """Add a Title field to a form description.
+
+        Arguments:
+            form_desc: A form description
+
+        Keyword Arguments:
+            required (bool): Whether this field is required; defaults to False
+
+        """
+        # Translators: This label appears above a field on the registration form
+        # which allows the user to input the Title
+        title_label = _(u"Title")
+
+        form_desc.add_field(
+            "title",
+            label=title_label,
+            required=required
+        )
+
+    def _add_first_name_field(self, form_desc, required=False):
+        """Add a First Name field to a form description.
+
+        Arguments:
+            form_desc: A form description
+
+        Keyword Arguments:
+            required (bool): Whether this field is required; defaults to False
+
+        """
+        # Translators: This label appears above a field on the registration form
+        # which allows the user to input the First Name
+        first_name_label = _(u"First Name")
+
+        form_desc.add_field(
+            "first_name",
+            label=first_name_label,
+            required=required
+        )
+
+    def _add_last_name_field(self, form_desc, required=False):
+        """Add a Last Name field to a form description.
+
+        Arguments:
+            form_desc: A form description
+
+        Keyword Arguments:
+            required (bool): Whether this field is required; defaults to False
+
+        """
+        # Translators: This label appears above a field on the registration form
+        # which allows the user to input the First Name
+        last_name_label = _(u"Last Name")
+
+        form_desc.add_field(
+            "last_name",
+            label=last_name_label,
             required=required
         )
 
@@ -666,31 +778,30 @@ class RegistrationView(APIView):
         """
         # Separate terms of service and honor code checkboxes
         if self._is_field_visible("terms_of_service"):
-            terms_text = _(u"Honor Code")
+            terms_label = _(u"Honor Code")
+            terms_link = marketing_link("HONOR")
+            terms_text = _(u"Review the Honor Code")
 
         # Combine terms of service and honor code checkboxes
         else:
             # Translators: This is a legal document users must agree to
             # in order to register a new account.
-            terms_text = _(u"Terms of Service and Honor Code")
+            terms_label = _(u"Terms of Service and Honor Code")
+            terms_link = marketing_link("HONOR")
+            terms_text = _(u"Review the Terms of Service and Honor Code")
 
-        terms_link = u"<a href=\"{url}\">{terms_text}</a>".format(
-            url=marketing_link("HONOR"),
-            terms_text=terms_text
+        # Translators: "Terms of Service" is a legal document users must agree to
+        # in order to register a new account.
+        label = _(u"I agree to the {platform_name} {terms_of_service}").format(
+            platform_name=configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME),
+            terms_of_service=terms_label
         )
 
         # Translators: "Terms of Service" is a legal document users must agree to
         # in order to register a new account.
-        label = _(u"I agree to the {platform_name} {terms_of_service}.").format(
-            platform_name=settings.PLATFORM_NAME,
-            terms_of_service=terms_link
-        )
-
-        # Translators: "Terms of Service" is a legal document users must agree to
-        # in order to register a new account.
-        error_msg = _(u"You must agree to the {platform_name} {terms_of_service}.").format(
-            platform_name=settings.PLATFORM_NAME,
-            terms_of_service=terms_link
+        error_msg = _(u"You must agree to the {platform_name} {terms_of_service}").format(
+            platform_name=configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME),
+            terms_of_service=terms_label
         )
 
         form_desc.add_field(
@@ -701,7 +812,9 @@ class RegistrationView(APIView):
             required=required,
             error_messages={
                 "required": error_msg
-            }
+            },
+            supplementalLink=terms_link,
+            supplementalText=terms_text
         )
 
     def _add_terms_of_service_field(self, form_desc, required=True):
@@ -716,34 +829,22 @@ class RegistrationView(APIView):
         """
         # Translators: This is a legal document users must agree to
         # in order to register a new account.
-        terms_text = _(u"Terms of Service")
-        terms_link = u"<a href=\"{url}\">{terms_text}</a>".format(
-            url=marketing_link("TOS"),
-            terms_text=terms_text
-        )
+        terms_label = _(u"Terms of Service")
+        terms_link = marketing_link("TOS")
+        terms_text = _(u"Review the Terms of Service")
 
-        # Translators: This is a legal document users must agree to
+        # Translators: "Terms of service" is a legal document users must agree to
         # in order to register a new account.
-        privacy_text = _(u"Privacy Policy")
-        privacy_link = u"<a href=\"{url}#privacy\">{privacy_text}</a>".format(
-            url=marketing_link("TOS"),
-            privacy_text=privacy_text,
+        label = _(u"I agree to the {platform_name} {terms_of_service}").format(
+            platform_name=configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME),
+            terms_of_service=terms_label
         )
 
         # Translators: "Terms of service" is a legal document users must agree to
         # in order to register a new account.
-        label = _(u"I agree to the {platform_name} {terms_of_service} and {privacy_policy}.").format(
-            platform_name=settings.PLATFORM_NAME,
-            privacy_policy=privacy_link,
-            terms_of_service=terms_link
-        )
-
-        # Translators: "Terms of service" is a legal document users must agree to
-        # in order to register a new account.
-        error_msg = _(u"You must agree to the {platform_name} {terms_of_service} and {privacy_policy}.").format(
-            platform_name=settings.PLATFORM_NAME,
-            privacy_policy=privacy_link,
-            terms_of_service=terms_link
+        error_msg = _(u"You must agree to the {platform_name} {terms_of_service}").format(
+            platform_name=configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME),
+            terms_of_service=terms_label
         )
 
         form_desc.add_field(
@@ -754,7 +855,52 @@ class RegistrationView(APIView):
             required=required,
             error_messages={
                 "required": error_msg
-            }
+            },
+            supplementalLink=terms_link,
+            supplementalText=terms_text
+        )
+
+    def _add_privacy_policy_field(self, form_desc, required=True):
+        """Add a privacy policy field to a form description.
+
+        Arguments:
+            form_desc: A form description
+
+        Keyword Arguments:
+            required (bool): Whether this field is required; defaults to True
+
+        """
+        # Translators: This is a legal document users must agree to
+        # in order to register a new account.
+        privacy_label = _(u'Privacy Policy')
+        privacy_link = marketing_link("PRIVACY")
+        privacy_text = _(u"Review the Privacy Policy")
+
+        # Translators: "Privacy Policy" is a legal document users must agree to
+        # in order to register a new account.
+        label = _(u"I agree to the {platform_name} {privacy}").format(
+            platform_name=configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME),
+            privacy=privacy_label
+        )
+
+        # Translators: "Privacy Policy" is a legal document users must agree to
+        # in order to register a new account.
+        error_msg = _(u"You must agree to the {platform_name} {privacy}").format(
+            platform_name=configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME),
+            privacy=privacy_label
+        )
+
+        form_desc.add_field(
+            "privacy_policy",
+            label=label,
+            field_type="checkbox",
+            default=False,
+            required=required,
+            error_messages={
+                "required": error_msg
+            },
+            supplementalLink=privacy_link,
+            supplementalText=privacy_text
         )
 
     def _apply_third_party_auth_overrides(self, request, form_desc):
@@ -841,7 +987,7 @@ class PasswordResetView(APIView):
         # Translators: These instructions appear on the password reset form,
         # immediately below a field meant to hold the user's email address.
         email_instructions = _(u"The email address you used to register with {platform_name}").format(
-            platform_name=settings.PLATFORM_NAME
+            platform_name=configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
         )
 
         form_desc.add_field(
@@ -957,3 +1103,37 @@ class UpdateEmailOptInPreference(APIView):
         email_opt_in = request.data['email_opt_in'].lower() == 'true'
         update_email_opt_in(request.user, org, email_opt_in)
         return HttpResponse(status=status.HTTP_200_OK)
+
+
+class CountryTimeZoneListView(generics.ListAPIView):
+    """
+    **Use Cases**
+
+        Retrieves a list of all time zones, by default, or common time zones for country, if given
+
+        The country is passed in as its ISO 3166-1 Alpha-2 country code as an
+        optional 'country_code' argument. The country code is also case-insensitive.
+
+    **Example Requests**
+
+        GET /user_api/v1/preferences/time_zones/
+
+        GET /user_api/v1/preferences/time_zones/?country_code=FR
+
+    **Example GET Response**
+
+        If the request is successful, an HTTP 200 "OK" response is returned along with a
+        list of time zone dictionaries for all time zones or just for time zones commonly
+        used in a country, if given.
+
+        Each time zone dictionary contains the following values.
+
+            * time_zone: The name of the time zone.
+            * description: The display version of the time zone
+    """
+    serializer_class = CountryTimeZoneSerializer
+    paginator = None
+
+    def get_queryset(self):
+        country_code = self.request.GET.get('country_code', None)
+        return get_country_time_zones(country_code)

@@ -10,6 +10,7 @@ ANONYMOUS_USER_EMAIL = 'noreply@example.com'
 API_DATE_FORMAT = '%Y-%m-%d'
 COURSE_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
 COURSE_MODE_DEFAULTS = {
+    'bulk_sku': None,
     'currency': 'usd',
     'description': None,
     'expiration_datetime': None,
@@ -53,6 +54,7 @@ FORUM_MONGO_PARAMS = {
 HELP_MODAL_LINKS = [
     # {'url': 'https://help.com', 'text': 'How to register an account'}
 ]
+HIDE_COURSE_INFO_CERTS_TEXT = True
 INLINE_ANALYTICS_SUPPORTED_TYPES = {
     'MultipleChoiceResponse': 'radio',
     'ChoiceResponse': 'checkbox',
@@ -64,7 +66,6 @@ INLINE_ANALYTICS_SUPPORTED_TYPES = {
 INSTALLED_APPS += (
     'branding_stanford',
     'cme_registration',
-    'instructor_email_widget',
     'settings_context_processor',
     'sneakpeek_deeplink',
     # Added here to allow translations
@@ -75,6 +76,7 @@ MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
 MIDDLEWARE_CLASSES += (
     'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
 )
+MKTG_URL_LINK_MAP['COPYRIGHT'] = 'copyright'
 ORA2_RESPONSES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
     'BUCKET': 'edx-grades',
@@ -116,7 +118,6 @@ TEMPLATES[0]['OPTIONS']['context_processors'] += [
     # Include TEMPLATE_VISIBLE_SETTINGS in templates
     'settings_context_processor.context_processors.settings',
 ]
-THEME_NAME = 'lagunita'
 TYPES_WITH_CHILD_PROBLEMS_LIST = [
     # These types are children of children of units.
     'library_content',

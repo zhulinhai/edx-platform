@@ -3,8 +3,8 @@
 from urllib import urlencode
 from bok_choy.page_object import PageObject, unguarded
 from bok_choy.promise import Promise, EmptyPromise
-from . import BASE_URL
-from .dashboard import DashboardPage
+from common.test.acceptance.pages.lms import BASE_URL
+from common.test.acceptance.pages.lms.dashboard import DashboardPage
 
 
 class RegisterPage(PageObject):
@@ -85,6 +85,26 @@ class ResetPasswordPage(PageObject):
             not self.q(css="#login-anchor").visible and
             self.q(css="#password-reset-form").visible
         )
+
+    def fill_password_reset_form(self, email):
+        """
+        Fill in the form and submit it
+        """
+        self.wait_for_element_visibility('#password-reset-email', 'Reset Email field is shown')
+        self.q(css="#password-reset-email").fill(email)
+        self.q(css="button.js-reset").click()
+
+    def is_success_visible(self, selector):
+        """
+        Check element is visible
+        """
+        self.wait_for_element_visibility(selector, 'Success div is shown')
+
+    def get_success_message(self):
+        """
+        Return a success message displayed to the user
+        """
+        return self.q(css=".submission-success h4").text
 
 
 class CombinedLoginAndRegisterPage(PageObject):
@@ -251,7 +271,7 @@ class CombinedLoginAndRegisterPage(PageObject):
         login_form = self.current_form
 
         # Click the password reset link on the login page
-        self.q(css="a.forgot-password").click()
+        self.q(css=".forgot-password").click()
 
         # Wait for the password reset form to load
         EmptyPromise(
@@ -336,10 +356,10 @@ class CombinedLoginAndRegisterPage(PageObject):
         """Wait for a status message to be visible following third_party registration, then return it."""
         def _check_func():
             """Return third party auth status notice message."""
-            for selector in ['.already-authenticated-msg p', '.status p']:
-                msg_element = self.q(css=selector)
-                if msg_element.visible:
-                    return (True, msg_element.text[0])
+            selector = '.js-auth-warning p'
+            msg_element = self.q(css=selector)
+            if msg_element.visible:
+                return (True, msg_element.text[0])
             return (False, None)
         return Promise(_check_func, "Result of third party auth is visible").fulfill()
 

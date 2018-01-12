@@ -138,7 +138,7 @@ class FormDescription(object):
     OVERRIDE_FIELD_PROPERTIES = [
         "label", "type", "defaultValue", "placeholder",
         "instructions", "required", "restrictions",
-        "options"
+        "options", "supplementalLink", "supplementalText"
     ]
 
     def __init__(self, method, submit_url):
@@ -158,6 +158,7 @@ class FormDescription(object):
             self, name, label=u"", field_type=u"text", default=u"",
             placeholder=u"", instructions=u"", required=True, restrictions=None,
             options=None, include_default_option=False, error_messages=None,
+            supplementalLink=u"", supplementalText=u""
     ):
         """Add a field to the form description.
 
@@ -198,6 +199,12 @@ class FormDescription(object):
                 that the messages should be displayed if the user does
                 not provide a value for a required field.
 
+            supplementalLink (unicode): A qualified URL to provide supplemental information
+                for the form field. An example may be a link to documentation for creating
+                strong passwords.
+
+            supplementalText (unicode): The visible text for the supplemental link above.
+
         Raises:
             InvalidFieldError
 
@@ -219,6 +226,8 @@ class FormDescription(object):
             "required": required,
             "restrictions": {},
             "errorMessages": {},
+            "supplementalLink": supplementalLink,
+            "supplementalText": supplementalText
         }
 
         if field_type == "select":
@@ -444,16 +453,8 @@ def shim_student_view(view_func, check_logged_in=False):
             msg = response_dict.get("value", u"")
             success = response_dict.get("success")
         except (ValueError, TypeError):
-            response_dict = {}
             msg = response.content
             success = True
-
-        redirect_url = response_dict.get('redirect')
-        if redirect_url == '/shib-login/':
-            # Hijack the response for Shibboleth redirects
-            response.status_code = 418
-            response.content = redirect_url
-            return response
 
         # If the user is not authenticated when we expect them to be
         # send the appropriate status code.

@@ -33,7 +33,7 @@ def intercepted_function(raise_error=None):
 
     """
     if raise_error is not None:
-        raise raise_error
+        raise raise_error                   # pylint: disable=raising-bad-type
 
 
 class InterceptErrorsTest(TestCase):
@@ -88,7 +88,9 @@ class FormDescriptionTest(TestCase):
             },
             error_messages={
                 "required": "You must provide a value!"
-            }
+            },
+            supplementalLink="",
+            supplementalText="",
         )
 
         self.assertEqual(desc.to_json(), json.dumps({
@@ -109,7 +111,9 @@ class FormDescriptionTest(TestCase):
                     },
                     "errorMessages": {
                         "required": "You must provide a value!"
-                    }
+                    },
+                    "supplementalLink": "",
+                    "supplementalText": ""
                 }
             ]
         }))
@@ -186,21 +190,6 @@ class StudentViewShimTest(TestCase):
         response = view(HttpRequest())
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, "")
-
-    def test_shib_redirect_from_json(self):
-        url = '/shib-login/'
-        view = self._shimmed_view(
-            HttpResponse(
-                status=418,
-                content=json.dumps({
-                    'success': True,
-                    'redirect': url,
-                }),
-            )
-        )
-        response = view(HttpRequest())
-        self.assertEqual(response.status_code, 418)
-        self.assertEqual(response.content, url)
 
     def test_error_from_json(self):
         view = self._shimmed_view(

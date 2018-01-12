@@ -1,0 +1,185 @@
+// LMS header styles
+
+.header-global {
+    @extend %ui-depth1;
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid $gray-l1;
+    box-shadow: 0 1px 5px 0 $shadow-l1;
+    background: $header-bg;
+
+    .wrapper-header {
+        @include clearfix();
+        box-sizing: border-box;
+        margin: 0 auto;
+        padding: 10px 10px 0;
+        width: 100%;
+        max-width: 1180px;
+
+        .left {
+            @include float(left);
+        }
+
+        .right {
+            @include float(right);
+        }
+
+        .logo {
+            @include float(left);
+            @include margin-left(10px);
+            @include margin-right(10px);
+            margin-top: 4px;
+            margin-bottom: 0;
+            position: relative;
+        }
+
+        .course-header {
+            @include float(left);
+            @include margin(12px, 10px, 0px, 10px);
+            color: $lms-label-color;
+        }
+
+        .wrapper-user-menu {
+            @include float(right);
+            margin-top: 4px;
+            width: auto;
+        }
+
+        .dropdown-menu {
+            @include text-align(left);
+            top: inherit;
+        }
+
+        .user-menu {
+            display: inline;
+        }
+
+        .list-inline {
+            &.nav-global {
+                margin-top: 12px;
+                margin-bottom: 0;
+            }
+
+            &.nav-courseware {
+                margin-top: 5px;
+            }
+
+            .item {
+                font-weight: font-weight(semi-bold);
+                text-transform: uppercase;
+
+                &.active {
+                    a {
+                        text-decoration: none;
+                        color: $link-color;
+                    }
+                }
+            }
+        }
+
+        .tab-nav-item{
+            @include float(left);
+            display: flex;
+            margin: 0;
+            justify-content: center;
+
+            .tab-nav-link{
+                font-size: font-size(base);
+                font-weight: font-weight(semi-bold);
+                color: palette(grayscale, dark);
+                padding: 5px 25px 23px;
+                display: inline-block;
+
+                &:active,
+                &:focus,
+                &:hover {
+                    border-bottom: 4px solid $lms-border-color;
+                }
+            }
+
+            .active{
+                border-bottom: 4px solid $black-t3 !important;
+            }
+        }
+
+        .user {
+            @include float(right);
+            margin-top: 0;
+
+            > .primary {
+                display: block;
+                @include float(left);
+                margin: 0;
+                margin-top: $baseline/2;
+                position: relative;
+
+                > a {
+                      margin: 0;
+                      @include border-right-radius(0);
+                      background-image: none;
+                }
+
+                &:last-child {
+                    > a {
+                        @include border-radius(0, 4px, 4px, 0);
+                        @include border-left(none);
+                        padding: ($baseline/2) ($baseline/2);
+                        color: $base-font-color;
+                        text-decoration: none;
+                        text-transform: uppercase;
+                        text-shadow: 0 1px rgba(255,255,255, 0.6);
+                        vertical-align: middle;
+
+                        &.shopping-cart {
+                            border-radius: 4px;
+                            border: 1px solid $border-color-2;
+                            margin-right: ($baseline/2);
+                            padding-bottom: 6px;
+                        }
+
+                        &:hover, &:focus, &:active {
+                            background: $button-bg-hover-color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Style the courseware's slim version of the header
+    &.slim {
+        .wrapper-header {
+            height: 60px;
+
+            .logo img {
+                margin-top: 4px;
+                height: 30px;
+            }
+
+            .course-header {
+                margin-top: 10px;
+            }
+
+            .list-inline.nav-global {
+                margin-top: 10px;
+            }
+
+            .wrapper-user-menu {
+                margin-top: 0;
+            }
+        }
+    }
+}
+
+.doc-link {
+    @include float(right);
+    @include margin(($baseline*0.75), ($baseline*0.75), ($baseline*0.75), ($baseline*0.75));
+    font-size: 14px;
+    font-weight: bold;
+    color: $base-font-color;
+
+    &:visited {
+      color: $base-font-color;
+    }
+}
