@@ -25,6 +25,7 @@ import django.utils
 from django.utils.translation import get_language, to_locale
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 from openedx.core.djangoapps.request_cache.middleware import RequestCache
 =======
 <<<<<<< HEAD
@@ -40,6 +41,11 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 #from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 >>>>>>> FIX: comenting out broken import To be fixed later
 >>>>>>> FIX: comenting out broken import To be fixed later
+=======
+
+from pymongo import ReadPreference
+
+>>>>>>> UPGRADE
 from xmodule.contentstore.django import contentstore
 from xmodule.modulestore.draft_and_published import BranchSettingMixin
 from xmodule.modulestore.mixed import MixedModuleStore
@@ -387,7 +393,7 @@ class ModuleI18nService(object):
             xblock_locale_path = resource_filename(xblock_resource, xblock_locale_dir)
             xblock_domain = 'text'
             selected_language = get_language()
-            language_code = 'enUS' #configuration_helpers.get_value('LANGUAGE_CODE')
+            language_code = 'enUS'
             try:
                 self.translator = gettext.translation(
                     xblock_domain,

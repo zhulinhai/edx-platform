@@ -37,6 +37,7 @@ CATALOG_VISIBILITY_ABOUT = "about"
 CATALOG_VISIBILITY_NONE = "none"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 DEFAULT_COURSE_VISIBILITY_IN_CATALOG = getattr(
     settings,
     'DEFAULT_COURSE_VISIBILITY_IN_CATALOG',
@@ -46,19 +47,10 @@ DEFAULT_COURSE_VISIBILITY_IN_CATALOG = getattr(
 =======
 <<<<<<< HEAD
 >>>>>>> FIX: setting in xmodule and adding chaching
-DEFAULT_MOBILE_AVAILABLE = getattr(settings, 'DEFAULT_MOBILE_AVAILABLE', False)
 =======
+>>>>>>> UPGRADE
+DEFAULT_MOBILE_AVAILABLE = getattr(settings, 'DEFAULT_MOBILE_AVAILABLE', False)
 DEFAULT_COURSE_VISIBILITY_IN_CATALOG = getattr(settings, 'DEFAULT_COURSE_VISIBILITY_IN_CATALOG', 'both')
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> FIX: setting in xmodule and adding chaching
-
-=======
-DEFAULT_MOBILE_AVAILABLE = getattr(settings, 'DEFAULT_MOBILE_AVAILABLE', False)
->>>>>>> Returning work we wissed due to upgrade
-=======
-DEFAULT_MOBILE_AVAILABLE = getattr(settings, 'DEFAULT_MOBILE_AVAILABLE', False)
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
 
 class StringOrDate(Date):
     def from_json(self, value):

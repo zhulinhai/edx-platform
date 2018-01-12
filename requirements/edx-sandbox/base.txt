@@ -20,10 +20,8 @@ numpy==1.12.1
 networkx==1.7
 sympy==0.7.1
 pyparsing==2.0.7
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 cryptography==1.9
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -53,6 +51,9 @@ matplotlib==2.0.2
 
 >>>>>>> merge fixes
 >>>>>>> merge fixes
+=======
+matplotlib==2.0.2
+>>>>>>> UPGRADE
 
 # We forked NLTK just to make it work with setuptools instead of distribute
 <<<<<<< HEAD
