@@ -421,6 +421,12 @@ FEATURES = {
 
     # Whether HTML XBlocks/XModules return HTML content with the Course Blocks API student_view_data
     'ENABLE_HTML_XBLOCK_STUDENT_VIEW_DATA': False,
+
+    # Whether the browser alert should be shown or not
+    'ENABLE_UNSUPPORTED_BROWSER_ALERT': False,
+
+    # Sets the default browser support
+    'UNSUPPORTED_BROWSER_ALERT_VERSIONS': "{i:-10,f:-3,o:-3,s:-3,c:-3}",
 }
 
 # Settings for the course reviews tool template and identification key, set either to None to disable course reviews
