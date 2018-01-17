@@ -3544,8 +3544,6 @@ COURSES_API_CACHE_TIMEOUT = 3600  # Value is in seconds
 COURSEGRAPH_JOB_QUEUE = LOW_PRIORITY_QUEUE
 
 
-<<<<<<< HEAD
-=======
 ############## Settings for ACE ####################################
 ACE_ENABLED_CHANNELS = [
     'file_email'
@@ -3560,11 +3558,6 @@ ACE_CHANNEL_SAILTHRU_API_SECRET = None
 
 ACE_ROUTING_KEY = LOW_PRIORITY_QUEUE
 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> Proversity/subscription (#614)
-=======
->>>>>>> UPGRADE
 # Initialize to 'unknown', but read from JSON in aws.py
 EDX_PLATFORM_REVISION = 'unknown'
 
@@ -3591,22 +3584,19 @@ INSTALLED_APPS.extend(plugin_apps.get_apps(plugin_constants.ProjectType.LMS))
 plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.LMS, plugin_constants.SettingsType.COMMON)
 =======
 RATELIMIT_RATE = '30/m'
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
 ############## Plugin Django Apps #########################
 
 from openedx.core.djangolib.django_plugins import DjangoAppRegistry, ProjectType, SettingsType
 INSTALLED_APPS.extend(DjangoAppRegistry.get_plugin_apps(ProjectType.LMS))
 DjangoAppRegistry.add_plugin_settings(__name__, ProjectType.LMS, SettingsType.COMMON)
-=======
-=======
-=======
->>>>>>> UPGRADE
+
 ############## Settings for Bibblio ####################################
 
 BIBBLIO_CLIENT_ID = 'bibblio_client_id'
 BIBBLIO_CLIENT_SECRET = 'bibblio_client_secret'
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 EDX_PLATFORM_REVISION = os.environ.get('EDX_PLATFORM_REVISION')
@@ -3634,3 +3624,5 @@ INSTALLED_APPS.extend(DjangoAppRegistry.get_plugin_apps(ProjectType.LMS))
 DjangoAppRegistry.add_plugin_settings(__name__, ProjectType.LMS, SettingsType.COMMON)
 >>>>>>> UPGRADE
 >>>>>>> UPGRADE
+=======
+>>>>>>> upstream master merge fix

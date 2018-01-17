@@ -1096,8 +1096,6 @@ if settings.BRANCH_IO_KEY:
     urlpatterns += [
         url(r'^text-me-the-app', student_views.text_me_the_app, name='text_me_the_app'),
     ]
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 <<<<<<< HEAD
 urlpatterns.extend(plugin_urls.get_patterns(plugin_constants.ProjectType.LMS))
@@ -1105,16 +1103,13 @@ urlpatterns.extend(plugin_urls.get_patterns(plugin_constants.ProjectType.LMS))
 
 from openedx.core.djangolib.django_plugins import DjangoAppRegistry, ProjectType
 urlpatterns.extend(DjangoAppRegistry.get_plugin_url_patterns(ProjectType.LMS))
-=======
-=======
-    )
-=======
->>>>>>> UPGRADE
+
 
 urlpatterns += (
     url(r'^subscription/', include('subscription_content.urls')),
 )
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Proversity/subscription (#614)
 >>>>>>> Proversity/subscription (#614)
 <<<<<<< HEAD
@@ -1124,3 +1119,5 @@ urlpatterns += (
 
 >>>>>>> UPGRADE
 >>>>>>> UPGRADE
+=======
+>>>>>>> upstream master merge fix
