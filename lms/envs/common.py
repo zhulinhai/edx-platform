@@ -961,6 +961,7 @@ STATIC_ROOT = ENV_ROOT / "staticfiles"
 STATICFILES_DIRS = [
     COMMON_ROOT / "static",
     PROJECT_ROOT / "static",
+    NODE_MODULES_ROOT / "@edx",
 ]
 
 FAVICON_PATH = 'images/favicon.ico'
@@ -3398,8 +3399,10 @@ ENTERPRISE_CUSTOMER_LOGO_IMAGE_SIZE = 512   # Enterprise logo image size limit i
 ENTERPRISE_PLATFORM_WELCOME_TEMPLATE = _(u'Welcome to {platform_name}.')
 ENTERPRISE_SPECIFIC_BRANDED_WELCOME_TEMPLATE = _(
     u'{start_bold}{enterprise_name}{end_bold} has partnered with {start_bold}'
-    '{platform_name}{end_bold} to offer you high-quality learning opportunities '
-    'from the world\'s best universities.'
+    '{platform_name}{end_bold} to  offer you always available, high-quality learning '
+    'programs to help you advance your knowledge and your career. '
+    '{line_break}Please continue with registration, or log in if you are an existing user, '
+    'and press continue to start learning.'
 )
 ENTERPRISE_TAGLINE = ''
 ENTERPRISE_EXCLUDED_REGISTRATION_FIELDS = {
