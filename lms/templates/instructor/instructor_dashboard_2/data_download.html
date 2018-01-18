@@ -1,8 +1,35 @@
+<%namespace name='static' file='/static_content.html'/>
 <%page args="section_data" expression_filter="h"/>
 <%!
 from django.utils.translation import ugettext as _
 from openedx.core.djangolib.markup import HTML, Text
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 %>
+
+<script type="text/javascript" src="${static.url('js/vendor/jquery.leanModal.js')}"></script>
+
+% if configuration_helpers.get_value('CUSTOM_THEME_DISPLAY_SENSITIVE_DATA_MSG_FOR_DASHBOARD', settings.FEATURES.get('CUSTOM_THEME_DISPLAY_SENSITIVE_DATA_MSG_FOR_DASHBOARD', True)):
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $(function() {
+    $('a[rel*=leanModal]').leanModal();
+  });
+     $("#sensitive_data").click()
+    $( "#sensitive" ).attr("aria-hidden", "false");
+
+});
+</script>
+
+<a class="instructor-info-action" href="#sensitive" id="sensitive_data" style="display:none" rel="leanModal"></a>
+
+  <div aria-hidden="true" role="dialog" tabindex="-1" class="modal staff-modal" id="sensitive" >
+  <div class="inner-wrapper">
+  Contains information protected under the Protection of Privacy Law - the wrongful transgressor commits an offense.
+  </div>
+</div>
+
+% endif
 
 <div class="data-download-container action-type-container">
   <div class="request-response-error msg msg-error copy" id="data-request-response-error"></div>
