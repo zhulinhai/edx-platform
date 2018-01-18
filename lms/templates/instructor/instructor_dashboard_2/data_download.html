@@ -6,26 +6,23 @@ from openedx.core.djangolib.markup import HTML, Text
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 %>
 
-<script type="text/javascript" src="${static.url('js/vendor/jquery.leanModal.js')}"></script>
-
 % if configuration_helpers.get_value('CUSTOM_THEME_DISPLAY_SENSITIVE_DATA_MSG_FOR_DASHBOARD', settings.FEATURES.get('CUSTOM_THEME_DISPLAY_SENSITIVE_DATA_MSG_FOR_DASHBOARD', True)):
 
-<script type="text/javascript">
-$( document ).ready(function() {
-  $(function() {
-    $('a[rel*=leanModal]').leanModal();
-  });
-     $("#sensitive_data").click()
-    $( "#sensitive" ).attr("aria-hidden", "false");
+<script type="text/javascript" src="${static.url('js/vendor/jquery.leanModal.js')}"></script>
 
-});
-</script>
+<style>
+.dataDisclaimer-modal{
+  color:#555;
+  padding: 60px;
+  line-height: 1.9;
+}
+</style>
 
-<a class="instructor-info-action" href="#sensitive" id="sensitive_data" style="display:none" rel="leanModal"></a>
+<a class="instructor-info-action" href="#sensitiveDataModal" id="sensitive_data" style="display:none" rel="leanModal"></a>
 
-  <div aria-hidden="true" role="dialog" tabindex="-1" class="modal staff-modal" id="sensitive" >
+  <div aria-hidden="true" role="dialog" tabindex="-1" class="modal dataDisclaimer-modal" id="sensitiveDataModal" >
   <div class="inner-wrapper">
-  Contains information protected under the Protection of Privacy Law - the wrongful transgressor commits an offense.
+  ${_("Contains information protected under the Protection of Privacy Law - the wrongful transgressor commits an offense.")}
   </div>
 </div>
 

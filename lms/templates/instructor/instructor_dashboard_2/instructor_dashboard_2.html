@@ -6,6 +6,7 @@
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 from openedx.core.djangolib.markup import HTML
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 %>
 <%block name="bodyclass">view-in-course view-instructordash</%block>
 
@@ -142,6 +143,18 @@ from openedx.core.djangolib.markup import HTML
         </main>
   </div>
 </div>
+
+% if configuration_helpers.get_value('CUSTOM_THEME_DISPLAY_SENSITIVE_DATA_MSG_FOR_DASHBOARD', settings.FEATURES.get('CUSTOM_THEME_DISPLAY_SENSITIVE_DATA_MSG_FOR_DASHBOARD', True)):
+
+<script>
+$('[data-section="data_download"]').click(function(){
+    $( 'a[rel*=leanModal]' ).leanModal();
+    $( "#sensitive_data" ).click()
+    $( "#sensitive" ).attr("aria-hidden", "false");
+});
+</script>
+
+% endif
 
 <%static:require_module_async module_name="js/dateutil_factory" class_name="DateUtilFactory">
     DateUtilFactory.transform(iterationKey=".localized-datetime");
