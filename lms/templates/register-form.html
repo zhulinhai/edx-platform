@@ -9,7 +9,6 @@ from microsite_configuration import microsite
 <%def name="theme_enabled()"><% return settings.FEATURES.get("USE_CUSTOM_THEME", False) %></%def>
 <%def name="is_microsite()"><% return microsite.is_request_in_microsite() %></%def>
 <%def name="stanford_theme_enabled()"><% return theme_enabled() and not is_microsite() %></%def>
-<%namespace name='static' file='static_content.html'/>
 
 <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
 
