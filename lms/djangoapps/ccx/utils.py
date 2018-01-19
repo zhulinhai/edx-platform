@@ -208,16 +208,10 @@ def get_valid_student_with_email(identifier):
 
 def ccx_students_enrolling_center(action, identifiers, email_students, course_key, email_params, coach):
     """
-    Function to enroll/add or unenroll/revoke students.
-
-    This function exists for backwards compatibility: in CCX there are
-    two different views to manage students that used to implement
-    a different logic. Now the logic has been reconciled at the point that
-    this function can be used by both.
-    The two different views can be merged after some UI refactoring.
+    Function to enroll or unenroll/revoke students.
 
     Arguments:
-        action (str): type of action to perform (add, Enroll, revoke, Unenroll)
+        action (str): type of action to perform (Enroll, Unenroll/revoke)
         identifiers (list): list of students username/email
         email_students (bool): Flag to send an email to students
         course_key (CCXLocator): a CCX course key
@@ -229,7 +223,7 @@ def ccx_students_enrolling_center(action, identifiers, email_students, course_ke
     """
     errors = []
 
-    if action == 'Enroll' or action == 'add':
+    if action == 'Enroll':
         ccx_course_overview = CourseOverview.get_from_id(course_key)
         course_locator = course_key.to_course_locator()
         staff = CourseStaffRole(course_locator).users_with_role()
