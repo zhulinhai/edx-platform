@@ -76,7 +76,7 @@ from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
 from notification_prefs.views import enable_notifications
 from openedx.core.djangoapps import monitoring_utils
 from openedx.core.djangoapps.catalog.utils import (
-    get_programs_with_type, get_visible_sessions_for_entitlement, get_pseudo_session_for_entitlement
+    get_programs, get_programs_with_type, get_visible_sessions_for_entitlement, get_pseudo_session_for_entitlement
 )
 from openedx.core.djangoapps.certificates.api import certificates_viewable_for_course
 from openedx.core.djangoapps.credit.email_utils import get_credit_provider_display_names, make_providers_strings
@@ -815,10 +815,10 @@ def dashboard(request):
     if bundles_on_dashboard_flag.is_enabled():
         programs_data = meter.programs
         if programs_data:
+            meter.programs = [get_programs(request.site, uuid=programs_data[0]['uuid'])]
             program_data = meter.programs[0]
             program_data = ProgramDataExtender(program_data, request.user).extend()
 
-            program_data.pop('courses')
             skus = program_data.get('skus')
 
             urls = {
@@ -2208,6 +2208,17 @@ def skip_activation_email(user, do_external_auth, running_pipeline, third_party_
             getattr(third_party_provider, "identity_provider_type", None) == SAP_SUCCESSFACTORS_SAML_KEY
         )
     )
+
+    # log the cases where skip activation email flag is set, but email validity check fails
+    if third_party_provider and third_party_provider.skip_email_verification and not valid_email:
+        log.info(
+            '[skip_email_verification=True][user=%s][pipeline-email=%s][identity_provider=%s][provider_type=%s] '
+            'Account activation email sent as user\'s system email differs from SSO email.',
+            user.email,
+            sso_pipeline_email,
+            getattr(third_party_provider, "provider_id", None),
+            getattr(third_party_provider, "identity_provider_type", None)
+        )
 
     return (
         settings.FEATURES.get('SKIP_EMAIL_VALIDATION', None) or
