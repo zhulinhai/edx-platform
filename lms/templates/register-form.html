@@ -9,7 +9,6 @@ from microsite_configuration import microsite
 <%def name="theme_enabled()"><% return settings.FEATURES.get("USE_CUSTOM_THEME", False) %></%def>
 <%def name="is_microsite()"><% return microsite.is_request_in_microsite() %></%def>
 <%def name="stanford_theme_enabled()"><% return theme_enabled() and not is_microsite() %></%def>
-<%namespace name='static' file='static_content.html'/>
 
 <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
 
@@ -234,7 +233,7 @@ from microsite_configuration import microsite
     % endif
   </ol>
 </div>
-<%static:optional_include_mako file="register_extra.html" is_theming_enabled="True" />
+
 <div class="group group-form group-form-accountacknowledgements">
   <h2 class="sr">${_("Account Acknowledgements")}</h2>
 
@@ -244,11 +243,9 @@ from microsite_configuration import microsite
       % if has_extauth_info is UNDEFINED or ask_for_tos :
       <div class="field required checkbox" id="field-tos">
         <input id="tos-yes" type="checkbox" name="terms_of_service" value="true" required aria-required="true" />
-        <label for="tos-yes">${_('I agree to the {link_start1}Terms of Service{link_end} and {link_start2}Privacy Policy{link_end}').format(
-          link_start1='<a href="{url}" class="new-vp" tabindex="-1">'.format(url=marketing_link('TOS')),
-          link_end='</a>',
-          link_start2='<a href="{url}" class="new-vp" tabindex="-1">'.format(url=marketing_link('PRIVACY')),
-          )}</label>
+        <label for="tos-yes">${_('I agree to the {link_start}Terms of Service{link_end}').format(
+          link_start='<a href="{url}" class="new-vp" tabindex="-1">'.format(url=marketing_link('TOS')),
+          link_end='</a>')}</label>
       </div>
       % endif
 
