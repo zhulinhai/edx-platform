@@ -22,7 +22,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
   <div aria-hidden="true" role="dialog" tabindex="-1" class="modal dataDisclaimer-modal" id="sensitiveDataModal" >
   <div class="inner-wrapper">
-  ${_("Contains information protected under the Protection of Privacy Law - the wrongful transgressor commits an offense.")}
+  <%include file="sensitive_data_download_msg.html"/>
   </div>
 </div>
 
