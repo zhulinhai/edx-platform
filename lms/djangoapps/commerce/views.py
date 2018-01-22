@@ -102,6 +102,22 @@ def checkout_receipt(request):
     }
     return render_to_response('commerce/checkout_receipt.html', context)
 
+#SEBAS CHANGE
+'''
+@csrf_exempt
+@login_required
+def checkout_confirmation(request):
+    context = {
+        'page_title':page_title,
+        'platform_name':configuration_helpers.get_value('platform_name',settings.PLATFORM_NAME),
+        'verified': SoftwareSecurePhotoVerification.verification_valid_or_pending(request.user).exists(),
+        'username': request.user.username,
+        'nav_hidden': True,
+        'is_request_in_themed_site': is_request_in_themed_site()
+    }
+
+    return render_to_response('commerce/checkout_receipt.html',context)
+'''
 
 @require_http_methods(["GET"])
 @login_required

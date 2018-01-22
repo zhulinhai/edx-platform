@@ -253,6 +253,8 @@ class UserProfile(models.Model):
     this_year = datetime.now(UTC).year
     VALID_YEARS = range(this_year, this_year - 120, -1)
     year_of_birth = models.IntegerField(blank=True, null=True, db_index=True)
+    month_of_birth = models.IntegerField(blank=True, null=True)
+    day_of_birth = models.IntegerField(blank=True, null=True)
     GENDER_CHOICES = (
         ('m', ugettext_noop('Male')),
         ('f', ugettext_noop('Female')),

@@ -10720,17 +10720,17 @@ msgstr ""
 #. below a field meant to hold the user's email address.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "This is what you will use to login."
-msgstr ""
+msgstr "Esto es lo que usarás para iniciar sesión"
 
 #. Translators: This label appears above a field on the registration form
 #. meant to confirm the user's email address.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Confirm Email"
-msgstr ""
+msgstr "Confirmar email"
 
 #: openedx/core/djangoapps/user_api/views.py
 msgid "The email addresses do not match."
-msgstr ""
+msgstr "Las direcciones de correo electrónico no coinciden."
 
 #. Translators: This example name is used as a placeholder in
 #. a field on the registration form meant to hold the user's name.
@@ -10750,15 +10750,14 @@ msgstr ""
 #: themes/stanford-style/lms/templates/register-form.html
 #: themes/stanford-style/lms/templates/register-shib.html
 msgid "Public Username"
-msgstr "Nombre público de usuario "
+msgstr "Nombre de usuario público"
 
 #. Translators: These instructions appear on the registration form,
 #. immediately
 #. below a field meant to hold the user's public username.
 #: openedx/core/djangoapps/user_api/views.py
-msgid ""
-"The name that will identify you in your courses. It cannot be changed later."
-msgstr ""
+msgid "The name that will identify you in your courses. It cannot be changed later."
+msgstr "El nombre que lo identificará al interior de sus cursos - {bold_start}(No podrá ser cambiado){bold_end}"
 
 #. Translators: This example username is used as a placeholder in
 #. a field on the registration form meant to hold the user's username.
@@ -15752,7 +15751,7 @@ msgstr ""
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "Upgrade to Verified"
-msgstr "Optar por el Certificado Verificado"
+msgstr "CERTIFÍCATE AQUÍ"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid ""

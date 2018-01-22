@@ -8361,15 +8361,15 @@ msgstr "Registrarse a través de edX"
 
 #: lms/templates/student_account/login.underscore
 msgid "First time here?"
-msgstr ""
+msgstr "Primera vez aquí?"
 
 #: lms/templates/student_account/login.underscore
 msgid "Create an Account."
-msgstr ""
+msgstr "Crear una cuenta"
 
 #: lms/templates/student_account/login.underscore
 msgid "Sign In"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: lms/templates/student_account/login.underscore
 #: test_root/staticfiles/templates/student_account/login.underscore
@@ -8437,11 +8437,11 @@ msgstr "¿Ya está registrado?"
 
 #: lms/templates/student_account/register.underscore
 msgid "Sign in."
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: lms/templates/student_account/register.underscore
 msgid "Create an Account"
-msgstr ""
+msgstr "Crear una cuenta"
 
 #: lms/templates/student_account/register.underscore
 #: test_root/staticfiles/templates/student_account/register.underscore
@@ -8461,7 +8461,7 @@ msgstr "o crear una nueva aquí"
 
 #: lms/templates/student_account/register.underscore
 msgid "Create account"
-msgstr ""
+msgstr "Crear cuenta"
 
 #: lms/templates/student_profile/badge.underscore
 #: test_root/staticfiles/templates/student_profile/badge.underscore

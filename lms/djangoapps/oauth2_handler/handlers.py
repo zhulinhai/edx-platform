@@ -58,8 +58,9 @@ class ProfileHandler(object):
     def claim_name(self, data):
         """ User displayable full name. """
         user = data['user']
-        profile = UserProfile.objects.get(user=user)
-        return profile.name
+        #profile = UserProfile.objects.get(user=user)
+        #return profile.name
+        return 'Usuario Campus Romero'
 
     def claim_locale(self, data):
         """

@@ -1740,7 +1740,7 @@ def _do_create_account(form, custom_form=None):
 
     profile_fields = [
         "name", "level_of_education", "gender", "mailing_address", "city", "country", "goals",
-        "year_of_birth"
+        "year_of_birth","location","month_of_birth","day_of_birth"
     ]
     profile = UserProfile(
         user=user,
@@ -1872,6 +1872,26 @@ def create_account_with_params(request, params):
     with transaction.atomic():
         # first, create the account
         (user, profile, registration) = _do_create_account(form, custom_form)
+        
+        # MAGIA DIGITAL #
+        try:
+            profile.day_of_birth = int(params.get('day_of_birth'))
+            profile.month_of_birth = int(params.get('month_of_birth'))
+            profile.save()
+        except:
+            pass
+
+        # SEBAS DIGITAL #
+        try:
+            #profile.location = params.get('location')
+            profile.location = '2222222222'
+            profile.location = params.get('location')
+            profile.save()
+            log.info('se viene el profile.location')
+            log.info(profile.location)
+        except Exception as e:
+            log.info('erruuuuur')
+            log.info(e)
 
         # If a 3rd party auth provider and credentials were provided in the API, link the account with social auth
         # (If the user is using the normal register page, the social auth pipeline does the linking, not this code)

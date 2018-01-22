@@ -31,6 +31,7 @@ from .signals import (
     SCORE_PUBLISHED,
     SUBSECTION_SCORE_CHANGED
 )
+import logging
 
 log = getLogger(__name__)
 
@@ -65,6 +66,8 @@ def submissions_score_set_handler(sender, **kwargs):  # pylint: disable=unused-a
     if points_possible == 0:
         # This scenario is known to not succeed, see TNL-6559 for details.
         return
+
+
 
     PROBLEM_WEIGHTED_SCORE_CHANGED.send(
         sender=None,
@@ -163,6 +166,9 @@ def score_published_handler(sender, block, user, raw_earned, raw_possible, only_
             block.set_score(Score(raw_earned=raw_earned, raw_possible=raw_possible))
 
         # Fire a signal (consumed by enqueue_subsection_update, below)
+        logging.info('DUELE EL AMOOOOOR SIN TIIIIII, DUELE HASTA MATAAAAAAR')
+        logging.info(ScoreDatabaseTableEnum.courseware_student_module)
+
         PROBLEM_RAW_SCORE_CHANGED.send(
             sender=None,
             raw_earned=raw_earned,

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """HTTP end-points for the User API. """
 import copy
 
@@ -406,7 +407,7 @@ class RegistrationView(APIView):
             "email",
             field_type="email",
             label=email_label,
-            placeholder=email_placeholder,
+            placeholder="",
             instructions=email_instructions,
             restrictions={
                 "min_length": EMAIL_MIN_LENGTH,
@@ -500,7 +501,7 @@ class RegistrationView(APIView):
         form_desc.add_field(
             "username",
             label=username_label,
-            instructions=username_instructions,
+            instructions="El nombre que lo identificará al interior de sus cursos - (No podrá ser cambiado)",
             placeholder=username_placeholder,
             restrictions={
                 "min_length": USERNAME_MIN_LENGTH,

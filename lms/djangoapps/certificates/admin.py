@@ -15,6 +15,12 @@ from certificates.models import (
 )
 from util.organizations_helpers import get_organizations
 
+# Sebas Imports
+import logging
+from import_export import resources, fields
+from import_export.admin import ImportExportModelAdmin, ExportActionModelAdmin
+from django.contrib.auth.models import User
+
 
 class CertificateTemplateForm(forms.ModelForm):
     """
@@ -50,10 +56,43 @@ class CertificateTemplateAssetAdmin(admin.ModelAdmin):
     prepopulated_fields = {"asset_slug": ("description",)}
 
 
-class GeneratedCertificateAdmin(admin.ModelAdmin):
+class GeneratedCertificateResource(resources.ModelResource):
+    username = fields.Field(attribute='username', column_name='username')
+    email = fields.Field(attribute='email', column_name='email')
+    user = fields.Field(attribute='user', column_name='user ID')
+
+    class Meta:
+        model = GeneratedCertificate
+        fields = ('course_id','verify_uuid','grade','status','mode','name','created_date','user','username','email')
+        export_order = ('user','username','course_id','verify_uuid','grade','status','mode','name','email','created_date')
+
+
+    def dehydrate_username(self,obj):
+        uname = ''
+        try:
+            objeto_user = User.objects.get(username=obj.user)
+            uname = objeto_user.username
+        except Exception as e:
+            logging.info(e)
+        return uname
+
+    def dehydrate_email(self,obj):
+        ema = ''
+        try:
+            objeto_user = User.objects.get(username=obj.user)
+            ema = objeto_user.email
+        except Exception as e:
+            logging.info(e)
+        return ema
+
+
+
+
+class GeneratedCertificateAdmin(ExportActionModelAdmin):
     """
     Django admin customizations for GeneratedCertificate model
     """
+    resource_class = GeneratedCertificateResource
     raw_id_fields = ('user',)
     show_full_result_count = False
     search_fields = ('course_id', 'user__username')

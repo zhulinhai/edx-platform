@@ -43,6 +43,10 @@ from third_party_auth.decorators import xframe_allow_whitelisted
 from util.bad_request_rate_limiter import BadRequestRateLimiter
 from util.date_utils import strftime_localized
 
+# sebas import 1
+from util.enterprise_helpers import set_enterprise_branding_filter_param
+
+
 AUDIT_LOG = logging.getLogger("audit")
 log = logging.getLogger(__name__)
 User = get_user_model()  # pylint:disable=invalid-name
@@ -77,18 +81,13 @@ def login_and_registration_form(request, initial_mode="login"):
         try:
             next_args = urlparse.parse_qs(urlparse.urlparse(redirect_to).query)
             provider_id = next_args['tpa_hint'][0]
-            tpa_hint_provider = third_party_auth.provider.Registry.get(provider_id=provider_id)
-            if tpa_hint_provider:
-                if tpa_hint_provider.skip_hinted_login_dialog:
-                    # Forward the user directly to the provider's login URL when the provider is configured
-                    # to skip the dialog.
-                    return redirect(
-                        pipeline.get_login_url(provider_id, pipeline.AUTH_ENTRY_LOGIN, redirect_url=redirect_to)
-                    )
+            if third_party_auth.provider.Registry.get(provider_id=provider_id):
                 third_party_auth_hint = provider_id
                 initial_mode = "hinted_login"
         except (KeyError, ValueError, IndexError):
             pass
+
+    set_enterprise_branding_filter_param(request=request, provider_id=third_party_auth_hint)
 
     # If this is a themed site, revert to the old login/registration pages.
     # We need to do this for now to support existing themes.
@@ -106,26 +105,17 @@ def login_and_registration_form(request, initial_mode="login"):
     if ext_auth_response is not None:
         return ext_auth_response
 
-    # Account activation message
-    account_activation_messages = [
-        {
-            'message': message.message, 'tags': message.tags
-        } for message in messages.get_messages(request) if 'account-activation' in message.tags
-    ]
-
     # Otherwise, render the combined login/registration page
+
+
     context = {
         'data': {
             'login_redirect_url': redirect_to,
             'initial_mode': initial_mode,
-            'third_party_auth': _third_party_auth_context(request, redirect_to, third_party_auth_hint),
+            'third_party_auth': _third_party_auth_context(request, redirect_to),
             'third_party_auth_hint': third_party_auth_hint or '',
             'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
             'support_link': configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK),
-            'password_reset_support_link': configuration_helpers.get_value(
-                'PASSWORD_RESET_SUPPORT_LINK', settings.PASSWORD_RESET_SUPPORT_LINK
-            ) or settings.SUPPORT_SITE_LINK,
-            'account_activation_messages': account_activation_messages,
 
             # Include form descriptions retrieved from the user API.
             # We could have the JS client make these requests directly,
@@ -134,21 +124,16 @@ def login_and_registration_form(request, initial_mode="login"):
             'login_form_desc': json.loads(form_descriptions['login']),
             'registration_form_desc': json.loads(form_descriptions['registration']),
             'password_reset_form_desc': json.loads(form_descriptions['password_reset']),
-            'account_creation_allowed': configuration_helpers.get_value(
-                'ALLOW_PUBLIC_ACCOUNT_CREATION', settings.FEATURES.get('ALLOW_PUBLIC_ACCOUNT_CREATION', True))
         },
         'login_redirect_url': redirect_to,  # This gets added to the query string of the "Sign In" button in header
         'responsive': True,
         'allow_iframing': True,
         'disable_courseware_js': True,
-        'combined_login_and_register': True,
         'disable_footer': not configuration_helpers.get_value(
             'ENABLE_COMBINED_LOGIN_REGISTRATION_FOOTER',
             settings.FEATURES['ENABLE_COMBINED_LOGIN_REGISTRATION_FOOTER']
         ),
     }
-
-    context = update_context_for_enterprise(request, context)
 
     return render_to_response('student_account/login_and_register.html', context)
 
@@ -202,7 +187,7 @@ def password_change_request_handler(request):
     else:
         return HttpResponseBadRequest(_("No email address provided."))
 
-
+'''
 def update_context_for_enterprise(request, context):
     """
     Take the processed context produced by the view, determine if it's relevant
@@ -285,7 +270,7 @@ def enterprise_sidebar_context(request):
     }
 
     return context
-
+'''
 
 def _third_party_auth_context(request, redirect_to, tpa_hint=None):
     """Context for third party auth providers and the currently running pipeline.
@@ -310,26 +295,26 @@ def _third_party_auth_context(request, redirect_to, tpa_hint=None):
         "errorMessage": None,
     }
 
+
     if third_party_auth.is_enabled():
-        if not enterprise_customer_for_request(request):
-            for enabled in third_party_auth.provider.Registry.displayed_for_login(tpa_hint=tpa_hint):
-                info = {
-                    "id": enabled.provider_id,
-                    "name": enabled.name,
-                    "iconClass": enabled.icon_class or None,
-                    "iconImage": enabled.icon_image.url if enabled.icon_image else None,
-                    "loginUrl": pipeline.get_login_url(
-                        enabled.provider_id,
-                        pipeline.AUTH_ENTRY_LOGIN,
-                        redirect_url=redirect_to,
-                    ),
-                    "registerUrl": pipeline.get_login_url(
-                        enabled.provider_id,
-                        pipeline.AUTH_ENTRY_REGISTER,
-                        redirect_url=redirect_to,
-                    ),
-                }
-                context["providers" if not enabled.secondary else "secondaryProviders"].append(info)
+        for enabled in third_party_auth.provider.Registry.displayed_for_login():
+            info = {
+                "id": enabled.provider_id,
+                "name": enabled.name,
+                "iconClass": enabled.icon_class or None,
+                "iconImage": enabled.icon_image.url if enabled.icon_image else None,
+                "loginUrl": pipeline.get_login_url(
+                    enabled.provider_id,
+                    pipeline.AUTH_ENTRY_LOGIN,
+                    redirect_url=redirect_to,
+                ),
+                "registerUrl": pipeline.get_login_url(
+                    enabled.provider_id,
+                    pipeline.AUTH_ENTRY_REGISTER,
+                    redirect_url=redirect_to,
+                ),
+            }
+            context["providers" if not enabled.secondary else "secondaryProviders"].append(info)
 
         running_pipeline = pipeline.get(request)
         if running_pipeline is not None:
@@ -454,6 +439,7 @@ def get_user_orders(user):
     return user_orders
 
 
+
 @login_required
 @require_http_methods(['GET'])
 def account_settings(request):
@@ -520,7 +506,7 @@ def account_settings_context(request):
 
     """
     user = request.user
-
+    _userprofile = UserProfile.objects.get(user_id=user.id)
     year_of_birth_options = [(unicode(year), unicode(year)) for year in UserProfile.VALID_YEARS]
     try:
         user_orders = get_user_orders(user)
@@ -529,6 +515,8 @@ def account_settings_context(request):
         # Return empty order list as account settings page expect a list and
         # it will be broken if exception raised
         user_orders = []
+
+    logging.info('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA WAWAWAWWA')
 
     context = {
         'auth': {},
@@ -551,7 +539,7 @@ def account_settings_context(request):
                 'options': all_languages(),
             }, 'time_zone': {
                 'options': TIME_ZONE_CHOICES,
-            }
+            }, 'mailing_address': _userprofile.mailing_address, 'location': _userprofile.location
         },
         'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
         'password_reset_support_link': configuration_helpers.get_value(

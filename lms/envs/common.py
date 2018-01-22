@@ -2238,6 +2238,12 @@ INSTALLED_APPS = (
     'openedx.features.enterprise_support',
 
     'experiments',
+
+    # Import_Export
+    'import_export',
+
+    # Range Filter
+    'rangefilter'
 )
 
 ######################### CSRF #########################################
@@ -2480,22 +2486,23 @@ REGISTRATION_EXTRA_FIELDS = {
 }
 
 REGISTRATION_FIELD_ORDER = [
-    "name",
-    "first_name",
-    "last_name",
-    "username",
     "email",
-    "confirm_email",
+    "name",
+    "username",
     "password",
-    "city",
-    "state",
+    "mailing_address",
     "country",
+    "state",
+    "city",
+    "location",
     "gender",
     "year_of_birth",
+    "first_name",
+    "last_name",
+    "confirm_email",
     "level_of_education",
     "company",
     "title",
-    "mailing_address",
     "goals",
     "honor_code",
     "terms_of_service",
@@ -2918,11 +2925,14 @@ ACCOUNT_VISIBILITY_CONFIGURATION = {
         "gender",
         "goals",
         "year_of_birth",
+        "month_of_birth",
+        "day_of_birth",
         "level_of_education",
         "mailing_address",
         "requires_parental_consent",
         "account_privacy",
         "accomplishments_shared",
+        "location"
     ]
 }
 
