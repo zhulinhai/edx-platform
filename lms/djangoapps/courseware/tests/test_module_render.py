@@ -19,7 +19,7 @@ from django.test.client import RequestFactory
 from django.test.utils import override_settings
 from edx_proctoring.api import create_exam, create_exam_attempt, update_attempt_status
 from edx_proctoring.runtime import set_runtime_service
-from edx_proctoring.tests.test_services import MockCreditService, MockGradesService
+from edx_proctoring.tests.test_services import MockCreditService, MockGradesService, MockCertificateService
 from freezegun import freeze_time
 from milestones.tests.utils import MilestonesTestCaseMixin
 from mock import MagicMock, Mock, patch
@@ -1170,6 +1170,11 @@ class TestProctoringRendering(SharedModuleStoreTestCase):
             MockGradesService()
         )
 
+        set_runtime_service(
+            'certificates',
+            MockCertificateService()
+        )
+
         exam_id = create_exam(
             course_id=unicode(self.course_key),
             content_id=unicode(sequence.location),
@@ -1285,7 +1290,7 @@ class TestGatedSubsectionRendering(SharedModuleStoreTestCase, MilestonesTestCase
             self.field_data_cache
         )
         self.assertIsNotNone(self._find_sequential(actual['chapters'], 'Chapter', 'Open_Sequential'))
-        self.assertIsNone(self._find_sequential(actual['chapters'], 'Chapter', 'Gated_Sequential'))
+        self.assertIsNotNone(self._find_sequential(actual['chapters'], 'Chapter', 'Gated_Sequential'))
         self.assertIsNone(self._find_sequential(actual['chapters'], 'Non-existent_Chapter', 'Non-existent_Sequential'))
         self.assertIsNone(actual['previous_of_active_section'])
         self.assertIsNone(actual['next_of_active_section'])
