@@ -40,6 +40,8 @@ FEATURES.update({
     #   with user.email in xqueue (Stanford does)
     'SEND_USERS_EMAILADDR_WITH_CODERESPONSE': False,
 })
+# Set this to the TPA provider_id if you want the entire site to be behind TPA
+FORCED_TPA_PROVIDER_ID = ''
 FORUM_MONGO_PARAMS = {
     'hosts': [
         {
