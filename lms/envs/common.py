@@ -601,7 +601,10 @@ CONTEXT_PROCESSORS = [
 
     # Online contextual help
     'help_tokens.context_processor',
-    'openedx.core.djangoapps.site_configuration.context_processors.configuration_context'
+    'openedx.core.djangoapps.site_configuration.context_processors.configuration_context',
+
+    # Mobile App processor (Detects if request is from the mobile app)
+    'mobile_api.context_processor.is_from_mobile_app'
 ]
 
 # Django templating
@@ -3001,6 +3004,7 @@ COURSE_CATALOG_VISIBILITY_PERMISSION = 'see_exists'
 # visible. We default this to the legacy permission 'see_exists'.
 COURSE_ABOUT_VISIBILITY_PERMISSION = 'see_exists'
 
+DEFAULT_COURSE_VISIBILITY_IN_CATALOG = "both"
 DEFAULT_MOBILE_AVAILABLE = True
 
 # Enrollment API Cache Timeout
@@ -3448,7 +3452,7 @@ COMPLETION_VIDEO_COMPLETE_PERCENTAGE = 0.95
 
 ############### Settings for Django Rate limit #####################
 RATELIMIT_ENABLE = True
-RATELIMIT_RATE = '30/m'
+RATELIMIT_RATE = '120/m'
 
 ############## Plugin Django Apps #########################
 

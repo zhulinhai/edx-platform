@@ -29,7 +29,9 @@
 #
 #   * TAG-OR-SHA is the specific commit to install.  It must be a git tag,
 #     or a git SHA commit hash.  Don't use branch names here.  If OWNER is
-#     not an edX organization, then it must be a SHA.
+#     not an edX organization, then it must be a SHA.  If you use a SHA,
+#     please make sure there is a tag associated with it, so the commit can't
+#     be lost during rebase.
 #
 #   * DIST-NAME is the distribution name, the same name you'd use in a
 #     "pip install" command.  It might be different than REPO-NAME. It must
@@ -96,7 +98,7 @@ git+https://github.com/edx/xblock-utils.git@v1.0.5#egg=xblock-utils==1.0.5
 -e git+https://github.com/edx-solutions/xblock-google-drive.git@138e6fa0bf3a2013e904a085b9fed77dab7f3f21#egg=xblock-google-drive
 git+https://github.com/edx/edx-user-state-client.git@1.0.2#egg=edx-user-state-client==1.0.2
 git+https://github.com/edx/xblock-lti-consumer.git@v1.1.6#egg=lti_consumer-xblock==1.1.6
-git+https://github.com/edx/edx-proctoring.git@1.3.5#egg=edx-proctoring==1.3.5
+git+https://github.com/edx/edx-proctoring.git@1.3.6#egg=edx-proctoring==1.3.6
 # This is here because all of the other XBlocks are located here. However, it is published to PyPI and will be installed that way
 xblock-review==1.1.4
 git+https://github.com/edx/edx-analytics-data-api-client.git@0.13.0#egg=edx-analytics-data-api-client==0.13.0
