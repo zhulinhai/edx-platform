@@ -39,7 +39,10 @@ class CourseOutlineFragmentView(EdxFragmentView):
             'gated_content': content_milestones
         }
         
-        html = render_to_string('course_experience/course-outline-fragment.html', context)
+        if configuration_helpers.get_value('custom_fragments', settings.CUSTOM_FRAGMENTS):
+            html = render_to_string('course_experience/course-outline-fragment-proversity.html', context)
+        else:
+            html = render_to_string('course_experience/course-outline-fragment.html', context)
 
         return Fragment(html)
 

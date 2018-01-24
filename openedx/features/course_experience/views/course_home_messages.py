@@ -29,6 +29,7 @@ from openedx.features.course_experience import CourseHomeMessages
 
 from student.models import CourseEnrollment
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from django.conf import settings
 
 
 class CourseHomeMessageFragmentView(EdxFragmentView):
@@ -101,7 +102,10 @@ class CourseHomeMessageFragmentView(EdxFragmentView):
             'username': request.user.username,
         }
 
-        html = render_to_string('course_experience/course-messages-fragment.html', context)
+        if configuration_helpers.get_value('custom_fragments', settings.CUSTOM_FRAGMENTS):
+            html = render_to_string('course_experience/course-messages-fragment-proversity.html', context)
+        else:
+            html = render_to_string('course_experience/course-messages-fragment.html', context)
 
         return Fragment(html)
 
