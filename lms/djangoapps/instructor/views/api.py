@@ -3004,20 +3004,6 @@ def upload_lti(request, course_id):
     return JsonResponse({'status': status})
 
 
-@ensure_csrf_cookie
-@cache_control(no_cache=True, no_store=True, must_revalidate=True)
-def irc_instructor_auth_token(request, course_id):
-    # Note: course_id is assumed to be deprecated crappy SSCK value
-    #       in future, hashing it below will need to convert from course_key
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
-    course = get_course_by_id(course_key, depth=None)
-    is_instructor_here = has_access(request.user, 'staff', course)
-    if is_instructor_here:
-        extras_key = hashlib.sha1(course_id + "happy fish").hexdigest()
-        return JsonResponse({'extras': extras_key, 'error': ''})
-    return JsonResponse({'extras': '', 'error': 'NotInstructor'})
-
-
 @require_level('staff')
 @require_POST
 def mark_student_can_skip_entrance_exam(request, course_id):  # pylint: disable=invalid-name
