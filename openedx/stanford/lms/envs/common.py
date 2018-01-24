@@ -34,6 +34,7 @@ FEATURES.update({
     'ENABLE_DISCUSSION_EMAIL_DIGEST': True,
     'ENABLE_PROGRESS_SUMMARY': True,
     'ENABLE_SUPERUSER_LOGIN_AS': False,
+    'SHOW_ABOUT_LINK': True,
     'USE_CME_REGISTRATION': False,
     # Sends the user's deanonymized email address to xqueue with code responses
     # DO NOT SET if you don't want the anonymous user id to be linked
@@ -92,6 +93,7 @@ PAYMENT_PLATFORM_NAME = 'PAYMENT PLATFORM NAME'
 # The following fields are available in the URL: {course_id} {student_id}
 PROGRESS_SUCCESS_BUTTON_URL = 'http://<domain>/<path>/{course_id}'
 PROGRESS_SUCCESS_BUTTON_TEXT_OVERRIDE = None
+REGISTRATION_EXTRA_FIELDS['privacy_policy'] = 'hidden'
 SHIB_ONLY_SITE = False
 SHIB_REDIRECT_DOMAIN_WHITELIST = {
     # Mapping of hosts to a list of safe redirect domains from that host
