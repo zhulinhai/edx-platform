@@ -74,6 +74,23 @@ def login_and_registration_form(request, initial_mode="login"):
     if UserProfile.has_registered(request.user):
         return redirect(redirect_to)
 
+    if third_party_auth.is_enabled():
+        force_provider_id = settings.FORCED_TPA_PROVIDER_ID
+        if force_provider_id:
+            force_provider = third_party_auth.provider.Registry.get(
+                provider_id=force_provider_id,
+            )
+            if force_provider and force_provider.display_for_login:
+                running_pipeline = third_party_auth.pipeline.get(request)
+                if not running_pipeline:
+                    if initial_mode in [pipeline.AUTH_ENTRY_LOGIN, pipeline.AUTH_ENTRY_REGISTER]:
+                        tpa_url = pipeline.get_login_url(
+                            force_provider_id,
+                            initial_mode,
+                            redirect_url=redirect_to,
+                        )
+                        return redirect(tpa_url)
+
     # Retrieve the form descriptions from the user API
     form_descriptions = _get_form_descriptions(request)
 
