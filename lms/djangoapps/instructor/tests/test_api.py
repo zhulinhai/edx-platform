@@ -180,14 +180,10 @@ INSTRUCTOR_POST_ENDPOINTS = set([
     'spent_registration_codes',
     'students_update_enrollment',
     'update_forum_role_membership',
-
-    'delete_report_download',
-    'get_course_forums_usage',
-    'get_ora2_responses',
-    'get_student_forums_usage',
-    'get_student_responses',
-    'graph_course_forums_usage',
 ])
+
+from openedx.stanford.lms.djangoapps.instructor.views.api import EXTRA_INSTRUCTOR_POST_ENDPOINTS
+INSTRUCTOR_POST_ENDPOINTS.update(EXTRA_INSTRUCTOR_POST_ENDPOINTS)
 
 
 def reverse(endpoint, args=None, kwargs=None, is_dashboard_endpoint=True):
@@ -304,17 +300,9 @@ class TestEndpointHttpMethods(SharedModuleStoreTestCase, LoginEnrollmentTestCase
         """
         Tests that POST endpoints are rejected with 405 when using GET.
         """
-        if data == 'get_ora2_responses':
-            url = reverse(
-                data,
-                kwargs={
-                    'course_id': unicode(self.course.id),
-                    'include_email': 'True',
-                }
-            )
-        else:
-            url = reverse(data, kwargs={'course_id': unicode(self.course.id)})
+        url = reverse(data, kwargs={'course_id': unicode(self.course.id)})
         response = self.client.get(url)
+
         self.assertEqual(
             response.status_code, 405,
             "Endpoint {} returned status code {} instead of a 405. It should not allow GET.".format(
@@ -391,17 +379,18 @@ class TestInstructorAPIDenyLevels(SharedModuleStoreTestCase, LoginEnrollmentTest
             ('list_report_downloads', {}),
             ('list_financial_report_downloads', {}),
             ('calculate_grades_csv', {}),
-            ('get_student_responses', {}),
-            ('get_student_forums_usage', {}),
-            ('get_ora2_responses', {'include_email': False}),
-            ('get_course_forums_usage', {}),
-            ('graph_course_forums_usage', {}),
+            ('get_students_features', {}),
             ('get_enrollment_report', {}),
             ('get_students_who_may_enroll', {}),
             ('get_exec_summary_report', {}),
             ('get_proctored_exam_results', {}),
             ('get_problem_responses', {}),
             ('export_ora2_data', {}),
+        ]
+        self.staff_level_endpoints += [
+            (endpoint, {})
+            for endpoint in EXTRA_INSTRUCTOR_POST_ENDPOINTS
+            if endpoint != 'delete_report_download'
         ]
         # Endpoints that only Instructors can access
         self.instructor_level_endpoints = [
@@ -421,10 +410,7 @@ class TestInstructorAPIDenyLevels(SharedModuleStoreTestCase, LoginEnrollmentTest
         status_code: expected HTTP status code response
         msg: message to display if assertion fails.
         """
-        if endpoint in ['get_ora2_responses']:
-            url = reverse(endpoint, kwargs={'course_id': self.course.id.to_deprecated_string(), 'include_email': False})
-        else:
-            url = reverse(endpoint, kwargs={'course_id': self.course.id.to_deprecated_string()})
+        url = reverse(endpoint, kwargs={'course_id': self.course.id.to_deprecated_string()})
         if endpoint in INSTRUCTOR_GET_ENDPOINTS:
             response = self.client.get(url, args)
         else:
@@ -3020,15 +3006,6 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
         res_json = json.loads(response.content)
         self.assertEqual(res_json, expected_response)
 
-    def test_delete_report_download(self):
-        def noop():
-            """method to be used as a side_effect for LocalFSReportStore.delete_file"""
-            pass
-        url = reverse('delete_report_download', kwargs={'course_id': unicode(self.course.id)})
-        with patch('lms.djangoapps.instructor_task.models.DjangoStorageReportStore.delete_file', side_effect=noop()):
-            response = self.client.post(url, {})
-        self.assertEqual(response.status_code, 200)
-
     @ddt.data(*REPORTS_DATA)
     @ddt.unpack
     @valid_problem_location
@@ -3109,39 +3086,6 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
             response = self.client.post(url, {})
         already_running_status = "An ORA data report generation task is already in progress."
         self.assertIn(already_running_status, response.content)
-
-    def test_collect_course_forums_data_success(self):
-        url = reverse('get_course_forums_usage', kwargs={'course_id': unicode(self.course.id)})
-
-        with patch('lms.djangoapps.instructor_task.api.submit_course_forums_usage_task'):
-            response = self.client.post(url, {})
-        success_status = "The course forums usage report is being generated."
-        self.assertIn(success_status, response.content)
-
-    def test_collect_course_forums_data_already_running(self):
-        url = reverse('get_course_forums_usage', kwargs={'course_id': unicode(self.course.id)})
-
-        with patch('lms.djangoapps.instructor_task.api.submit_course_forums_usage_task') as mock_submit_course_forums_usage_task:
-            mock_submit_course_forums_usage_task.side_effect = AlreadyRunningError()
-            response = self.client.post(url, {})
-        already_running_status = "A course forums usage report task is already in progress."
-        self.assertIn(already_running_status, response.content)
-
-    def test_get_student_forums_usage_success(self):
-        url = reverse('get_student_forums_usage', kwargs={'course_id': unicode(self.course.id)})
-
-        with patch('lms.djangoapps.instructor_task.api.submit_student_forums_usage_task'):
-            response = self.client.post(url, {})
-        success_status = "The student forums usage report is being generated."
-        self.assertIn(success_status, response.content)
-
-    def test_get_student_forums_usage_already_running(self):
-        url = reverse('get_student_forums_usage', kwargs={'course_id': unicode(self.course.id)})
-
-        with patch('lms.djangoapps.instructor_task.api.submit_student_forums_usage_task') as mock_submit_student_forums_task:
-            mock_submit_student_forums_task.side_effect = AlreadyRunningError()
-            response = self.client.get(url, {})
-        already_running_status = "A student forums usage report task is already in progress."
 
     def test_get_student_progress_url(self):
         """ Test that progress_url is in the successful response. """

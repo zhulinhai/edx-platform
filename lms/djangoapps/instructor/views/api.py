@@ -5,7 +5,6 @@ JSON views which the instructor dashboard requests.
 
 Many of these GETs may become PUTs in the future.
 """
-import hashlib
 import StringIO
 import json
 import logging
@@ -28,7 +27,6 @@ from django.shortcuts import redirect
 import string
 import random
 import unicodecsv
-import urllib2
 import decimal
 from student import auth
 from student.roles import CourseSalesAdminRole, CourseFinanceAdminRole
@@ -37,11 +35,6 @@ from util.file import (
     FileValidationException, UniversalNewlineIterator
 )
 from util.json_request import JsonResponse, JsonResponseBadRequest
-
-from instructor_analytics.csvs import create_csv_response
-import gzip
-from instructor.lti_grader import LTIGrader
-
 from util.views import require_global_staff
 from lms.djangoapps.instructor.views.instructor_task_helpers import extract_email_features, extract_task_features
 
@@ -111,13 +104,10 @@ from .tools import (
     parse_datetime,
     set_due_date_extension,
     strip_if_string,
-    generate_course_forums_d3,
 )
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from opaque_keys import InvalidKeyError
-from opaque_keys.edx import locator
-from student.models import UserProfile, Registration
 from openedx.core.djangoapps.course_groups.cohorts import is_course_cohorted
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
@@ -2424,26 +2414,6 @@ def calculate_grades_csv(request, course_id):
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
-def get_student_responses(request, course_id):
-    """
-    AlreadyRunningError is raised if the student response CSV is still being generated.
-    """
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
-    try:
-        lms.djangoapps.instructor_task.api.submit_get_student_responses(request, course_key)
-        success_status = _("Your student responses report is being generated! You can view the status of the generation task in the 'Pending Instructor Tasks' section.")
-        return JsonResponse({"status": success_status})
-    except AlreadyRunningError:
-        already_running_status = _("A student responses report generation task is already in progress. Check the 'Pending Instructor Tasks' table for the status of the task. When completed, the report will be available for download in the table below.")
-        return JsonResponse({
-            "status": already_running_status
-        })
-
-
-@transaction.non_atomic_requests
-@ensure_csrf_cookie
-@cache_control(no_cache=True, no_store=True, must_revalidate=True)
-@require_level('staff')
 def problem_grade_report(request, course_id):
     """
     Request a CSV showing students' grades for all problems in the
@@ -2528,137 +2498,6 @@ def list_forum_members(request, course_id):
         rolename: map(extract_user_info, users),
     }
     return JsonResponse(response_payload)
-
-
-@require_POST
-@ensure_csrf_cookie
-@cache_control(no_cache=True, no_store=True, must_revalidate=True)
-@require_level('staff')
-def delete_report_download(request, course_id):
-    """
-    Deletes a downloaded report that was previously generated from the Instructor Dashboard
-    """
-    course_id = SlashSeparatedCourseKey.from_string(course_id)
-    filename = request.POST.get('filename')
-    report_store = ReportStore.from_config(config_name='GRADES_DOWNLOAD')
-    report_store.delete_file(course_id, filename)
-    message = {
-        'status': _('The report was successfully deleted!'),
-    }
-    return JsonResponse(message)
-
-
-@require_POST
-@transaction.non_atomic_requests
-@ensure_csrf_cookie
-@cache_control(no_cache=True, no_store=True, must_revalidate=True)
-@require_level('staff')
-def get_student_forums_usage(request, course_id):
-    """
-    Pushes a Celery task which will aggregate student forums usage statistics for a course into a .csv
-    """
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
-    try:
-        lms.djangoapps.instructor_task.api.submit_student_forums_usage_task(request, course_key)
-        success_status = _("The student forums usage report is being generated.")
-        return JsonResponse({"status": success_status})
-    except AlreadyRunningError:
-        already_running_status = _(
-            "A student forums usage report task is already in "
-            "progress. Check the 'Pending Instructor Tasks' table "
-            "for the status of the task. When completed, the report "
-            "will be available for download in the table below."
-        )
-
-        return JsonResponse({
-            "status": already_running_status
-        })
-
-
-@require_POST
-@transaction.non_atomic_requests
-@ensure_csrf_cookie
-@cache_control(no_cache=True, no_store=True, must_revalidate=True)
-@require_level('staff')
-def get_ora2_responses(request, course_id, include_email):
-    """
-    Pushes a Celery task which will aggregate ora2 responses for a course into a .csv
-    """
-    course_key = locator.CourseLocator.from_string(course_id)
-    try:
-        lms.djangoapps.instructor_task.api.submit_ora2_request_task(request, course_key, include_email)
-        success_status = _("The ORA2 responses report is being generated.")
-        return JsonResponse({"status": success_status})
-    except AlreadyRunningError:
-        already_running_status = _(
-            "An ORA2 responses report generation task is already in "
-            "progress. Check the 'Pending Instructor Tasks' table "
-            "for the status of the task. When completed, the report "
-            "will be available for download in the table below."
-        )
-
-        return JsonResponse({
-            "status": already_running_status
-        })
-
-
-@require_POST
-@transaction.non_atomic_requests
-@ensure_csrf_cookie
-@cache_control(no_cache=True, no_store=True, must_revalidate=True)
-@require_level('staff')
-def get_course_forums_usage(request, course_id):
-    """
-    Pushes a Celery task which will aggregate course forums statistics into a .csv
-    """
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
-    try:
-        lms.djangoapps.instructor_task.api.submit_course_forums_usage_task(request, course_key)
-        success_status = _("The course forums usage report is being generated.")
-        return JsonResponse({"status": success_status})
-    except AlreadyRunningError:
-        already_running_status = _(
-            "A course forums usage report task is already in "
-            "progress. Check the 'Pending Instructor Tasks' table "
-            "for the status of the task. When completed, the report "
-            "will be available for download in the table below."
-        )
-
-        return JsonResponse({
-            "status": already_running_status
-        })
-
-
-@require_POST
-@transaction.non_atomic_requests
-@ensure_csrf_cookie
-@cache_control(no_cache=True, no_store=True, must_revalidate=True)
-@require_level('staff')
-def graph_course_forums_usage(request, course_id):
-    """
-    Generate a d3 graphable csv-string by checking the report store for the clicked_on file
-    """
-    clicked_text = request.POST.get('clicked_on')
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
-    report_store = ReportStore.from_config(config_name='GRADES_DOWNLOAD')
-    graph = None
-    if clicked_text:
-        for name, url in report_store.links_for(course_key):
-            if clicked_text in name and 'course_forums' in name:
-                url = settings.LMS_ROOT_URL + url
-                request = urllib2.Request(url)
-                request.add_header('Accept-encoding', 'gzip')
-                url_handle = urllib2.urlopen(request)
-                if url_handle.info().get('Content-Encoding') == 'gzip':
-                    file_buffer = StringIO.StringIO(url_handle.read())
-                    url_handle = gzip.GzipFile(fileobj=file_buffer)
-                graph = generate_course_forums_d3(url_handle)
-                break
-    if graph:
-        return JsonResponse({'data': graph,
-                             'filename': clicked_text})
-    else:
-        return JsonResponse({'data': 'failure'})
 
 
 @transaction.non_atomic_requests
@@ -2964,46 +2803,6 @@ def enable_certificate_generation(request, course_id=None):
 
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
-@require_level('staff')
-def get_blank_lti(request, course_id):  # pylint: disable=unused-argument
-    """
-    Respond with 4-column CSV output of ID, email, grade (blank), max_grade (blank), and comments (blank)
-    """
-    course_id = CourseKey.from_string(course_id)
-    students = User.objects.filter(
-        courseenrollment__course_id=course_id,
-    ).order_by('id')
-    header = ['ID', 'Anonymized User ID', 'email', 'grade', 'max_grade', 'comments']
-    encoded_header = [unicode(s).encode('utf-8') for s in header]
-    rows = [[s.id, unique_id_for_user(s, save=False), s.email, '', '', ''] for s in students]
-    csv_filename = "{course_id}-blank-grade-submission.csv".format(
-        course_id=unicode(course_id).replace('/', '-'),
-    )
-    return create_csv_response(csv_filename, encoded_header, rows)
-
-
-@ensure_csrf_cookie
-@cache_control(no_cache=True, no_store=True, must_revalidate=True)
-@require_level('staff')
-def upload_lti(request, course_id):
-    """
-    Update grades for the lti component specified by processing the uploaded csv file
-    :param request: The post request containing lti-key, lti-secret, and the lti-grades data file
-    :param course_id: the id of the course containing the lti component
-    :return: JsonResponse with the status from the LTIGrader
-    """
-    lti_base_url = re.sub(
-        r'\{anon_user_id\}',
-        '',
-        request.POST.get('lti-endpoint')
-    )
-    lti_key = request.POST.get('lti-key')
-    lti_secret = request.POST.get('lti-secret')
-    lti_grader = LTIGrader(course_id, lti_base_url, lti_key, lti_secret)
-    status = lti_grader.update_grades(request.FILES['lti-grades'])
-    return JsonResponse({'status': status})
-
-
 @require_level('staff')
 @require_POST
 def mark_student_can_skip_entrance_exam(request, course_id):  # pylint: disable=invalid-name

@@ -11,16 +11,12 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 
 from course_modes.models import CourseMode
-from courseware.courses import get_course
 from courseware.tests.factories import InstructorFactory
-from courseware.tests.factories import StudentModuleFactory
 from instructor_analytics.basic import (
     StudentModule, sale_record_features, sale_order_record_features, enrolled_students_features,
     course_registration_features, coupon_codes_features, get_proctored_exam_results, list_may_enroll,
     list_problem_responses, AVAILABLE_FEATURES, STUDENT_FEATURES, PROFILE_FEATURES
 )
-from instructor_analytics.basic import student_responses
-from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locator import UsageKey
 from openedx.core.djangoapps.course_groups.tests.helpers import CohortFactory
 from student.models import CourseEnrollment, CourseEnrollmentAllowed
@@ -31,10 +27,9 @@ from shoppingcart.models import (
     Invoice, Coupon, CourseRegCodeItem, CouponRedemption, CourseRegistrationCodeInvoiceItem
 )
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
+from xmodule.modulestore.tests.factories import CourseFactory
 from edx_proctoring.api import create_exam
 from edx_proctoring.models import ProctoredExamStudentAttempt
-from xmodule.modulestore.django import modulestore
 
 
 @attr(shard=3)
@@ -616,134 +611,3 @@ class TestCourseRegistrationCodeAnalyticsBasic(ModuleStoreTestCase):
                 active_coupon['course_id'],
                 [coupon.course_id.to_deprecated_string() for coupon in active_coupons]
             )
-
-
-class TestStudentResponsesAnalyticsBasic(ModuleStoreTestCase):
-    """ Test basic student responses analytics function. """
-
-    def setUp(self):
-        super(TestStudentResponsesAnalyticsBasic, self).setUp()
-        self.course = CourseFactory.create()
-
-    def create_student(self):
-        self.student = UserFactory()
-        CourseEnrollment.enroll(self.student, self.course.id)
-
-    def create_course_structure(self):
-        section = ItemFactory.create(
-            parent_location=self.course.location,
-            category='chapter',
-            display_name=u'test section',
-        )
-        sub_section = ItemFactory.create(
-            parent_location=section.location,
-            category='sequential',
-            display_name=u'test subsection',
-        )
-        unit = ItemFactory.create(
-            parent_location=sub_section.location,
-            category="vertical",
-            metadata={'graded': True, 'format': 'Homework'},
-            display_name=u'test unit',
-        )
-        problem = ItemFactory.create(
-            parent_location=unit.location,
-            category='problem',
-            display_name=u'test problem',
-        )
-        return section, sub_section, unit, problem
-
-    def test_empty_course(self):
-        self.create_student()
-        datarows = list(student_responses(self.course))
-        self.assertEqual(datarows, [])
-
-    def test_full_course_no_students(self):
-        datarows = list(student_responses(self.course))
-        self.assertEqual(datarows, [])
-
-    def test_invalid_module_state(self):
-        section, sub_section, unit, problem = self.create_course_structure()
-        self.create_student()
-        StudentModuleFactory.create(
-            course_id=self.course.id,
-            module_state_key=problem.location,
-            student=self.student,
-            grade=0,
-            state=u'{"student_answers":{"fake-problem":"No idea"}}}'
-        )
-        course_with_children = modulestore().get_course(self.course.id, depth=4)
-        datarows = list(student_responses(course_with_children))
-        #Invalid module state response will be skipped, so datarows should be empty
-        self.assertEqual(len(datarows), 0)
-
-    def test_problem_with_student_answer_and_answers(self):
-        section, sub_section, unit, problem = self.create_course_structure()
-        submit_and_compare_valid_state = ItemFactory.create(
-            parent_location=unit.location,
-            category='submit-and-compare',
-            display_name=u'test submit_and_compare1',
-        )
-        submit_and_compare_invalid_state = ItemFactory.create(
-            parent_location=unit.location,
-            category='submit-and-compare',
-            display_name=u'test submit_and_compare2',
-        )
-        content_library = ItemFactory.create(
-            parent_location=unit.location,
-            category='library_content',
-            display_name=u'test content_library',
-        )
-        library_problem = ItemFactory.create(
-            parent_location=content_library.location,
-            category='problem',
-        )
-        self.create_student()
-        StudentModuleFactory.create(
-            course_id=self.course.id,
-            module_state_key=problem.location,
-            student=self.student,
-            grade=0,
-            state=u'{"student_answers":{"problem_id":"student response1"}}',
-        )
-        StudentModuleFactory.create(
-            course_id=self.course.id,
-            module_state_key=submit_and_compare_valid_state.location,
-            student=self.student,
-            grade=1,
-            state=u'{"student_answer": "student response2"}',
-        )
-        StudentModuleFactory.create(
-            course_id=self.course.id,
-            module_state_key=submit_and_compare_invalid_state.location,
-            student=self.student,
-            grade=1,
-            state=u'{"answer": {"problem_id": "123"}}',
-        )
-        StudentModuleFactory.create(
-            course_id=self.course.id,
-            module_state_key=library_problem.location,
-            student=self.student,
-            grade=0,
-            state=u'{"student_answers":{"problem_id":"content library response1"}}',
-        )
-        course_with_children = modulestore().get_course(self.course.id, depth=4)
-        datarows = list(student_responses(course_with_children))
-        self.assertEqual(datarows[0][-1], u'problem_id=student response1')
-        self.assertEqual(datarows[1][-1], u'student response2')
-        self.assertEqual(datarows[2][-1], None)
-        self.assertEqual(datarows[3][-1], u'problem_id=content library response1')
-
-    def test_problem_with_no_answer(self):
-        section, sub_section, unit, problem = self.create_course_structure()
-        self.create_student()
-        StudentModuleFactory.create(
-            course_id=self.course.id,
-            module_state_key=problem.location,
-            student=self.student,
-            grade=0,
-            state=u'{"answer": {"problem_id": "123"}}',
-        )
-        course_with_children = modulestore().get_course(self.course.id, depth=4)
-        datarows = list(student_responses(course_with_children))
-        self.assertEqual(datarows[0][-1], None)
