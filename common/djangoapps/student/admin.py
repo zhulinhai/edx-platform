@@ -16,6 +16,9 @@ from student.models import (
 )
 from student.roles import REGISTERED_ACCESS_ROLES
 
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django import forms
+
 User = get_user_model()  # pylint:disable=invalid-name
 
 
@@ -162,6 +165,17 @@ class UserProfileInline(admin.StackedInline):
     verbose_name_plural = _('User profile')
 
 
+class UserCreationFormExtended(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super(UserCreationFormExtended, self).__init__(*args, **kwargs)
+        self.fields['email'] = forms.EmailField(label=_("E-mail"), max_length=75)
+
+class UserChangeFormExtended(UserChangeForm):
+    def __init__(self, *args, **kwargs):
+        super(UserChangeFormExtended, self).__init__(*args, **kwargs)
+        self.fields['email'] = forms.EmailField(label=_("E-mail"), max_length=75)
+
+
 class UserAdmin(BaseUserAdmin):
     """ Admin interface for the User model. """
     inlines = (UserProfileInline,)
@@ -177,6 +191,25 @@ class UserAttributeAdmin(admin.ModelAdmin):
 
     class Meta(object):
         model = UserAttribute
+
+
+UserAdmin.add_form = UserCreationFormExtended
+UserAdmin.add_fieldsets = (
+    (None, {
+        'classes': ('wide',),
+        'fields': ('email', 'username', 'password1', 'password2',)
+    }),
+)
+
+
+UserAdmin.form = UserChangeFormExtended
+UserAdmin.fieldsets = (
+    (None, {'fields': ('email', 'username', 'password')}),
+    (_('Personal info'), {'fields': ('first_name', 'last_name')}),
+    (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                   'groups', 'user_permissions')}),
+    (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+)
 
 
 admin.site.register(UserTestGroup)
