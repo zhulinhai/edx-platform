@@ -21,7 +21,7 @@ from django.conf import settings
         tweet_text = _("I just enrolled in {number} {title} through {account}: {url}").format(
             number=course.number,
             title=course.display_name_with_default_escaped,
-            account='https://lagunita.stanford.edu',
+            account=static.get_value('course_about_twitter_account', settings.PLATFORM_TWITTER_ACCOUNT),
             url=u"http://{domain}{path}".format(
                 domain=site_domain,
                 path=reverse('about_course', args=[course.id.to_deprecated_string()])
