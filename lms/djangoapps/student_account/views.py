@@ -483,6 +483,7 @@ def account_settings_context(request):
                 'options': TIME_ZONE_CHOICES,
             }
         },
+        'is_shib_auth': False,
         'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
         'user_accounts_api_url': reverse("accounts_api", kwargs={'username': user.username}),
         'user_preferences_api_url': reverse('preferences_api', kwargs={'username': user.username}),
@@ -520,7 +521,5 @@ def account_settings_context(request):
 
         if any(state.provider.provider_id == 'saml-sunet' for state in auth_states if state.has_account):
             context['is_shib_auth'] = True
-        else:
-            context['is_shib_auth'] = False
 
     return context
