@@ -2,4 +2,4 @@
 from django.utils.translation import ugettext as _
 %>
 
-${_("This page contains sensitive information protected under the Protection of Privacy Law.")}
+${_("Contains information protected under the Protection of Privacy Law - the wrongful transgressor commits an offense")}
