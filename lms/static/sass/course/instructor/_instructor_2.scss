@@ -291,6 +291,18 @@
     }
 }
 
+.modal_close{
+  position: absolute;
+  display: block;
+  z-index: 2;
+}
+
+.dataDisclaimer-modal{
+  color:#555;
+  padding: 60px;
+  line-height: 1.9;
+}
+
 // elements - general
 // --------------------
 .idash-section {
