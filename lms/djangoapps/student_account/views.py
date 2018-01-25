@@ -9,9 +9,11 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
+from django.core.mail import send_mail
+from django.core.urlresolvers import resolve, reverse
+from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import redirect
+from django.template import loader
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods
@@ -40,7 +42,6 @@ from openedx.core.djangoapps.user_api.errors import (
 from openedx.core.lib.edx_api_utils import get_edx_api_data
 from openedx.core.lib.time_zone_utils import TIME_ZONE_CHOICES
 from openedx.features.enterprise_support.api import enterprise_customer_for_request, get_enterprise_customer_for_learner
-from student.cookies import set_experiments_is_enterprise_cookie
 from openedx.features.enterprise_support.utils import (
     handle_enterprise_cookies_for_logistration,
     update_logistration_context_for_enterprise,
@@ -48,8 +49,7 @@ from openedx.features.enterprise_support.utils import (
 )
 from student.helpers import destroy_oauth_tokens, get_next_url_for_login_page
 from student.models import UserProfile
-from student.views import register_user as old_register_view
-from student.views import signin_user as old_login_view
+from student.views import register_user as old_register_view, signin_user as old_login_view
 from third_party_auth import pipeline
 from third_party_auth.decorators import xframe_allow_whitelisted
 from util.bad_request_rate_limiter import BadRequestRateLimiter
@@ -217,6 +217,25 @@ def password_change_request_handler(request):
             AUDIT_LOG.info("Invalid password reset attempt")
             # Increment the rate limit counter
             limiter.tick_bad_request_counter(request)
+
+            # If enabled, send an email saying that a password reset was attempted, but that there is
+            # no user associated with the email
+            if configuration_helpers.get_value('ENABLE_PASSWORD_RESET_FAILURE_EMAIL',
+                                               settings.FEATURES['ENABLE_PASSWORD_RESET_FAILURE_EMAIL']):
+                context = {
+                    'failed': True,
+                    'email_address': email,
+                    'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
+
+                }
+                subject = loader.render_to_string('emails/password_reset_subject.txt', context)
+                subject = ''.join(subject.splitlines())
+                message = loader.render_to_string('registration/password_reset_email.html', context)
+                from_email = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
+                try:
+                    send_mail(subject, message, from_email, [email])
+                except Exception:  # pylint: disable=broad-except
+                    log.exception(u'Unable to send password reset failure email notification from "%s"', from_email)
         except UserAPIInternalError as err:
             log.exception('Error occured during password change for user {email}: {error}'
                           .format(email=email, error=err))

@@ -39,13 +39,9 @@ from lms.envs.test import (
     REGISTRATION_EXTRA_FIELDS,
 )
 
-# Add some host names used in assorted tests
+# Allow all hosts during tests, we use a lot of different ones all over the codebase.
 ALLOWED_HOSTS = [
-    'localhost',
-    'logistration.testserver',
-    '.testserver.fake',
-    'test-site.testserver',
-    'testserver.fakeother',
+    '*'
 ]
 
 # mongo connection settings
@@ -281,6 +277,9 @@ FEATURES['ENABLE_DISCUSSION_SERVICE'] = False
 
 # Enable a parental consent age limit for testing
 PARENTAL_CONSENT_AGE_LIMIT = 13
+
+# Enable certificates for the tests
+FEATURES['CERTIFICATES_HTML_VIEW'] = True
 
 # Enable content libraries code for the tests
 FEATURES['ENABLE_CONTENT_LIBRARIES'] = True

@@ -422,10 +422,14 @@ FEATURES = {
     # Whether HTML XBlocks/XModules return HTML content with the Course Blocks API student_view_data
     'ENABLE_HTML_XBLOCK_STUDENT_VIEW_DATA': False,
 
+    # Whether to send an email for failed password reset attempts or not. This is mainly useful for notifying users
+    # that they don't have an account associated with email addresses they believe they've registered with.
+    'ENABLE_PASSWORD_RESET_FAILURE_EMAIL': False,
+
     # Whether the browser alert should be shown or not
     'ENABLE_UNSUPPORTED_BROWSER_ALERT': False,
 
-    # Sets the default browser support
+    # Sets the default browser support. For more information go to http://browser-update.org/customize.html
     'UNSUPPORTED_BROWSER_ALERT_VERSIONS': "{i:10,f:-3,o:-3,s:-3,c:-3}",
 }
 
@@ -733,6 +737,21 @@ USAGE_ID_PATTERN = r'(?P<usage_id>(?:i4x://?[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|
 USERNAME_REGEX_PARTIAL = r'[\w .@_+-]+'
 USERNAME_PATTERN = r'(?P<username>{regex})'.format(regex=USERNAME_REGEX_PARTIAL)
 
+
+############################## HEARTBEAT ######################################
+
+# Checks run in normal mode by the heartbeat djangoapp
+HEARTBEAT_CHECKS = [
+    'openedx.core.djangoapps.heartbeat.default_checks.check_modulestore',
+    'openedx.core.djangoapps.heartbeat.default_checks.check_database',
+]
+
+# Other checks to run by default in "extended"/heavy mode
+HEARTBEAT_EXTENDED_CHECKS = (
+    'openedx.core.djangoapps.heartbeat.default_checks.check_celery',
+)
+
+HEARTBEAT_CELERY_TIMEOUT = 5
 
 ############################## EVENT TRACKING #################################
 LMS_SEGMENT_KEY = None

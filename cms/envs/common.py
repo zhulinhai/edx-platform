@@ -76,6 +76,11 @@ from lms.envs.common import (
 
     STATICI18N_OUTPUT_DIR,
 
+    # Heartbeat
+    HEARTBEAT_CHECKS,
+    HEARTBEAT_EXTENDED_CHECKS,
+    HEARTBEAT_CELERY_TIMEOUT,
+
     # Theme to use when no site or site theme is defined,
     DEFAULT_SITE_THEME,
 
@@ -282,6 +287,10 @@ FEATURES = {
 
     # Whether or not the dynamic EnrollmentTrackUserPartition should be registered.
     'ENABLE_ENROLLMENT_TRACK_USER_PARTITION': True,
+
+    # Whether to send an email for failed password reset attempts or not. This is mainly useful for notifying users
+    # that they don't have an account associated with email addresses they believe they've registered with.
+    'ENABLE_PASSWORD_RESET_FAILURE_EMAIL': False,
 
     # Whether archived courses (courses with end dates in the past) should be
     # shown in Studio in a separate list.
@@ -1124,6 +1133,9 @@ INSTALLED_APPS = [
 
     # Entitlements, used in openedx tests
     'entitlements',
+
+    # Asset management for mako templates
+    'pipeline_mako',
 ]
 
 
