@@ -1912,11 +1912,12 @@ class TestInstructorAPIBulkBetaEnrollment(SharedModuleStoreTestCase, LoginEnroll
             u"Dear {student_name}\n\nYou have been invited to be a beta tester "
             "for {display_name} at edx.org by a member of the course staff.\n\n"
             "To start accessing course materials, please visit "
-            "https://{site}/dashboard\n\n----\n"
+            "{proto}://{site}{course_path}\n\n----\n"
             "This email was automatically sent from edx.org to {student_email}".format(
                 display_name=self.course.display_name,
                 student_name=self.notenrolled_student.profile.name,
                 student_email=self.notenrolled_student.email,
+                proto=protocol,
                 site=self.site_name,
                 course_path=self.course_path
             )

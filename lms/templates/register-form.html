@@ -4,12 +4,7 @@ from third_party_auth import pipeline, provider
 from django.utils.translation import ugettext as _
 from django_countries import countries
 from student.models import UserProfile
-from microsite_configuration import microsite
 %>
-<%def name="theme_enabled()"><% return settings.FEATURES.get("USE_CUSTOM_THEME", False) %></%def>
-<%def name="is_microsite()"><% return microsite.is_request_in_microsite() %></%def>
-<%def name="stanford_theme_enabled()"><% return theme_enabled() and not is_microsite() %></%def>
-<%namespace name='static' file='static_content.html'/>
 
 <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
 
@@ -234,7 +229,7 @@ from microsite_configuration import microsite
     % endif
   </ol>
 </div>
-<%static:optional_include_mako file="register_extra.html" is_theming_enabled="True" />
+
 <div class="group group-form group-form-accountacknowledgements">
   <h2 class="sr">${_("Account Acknowledgements")}</h2>
 
@@ -244,26 +239,19 @@ from microsite_configuration import microsite
       % if has_extauth_info is UNDEFINED or ask_for_tos :
       <div class="field required checkbox" id="field-tos">
         <input id="tos-yes" type="checkbox" name="terms_of_service" value="true" required aria-required="true" />
-        <label for="tos-yes">${_('I agree to the {link_start1}Terms of Service{link_end} and {link_start2}Privacy Policy{link_end}').format(
-          link_start1='<a href="{url}" class="new-vp" tabindex="-1">'.format(url=marketing_link('TOS')),
-          link_end='</a>',
-          link_start2='<a href="{url}" class="new-vp" tabindex="-1">'.format(url=marketing_link('PRIVACY')),
-          )}</label>
+        <label for="tos-yes">${_('I agree to the {link_start}Terms of Service{link_end}').format(
+          link_start='<a href="{url}" class="new-vp" tabindex="-1">'.format(url=marketing_link('TOS')),
+          link_end='</a>')}</label>
       </div>
       % endif
 
       % if settings.REGISTRATION_EXTRA_FIELDS['honor_code'] != 'hidden':
-      ## If the stanford theme isn't enabled, check if we have an Honor Code link in our marketing map
-      % if stanford_theme_enabled() or marketing_link('HONOR') and marketing_link('HONOR') != '#':
+      ## check if we have an Honor Code link in our marketing map
+      % if marketing_link('HONOR') and marketing_link('HONOR') != '#':
       <div class="field ${settings.REGISTRATION_EXTRA_FIELDS['honor_code']} checkbox" id="field-honorcode">
         <input id="honorcode-yes" type="checkbox" name="honor_code" value="true" />
         <%
-          ## TODO: provide a better way to override these links
-          self.register_honor_link = marketing_link('HONOR')
-          if self.register_honor_link:
-            honor_code_path = self.register_honor_link
-          else:
-            honor_code_path = marketing_link('HONOR')
+          honor_code_path = marketing_link('HONOR')
         %>
         <label for="honorcode-yes">${_('I agree to the {link_start}Honor Code{link_end}').format(
           link_start='<a href="{url}" class="new-vp" tabindex="-1">'.format(url=honor_code_path),
