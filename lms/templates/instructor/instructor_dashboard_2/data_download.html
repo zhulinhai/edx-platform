@@ -10,9 +10,20 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
 <script type="text/javascript" src="${static.url('js/vendor/jquery.leanModal.js')}"></script>
 
-<a class="instructor-info-action" href="#sensitiveDataModal" id="sensitive_data" style="display:none" rel="leanModal"></a>
+<script>
+$( document ).ready(function() {
+  $('[data-section="data_download"]').click(function(){
+      $( 'a[rel*=leanModal]' ).leanModal({ top : 200, closeButton: ".modal_close" });
+      $( "#sensitive_data" ).click();
+      $( "#sensitive" ).attr("aria-hidden", "false");
+  });
+});
+</script>
 
-  <div aria-hidden="true" role="dialog" tabindex="-1" class="modal dataDisclaimer-modal" id="sensitiveDataModal" >
+
+<a href="#sensitiveDataModal" id="sensitive_data" style="display:none" rel="leanModal"></a>
+
+  <div aria-hidden="true" role="dialog" tabindex="-1" class="modal dataDisclaimer-modal email-modal" id="sensitiveDataModal">
   <div class="inner-wrapper">
   <%include file="sensitive_data_download_msg.html"/>
   <input type="button" class="modal_close" value="OK" href="#">
