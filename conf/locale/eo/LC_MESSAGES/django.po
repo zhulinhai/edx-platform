@@ -20865,6 +20865,7 @@ msgid "modal open"
 msgstr "mödäl öpén Ⱡ'σяєм ιρѕυм ∂σłσ#"
 
 #: lms/templates/modal/accessible_confirm.html
+#: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid "OK"
 msgstr "ÖK Ⱡ'σя#"
 
