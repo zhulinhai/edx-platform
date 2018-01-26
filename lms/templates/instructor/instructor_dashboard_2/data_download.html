@@ -6,22 +6,20 @@ from openedx.core.djangolib.markup import HTML, Text
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 %>
 
-% if configuration_helpers.get_value('ENABLE_SENSITIVE_DATA_MSG_ON_DASHBOARD', settings.FEATURES.get('ENABLE_SENSITIVE_DATA_MSG_ON_DASHBOARD', True)):
+% if configuration_helpers.get_value('ENABLE_SENSITIVE_DATA_MSG_ON_DASHBOARD', settings.FEATURES.get('ENABLE_SENSITIVE_DATA_MSG_ON_DASHBOARD', False)):
 
 <%static:require_module_async module_name="js/vendor/jquery.leanModal" class_name="leanModal">
 
-$( document ).ready(function() {
   $('[data-section="data_download"]').click(function(){
       $( 'a[rel*=leanModal]' ).leanModal({ top : 200, closeButton: ".modal_close" });
-      $( "#sensitive_data" ).click();
+      $( "#sensitive-data" ).click();
   });
-});
 
   </%static:require_module_async>
 
-<a href="#sensitiveDataModal" id="sensitive_data" style="display:none" rel="leanModal"></a>
+<a href="#sensitive-data-modal" id="sensitive-data" style="display:none" rel="leanModal"></a>
 
-<div aria-hidden="true" role="dialog" tabindex="-1" class="modal dataDisclaimer-modal" id="sensitiveDataModal">
+<div aria-hidden="true" role="dialog" tabindex="-1" class="modal data-disclaimer-modal" id="sensitive-data-modal">
   <div class="inner-wrapper" style="margin-bottom: 20px;">
   <%include file="sensitive_data_download_msg.html"/>
   </div>
