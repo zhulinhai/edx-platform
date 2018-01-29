@@ -83,7 +83,6 @@ class CourseModeFactory(DjangoModelFactory):
     currency = 'usd'
     expiration_datetime = None
 
-    @lazy_attribute
     def min_price(self):
         if CourseMode.is_verified_slug(self.mode_slug):
             return random.randint(1, 100)
