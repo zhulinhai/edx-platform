@@ -132,7 +132,10 @@ git+https://github.com/edx/xblock-utils.git@v1.0.5#egg=xblock-utils==1.0.5
 git+https://github.com/edx/edx-user-state-client.git@1.0.2#egg=edx-user-state-client==1.0.2
 git+https://github.com/edx/xblock-lti-consumer.git@v1.1.6#egg=lti_consumer-xblock==1.1.6
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> dependencies update
 <<<<<<< HEAD
 git+https://github.com/edx/edx-proctoring.git@1.3.6#egg=edx-proctoring==1.3.6
 >>>>>>> UPGRADE
@@ -156,6 +159,9 @@ git+https://github.com/edx/xblock-lti-consumer.git@v1.1.3#egg=lti_consumer-xbloc
 -e git+https://github.com/proversity-org/edx-proctoring.git#egg=edx-proctoring
 =======
 -e git+https://github.com/proversity-org/edx-proctoring.git#egg=edx-proctoring
+=======
+-e git+https://github.com/proversity-org/edx-proctoring.git@v1.3.6#egg=edx-proctoring==1.3.6
+>>>>>>> dependencies update
 # This is here because all of the other XBlocks are located here. However, it is published to PyPI and will be installed that way
 xblock-review==1.1.2
 >>>>>>> UPGRADE
@@ -164,10 +170,10 @@ git+https://github.com/edx/help-tokens.git@v1.0.0#egg=help-tokens==1.0.0
 # Third Party XBlocks
 
 git+https://github.com/mitodl/edx-sga.git@d019b8a050c056db535e3ff13c93096145a932de#egg=edx-sga==0.7.1
-git+https://github.com/proversity-org/xblock-poll@v1.3.0#egg=xblock-poll==1.3.0
-git+https://github.com/proversity-org/xblock-drag-and-drop-v2#egg=xblock-drag-and-drop-v2==2.0.18
-git+https://github.com/proversity-org/edx-xblock-bibblio@0.3#egg=edx-xblock-bibblio==0.3
-git+https://github.com/proversity-org/xblock-free-text-response.git@0.2.0#egg=xblock-free-text-response==0.2.0
+git+https://github.com/proversity-org/xblock-poll@v1.4.0#egg=xblock-poll==1.4.0
+git+https://github.com/proversity-org/xblock-drag-and-drop-v2.1.0#egg=xblock-drag-and-drop-v2==2.1.0
+git+https://github.com/proversity-org/edx-xblock-bibblio@0.4#egg=edx-xblock-bibblio==0.4
+git+https://github.com/proversity-org/xblock-free-text-response.git@v0.3.0#egg=xblock-free-text-response==0.3.0
 git+https://github.com/proversity-org/recap-xblock.git@0.2.1#egg=recap-xblock==0.2.1
 git+https://github.com/proversity-org/badger-xblock.git@0.2.3#egg=badger-xblock==0.2.3
 git+https://github.com/eduNEXT/flow-control-xblock@v0.2.0#egg=flow-control-xblock==0.2.0
