@@ -11,6 +11,8 @@ from time import time
 from lazy import lazy
 from pytz import UTC
 
+from django.conf import settings
+
 from certificates.models import CertificateWhitelist, GeneratedCertificate, certificate_info_for_user
 from courseware.courses import get_course_by_id
 from instructor_analytics.basic import list_problem_responses
@@ -23,6 +25,7 @@ from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
 from openedx.core.djangoapps.content.block_structure.api import get_course_in_cache
 from openedx.core.djangoapps.course_groups.cohorts import bulk_cache_cohorts, get_cohort, is_course_cohorted
 from openedx.core.djangoapps.user_api.course_tag.api import BulkCourseTags
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from student.models import CourseEnrollment
 from student.roles import BulkRoleCache
 from xmodule.modulestore.django import modulestore
@@ -444,7 +447,6 @@ class ProblemGradeReport(object):
 
         graded_scorable_blocks = cls._graded_scorable_blocks_to_header(course_id)
         # Just generate the static fields for now.
-        disclaimer = ['Disclaimer, this report contains sensitive data', '']
         rows = [list(header_row.values()) + ['Enrollment Status', 'Grade'] + _flatten(graded_scorable_blocks.values())]
         error_rows = [list(header_row.values()) + ['error_msg']]
         current_step = {'step': 'Calculating Grades'}
@@ -489,7 +491,11 @@ class ProblemGradeReport(object):
 
         # Perform the upload if any students have been successfully graded
         if len(rows) > 1:
-            upload_csv_to_report_store([disclaimer] + rows, 'problem_grade_report', course_id, start_date)
+            if configuration_helpers.get_value('DISPLAY_SENSITIVE_DATA_MSG_FOR_DOWNLOADS', settings.FEATURES.get('DISPLAY_SENSITIVE_DATA_MSG_FOR_DOWNLOADS', False)):
+                disclaimer = ['Disclaimer, this report contains sensitive data', '']
+                upload_csv_to_report_store([disclaimer] + rows, 'problem_grade_report', course_id, start_date)
+            else:
+                upload_csv_to_report_store(rows, 'problem_grade_report', course_id, start_date)
         # If there are any error rows, write them out as well
         if len(error_rows) > 1:
             upload_csv_to_report_store(error_rows, 'problem_grade_report_err', course_id, start_date)
