@@ -4,6 +4,7 @@ Utility library for working with the edx-organizations app
 
 from django.conf import settings
 from django.db.utils import DatabaseError
+import logging
 
 
 def add_organization(organization_data):
@@ -30,6 +31,7 @@ def get_organization(organization_id):
     """
     Client API operation adapter/wrapper
     """
+
     if not organizations_enabled():
         return []
     from organizations import api as organizations_api

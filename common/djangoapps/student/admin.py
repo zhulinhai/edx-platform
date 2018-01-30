@@ -182,7 +182,7 @@ class UserAdmin(BaseUserAdmin):
         """
 
         django_readonly = super(UserAdmin, self).get_readonly_fields(*args, **kwargs)
-        return django_readonly + ('username',)
+        return django_readonly
 
 
 @admin.register(UserAttribute)

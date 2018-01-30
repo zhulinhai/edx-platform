@@ -3,42 +3,230 @@
 <%
 course_mode_class = course_mode if course_mode else ''
 %>
+ <style type="text/css"> 
 
+
+@font-face {
+  font-family: 'Flexo-Demi';
+  src: url('/static/certificates/fonts/Flexo/Flexo-Demi.eot?#iefix') format('embedded-opentype'),  url('/static/certificates/fonts/Flexo/Flexo-Demi.otf')  format('opentype'),
+	     url('/static/certificates/fonts/Flexo/Flexo-Demi.woff') format('woff'), url('/static/certificates/fonts/Flexo/Flexo-Demi.ttf')  format('truetype'), url('/static/certificates/fonts/Flexo/Flexo-Demi.svg#Flexo-Demi') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Flexo-Regular';
+  src: url('/static/certificates/fonts/Flexo/Flexo-Regular.eot?#iefix') format('embedded-opentype'),  url('/static/certificates/fonts/Flexo/Flexo-Regular.otf')  format('opentype'),
+	     url('/static/certificates/fonts/Flexo/Flexo-Regular.woff') format('woff'), url('/static/certificates/fonts/Flexo/Flexo-Regular.ttf')  format('truetype'), url('/static/certificates/fonts/Flexo/Flexo-Regular.svg#Flexo-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Flexo-Medium';
+  src: url('/static/certificates/fonts/Flexo/Flexo-Medium.eot?#iefix') format('embedded-opentype'),  url('/static/certificates/fonts/Flexo/Flexo-Medium.otf')  format('opentype'),
+	     url('/static/certificates/fonts/Flexo/Flexo-Medium.woff') format('woff'), url('/static/certificates/fonts/Flexo/Flexo-Medium.ttf')  format('truetype'), url('/static/certificates/fonts/Flexo/Flexo-Medium.svg#Flexo-Medium') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Flexo-Bold';
+  src: url('/static/certificates/fonts/Flexo/Flexo-Bold.eot?#iefix') format('embedded-opentype'), url('/static/certificates/fonts/Flexo/Flexo-Bold.otf') format('opentype'),
+	     url('/static/certificates/fonts/Flexo/Flexo-Bold.woff') format('woff'), url('/static/certificates/fonts/Flexo/Flexo-Bold.ttf') format('truetype'), 
+url('/static/certificates/fonts/Flexo/Flexo-Bold.svg#Flexo-Bold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Flexo-BoldIt';
+  src: url('/static/certificates/fonts/Flexo/Flexo-BoldIt.eot?#iefix') format('embedded-opentype'),  url('/static/certificates/fonts/Flexo/Flexo-BoldIt.otf')  format('opentype'),
+	     url('/static/certificates/fonts/Flexo/Flexo-BoldIt.woff') format('woff'), url('/static/certificates/fonts/Flexo/Flexo-BoldIt.ttf')  format('truetype'), url('/static/certificates/fonts/Flexo/Flexo-BoldIt.svg#Flexo-BoldIt') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.header-app, .wrapper-banner .banner, .footer-app, .layout-accomplishment .wrapper-introduction .introduction, .layout-accomplishment .accomplishment-rendering, .layout-accomplishment .wrapper-accomplishment-metadata .accomplishment-metadata, .layout-accomplishment .wrapper-accomplishment-related .accomplishment-related, .layout-accomplishment .wrapper-about .about, .wrapper-content.status-invalid .wrapper-content-grid{
+max-width: 60.125rem;
+}
+
+@media (min-width: 1024px) {
+.layout-accomplishment .accomplishment-signatories .signatory {
+	width: 36.40426%
+}
+}
+
+@page {
+size: A4 landscape;
+margin: 0;
+}
+
+.accomplishment-rendering .accomplishment-signatories .signatory-signature {
+    margin: 0 auto 0 auto;
+}
+.nuevo-nomcurso{
+    font-family: "Flexo-Bold" !important;	
+}
+
+@media print {
+	.accomplishment-rendering .wrapper-statement-and-signatories {
+		border-bottom: 0 !important
+	}
+
+.accomplishment-rendering .accomplishment-signatories .signatory-signature {
+	height: auto;
+}
+
+.accomplishment-metadata .accomplishment-id,
+.accomplishment-metadata .accomplishment-date {
+	display: none
+}
+
+
+}
+
+.accomplishment-rendering {
+    padding: 0;
+}
+.signatory-credentials{
+	color: #043F85 !important;
+	font-size: 12px !important;
+}
+.accomplishment-signatories .signatory-name{
+font-family: 'Flexo-Bold';
+	color: #043F85 !important;
+	font-size: 14px !important;
+}
+
+.certificate .accomplishment-rendering .accomplishment-statement, .certificate .accomplishment-rendering .accomplishment-statement-lead, .certificate .accomplishment-rendering .accomplishment-recipient, .certificate .accomplishment-rendering .accomplishment-course {
+    font-family: "Flexo-Regular" !important;
+}
+
+.layout-accomplishment .accomplishment-signatories .signatory .signatory-signature {
+    padding: 1.25rem 0.625rem 0;
+}
+
+.accomplishment-rendering .accomplishment-statement, .accomplishment-rendering .accomplishment-signatories{
+margin-bottom: 1rem;
+	border-bottom: 0px !important;
+}
+
+.nuevo-borde-superior{
+ font-family: 'Flexo-Demi';
+  border-top: 1px solid #d9d9d9; 
+}
+.nuevo-eltitulo{ 
+  font-size: 44px;
+  color: #0C4580 !important;
+}
+
+.nuevo-banners{
+	margin-bottom: 1rem;
+       width: 100%
+}
+.nuevo-banner-pie{
+	border-bottom: 12px solid #4D80B1;
+       width: 100%;
+}
+.nuevo-oto{
+  font-size: 18px;
+  color: #0C4580;
+text-align: center;
+margin-bottom: 1.50rem;
+}
+.nuevo-descrip{
+  font-size: 18px;
+  color: #0C4580;
+text-align: center;
+margin-bottom: 1.50rem;
+ font-family: 'Flexo-Medium';
+}
+.nuevo-tema{
+  font-family: 'Flexo-BoldIt' !important;
+color: #4D80B1 !important;
+}
+.nuevo-banners:after{
+  clear: both;
+  display: table;
+  content: "";
+}
+.nuevo-banner-cr{
+float: left;
+}
+.nuevo-banner-cliente{
+float: right;
+}
+.nuevo-fecha-emitido{
+	text-align: center;
+	font-size: 14px;
+	color: #043F85;
+}
+
+.layout-accomplishment.certificate-honor .accomplishment-rendering .accomplishment-signatories .signatory-signature, .layout-accomplishment.certificate-honor .accomplishment-rendering .accomplishment-type-symbol {
+     display: block;
+}
+.nuevo-nombres{
+	font-size: 40px !important;
+	color: #00B2CE !important;
+       font-family: "Flexo-Regular" !important; 
+font-weight: normal !important;
+}
+
+.accomplishment-id2{
+	position: absolute;
+	right: 30px;
+	bottom: 5px;
+        font-size: 12px;
+        color: #0C4580;
+}
+.accomplishment-id2 .certlabel{
+
+}
+.accomplishment-id2 .certvalue{
+
+}
+
+</style>
 <main class="accomplishment accomplishment-main">
 
     <div class="wrapper-accomplishment-rendering">
-        <div class="accomplishment-rendering">
-            <span class="deco-corner deco-corner-tl"></span>
+        <div class="accomplishment-rendering nuevo-borde-superior">
+            <!--<span class="deco-corner deco-corner-tl"></span>
             <span class="deco-corner deco-corner-tr"></span>
             <span class="deco-corner deco-corner-bl"></span>
-            <span class="deco-corner deco-corner-br"></span>
+            <span class="deco-corner deco-corner-br"></span>-->
+<div class="nuevo-banners">
+<div class="nuevo-banner-cr"><img  src="/static/certificates/images/banner_cr.png" width="651" height="107" alt="">
+</div>
+<div class="nuevo-banner-cliente"><img  src="/static/certificates/images/banner_bcp.png" width="202" height="107" alt="">
+</div>
+</div>
 
-            <div class="accomplishment-type">
-                <span class="accomplishment-type-symbol">
+            <div class="accomplishment-type" style="margin-bottom: 1.5rem; margin-top: 0 !important ">
+                <span class="accomplishment-type-symbol" style="display: none">
                     <img class="src" src="/static/certificates/images/ico-${course_mode_class}.png" alt="">
                 </span>
 
-                <span class="accomplishment-type-label hd-4">${document_title}</span>
+                <span class="accomplishment-type-label hd-4 nuevo-eltitulo">CERTIFICADO</span>
             </div>
-
             <div class="wrapper-statement-and-signatories">
-                <div class="accomplishment-statement">
-                    <p class="accomplishment-statement-lead">
-                        <strong class="accomplishment-recipient hd-1 emphasized">${accomplishment_copy_name | h}</strong>
-                        <span class="accomplishment-summary copy copy-lead">${accomplishment_copy_description_full}</span>
+                <div class="accomplishment-statement" style="border: none; padding-bottom: 0 ">
+<p class="nuevo-oto">Otorgado a:</p>
 
-                        <span class="accomplishment-course hd-1 emphasized">
+                    <p class="accomplishment-statement-lead">
+                        <strong class="accomplishment-recipient hd-1 emphasized nuevo-nombres">${accomplishment_copy_name | h}</strong>
+                     <!--  <span class="accomplishment-summary copy copy-lead">${accomplishment_copy_description_full}</span>-->
+<p class="nuevo-descrip">Por haber culminado satisfactoriamente el curso  <span class="nuevo-nomcurso">"${accomplishment_copy_course_name}"</span>, <br> 
+                      <!--  <span class="accomplishment-course hd-1 emphasized">
                             <span class="accomplishment-course-org">${accomplishment_copy_course_org}  </span>
                             <span class="accomplishment-course-number">${course_number}</span>:
                             <span class="accomplishment-course-name">${accomplishment_copy_course_name}</span>
-                        </span>
+                        </span>-->
+como parte del programa de capacitación en <span class="nuevo-tema">Habilidades Generales</span></p>
                     </p>
 
                     <p class="accomplishment-statement-detail copy copy-lead">${accomplishment_copy_course_description}</p>
                 </div>
 
                 % if mode != 'base':
-                <div class="accomplishment-signatories">
+                <div class="accomplishment-signatories" style="border: none !important; padding-bottom: 0; margin-bottom: 0">
                     <h3 class="accomplishment-signatories-title sr-only">${_("Noted by")}</h3>
 
                     <div class="wrapper-signatories">
@@ -62,7 +250,7 @@ course_mode_class = course_mode if course_mode else ''
                 % endif
             </div>
 
-            <div class="accomplishment-orgs">
+            <div class="accomplishment-orgs" style="display: none">
                 <h3 class="accomplishment-orgs-title sr-only">${_("Supported by the following organizations")}</h3>
 
                 <ul class="wrapper-orgs list-orgs">
@@ -81,6 +269,13 @@ course_mode_class = course_mode if course_mode else ''
                     % endif
                 </ul>
             </div>
+<div class="nuevo-banner-pie"><img  src="/static/certificates/images/firma_bcp.png" width="185" height="60" alt="" />
+</div>
+
+<p class="accomplishment-id2">
+					<span class="certlabel">${certificate_id_number_title}:</span>
+                    <span class="certvalue">${certificate_id_number}</span>
+                </p>
         </div>
     </div>
 
@@ -97,7 +292,7 @@ course_mode_class = course_mode if course_mode else ''
                         </span>
                         <div class="recipient-details">
                             <h3 class="recipient-name">${accomplishment_copy_name | h}</h3>
-                            <p class="recipient-username">${accomplishment_copy_username} @ ${platform_name}</p>
+                            <p class="recipient-username">${accomplishment_copy_username} @ Campus Virtual Romero</p>
                         </div>
                     </dd>
                 </dl>
@@ -107,7 +302,7 @@ course_mode_class = course_mode if course_mode else ''
                 </dl>
                 <dl class="metadata accomplishment-date">
                     <dt class="label copy copy-meta">${certificate_date_issued_title}</dt>
-                    <dd class="value copy copy-base">${certificate_date_issued}</dd>
+                    <dd class="value copy copy-base">${certificate_date_issued_espanol}</dd>
                 </dl>
             </div>
         </div>

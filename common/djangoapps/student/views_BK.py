@@ -151,11 +151,6 @@ REGISTER_USER = Signal(providing_args=["user", "profile"])
 # Disable this warning because it doesn't make sense to completely refactor tests to appease Pylint
 # pylint: disable=logging-format-interpolation
 
-# MH
-from django.core.mail import get_connection
-from django.core.mail.message import EmailMultiAlternatives
-from django.template import loader
-
 def send_mailX(subject, message, from_email, recipient_list,
               fail_silently=False, auth_user=None, auth_password=None,
               connection=None, html_message=None):
@@ -636,17 +631,13 @@ def compose_and_send_activation_email(user, profile, user_registration=None):
     # Email subject *must not* contain newlines
     subject = ''.join(subject.splitlines())
     message_for_activation = render_to_string('emails/activation_email.txt', context)
-    message_for_activation_html = render_to_string('emails/html/activation_email.html', context) # RP
     from_address = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
     from_address = configuration_helpers.get_value('ACTIVATION_EMAIL_FROM_ADDRESS', from_address)
     if settings.FEATURES.get('REROUTE_ACTIVATION_EMAIL'):
         dest_addr = settings.FEATURES['REROUTE_ACTIVATION_EMAIL']
         message_for_activation = ("Activation for %s (%s): %s\n" % (user, user.email, profile.name) +
                                   '-' * 80 + '\n\n' + message_for_activation)
-    #send_activation_email.delay(subject, message_for_activation, from_address, dest_addr)
-    #send_mailX(subject, message_for_activation, from_address, dest_addr, html_message=message_html) # RP
-    #send_mailX(subject, message_for_activation_html, from_address, dest_addr)
-	send_mailX(subject, message, from_address, dest_addr) # RP
+    send_activation_email.delay(subject, message_for_activation, from_address, dest_addr)
 
 
 @login_required
@@ -1328,7 +1319,10 @@ def _generate_not_activated_message(user):
         settings.PLATFORM_NAME
     )
 
-    not_activated_msg_template = _('Para iniciar sesi&oacute;n, debe activar su cuenta.<br /><br />Hemos enviado un enlace de activaci&oacute;n a <strong>{email}</strong>.  Si usted no recibe un correo electr&oacute;nico, revise sus carpetas de spam <a href="{support_url}">contact {platform} Support</a>.')
+    not_activated_msg_template = _('In order to sign in, you need to activate your account.<br /><br />'
+                                   'We just sent an activation link to <strong>{email}</strong>.  If '
+                                   'you do not receive an email, check your spam folders or '
+                                   '<a href="{support_url}">contact {platform} Support</a>.')
 
     not_activated_message = not_activated_msg_template.format(
         email=user.email,
@@ -2668,7 +2662,6 @@ def reactivation_email_for_user(user):
     subject = render_to_string('emails/activation_email_subject.txt', context)
     subject = ''.join(subject.splitlines())
     message = render_to_string('emails/activation_email.txt', context)
-    message_for_activation_html = render_to_string('emails/html/activation_email.html', context) # RP
     from_address = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
     from_address = configuration_helpers.get_value('ACTIVATION_EMAIL_FROM_ADDRESS', from_address)
 

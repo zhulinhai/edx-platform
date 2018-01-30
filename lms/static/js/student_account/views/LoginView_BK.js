@@ -126,7 +126,9 @@
                 var email = $('#password-reset-email').val(),
                     successTitle = gettext('Check Your Email'),
                     successMessageHtml = HtmlUtils.interpolateHtml(
-                        gettext('Ingresaste {boldStart}{email}{boldEnd}, si este correo electrónico está asociado con tu cuenta del {platform_name} te enviaremos un mensaje con las instrucciones para resetear tu contraseña.'), { // eslint-disable-line max-len
+                        gettext('{paragraphStart}You entered {boldStart}{email}{boldEnd}. If this email address is associated with your {platform_name} account, we will send a message with password reset instructions to this email address.{paragraphEnd}' + // eslint-disable-line max-len
+                        '{paragraphStart}If you do not receive a password reset message, verify that you entered the correct email address, or check your spam folder.{paragraphEnd}' + // eslint-disable-line max-len
+                        '{paragraphStart}If you need further assistance, {anchorStart}contact technical support{anchorEnd}.{paragraphEnd}'), { // eslint-disable-line max-len
                             boldStart: HtmlUtils.HTML('<b>'),
                             boldEnd: HtmlUtils.HTML('</b>'),
                             paragraphStart: HtmlUtils.HTML('<p>'),

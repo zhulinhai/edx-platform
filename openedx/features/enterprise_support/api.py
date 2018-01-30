@@ -22,6 +22,7 @@ from openedx.core.djangoapps.catalog.models import CatalogIntegration
 from openedx.core.djangoapps.catalog.utils import create_catalog_api_client
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.lib.token_utils import JwtBuilder
+import logging
 
 try:
     from enterprise import utils as enterprise_utils
@@ -51,6 +52,8 @@ class EnterpriseApiClient(object):
         """
         Initialize an Enterprise service API client, authenticated using the Enterprise worker username.
         """
+        logging.info('SE VIENE LO BUENO ---------------------------')
+        logging.info(settings.ENTERPRISE_SERVICE_WORKER_USERNAME)
         self.user = User.objects.get(username=settings.ENTERPRISE_SERVICE_WORKER_USERNAME)
         jwt = JwtBuilder(self.user).build_token([])
         self.client = EdxRestApiClient(

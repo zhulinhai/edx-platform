@@ -1,16 +1,16 @@
 <div class="js-form-feedback" aria-live="assertive" tabindex="-1">
 </div>
 
+<% if ( context.createAccountOption !== false ) { %>
+<div class="toggle-form">
+    <span class="text"><%- gettext("First time here?") %></span>
+    <a href="#login" class="form-toggle" data-type="register"><%- gettext("Create an Account.") %></a>
+</div>
+<% } %>
 
-
+<h2><%- gettext("Sign In") %></h2>
 
 <form id="login" class="login-form" tabindex="-1" method="POST">
-
-        <div class="section-title lines">
-            <h3>
-                <span class="text">Iniciar sesión</span>
-            </h3>
-        </div>
 
     <p class="sr">
         <% if ( context.providers.length > 0 && !context.currentProvider || context.hasSecondaryProviders ) { %>
@@ -55,11 +55,4 @@
     </div>
     <% } %>
 </form>
-<br />
-<% if ( context.createAccountOption !== false ) { %>
-<div class="toggle-form">
-    <span class="text">¿Es nuevo en Campus Virtual Romero?</span>
-    <a href="#login" class="form-toggle botonlr" data-type="register">Crear una cuenta</a>
-</div>
-<% } %>
 

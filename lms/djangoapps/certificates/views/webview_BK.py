@@ -103,16 +103,6 @@ def _update_certificate_context(context, user_certificate, platform_name):
         year=user_certificate.modified_date.year
     )
 
-    dictfechas={'01': 'Enero', '02': 'Febrero', '03': 'Marzo', '04': 'Abril', '05': 'Mayo', '06': 'Junio', '07': 'Julio', '08': 'Agosto', '09': 'Setiembre', '10': 'Octubre', '11': 'Noviembre', '12': 'Diciembre'}
-
-    month=user_certificate.modified_date.strftime("%m")
-
-    context['certificate_date_issued_espanol'] = _('{day} de {monthespanol} de {year}').format(
-        monthespanol= dictfechas.get(month),
-        day=user_certificate.modified_date.day,
-        year=user_certificate.modified_date.year
-    )
-
     # Translators:  This text represents the verification of the certificate
     context['document_meta_description'] = _('This is a valid {platform_name} certificate for {user_name}, '
                                              'who participated in {partner_short_name} {course_number}').format(

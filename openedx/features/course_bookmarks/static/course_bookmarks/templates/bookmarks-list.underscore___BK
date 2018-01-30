@@ -41,12 +41,12 @@
     <div class="bookmarks-empty">
         <h3 class="hd-4 bookmarks-empty-header">
             <span class="icon fa fa-bookmark-o bookmarks-empty-header-icon" aria-hidden="true"></span>
-			Todavía no tiene marcadores.
+            <%- gettext("You have not bookmarked any courseware pages yet") %>
             <br>
         </h3>
         <div  class="bookmarks-empty-detail">
             <span class="bookmarks-empty-detail-title">
-                Use marcadores para ayudarlo a regresar fácilmente a las páginas de cursos. Para agregar un marcador, haga clic en "Marcar esta página como favorito" debajo del título de la página.
+                <%- gettext('Use bookmarks to help you easily return to courseware pages. To bookmark a page, click "Bookmark this page" under the page title.') %>
             </span>
         </div>
     </div>

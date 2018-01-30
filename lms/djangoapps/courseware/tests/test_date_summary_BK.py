@@ -201,12 +201,12 @@ class CourseDateSummaryTest(SharedModuleStoreTestCase):
             self.client.login(username='mrrobot', password='test')
 
             html_elements = [
-                '<h3 class="hd hd-6 handouts-header">Fechas importantes del curso</h3>',
+                '<h3 class="hd hd-6 handouts-header">Important Course Dates</h3>',
                 '<div class="date-summary-container">',
                 '<div class="date-summary date-summary-todays-date">',
                 '<span class="hd hd-6 heading localized-datetime"',
                 'data-datetime="2015-01-02 00:00:00+00:00"',
-                'data-string="Hoy es {date}"',
+                'data-string="Today is {date}"',
                 'data-timezone="None"'
             ]
             url = reverse(url_name, args=(self.course.id, ))
@@ -228,12 +228,12 @@ class CourseDateSummaryTest(SharedModuleStoreTestCase):
             response = self.client.get(url, follow=True)
 
             html_elements = [
-                '<h3 class="hd hd-6 handouts-header">Fechas importantes del curso</h3>',
+                '<h3 class="hd hd-6 handouts-header">Important Course Dates</h3>',
                 '<div class="date-summary-container">',
                 '<div class="date-summary date-summary-todays-date">',
                 '<span class="hd hd-6 heading localized-datetime"',
                 'data-datetime="2015-01-02 00:00:00+00:00"',
-                'data-string="Hoy es {date}"',
+                'data-string="Today is {date}"',
                 'data-timezone="America/Los_Angeles"'
             ]
             for html in html_elements:
