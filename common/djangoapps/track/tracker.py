@@ -99,8 +99,13 @@ def send(event):
             
     if settings.ANALITICA_ACTIVE:
        event['time'] = time.time()
-       event['event']['created_at'] = time.time()
-       event['event']['submitted_at'] = time.time()
+       
+       if 'created_at' in event['event']:
+           event['event']['created_at'] = time.time()
+       if 'submitted_at' in event['event']:
+           event['event']['submitted_at'] = time.time()
+
+       event['event'] = json.loads(event.get('event'))
 
        try:
            r =\
@@ -112,9 +117,8 @@ def send(event):
            if r.status_code != 200:
                log.error("Failed to post to the tracking backend with error {e}".format(e=r.json()))
 
-       except (Exception):
-           log.error("TRACK FAIL: Message could not be posted message = {}".format(e=event))
-           log.error("TRACK FAIL: Message could not be posted message = {e}".format(e=event))
+       except Exception as e:
+           log.error("TRACK FAIL: Message could not be posted message = {m} and error {e}".format(m=event, e=e))
            pass
 
 
