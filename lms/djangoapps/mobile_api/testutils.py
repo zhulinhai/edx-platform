@@ -16,9 +16,6 @@ from django.conf import settings
 from django.utils import timezone
 import ddt
 from mock import patch
-
-from unittest import skip
-
 from django.core.urlresolvers import reverse
 from rest_framework.test import APITestCase
 from opaque_keys.edx.keys import CourseKey
