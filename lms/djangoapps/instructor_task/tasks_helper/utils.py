@@ -1,7 +1,6 @@
 from eventtracking import tracker
 from lms.djangoapps.instructor_task.models import ReportStore
 from util.file import course_filename_prefix_generator
-from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from edxmako.shortcuts import render_to_string
 
 from django.conf import settings
@@ -67,12 +66,9 @@ class SensitiveMessageOnReports(object):
     """
 
     def __init__(self):
-        self.should_msg_be_displayed = configuration_helpers.get_value(
+        self.should_msg_be_displayed = settings.FEATURES.get(
             'DISPLAY_SENSITIVE_DATA_MSG_FOR_DOWNLOADS',
-            settings.FEATURES.get(
-                'DISPLAY_SENSITIVE_DATA_MSG_FOR_DOWNLOADS',
-                False
-            )
+            False
         )
 
     def csv_direct(self, writer):
@@ -82,7 +78,7 @@ class SensitiveMessageOnReports(object):
         if self.should_msg_be_displayed:
             msg = self.process_message()
             encode = unicode(msg).encode('utf-8')
-            return writer.writerow([encode])
+            writer.writerow([encode])
 
     def with_report_store(self):
         """
