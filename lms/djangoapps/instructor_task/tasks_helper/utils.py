@@ -1,8 +1,10 @@
-import csv
-
 from eventtracking import tracker
 from lms.djangoapps.instructor_task.models import ReportStore
 from util.file import course_filename_prefix_generator
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from edxmako.shortcuts import render_to_string
+
+from django.conf import settings
 
 REPORT_REQUESTED_EVENT_NAME = u'edx.instructor.report.requested'
 
@@ -30,9 +32,11 @@ def upload_csv_to_report_store(rows, csv_name, course_id, timestamp, config_name
         course_id: ID of the course
     """
     report_store = ReportStore.from_config(config_name)
-
     disclaimer = SensitiveMessageOnReports()
-    send_disclaimer = disclaimer.with_report_store()
+    if disclaimer.display_msg:
+        # Append the new row above the headers.
+        send_disclaimer = disclaimer.with_report_store()
+        rows = [send_disclaimer] + rows
     report_store.store_rows(
         course_id,
         u"{course_prefix}_{csv_name}_{timestamp_str}.csv".format(
@@ -40,7 +44,7 @@ def upload_csv_to_report_store(rows, csv_name, course_id, timestamp, config_name
             csv_name=csv_name,
             timestamp_str=timestamp.strftime("%Y-%m-%d-%H%M")
         ),
-        [send_disclaimer] + rows
+        rows
     )
     tracker_emit(csv_name)
 
@@ -54,21 +58,36 @@ def tracker_emit(report_name):
 
 class SensitiveMessageOnReports(object):
     """
-    TODO: Write docstring
+    Check how to add the disclaimer new row in the CSV,
+    due to reports are generated of different ways, each one handles their own way:
+        1. Using the CSV library directly.
+        2. Using upload_csv_to_report_store function which in turn
+           uses store_rows of DjangoStorageReportStore class where is built the CSV.
     """
 
     def __init__(self):
-        self.disclaimer_msg = "Contains information protected under the Protection of Privacy Law - the wrongful transgressor commits an offense"
+        self.display_msg = configuration_helpers.get_value('DISPLAY_SENSITIVE_DATA_MSG_FOR_DOWNLOADS', settings.FEATURES.get('DISPLAY_SENSITIVE_DATA_MSG_FOR_DOWNLOADS', False))
 
     def csv_direct(self, writer):
         """
-        TODO: Rename this method name
+        Writes the row immediately in the CSV.
         """
-        write_disclaimer = writer.writerow([self.disclaimer_msg])
-        return write_disclaimer
+        if self.display_msg:
+            write_disclaimer = writer.writerow([self.process_message()])
+            return write_disclaimer
 
     def with_report_store(self):
         """
-        TODO: Rename this method name
+        Return the string parsed in process_message. This string is passed
+        to upload_csv_to_report_store which decides if execute it or not.
         """
-        return [self.disclaimer_msg]
+        return [self.process_message()]
+
+    def process_message(self):
+        """
+        Return the message parsed from template.
+        """
+        template_message = 'instructor/instructor_dashboard_2/sensitive_data_download_msg.txt'
+        message = render_to_string(template_message, None)
+        message = message.replace('"', '')
+        return message
