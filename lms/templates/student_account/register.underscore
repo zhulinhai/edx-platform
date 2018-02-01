@@ -129,7 +129,7 @@
 			}
 	   });
 	
-	   $(".text-city").after("<div class='form-field textarea-mailing_address'> <label for='register-location' >Telefono *</label> <input id='register-location' type='number' name='location' class='input-block' aria-describedby='register-mailing_address-desc' aria-required='true' required='Ingrese un numero de telefono' style='width: 100%;height: 30px; border: 1px solid #ccc; box-shadow: none;' maxlength='254' minlength='6'></div>");
+	   $(".text-city").after("<div class='form-field textarea-mailing_address'> <label for='register-location' >Teléfono *</label> <input id='register-location' type='number' name='location' class='input-block' aria-describedby='register-mailing_address-desc' aria-required='true' required='Ingrese un numero de teléfono' style='width: 100%;height: 30px; border: 1px solid #ccc; box-shadow: none;' maxlength='254' minlength='6'></div>");
 	   $(".text-city").remove();
 	   $(".select-country").after("<div class='form-field text-city'><label for='register-city'> Región *</label><input id='register-city' type='text' name='city' class='input-block' aria-describedby='register-city-desc' aria-required='true' required='Ingrese una Region' value=''></div>");
 	   

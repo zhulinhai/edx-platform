@@ -393,7 +393,7 @@ class RegistrationView(APIView):
         """
         # Translators: This label appears above a field on the registration form
         # meant to hold the user's email address.
-        email_label = _(u"Email")
+        email_label = _(u"Email") + ' *'
 
         # Translators: This example email address is used as a placeholder in
         # a field on the registration form meant to hold the user's email address.
