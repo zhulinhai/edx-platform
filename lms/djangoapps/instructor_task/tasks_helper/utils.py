@@ -88,7 +88,6 @@ class SensitiveMessageOnReports(object):
         """
         Return the message parsed from template.
         """
-        template_message = 'instructor/instructor_dashboard_2/sensitive_data_on_reports.txt'
+        template_message = 'instructor/instructor_dashboard_2/sensitive_data_download_msg.txt'
         message = render_to_string(template_message, None)
-        message = message.replace('"', '')
         return message
