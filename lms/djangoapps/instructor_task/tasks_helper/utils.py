@@ -73,8 +73,9 @@ class SensitiveMessageOnReports(object):
         Writes the row immediately in the CSV.
         """
         if self.display_msg:
-            write_disclaimer = writer.writerow([self.process_message()])
-            return write_disclaimer
+            msg = self.process_message()
+            encode = unicode(msg).encode('utf-8')
+            return writer.writerow([encode])
 
     def with_report_store(self):
         """
@@ -87,7 +88,7 @@ class SensitiveMessageOnReports(object):
         """
         Return the message parsed from template.
         """
-        template_message = 'instructor/instructor_dashboard_2/sensitive_data_download_msg.txt'
+        template_message = 'instructor/instructor_dashboard_2/sensitive_data_on_reports.txt'
         message = render_to_string(template_message, None)
         message = message.replace('"', '')
         return message

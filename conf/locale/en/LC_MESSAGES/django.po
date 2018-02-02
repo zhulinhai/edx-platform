@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-"POT-Creation-Date: 2018-01-29 16:14+0000\n"
-"PO-Revision-Date: 2018-01-29 16:14:28.386843\n"
+"POT-Creation-Date: 2018-02-02 20:12+0000\n"
+"PO-Revision-Date: 2018-02-02 20:12:58.387283\n"
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -16181,6 +16181,12 @@ msgstr ""
 msgid ""
 "Contains information protected under the Protection of Privacy Law - the "
 "wrongful transgressor commits an offense"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/sensitive_data_on_reports.html
+msgid ""
+"This report contains information protected under\n"
+"the Protection of Privacy Law - the wrongful transgressor commits an offense\n"
 msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/set_course_mode_price_modal.html
