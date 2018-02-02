@@ -126,7 +126,6 @@ def login_and_registration_form(request, initial_mode="login"):
         return ext_auth_response
 
     # Otherwise, render the combined login/registration page
-
     context = {
         'data': {
             'login_redirect_url': redirect_to,
