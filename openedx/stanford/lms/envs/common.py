@@ -75,6 +75,8 @@ INSTALLED_APPS += (
     'freetextresponse',
 )
 MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
+MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
+MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'lms/djangoapps/*/templates')
 MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
 MIDDLEWARE_CLASSES += (
     'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
@@ -101,6 +103,8 @@ SHIB_REDIRECT_DOMAIN_WHITELIST = {
     # 'suclass.stanford.edu': ['studio.suclass.stanford.edu']
 }
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'djangoapps/*/static')
+STATICFILES_DIRS += glob(STANFORD_ROOT / 'common/djangoapps/*/static')
+STATICFILES_DIRS += glob(STANFORD_ROOT / 'lms/djangoapps/*/static')
 STUDENT_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
 STUDENT_RESPONSES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
@@ -118,6 +122,8 @@ TEMPLATE_VISIBLE_SETTINGS = [
     'FEATURES',
 ]
 TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'lms/djangoapps/*/templates')
 TEMPLATES[0]['OPTIONS']['context_processors'] += [
     # Include TEMPLATE_VISIBLE_SETTINGS in templates
     'settings_context_processor.context_processors.settings',
