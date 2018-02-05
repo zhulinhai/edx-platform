@@ -417,6 +417,9 @@ FEATURES = {
     # Allow users to change their email address.
     'ALLOW_EMAIL_ADDRESS_CHANGE': True,
 
+    # Show feedback when email does not exists when resetting password.
+    'SHOW_FORGOT_PASSWORD_EMAIL_ERROR': False,
+
     # Whether to check the "Notify users by email" checkbox in the batch enrollment form
     # in the instructor dashboard.
     'BATCH_ENROLLMENT_NOTIFY_USERS_DEFAULT': True,

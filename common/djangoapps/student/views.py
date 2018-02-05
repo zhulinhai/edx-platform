@@ -1015,8 +1015,7 @@ def dashboard(request):
         'show_dashboard_tabs': True,
         'disable_courseware_js': True,
         'display_course_modes_on_dashboard': enable_verified_certificates and display_course_modes_on_dashboard,
-        'display_sidebar_on_dashboard': display_sidebar_on_dashboard,
-        'subscription_courses': subscription_courses
+        'display_sidebar_on_dashboard': display_sidebar_on_dashboard
     }
 
     if ecommerce_service.is_enabled(request.user):

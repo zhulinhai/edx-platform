@@ -223,6 +223,12 @@ def password_change_request_handler(request):
     email = user.email if user.is_authenticated() else request.POST.get('email')
 
     if email:
+        invalid_email = False
+        show_forgot_password_email_error = configuration_helpers.get_value(
+            'SHOW_FORGOT_PASSWORD_EMAIL_ERROR',
+            settings.FEATURES['SHOW_FORGOT_PASSWORD_EMAIL_ERROR']
+        )
+
         try:
             request_password_change(email, request.is_secure())
             user = user if user.is_authenticated() else User.objects.get(email=email)
@@ -230,6 +236,7 @@ def password_change_request_handler(request):
         except UserNotFound:
             AUDIT_LOG.info("Invalid password reset attempt")
             # Increment the rate limit counter
+            invalid_email = True
             limiter.tick_bad_request_counter(request)
 
             # If enabled, send an email saying that a password reset was attempted, but that there is
@@ -255,7 +262,11 @@ def password_change_request_handler(request):
                           .format(email=email, error=err))
             return HttpResponse(_("Some error occured during password change. Please try again"), status=500)
 
-        return HttpResponse(status=200)
+        if not show_forgot_password_email_error or not invalid_email:
+            return HttpResponse(status=200)
+
+        return HttpResponseBadRequest(_("That e-mail address doesn't have an "
+            "associated user account. Are you sure you've registered?"))
     else:
         return HttpResponseBadRequest(_("No email address provided."))
 

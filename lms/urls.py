@@ -1106,7 +1106,7 @@ urlpatterns.extend(DjangoAppRegistry.get_plugin_url_patterns(ProjectType.LMS))
 
 
 urlpatterns += (
-    url(r'^subscription/', include('subscription_content.urls')),
+    url(r'^subscription/', include('agnosticcontentxblock.urls')),
 )
 <<<<<<< HEAD
 <<<<<<< HEAD
