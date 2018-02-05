@@ -114,7 +114,10 @@ class ActivationEmailTests(TestCase):
     OPENEDX_FRAGMENTS = [
         u"Thank you for creating an account with {platform}!".format(platform=settings.PLATFORM_NAME),
         "http://edx.org/activate/",
-        "For more information, check our Help Center here: ",
+        (
+            "Check the help section of the "
+            u"{platform} website".format(platform=settings.PLATFORM_NAME)
+        )
     ]
 
     # Text fragments we expect in the body of an email
