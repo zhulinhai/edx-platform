@@ -11300,10 +11300,16 @@ msgid "You should Register before trying to access the Unit"
 msgstr "עליך להירשם לפני שתוכל לגשת ליחידה"
 
 #: lms/templates/enroll_staff.html lms/templates/ccx/enrollment.html
-#: lms/templates/courseware/course_about.html
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
+msgctxt "someone"
 msgid "Enroll"
 msgstr "הירשם"
+
+#: lms/templates/enroll_staff.html
+#: lms/templates/courseware/course_about.html
+msgctxt "self"
+msgid "Enroll"
+msgstr "רישום אוטומטי"
 
 #: lms/templates/enroll_staff.html
 msgid "Don't enroll"
@@ -14135,6 +14141,11 @@ msgid "Enroll in {course_name}"
 msgstr "הירשם ב-{course_name}"
 
 #: lms/templates/courseware/course_about.html
+msgctxt "self"
+msgid "Enroll in {course_name}"
+msgstr "רישום אוטומטי ב-{course_name}"
+
+#: lms/templates/courseware/course_about.html
 msgid "View About Page in studio"
 msgstr "ראה עמוד \"אודות\" בסטודיו"
 
@@ -14167,8 +14178,9 @@ msgid "Additional Resources"
 msgstr "משאבים נוספים"
 
 #: lms/templates/courseware/course_about.html
+msgctxt "self"
 msgid "enroll"
-msgstr "הירשם"
+msgstr "רישום אוטומטי"
 
 #: lms/templates/courseware/course_about_sidebar_header.html
 #: themes/stanford-style/lms/templates/courseware/course_about_sidebar_header.html
