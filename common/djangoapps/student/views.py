@@ -967,10 +967,6 @@ def dashboard(request):
             if course_language != user_prefered_lang:
                 course_enrollments.remove(enrollment)
 
-    subscription_courses = frozenset(
-        enrollment.course_id for enrollment in course_enrollments
-        if modulestore().get_course(enrollment.course_id).subscription_catalog_id
-    )
 
     context = {
         'urls': urls,
