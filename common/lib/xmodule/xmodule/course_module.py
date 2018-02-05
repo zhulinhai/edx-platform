@@ -926,7 +926,7 @@ class CourseFields(object):
         ),
         scope=Scope.settings, default=0.0
     )
-        subscription_content_settings = Dict(
+    subscription_content_settings = Dict(
         display_name=_("Subscription Content Settings"),
         help=_(
             "Enter the Bibblio Catalog IDs by Course Mode relevant to the subscription content for this course."
@@ -939,6 +939,7 @@ class CourseFields(object):
             ),
         ),
         scope=Scope.settings, default=None
+     )
 
 
 class CourseModule(CourseFields, SequenceModule):  # pylint: disable=abstract-method
