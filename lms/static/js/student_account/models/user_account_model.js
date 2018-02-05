@@ -25,6 +25,7 @@
                 profile_image: null,
                 accomplishments_shared: false,
                 default_public_account_fields: [],
+                linkedin_profile: null,
                 extended_profile: []
             },
 

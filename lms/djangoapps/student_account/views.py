@@ -727,12 +727,12 @@ class LinkedInProfile(ViewSet):
                             if len(user_profile.meta) > 0:
                                 previous_meta = json.loads(user_profile.meta)
                                 mixed_dicts =\
-                                    (previous_meta.items() + r.json().items())
+                                    (previous_meta.items() + linkedin_profile.items())
                                 new_meta =\
                                     {key: value for (key, value) in mixed_dicts}
                                     
                             else:
-                                new_meta = r.json()
+                                new_meta = linkedin_profile
                             user_profile.meta = json.dumps(new_meta)
                             user_profile.save()
         except Exception as e:
