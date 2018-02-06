@@ -16,21 +16,6 @@ urlpatterns = [
         name='get_analytics_answer_dist',
     ),
 ]
-if settings.SHIB_ONLY_SITE:
-    urlpatterns += [
-        url(
-            r'^backup_login$',
-            'student_account.views.login_and_registration_form',
-            {'initial_mode': 'login'},
-            name='backup_signin_user',
-        ),
-        url(
-            r'^backup_register$',
-            'student_account.views.login_and_registration_form',
-            {'initial_mode': 'register'},
-            name='backup_register_user',
-        ),
-    ]
 if settings.FEATURES.get('ENABLE_SUPERUSER_LOGIN_AS'):
     urlpatterns += [
         url(
