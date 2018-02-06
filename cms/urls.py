@@ -81,9 +81,6 @@ urlpatterns += patterns(
         r'^course_info_update/{}/(?P<provided_id>\d+)?$'.format(settings.COURSE_KEY_PATTERN),
         'course_info_update_handler'
     ),
-    url(r'^utilities/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_handler'),
-    url(r'^utility/captions/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_captions_handler'),
-    url(r'^utility/bulksettings/{}$'.format(settings.COURSE_KEY_PATTERN), 'utility_bulksettings_handler'),
     url(r'^home/?$', 'course_listing', name='home'),
     url(
         r'^course/{}/search_reindex?$'.format(settings.COURSE_KEY_PATTERN),
@@ -108,7 +105,6 @@ urlpatterns += patterns(
     url(r'^settings/details/{}$'.format(settings.COURSE_KEY_PATTERN), 'settings_handler'),
     url(r'^settings/grading/{}(/)?(?P<grader_index>\d+)?$'.format(settings.COURSE_KEY_PATTERN), 'grading_handler'),
     url(r'^settings/advanced/{}$'.format(settings.COURSE_KEY_PATTERN), 'advanced_settings_handler'),
-    url(r'^settings/send_test_enrollment_email/{}$'.format(settings.COURSE_KEY_PATTERN), 'send_test_enrollment_email', name='send_test_enrollment_email'),
     url(r'^textbooks/{}$'.format(settings.COURSE_KEY_PATTERN), 'textbooks_list_handler'),
     url(r'^textbooks/{}/(?P<textbook_id>\d[^/]*)$'.format(settings.COURSE_KEY_PATTERN), 'textbooks_detail_handler'),
     url(r'^videos/{}(?:/(?P<edx_video_id>[-\w]+))?$'.format(settings.COURSE_KEY_PATTERN), 'videos_handler'),
@@ -132,17 +128,6 @@ if settings.FEATURES.get('ENABLE_CONTENT_LIBRARIES'):
             'contentstore.views.library_handler', name='library_handler'),
         url(r'^library/{}/team/$'.format(LIBRARY_KEY_PATTERN),
             'contentstore.views.manage_library_users', name='manage_library_users'),
-    )
-
-if settings.SHIB_ONLY_SITE:
-    urlpatterns += (
-        url(r'^backup_signup$', 'contentstore.views.signup', name='backup_signup'),
-        url(r'^backup_signin$', 'contentstore.views.login_page', name='backup_login'),
-    )
-
-if settings.SPLIT_STUDIO_HOME:
-    urlpatterns += (
-        url(r'^home_library/?$', 'contentstore.views.library_listing', name='home_library'),
     )
 
 if settings.FEATURES.get('ENABLE_EXPORT_GIT'):
@@ -225,3 +210,4 @@ urlpatterns += (
     url(r'^404$', handler404),
     url(r'^500$', handler500),
 )
+urlpatterns += (url(r'', include('openedx.stanford.cms.urls')),)
