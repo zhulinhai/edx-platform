@@ -105,24 +105,6 @@ urlpatterns = (
     url(r'^api-admin/', include('openedx.core.djangoapps.api_admin.urls', namespace='api_admin')),
 )
 
-# Stanford SHIB_ONLY urls
-if settings.SHIB_ONLY_SITE:
-    urlpatterns += (
-        url(
-            r'^backup_login$',
-            'student_account.views.login_and_registration_form',
-            {'initial_mode': 'login'},
-            name='backup_signin_user',
-        ),
-        url(
-            r'^backup_register$',
-            'student_account.views.login_and_registration_form',
-            {'initial_mode': 'register'},
-            name='backup_register_user',
-        ),
-    )
-# / Stanford SHIB_ONLY urls
-
 urlpatterns += (
     url(r'^dashboard/', include('learner_dashboard.urls')),
 )
@@ -459,6 +441,8 @@ urlpatterns += (
         'lms.djangoapps.instructor.views.instructor_dashboard.instructor_dashboard_2',
         name='instructor_dashboard',
     ),
+
+
     url(
         r'^courses/{}/set_course_mode_price$'.format(
             settings.COURSE_ID_PATTERN,
@@ -615,23 +599,6 @@ urlpatterns += (
     ),
 )
 
-# Stanford-specific URL endpoints
-urlpatterns += (
-    # Analytics api endpoints for in-line analytics
-    url(
-        r'^get_analytics_answer_dist/',
-        'courseware.views.views.get_analytics_answer_dist',
-        name='get_analytics_answer_dist',
-    ),
-    url(
-        r'^course_sneakpeek/{}/$'.format(
-            settings.COURSE_ID_PATTERN,
-        ),
-        'student.views.setup_sneakpeek',
-        name='course_sneakpeek',
-    ),
-)
-
 if settings.FEATURES["ENABLE_TEAMS"]:
     # Teams endpoints
     urlpatterns += (
@@ -785,11 +752,6 @@ urlpatterns += (
     url(r'^shoppingcart/', include('shoppingcart.urls')),
     url(r'^commerce/', include('commerce.urls', namespace='commerce')),
 )
-
-if settings.FEATURES.get('ENABLE_SUPERUSER_LOGIN_AS'):
-    urlpatterns += (
-        url(r'^su_login_as/(?P<username>[\w.@+-]+)/?$', 'student.views.superuser_login_as', name='impersonate'),
-    )
 
 # Embargo
 if settings.FEATURES.get('EMBARGO'):
@@ -1002,3 +964,4 @@ if settings.FEATURES.get('ENABLE_FINANCIAL_ASSISTANCE_FORM'):
             name='submit_financial_assistance_request'
         )
     )
+urlpatterns += (url(r'', include('openedx.stanford.lms.urls')),)
