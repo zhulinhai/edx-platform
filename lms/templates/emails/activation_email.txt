@@ -16,9 +16,8 @@ ${_("There's just one more step before you can enroll in a course: "
 % else:
   http://${ site }/activate/${ key }
 % endif
-
-${_("If you didn't request this, you don't need to do anything; you won't "
-    "receive any more email from us. Please do not reply to this email. "
-    "For more information, check our Help Center here: ")}
-
+${_("If you didn't create an account, you don't need to do anything; you "
+      "won't receive any more email from us. If you need assistance, please "
+      "do not reply to this email message. Check the help section of the "
+      "{platform_name} website.").format(platform_name=configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME))}
   ${settings.ZENDESK_URL}
