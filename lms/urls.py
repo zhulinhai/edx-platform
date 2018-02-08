@@ -1098,8 +1098,7 @@ if settings.BRANCH_IO_KEY:
     ]
 
 
-from openedx.core.djangolib.django_plugins import DjangoAppRegistry, ProjectType
-urlpatterns.extend(DjangoAppRegistry.get_plugin_url_patterns(ProjectType.LMS))
+urlpatterns.extend(plugin_urls.get_patterns(plugin_constants.ProjectType.LMS))
 
 
 urlpatterns += (
