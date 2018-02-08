@@ -126,15 +126,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: edx-platform\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-<<<<<<< HEAD
 "POT-Creation-Date: 2018-01-25 11:23+0000\n"
 "PO-Revision-Date: 2018-01-22 14:19+0000\n"
 "Last-Translator: edx_transifex_bot <i18n-working-group+edx-transifex-bot@edx.org>\n"
-=======
-"POT-Creation-Date: 2017-09-28 16:48+0000\n"
-"PO-Revision-Date: 2017-10-19 08:37+0000\n"
-"Last-Translator: Ned Batchelder <ned@edx.org>\n"
->>>>>>> missing arabic translations
 "Language-Team: Arabic (http://www.transifex.com/open-edx/edx-platform/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -144,11 +138,8 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: cms/static/cms/js/main.js cms/static/js/views/active_video_upload_list.js
-<<<<<<< HEAD
 #: cms/static/js/views/video_transcripts.js common/static/bundles/Import.js
-=======
 #: common/static/bundles/Import.js
->>>>>>> missing arabic translations
 msgid ""
 "This may be happening because of an error with our server or your internet "
 "connection. Try refreshing the page or making sure you are online."
@@ -298,10 +289,7 @@ msgstr "جاري التحميل"
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/active_video_upload.js
 #: cms/static/js/views/modals/edit_xblock.js
-<<<<<<< HEAD
 #: cms/static/js/views/video_transcripts.js
-=======
->>>>>>> missing arabic translations
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
 #: lms/static/js/student_account/tos_modal.js
 #: common/static/common/templates/image-modal.underscore
@@ -312,14 +300,11 @@ msgstr "جاري التحميل"
 msgid "Close"
 msgstr "إغلاق"
 
-<<<<<<< HEAD
-=======
 #. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/assets.js
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
->>>>>>> missing arabic translations
 #: cms/templates/js/asset-library.underscore
 #: cms/templates/js/course-instructor-details.underscore
 #: cms/templates/js/previous-video-upload-list.underscore
@@ -343,13 +328,11 @@ msgstr "اختر الملف"
 msgid "OK"
 msgstr "موافق"
 
-<<<<<<< HEAD
 #: cms/templates/js/timed-examination-preference-editor.underscore
 msgid "None"
 msgstr "لا شيء"
 
 #: cms/static/js/views/course_video_settings.js
-=======
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/manage_users_and_roles.js
@@ -362,7 +345,6 @@ msgstr "موافق"
 msgid "Unknown"
 msgstr "غير معروف "
 
->>>>>>> missing arabic translations
 #: cms/static/js/views/metadata.js
 #: cms/static/js/views/previous_video_upload.js
 #: cms/static/js/views/video_transcripts.js
@@ -373,7 +355,6 @@ msgstr "غير معروف "
 msgid "Remove"
 msgstr "حذف"
 
-<<<<<<< HEAD
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/manage_users_and_roles.js
@@ -386,20 +367,15 @@ msgstr ""
 msgid "Unknown"
 msgstr "غير معروف "
 
-=======
->>>>>>> missing arabic translations
 #: cms/static/js/views/metadata.js lms/static/js/views/file_uploader.js
 msgid "Upload File"
 msgstr "تحميل الملف"
 
-<<<<<<< HEAD
-=======
 #. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/modals/base_modal.js
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
->>>>>>> missing arabic translations
 #: cms/templates/js/certificate-editor.underscore
 #: cms/templates/js/content-group-editor.underscore
 #: cms/templates/js/course_info_handouts.underscore
@@ -408,24 +384,18 @@ msgstr "تحميل الملف"
 #: cms/templates/js/section-name-edit.underscore
 #: cms/templates/js/signatory-actions.underscore
 #: cms/templates/js/xblock-string-field-editor.underscore
-<<<<<<< HEAD
 #: lms/templates/fields/field_dropdown.underscore
-=======
->>>>>>> missing arabic translations
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 #: lms/templates/instructor/instructor_dashboard_2/divided-discussions-course-wide.underscore
 #: lms/templates/instructor/instructor_dashboard_2/divided-discussions-inline.underscore
 msgid "Save"
 msgstr "حفظ"
 
-<<<<<<< HEAD
-=======
 #. #-#-#-#-#  djangojs-partial.po (edx-platform)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/modals/course_outline_modals.js
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
->>>>>>> missing arabic translations
 #: cms/templates/js/add-xblock-component-menu-problem.underscore
 msgid "Advanced"
 msgstr "إعدادات متقدّمة"
@@ -1674,13 +1644,12 @@ msgstr ""
 msgid "Table"
 msgstr ""
 
-<<<<<<< HEAD
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
 msgid "Target"
 msgstr ""
-=======
+
 #. Translators: This message will be added to the front of messages of type
 #. error,
 #. e.g. "Error: required field is missing".
@@ -1696,7 +1665,6 @@ msgstr ""
 #: lms/static/js/views/fields.js
 msgid "Error"
 msgstr "خطأ"
->>>>>>> missing arabic translations
 
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
@@ -1739,7 +1707,6 @@ msgstr ""
 msgid "Title"
 msgstr "العنوان"
 
-<<<<<<< HEAD
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
@@ -1775,7 +1742,7 @@ msgstr ""
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
 msgid "Upper Roman"
 msgstr ""
-=======
+
 #: common/lib/xmodule/xmodule/js/src/annotatable/display.js
 msgid "Show Annotations"
 msgstr "إظهار الملاحظات التوضيحية"
@@ -1875,7 +1842,6 @@ msgstr[2] "%(earned)s/%(possible)s  نقاط (غير مقيمة)"
 msgstr[3] "%(earned)s/%(possible)s  نقاط (غير مقيمة)"
 msgstr[4] "%(earned)s/%(possible)s  نقاط (غير مقيمة)"
 msgstr[5] "%(earned)s/%(possible)s نقاط (دون علامة)"
->>>>>>> missing arabic translations
 
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
@@ -1919,19 +1885,17 @@ msgstr ""
 msgid "Width"
 msgstr ""
 
-<<<<<<< HEAD
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
 msgid "Words: {0}"
 msgstr ""
-=======
+
 #. Translators: This is only translated to allow for reordering of label and
 #. associated status.;
 #: common/lib/xmodule/xmodule/js/src/capa/display.js
 msgid "{label}: {status}"
 msgstr "{label}: {status}"
->>>>>>> missing arabic translations
 
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
@@ -4589,7 +4553,6 @@ msgstr "كافّة المواضيع"
 
 #: lms/static/coffee/src/calculator.js
 msgid "Open Calculator"
-<<<<<<< HEAD
 msgstr ""
 
 #: lms/static/coffee/src/calculator.js
@@ -4603,8 +4566,6 @@ msgstr ""
 #: lms/static/coffee/src/customwmd.js
 #: common/static/common/templates/discussion/new-post.underscore
 msgid "Your question or idea (required)"
-msgstr ""
-=======
 msgstr "فتح الآلة الحاسبة "
 
 #: lms/static/coffee/src/calculator.js
@@ -4618,7 +4579,6 @@ msgstr "استعراض المنشور في HTML"
 #: lms/static/coffee/src/customwmd.js
 msgid "Post body"
 msgstr "محتوى المنشور"
->>>>>>> missing arabic translations
 
 #: lms/static/js/Markdown.Editor.js
 msgid "Insert Hyperlink"
@@ -6060,7 +6020,6 @@ msgstr ""
 "يجري استحداث الروابط عند الطلب وينتهي مفعولها في غضون 5 دقائق نظرًا لحساسية "
 "معلومات الطالب."
 
-<<<<<<< HEAD
 #: lms/static/js/learner_dashboard/models/course_card_model.js
 msgid "(Self-paced) Starts {start}"
 msgstr ""
@@ -6138,8 +6097,6 @@ msgid ""
 "will be refunded the amount you paid."
 msgstr ""
 
-=======
->>>>>>> missing arabic translations
 #: lms/static/js/learner_dashboard/views/program_details_sidebar_view.js
 msgid "{type} Progress"
 msgstr ""
@@ -6826,8 +6783,6 @@ msgstr "النتيجة الكلية"
 msgid "Bookmark this page"
 msgstr ""
 
-<<<<<<< HEAD
-=======
 #: openedx/features/course_experience/static/course_experience/js/CourseGoals.js
 msgid "Thank you for setting your course goal!"
 msgstr ""
@@ -6840,7 +6795,6 @@ msgstr ""
 msgid "Show less"
 msgstr ""
 
->>>>>>> missing arabic translations
 #: openedx/features/course_search/static/course_search/js/views/search_results_view.js
 msgid "{total_results} result"
 msgid_plural "{total_results} results"
@@ -7368,7 +7322,6 @@ msgstr "خلق وحدة مُعاد تنفيذها"
 msgid "Processing Re-run Request"
 msgstr "جاري معالجة طلب إعادة التنفيذ"
 
-<<<<<<< HEAD
 #: cms/static/js/views/course_video_settings.js
 msgid "An error has occurred. Wait a few minutes, and then try again."
 msgstr ""
@@ -7410,8 +7363,6 @@ msgstr ""
 msgid "{selectedProvider} credentials saved"
 msgstr ""
 
-=======
->>>>>>> missing arabic translations
 #: cms/static/js/views/edit_chapter.js
 msgid "Upload a new PDF to “<%= name %>”"
 msgstr "حمّل ملف PDF جديد إلى “<%= name %>”."
@@ -9606,7 +9557,6 @@ msgstr ""
 msgid "Certificate Purchased"
 msgstr ""
 
-<<<<<<< HEAD
 #: lms/templates/learner_dashboard/course_card.underscore
 msgid "Change or Leave Session"
 msgstr ""
@@ -9631,8 +9581,6 @@ msgstr ""
 msgid "for {courseName}"
 msgstr ""
 
-=======
->>>>>>> missing arabic translations
 #: lms/templates/learner_dashboard/course_enroll.underscore
 msgid "View Archived Course"
 msgstr "استعراض المساق"
@@ -9661,7 +9609,6 @@ msgstr "يُفتح باب الانضمام في"
 msgid "Not Currently Available"
 msgstr "غير متاحٍ الآن"
 
-<<<<<<< HEAD
 #: lms/templates/learner_dashboard/course_entitlement.underscore
 msgid "More sessions coming soon."
 msgstr ""
@@ -9694,8 +9641,6 @@ msgstr ""
 msgid "Leave the current session and decide later"
 msgstr ""
 
-=======
->>>>>>> missing arabic translations
 #: lms/templates/learner_dashboard/empty_programs_list.underscore
 msgid "You are not enrolled in any programs yet."
 msgstr "أنت لست منضماً لأي برامج بعد."
@@ -11461,10 +11406,7 @@ msgid "Component Location ID"
 msgstr "معرف موقع العناصر"
 
 #: cms/templates/js/metadata-file-uploader-item.underscore
-<<<<<<< HEAD
 #: cms/templates/js/video-transcripts.underscore
-=======
->>>>>>> missing arabic translations
 #: cms/templates/js/video/metadata-translations-item.underscore
 msgid "Download"
 msgstr "تنزيل"

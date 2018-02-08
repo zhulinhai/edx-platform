@@ -27,11 +27,8 @@ from lms.djangoapps.certificates.models import (
 from lms.djangoapps.certificates.queue import XQueueCertInterface
 from eventtracking import tracker
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
-<<<<<<< HEAD
-=======
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
->>>>>>> ENH: course user lang filter and filter certificated via ORG
 from util.organizations_helpers import get_course_organization_id
 from xmodule.modulestore.django import modulestore
 

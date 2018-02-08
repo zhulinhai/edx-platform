@@ -96,12 +96,10 @@ class CourseModeForm(forms.ModelForm):
             )
 
     def clean_course_id(self):
-<<<<<<< HEAD
         """
         Validate the course id
         """
-        return clean_course_id(self)
-=======
+
         course_id = self.cleaned_data['course']
         try:
             course_key = CourseKey.from_string(course_id)
@@ -112,7 +110,6 @@ class CourseModeForm(forms.ModelForm):
             raise forms.ValidationError("Cannot find course with id {} in the modulestore".format(course_id))
 
         return course_key
->>>>>>> remove overwrite of course id
 
     def clean__expiration_datetime(self):
         """

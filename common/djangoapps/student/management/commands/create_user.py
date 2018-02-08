@@ -5,21 +5,10 @@ from django.contrib.auth.models import User
 from django.utils import translation
 
 from opaque_keys.edx.keys import CourseKey
-<<<<<<< HEAD
-<<<<<<< HEAD
 from six import text_type
 
-=======
-<<<<<<< HEAD
-=======
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
->>>>>>> get LANGUAGE_CODE from configuration helper
->>>>>>> get LANGUAGE_CODE from configuration helper
-=======
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
-from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
->>>>>>> merge fixes
 from student.forms import AccountCreationForm
 from student.models import CourseEnrollment, create_comments_service_user
 from student.views import _do_create_account, AccountValidationError

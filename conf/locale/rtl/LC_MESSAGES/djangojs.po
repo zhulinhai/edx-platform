@@ -26,54 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 "POT-Creation-Date: 2018-02-06 08:37+0000\n"
 "PO-Revision-Date: 2018-02-06 08:43:43.668350\n"
-=======
-=======
->>>>>>> master merge (#588)
-=======
->>>>>>> Proversity/staging (#589)
-=======
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-<<<<<<< HEAD
-"POT-Creation-Date: 2018-01-10 10:44+0000\n"
-"PO-Revision-Date: 2018-01-10 10:50:56.873858\n"
-=======
-"POT-Creation-Date: 2017-11-14 02:56-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:09.055399\n"
->>>>>>> Proversity/development (#587)
-<<<<<<< HEAD
->>>>>>> Proversity/development (#587)
-=======
-=======
-"POT-Creation-Date: 2017-11-14 02:56-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:09.055399\n"
->>>>>>> master merge (#588)
-<<<<<<< HEAD
->>>>>>> master merge (#588)
-=======
-=======
-"POT-Creation-Date: 2017-11-14 02:56-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:09.055399\n"
->>>>>>> Proversity/staging (#589)
-<<<<<<< HEAD
->>>>>>> Proversity/staging (#589)
-=======
-=======
-"POT-Creation-Date: 2017-11-14 02:56-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:09.055399\n"
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-=======
-
-"POT-Creation-Date: 2018-01-10 10:44+0000\n"
-"PO-Revision-Date: 2018-01-10 10:50:56.873858\n"
->>>>>>> UPGRADE
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -83,21 +37,6 @@ msgstr ""
 "Language: en\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master merge (#588)
-=======
->>>>>>> Proversity/staging (#589)
-=======
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-<<<<<<< HEAD
-=======
->>>>>>> UPGRADE
 #: cms/static/cms/js/main.js cms/static/js/views/active_video_upload_list.js
 #: cms/static/js/views/video_transcripts.js common/static/bundles/Import.js
 #: cms/static/cms/js/main.js cms/static/coffee/src/main.js
@@ -115,7 +54,6 @@ msgstr ""
 msgid "Studio's having trouble saving your work"
 msgstr "سفعيهخ'س اشدهرل فقخعزمث سشدهرل غخعق صخقن"
 
->>>>>>> Proversity/development (#587)
 #: cms/static/cms/js/xblock/cms.runtime.v1.js
 #: cms/static/coffee/src/views/tabs.js
 #: cms/static/coffee/src/xblock/cms.runtime.v1.js
@@ -132,7 +70,6 @@ msgstr "سفعيهخ'س اشدهرل فقخعزمث سشدهرل غخعق صخق
 msgid "Saving"
 msgstr "سشدهرل"
 
-<<<<<<< HEAD
 #: cms/static/js/certificates/views/signatory_editor.js
 #: cms/static/js/views/asset.js cms/static/js/views/list_item.js
 #: cms/static/js/views/manage_users_and_roles.js
@@ -159,7 +96,7 @@ msgstr "سشدهرل"
 #: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/forum-action-delete.underscore
 msgid "Delete"
 msgstr "يثمثفث"
-=======
+
 #. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
@@ -171,7 +108,6 @@ msgstr "يثمثفث"
 #: common/static/common/templates/discussion/alert-popup.underscore
 msgid "OK"
 msgstr "خن"
->>>>>>> Proversity/development (#587)
 
 #. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 #. Translators: this is a message from the raw HTML editor displayed in the
@@ -220,8 +156,6 @@ msgstr "خن"
 msgid "Cancel"
 msgstr "ذشرذثم"
 
-<<<<<<< HEAD
-=======
 #: cms/static/js/certificates/views/signatory_editor.js
 #: cms/static/js/views/asset.js cms/static/js/views/list_item.js
 #: cms/static/js/views/manage_users_and_roles.js
@@ -303,7 +237,6 @@ msgstr "ثققخق هوحخقفهرل ذخعقسث"
 msgid "There was an error with the upload"
 msgstr "فاثقث صشس شر ثققخق صهفا فاث عحمخشي"
 
->>>>>>> Proversity/development (#587)
 #. Translators: This is the status of an active video upload
 #: cms/static/js/models/active_video_upload.js cms/static/js/views/assets.js
 #: cms/static/js/views/video_thumbnail.js lms/static/js/views/image_field.js
@@ -2141,21 +2074,6 @@ msgstr "فعقر خر فقشرسذقهحفس"
 msgid "Turn off transcripts"
 msgstr "فعقر خبب فقشرسذقهحفس"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master merge (#588)
-=======
->>>>>>> Proversity/staging (#589)
-=======
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-<<<<<<< HEAD
-=======
->>>>>>> UPGRADE
 #: common/static/bundles/AssetsPage.bace7aaf2adb48c51598.js
 msgid "end"
 msgstr "ثري"
@@ -3436,7 +3354,6 @@ msgstr "صث اشي سخوث فقخعزمث يثمثفهرل فاهس ذخووث
 msgid "Are you sure you want to delete this response?"
 msgstr "شقث غخع سعقث غخع صشرف فخ يثمثفث فاهس قثسحخرسث?"
 
->>>>>>> Proversity/development (#587)
 #: common/static/common/js/components/utils/view_utils.js
 msgid "Required field."
 msgstr "قثضعهقثي بهثمي."
@@ -3787,15 +3704,12 @@ msgstr "حعزمهذ"
 #: lms/djangoapps/discussion/static/discussion/templates/search.underscore
 #: lms/djangoapps/support/static/support/templates/certificates.underscore
 #: lms/djangoapps/support/static/support/templates/enrollment.underscore
-<<<<<<< HEAD
 #: lms/djangoapps/support/static/support/templates/manage_user.underscore
 #: test_root/staticfiles/common/templates/components/search-field.underscore
 #: test_root/staticfiles/discussion/templates/search.underscore
 #: test_root/staticfiles/support/templates/certificates.underscore
 #: test_root/staticfiles/support/templates/enrollment.underscore
 #: test_root/staticfiles/xmodule_js/common_static/common/templates/components/search-field.underscore
-=======
->>>>>>> Proversity/development (#587)
 msgid "Search"
 msgstr "سثشقذا"
 
@@ -5125,11 +5039,8 @@ msgid "Username"
 msgstr "عسثقرشوث"
 
 #: lms/static/js/instructor_dashboard/membership.js
-<<<<<<< HEAD
 #: lms/djangoapps/support/static/support/templates/manage_user.underscore
 #: test_root/staticfiles/proctoring/templates/course_allowances.underscore
-=======
->>>>>>> Proversity/development (#587)
 msgid "Email"
 msgstr "ثوشهم"
 
@@ -6605,7 +6516,6 @@ msgstr "شذذخوحمهساوثرفس"
 msgid "Profile"
 msgstr "حقخبهمث"
 
-<<<<<<< HEAD
 #: cms/static/cms/js/main.js cms/static/js/views/active_video_upload_list.js
 #: cms/static/js/views/video_transcripts.js
 msgid ""
@@ -6618,7 +6528,7 @@ msgstr ""
 #: cms/static/cms/js/main.js
 msgid "Studio's having trouble saving your work"
 msgstr "سفعيهخ'س اشدهرل فقخعزمث سشدهرل غخعق صخقن"
-=======
+
 #: src/edx-reverification-block/edx_reverification_block/xblock/static/js/checkpoint_edit.js
 msgid "The Verification Checkpoint Name field cannot be empty."
 msgstr "فاث دثقهبهذشفهخر ذاثذنحخهرف رشوث بهثمي ذشررخف زث ثوحفغ."
@@ -6640,7 +6550,6 @@ msgstr "دثقهبهذشفهخر ذاثذنحخهرف سشدث ثققخق"
 #: src/edx-reverification-block/edx_reverification_block/xblock/static/js/checkpoint_edit.js
 msgid "An unexpected error occurred. Select Save to try again."
 msgstr "شر عرثطحثذفثي ثققخق خذذعققثي. سثمثذف سشدث فخ فقغ شلشهر."
->>>>>>> Proversity/development (#587)
 
 #: cms/static/cms/js/xblock/cms.runtime.v1.js
 #: cms/static/coffee/src/xblock/cms.runtime.v1.js
@@ -8294,26 +8203,6 @@ msgstr "حخسف شرخرغوخعسمغ"
 msgid "post anonymously to classmates"
 msgstr "حخسف شرخرغوخعسمغ فخ ذمشسسوشفثس"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-=======
->>>>>>> UPGRADE
-#: common/static/common/templates/discussion/new-post.underscore
-msgid "post privately to staff"
-msgstr "حخسف حقهدشفثمغ فخ سفشبب"
-
->>>>>>> Proversity/development (#587)
-#: common/static/common/templates/discussion/new-post.underscore
-msgid "post privately to staff"
-msgstr "حخسف حقهدشفثمغ فخ سفشبب"
-
-#: common/static/common/templates/discussion/new-post.underscore
-msgid "post privately to staff"
-msgstr "حخسف حقهدشفثمغ فخ سفشبب"
-
 #: common/static/common/templates/discussion/new-post.underscore
 msgid "post privately to staff"
 msgstr "حخسف حقهدشفثمغ فخ سفشبب"
@@ -8322,7 +8211,6 @@ msgstr "حخسف حقهدشفثمغ فخ سفشبب"
 #: common/static/common/templates/discussion/thread-response.underscore
 #: common/static/common/templates/discussion/thread.underscore
 #: lms/templates/verify_student/incourse_reverify.underscore
-<<<<<<< HEAD
 #: test_root/staticfiles/common/templates/discussion/new-post.underscore
 #: test_root/staticfiles/common/templates/discussion/thread-response.underscore
 #: test_root/staticfiles/common/templates/discussion/thread.underscore
@@ -8333,15 +8221,7 @@ msgstr "حخسف حقهدشفثمغ فخ سفشبب"
 msgid "Submit"
 msgstr "سعزوهف"
 
-=======
-msgid "Submit"
-msgstr "سعزوهف"
 
-<<<<<<< HEAD
->>>>>>> Proversity/development (#587)
->>>>>>> Proversity/development (#587)
-=======
->>>>>>> UPGRADE
 #: common/static/common/templates/discussion/post-user-display.underscore
 msgid "(Community TA)"
 msgstr "(ذخووعرهفغ فش)"
@@ -9726,11 +9606,6 @@ msgid "Forgot password?"
 msgstr "بخقلخف حشسسصخقي?"
 
 #: lms/templates/student_account/hinted_login.underscore
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 #: lms/templates/student_account/login.underscore
 #: test_root/staticfiles/templates/student_account/hinted_login.underscore
 #: test_root/staticfiles/templates/student_account/login.underscore
@@ -9738,20 +9613,6 @@ msgid "Sign in"
 msgstr "سهلر هر"
 
 #: lms/templates/student_account/hinted_login.underscore
-=======
-<<<<<<< HEAD
->>>>>>> Proversity/development (#587)
-=======
-<<<<<<< HEAD
->>>>>>> master merge (#588)
-=======
-<<<<<<< HEAD
->>>>>>> Proversity/staging (#589)
-=======
-<<<<<<< HEAD
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-=======
->>>>>>> UPGRADE
 #: test_root/staticfiles/templates/student_account/hinted_login.underscore
 #: lms/templates/student_account/login.underscore
 msgid "Sign in"

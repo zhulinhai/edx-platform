@@ -191,24 +191,7 @@
     "Add": "\u00c0dd \u2c60'\u03c3\u044f\u0454\u043c#", 
     "Add Additional Signatory": "\u00c0dd \u00c0dd\u00eft\u00ef\u00f6n\u00e4l S\u00efgn\u00e4t\u00f6r\u00fd \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442 \u03b1\u043c\u0454\u0442, \u00a2\u03c3\u03b7#",
     "Add Allowance": "\u00c0dd \u00c0ll\u00f6w\u00e4n\u00e7\u00e9 \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9#", 
-<<<<<<< HEAD
-=======
     "Add Attachment": "\u00c0dd \u00c0tt\u00e4\u00e7hm\u00e9nt \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442#", 
-<<<<<<< HEAD
-=======
->>>>>>> Proversity/development (#587)
-<<<<<<< HEAD
->>>>>>> Proversity/development (#587)
-=======
-=======
->>>>>>> master merge (#588)
->>>>>>> master merge (#588)
-=======
->>>>>>> Proversity/staging (#589)
-=======
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-=======
->>>>>>> UPGRADE
     "Add Cohort": "\u00c0dd \u00c7\u00f6h\u00f6rt \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3#", 
     "Add Component:": "\u00c0dd \u00c7\u00f6mp\u00f6n\u00e9nt: \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442#", 
     "Add Country": "\u00c0dd \u00c7\u00f6\u00fcntr\u00fd \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f #", 
@@ -1474,46 +1457,10 @@
     "Some Rights Reserved": "S\u00f6m\u00e9 R\u00efghts R\u00e9s\u00e9rv\u00e9d \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442 \u03b1\u043c\u0454\u0442, #", 
     "Some images in this post have been omitted": "S\u00f6m\u00e9 \u00efm\u00e4g\u00e9s \u00efn th\u00efs p\u00f6st h\u00e4v\u00e9 \u00df\u00e9\u00e9n \u00f6m\u00eftt\u00e9d \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442 \u03b1\u043c\u0454\u0442, \u00a2\u03c3\u03b7\u0455\u0454\u00a2\u0442\u0454\u0442\u03c5\u044f #", 
     "Something went wrong changing this enrollment. Please try again.": "S\u00f6m\u00e9th\u00efng w\u00e9nt wr\u00f6ng \u00e7h\u00e4ng\u00efng th\u00efs \u00e9nr\u00f6llm\u00e9nt. Pl\u00e9\u00e4s\u00e9 tr\u00fd \u00e4g\u00e4\u00efn. \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442 \u03b1\u043c\u0454\u0442, \u00a2\u03c3\u03b7\u0455\u0454\u00a2\u0442\u0454\u0442\u03c5\u044f \u03b1#", 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master merge (#588)
-=======
->>>>>>> Proversity/staging (#589)
-=======
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-<<<<<<< HEAD
-    "Something went wrong. Please try again later.": "S\u00f6m\u00e9th\u00efng w\u00e9nt wr\u00f6ng. Pl\u00e9\u00e4s\u00e9 tr\u00fd \u00e4g\u00e4\u00efn l\u00e4t\u00e9r. \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442 \u03b1\u043c\u0454\u0442, \u00a2\u03c3\u03b7\u0455\u0454\u00a2\u0442\u0454\u0442\u03c5\u044f #", 
-=======
-    "Sorry": "S\u00f6rr\u00fd \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455#", 
->>>>>>> Proversity/development (#587)
-<<<<<<< HEAD
->>>>>>> Proversity/development (#587)
-=======
-=======
-    "Sorry": "S\u00f6rr\u00fd \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455#", 
->>>>>>> master merge (#588)
-<<<<<<< HEAD
->>>>>>> master merge (#588)
-=======
-=======
-    "Sorry": "S\u00f6rr\u00fd \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455#", 
->>>>>>> Proversity/staging (#589)
-<<<<<<< HEAD
->>>>>>> Proversity/staging (#589)
-=======
-=======
-    "Sorry": "S\u00f6rr\u00fd \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455#", 
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-=======
     "Something went wrong. Please try again later.": "S\u00f6m\u00e9th\u00efng w\u00e9nt wr\u00f6ng. Pl\u00e9\u00e4s\u00e9 tr\u00fd \u00e4g\u00e4\u00efn l\u00e4t\u00e9r. \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442 \u03b1\u043c\u0454\u0442, \u00a2\u03c3\u03b7\u0455\u0454\u00a2\u0442\u0454\u0442\u03c5\u044f #", 
     "Sorry": "S\u00f6rr\u00fd \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455#", 
->>>>>>> UPGRADE
+    "Something went wrong. Please try again later.": "S\u00f6m\u00e9th\u00efng w\u00e9nt wr\u00f6ng. Pl\u00e9\u00e4s\u00e9 tr\u00fd \u00e4g\u00e4\u00efn l\u00e4t\u00e9r. \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442 \u03b1\u043c\u0454\u0442, \u00a2\u03c3\u03b7\u0455\u0454\u00a2\u0442\u0454\u0442\u03c5\u044f #", 
+    "Sorry": "S\u00f6rr\u00fd \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455#", 
     "Sorry, no results were found.": "S\u00f6rr\u00fd, n\u00f6 r\u00e9s\u00fclts w\u00e9r\u00e9 f\u00f6\u00fcnd. \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442 \u03b1\u043c\u0454\u0442, \u00a2\u03c3\u03b7\u0455\u0454\u00a2#", 
     "Sorry, there was an error parsing the subtitles that you uploaded. Please check the format and try again.": "S\u00f6rr\u00fd, th\u00e9r\u00e9 w\u00e4s \u00e4n \u00e9rr\u00f6r p\u00e4rs\u00efng th\u00e9 s\u00fc\u00dft\u00eftl\u00e9s th\u00e4t \u00fd\u00f6\u00fc \u00fcpl\u00f6\u00e4d\u00e9d. Pl\u00e9\u00e4s\u00e9 \u00e7h\u00e9\u00e7k th\u00e9 f\u00f6rm\u00e4t \u00e4nd tr\u00fd \u00e4g\u00e4\u00efn. \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142\u03c3\u044f \u0455\u03b9\u0442 #", 
     "Sorted by": "S\u00f6rt\u00e9d \u00df\u00fd \u2c60'\u03c3\u044f\u0454\u043c \u03b9\u03c1\u0455\u03c5\u043c \u2202\u03c3\u0142#", 

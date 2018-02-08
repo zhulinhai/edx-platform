@@ -586,9 +586,6 @@ def _save_xblock(user, xblock, data=None, children_strings=None, metadata=None, 
 
         # get course
         course = store.get_course(xblock.location.course_key)
-<<<<<<< HEAD
-        if xblock.location.block_type == 'static_tab':
-=======
 
         # ensure child release dates are kept in line with parent
         def _update_child_start_dates(block):
@@ -611,7 +608,6 @@ def _save_xblock(user, xblock, data=None, children_strings=None, metadata=None, 
 
         # for static tabs, their containing course also records their display name
         if xblock.location.category == 'static_tab':
->>>>>>> dynamically update release dates (#567)
             # find the course's reference to this tab and update the name.
             static_tab = CourseTabList.get_tab_by_slug(course.tabs, xblock.location.name)
             # only update if changed

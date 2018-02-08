@@ -105,21 +105,8 @@ def get_course_outline_block_tree(request, course_id):
 
         last_accessed_child_position = student_module_dict.get('position')
         if last_accessed_child_position and block.get('children'):
-<<<<<<< HEAD
-            block['resume_block'] = True
-=======
             block['last_accessed'] = True
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> fix bad last accessed conditional
-=======
-<<<<<<< HEAD
->>>>>>> microsites api and last accessed conditional (#395)
-            if last_accessed_child_position <= len(block['children']):
-=======
-=======
->>>>>>> merge fixes
+
             if len(block['children']) >= last_accessed_child_position:
                 last_accessed_child_block = block['children'][last_accessed_child_position - 1]
                 last_accessed_child_block['resume_block'] = True

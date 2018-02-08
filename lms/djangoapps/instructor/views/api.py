@@ -40,16 +40,11 @@ import instructor_analytics.csvs
 import instructor_analytics.distributions
 import lms.djangoapps.instructor.enrollment as enrollment
 import lms.djangoapps.instructor_task.api
-<<<<<<< HEAD
 from bulk_email.models import BulkEmailFlag, CourseEmail
 from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.certificates.models import (
     CertificateInvalidation, CertificateStatuses, CertificateWhitelist, GeneratedCertificate,
 )
-=======
-from certificates import api as certs_api
-from certificates.models import CertificateInvalidation, CertificateStatuses, CertificateWhitelist, GeneratedCertificate
->>>>>>> merge fixes
 from courseware.access import has_access
 from courseware.models import StudentModule
 from django_comment_client.utils import (

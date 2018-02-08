@@ -32,83 +32,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 "POT-Creation-Date: 2018-02-06 08:43+0000\n"
 "PO-Revision-Date: 2018-02-06 08:43:43.282230\n"
-=======
-=======
->>>>>>> Returning work we wissed due to upgrade
-=======
->>>>>>> [ci skip] reverting conftest
-=======
->>>>>>> Proversity/development (#587)
-=======
->>>>>>> master merge (#588)
-=======
->>>>>>> Proversity/staging (#589)
-=======
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-<<<<<<< HEAD
 "POT-Creation-Date: 2018-01-10 10:50+0000\n"
 "PO-Revision-Date: 2018-01-10 10:50:56.384997\n"
-=======
-"POT-Creation-Date: 2017-10-23 12:14-0400\n"
-"PO-Revision-Date: 2017-10-23 16:14:33.026562\n"
->>>>>>> upstream master merge
-<<<<<<< HEAD
->>>>>>> upstream master merge
-=======
-=======
-"POT-Creation-Date: 2017-10-31 05:35-0400\n"
-"PO-Revision-Date: 2017-10-31 09:35:17.857828\n"
->>>>>>> Returning work we wissed due to upgrade
-<<<<<<< HEAD
->>>>>>> Returning work we wissed due to upgrade
-=======
-=======
-"POT-Creation-Date: 2017-10-31 05:35-0400\n"
-"PO-Revision-Date: 2017-10-31 09:35:17.857828\n"
->>>>>>> [ci skip] reverting conftest
-<<<<<<< HEAD
->>>>>>> [ci skip] reverting conftest
-=======
-=======
 "POT-Creation-Date: 2017-11-14 03:01-0500\n"
 "PO-Revision-Date: 2017-11-14 08:01:07.831389\n"
->>>>>>> Proversity/development (#587)
-<<<<<<< HEAD
->>>>>>> Proversity/development (#587)
-=======
-=======
-"POT-Creation-Date: 2017-11-14 03:01-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:07.831389\n"
->>>>>>> master merge (#588)
-<<<<<<< HEAD
->>>>>>> master merge (#588)
-=======
-=======
-"POT-Creation-Date: 2017-11-14 03:01-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:07.831389\n"
->>>>>>> Proversity/staging (#589)
-<<<<<<< HEAD
->>>>>>> Proversity/staging (#589)
-=======
-=======
-"POT-Creation-Date: 2017-11-14 03:01-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:07.831389\n"
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-=======
-"POT-Creation-Date: 2017-11-14 03:01-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:07.831389\n"
->>>>>>> UPGRADE
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -771,11 +700,10 @@ msgstr ""
 msgid "ID photo is blurry"
 msgstr ""
 
-<<<<<<< HEAD
 #: common/djangoapps/student/views/dashboard.py
 #, python-brace-format
 msgid "The course you are looking for does not start until {date}."
-=======
+
 #: common/djangoapps/student/views.py
 msgid " and "
 msgstr ""
@@ -810,20 +738,17 @@ msgstr ""
 
 #: common/djangoapps/student/views.py
 msgid "Enrollment action is invalid"
->>>>>>> upstream master merge
 msgstr ""
 
 #: common/djangoapps/student/views/dashboard.py
 #, python-brace-format
-<<<<<<< HEAD
 msgid "The course you are looking for is closed for enrollment as of {date}."
-=======
+
 msgid ""
 "In order to sign in, you need to activate your account.<br /><br />We just "
 "sent an activation link to <strong>{email}</strong>.  If you do not receive "
 "an email, check your spam folders or <a href=\"{support_url}\">contact "
 "{platform_name} Support</a>."
->>>>>>> Proversity/development (#587)
 msgstr ""
 
 #: common/djangoapps/student/views/login.py
@@ -4687,20 +4612,12 @@ msgstr ""
 msgid "Careers"
 msgstr ""
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 #: lms/djangoapps/branding/api.py lms/djangoapps/certificates/views/webview.py
-=======
-<<<<<<< HEAD
-=======
-=======
->>>>>>> UPGRADE
 #: lms/djangoapps/branding/api.py lms/templates/static_templates/donate.html
 msgid "Donate"
 msgstr ""
 
 #: lms/djangoapps/branding/api.py
->>>>>>> [ci skip] reverting conftest
 #: themes/edx.org/lms/templates/certificates/_accomplishment-footer.html
 msgid "Terms of Service & Honor Code"
 msgstr ""
@@ -5256,49 +5173,27 @@ msgstr ""
 msgid "Automatically approve valid refund requests, without manual processing"
 msgstr ""
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 #: lms/djangoapps/commerce/utils.py lms/djangoapps/shoppingcart/models.py
 msgid "[Refund] User-Requested Refund"
 msgstr ""
 
 #: lms/djangoapps/commerce/utils.py
-=======
-<<<<<<< HEAD
 #: lms/djangoapps/commerce/signals.py lms/djangoapps/commerce/utils.py
-=======
 #: lms/djangoapps/commerce/signals.py
->>>>>>> [ci skip] reverting conftest
->>>>>>> [ci skip] reverting conftest
-=======
 #: lms/djangoapps/commerce/signals.py lms/djangoapps/commerce/utils.py
->>>>>>> UPGRADE
-=======
 #: lms/djangoapps/commerce/signals.py
->>>>>>> missing arabic translations
 #, python-brace-format
 msgid ""
 "A refund request has been initiated for {username} ({email}). To process "
 "this request, please visit the link(s) below."
 msgstr ""
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> UPGRADE
 #: lms/djangoapps/commerce/signals.py lms/djangoapps/commerce/utils.py
 #: lms/djangoapps/shoppingcart/models.py
-=======
 #: lms/djangoapps/commerce/signals.py lms/djangoapps/shoppingcart/models.py
->>>>>>> missing arabic translations
 msgid "[Refund] User-Requested Refund"
 msgstr ""
 
->>>>>>> [ci skip] reverting conftest
 #: lms/djangoapps/commerce/views.py lms/djangoapps/shoppingcart/pdf.py
 msgid "Receipt"
 msgstr ""
@@ -5936,17 +5831,14 @@ msgstr ""
 msgid "Courses loaded in the modulestore"
 msgstr ""
 
-<<<<<<< HEAD
 #: lms/djangoapps/dashboard/sysadmin.py
 #: lms/djangoapps/support/views/manage_user.py lms/templates/tracking_log.html
-=======
 #. #-#-#-#-#  django-partial.po (0.1a)  #-#-#-#-#
 #. Translators: This example email address is used as a placeholder in
 #. a field on the login form meant to hold the user's email address.
 #: lms/djangoapps/dashboard/sysadmin.py
 #: openedx/core/djangoapps/user_api/views.py lms/templates/login.html
 #: lms/templates/tracking_log.html
->>>>>>> upstream master merge
 msgid "username"
 msgstr ""
 
@@ -10822,7 +10714,6 @@ msgid ""
 "Alternative text describes an image and appears if the image is unavailable."
 msgstr ""
 
-<<<<<<< HEAD
 #: src/xblock-poll/poll/poll.py
 msgid "Whether or not to display results to the user."
 msgstr ""
@@ -11079,26 +10970,10 @@ msgstr ""
 msgid "Question"
 msgstr ""
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 #: cms/djangoapps/api/v1/serializers/course_runs.py
 msgid "Course team user does not exist"
 msgstr ""
 
-=======
-=======
->>>>>>> Proversity/development (#587)
->>>>>>> Proversity/development (#587)
-=======
->>>>>>> master merge (#588)
-=======
->>>>>>> Proversity/staging (#589)
-=======
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-=======
->>>>>>> UPGRADE
-=======
->>>>>>> missing arabic translations
 #: cms/djangoapps/contentstore/course_group_config.py
 msgid ""
 "The groups in this configuration can be mapped to cohorts in the Instructor "
@@ -11809,17 +11684,14 @@ msgstr ""
 msgid "Course Number:"
 msgstr ""
 
-<<<<<<< HEAD
 #: cms/templates/index.html
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
 msgid "Course Run:"
 msgstr ""
 
 #: cms/templates/index.html lms/templates/sysadmin_dashboard.html
-=======
 #: cms/templates/index.html lms/templates/navigation.html
 #: lms/templates/sysadmin_dashboard.html
->>>>>>> upstream master merge
 #: lms/templates/sysadmin_dashboard_gitlogs.html
 #: lms/templates/courseware/courses.html
 #: lms/templates/navigation/navbar-authenticated.html
@@ -15474,7 +15346,6 @@ msgid "Related Programs"
 msgstr ""
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
-<<<<<<< HEAD
 msgid "Buy all remaining courses in this program and save 10%"
 msgstr ""
 
@@ -15502,8 +15373,6 @@ msgid ""
 msgstr ""
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
-=======
->>>>>>> missing arabic translations
 msgid "Verification not yet complete."
 msgstr ""
 
@@ -16806,24 +16675,14 @@ msgid "Course Name:"
 msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
-<<<<<<< HEAD
-=======
 msgid "Course Display Name:"
 msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> [ci skip] reverting conftest
-=======
->>>>>>> UPGRADE
 msgid "Course Start Date:"
 msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
-=======
->>>>>>> missing arabic translations
 msgid "Course End Date:"
 msgstr ""
 
@@ -19283,7 +19142,6 @@ msgstr ""
 msgid "Important Course Dates"
 msgstr ""
 
-<<<<<<< HEAD
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
 msgid "Goal: "
 msgstr ""
@@ -19388,8 +19246,6 @@ msgstr ""
 msgid "Upgrade ({course_price})"
 msgstr ""
 
-=======
->>>>>>> missing arabic translations
 #: openedx/features/course_experience/templates/course_experience/course-dates-fragment.html
 msgid "Today is {date}"
 msgstr ""

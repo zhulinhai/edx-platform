@@ -171,11 +171,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: edx-platform\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-<<<<<<< HEAD
 "POT-Creation-Date: 2018-01-25 11:41+0000\n"
-=======
-"POT-Creation-Date: 2017-09-28 16:57+0000\n"
->>>>>>> missing arabic translations
 "PO-Revision-Date: 2017-10-19 08:33+0000\n"
 "Last-Translator: Sahbi Ben Gdaim <sahbi.g@gmail.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/open-edx/edx-platform/language/ar/)\n"
@@ -3609,7 +3605,6 @@ msgstr ""
 msgid "General"
 msgstr "عام"
 
-<<<<<<< HEAD
 #: common/lib/xmodule/xmodule/graders.py
 #, python-brace-format
 msgid "{assignment_type} = {weighted_percent:.2%} of a possible {weight:.2%}"
@@ -3643,8 +3638,7 @@ msgstr ""
 msgid "{short_label} Avg"
 msgstr ""
 
-=======
->>>>>>> missing arabic translations
+
 #: common/lib/xmodule/xmodule/html_module.py
 msgid "Text"
 msgstr "نصّ"
@@ -4512,7 +4506,6 @@ msgid ""
 "requirements."
 msgstr "هذا القسم الفرعي متاح للمتعلمين عند استيفائهم للشروط المطلوبة مسبقًا."
 
-<<<<<<< HEAD
 #: common/lib/xmodule/xmodule/seq_module.py
 msgid ""
 "This section is a prerequisite. You must complete this section in order to "
@@ -4524,8 +4517,6 @@ msgid ""
 "A list summarizing what students should look forward to in this section."
 msgstr ""
 
-=======
->>>>>>> missing arabic translations
 #: common/lib/xmodule/xmodule/split_test_module.py
 #, python-brace-format
 msgid "Group ID {group_id}"
@@ -5231,15 +5222,12 @@ msgstr "معلومات الاتّصال"
 msgid "Careers"
 msgstr "الوظائف"
 
-<<<<<<< HEAD
 #: lms/djangoapps/branding/api.py lms/djangoapps/certificates/views/webview.py
-=======
 #: lms/djangoapps/branding/api.py lms/templates/static_templates/donate.html
 msgid "Donate"
 msgstr "تبرَّع"
 
 #: lms/djangoapps/branding/api.py
->>>>>>> missing arabic translations
 msgid "Terms of Service & Honor Code"
 msgstr "شروط الخدمة وميثاق الشرف الأكاديمي"
 
@@ -5894,7 +5882,6 @@ msgstr ""
 "إذا لم يظهر مساقك على لوحة معلوماتك، يُرجى الاتصال بـ "
 "{payment_support_link}."
 
-<<<<<<< HEAD
 #: lms/djangoapps/completion/api/v1/views.py
 msgid ""
 "BlockCompletion.objects.submit_batch_completion should not be called when "
@@ -5928,8 +5915,6 @@ msgstr ""
 msgid "{value} must be between 0.0 and 1.0"
 msgstr ""
 
-=======
->>>>>>> missing arabic translations
 #: lms/djangoapps/course_goals/models.py
 msgid "Earn a certificate."
 msgstr ""
@@ -9131,7 +9116,6 @@ msgstr "لم يُحدَّد عنوان بريد إلكتروني."
 msgid "Create Account"
 msgstr ""
 
-<<<<<<< HEAD
 #. Translators: This label appears above a field on the registration form
 #. which allows the user to input the State/Province/Region in which they
 #. live.
@@ -9161,7 +9145,7 @@ msgstr ""
 #: openedx/core/djangoapps/user_api/api.py lms/templates/signup_modal.html
 msgid "Mailing address"
 msgstr "العنوان البريدي"
-=======
+
 #: lms/templates/peer_grading/peer_grading_problem.html
 msgid "Continue"
 msgstr "استمر "
@@ -9173,7 +9157,6 @@ msgstr "عرض وإعادة إعداد الشهادات."
 #: lms/djangoapps/support/views/index.py lms/templates/support/refund.html
 msgid "Manual Refund"
 msgstr "استرداد المبلغ يدويًّا"
->>>>>>> missing arabic translations
 
 #: lms/djangoapps/support/views/index.py
 msgid "Track refunds issued directly through CyberSource."
@@ -11690,7 +11673,6 @@ msgstr ""
 msgid "Access restricted to: {list_of_groups}"
 msgstr ""
 
-<<<<<<< HEAD
 #: cms/djangoapps/contentstore/views/transcript_settings.py
 msgid "The information you entered is incorrect."
 msgstr ""
@@ -11715,8 +11697,6 @@ msgid ""
 "file."
 msgstr ""
 
-=======
->>>>>>> missing arabic translations
 #: cms/djangoapps/contentstore/views/transcripts_ajax.py
 msgid "Incoming video data is empty."
 msgstr "بيانات الفيديو الوارد فارغة."
@@ -15068,7 +15048,6 @@ msgstr "لاحظها"
 msgid "Supported by the following organizations"
 msgstr "مدعومة من المؤسسات التالية"
 
-<<<<<<< HEAD
 #: lms/templates/certificates/_accomplishment-rendering.html
 msgid "Awarded to:"
 msgstr ""
@@ -15079,8 +15058,6 @@ msgid ""
 "Certificates help documentation{link_end}."
 msgstr ""
 
-=======
->>>>>>> missing arabic translations
 #: lms/templates/certificates/invalid.html
 msgid "Cannot Find Certificate"
 msgstr "عذرًا، لم نتمكّن من إيجاد الشهادة"
@@ -16061,7 +16038,6 @@ msgid "Starts - {date}"
 msgstr "يبدأ  - {date}"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
-<<<<<<< HEAD
 msgid "You must select a session by {expiration_date} to access the course."
 msgstr ""
 
@@ -16082,8 +16058,6 @@ msgid "You can change sessions until {entitlement_expiration_date}."
 msgstr ""
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
-=======
->>>>>>> missing arabic translations
 msgid "View Archived Course"
 msgstr "استعراض المساق"
 
@@ -16125,7 +16099,6 @@ msgid "Related Programs"
 msgstr "البرامج ذات الصلة"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
-<<<<<<< HEAD
 msgid "Buy all remaining courses in this program and save 10%"
 msgstr ""
 
@@ -16157,8 +16130,6 @@ msgstr ""
 "هذا المساق."
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
-=======
->>>>>>> missing arabic translations
 msgid "Verification not yet complete."
 msgstr "لم يكتمل التحقّق بعد."
 
@@ -17637,13 +17608,8 @@ msgid "Course Name:"
 msgstr "اسم المساق:"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
-<<<<<<< HEAD
-msgid "Course Start Date:"
-msgstr "تاريخ بداية المساق:"
-=======
 msgid "Course Display Name:"
 msgstr "الاسم الظاهر للمساق:"
->>>>>>> missing arabic translations
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
 msgid "Course End Date:"
@@ -20430,7 +20396,6 @@ msgstr ""
 msgid "How it works"
 msgstr ""
 
-<<<<<<< HEAD
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html
 msgid "Pay the Verified Certificate upgrade fee"
 msgstr ""
@@ -20472,7 +20437,8 @@ msgstr ""
 
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html
 msgid "Upgrade ({course_price})"
-=======
+msgstr ""
+
 #: openedx/features/course_experience/templates/course_experience/course-messages-fragment.html
 msgid "Course message author"
 msgstr ""
@@ -20483,7 +20449,6 @@ msgstr ""
 
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
 msgid "This is your last visited course section."
->>>>>>> missing arabic translations
 msgstr ""
 
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html

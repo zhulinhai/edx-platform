@@ -13,12 +13,8 @@ from django.db.models import Q
 from django.dispatch import receiver
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-<<<<<<< HEAD
-=======
-from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
->>>>>>> [ci skip] ENH: usage of site_configuration for settings
 from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.django.models import CourseKeyField
 

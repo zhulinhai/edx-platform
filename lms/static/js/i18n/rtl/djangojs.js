@@ -191,24 +191,7 @@
     "Add": "\u0634\u064a\u064a", 
     "Add Additional Signatory": "\u0634\u064a\u064a \u0634\u064a\u064a\u0647\u0641\u0647\u062e\u0631\u0634\u0645 \u0633\u0647\u0644\u0631\u0634\u0641\u062e\u0642\u063a", 
     "Add Allowance": "\u0634\u064a\u064a \u0634\u0645\u0645\u062e\u0635\u0634\u0631\u0630\u062b", 
-<<<<<<< HEAD
-=======
     "Add Attachment": "\u0634\u064a\u064a \u0634\u0641\u0641\u0634\u0630\u0627\u0648\u062b\u0631\u0641", 
-<<<<<<< HEAD
-=======
->>>>>>> Proversity/development (#587)
-<<<<<<< HEAD
->>>>>>> Proversity/development (#587)
-=======
-=======
->>>>>>> master merge (#588)
->>>>>>> master merge (#588)
-=======
->>>>>>> Proversity/staging (#589)
-=======
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-=======
->>>>>>> UPGRADE
     "Add Cohort": "\u0634\u064a\u064a \u0630\u062e\u0627\u062e\u0642\u0641", 
     "Add Component:": "\u0634\u064a\u064a \u0630\u062e\u0648\u062d\u062e\u0631\u062b\u0631\u0641:", 
     "Add Country": "\u0634\u064a\u064a \u0630\u062e\u0639\u0631\u0641\u0642\u063a", 
@@ -1474,46 +1457,8 @@
     "Some Rights Reserved": "\u0633\u062e\u0648\u062b \u0642\u0647\u0644\u0627\u0641\u0633 \u0642\u062b\u0633\u062b\u0642\u062f\u062b\u064a", 
     "Some images in this post have been omitted": "\u0633\u062e\u0648\u062b \u0647\u0648\u0634\u0644\u062b\u0633 \u0647\u0631 \u0641\u0627\u0647\u0633 \u062d\u062e\u0633\u0641 \u0627\u0634\u062f\u062b \u0632\u062b\u062b\u0631 \u062e\u0648\u0647\u0641\u0641\u062b\u064a", 
     "Something went wrong changing this enrollment. Please try again.": "\u0633\u062e\u0648\u062b\u0641\u0627\u0647\u0631\u0644 \u0635\u062b\u0631\u0641 \u0635\u0642\u062e\u0631\u0644 \u0630\u0627\u0634\u0631\u0644\u0647\u0631\u0644 \u0641\u0627\u0647\u0633 \u062b\u0631\u0642\u062e\u0645\u0645\u0648\u062b\u0631\u0641. \u062d\u0645\u062b\u0634\u0633\u062b \u0641\u0642\u063a \u0634\u0644\u0634\u0647\u0631.", 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> master merge (#588)
-=======
->>>>>>> Proversity/staging (#589)
-=======
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-<<<<<<< HEAD
-    "Something went wrong. Please try again later.": "\u0633\u062e\u0648\u062b\u0641\u0627\u0647\u0631\u0644 \u0635\u062b\u0631\u0641 \u0635\u0642\u062e\u0631\u0644. \u062d\u0645\u062b\u0634\u0633\u062b \u0641\u0642\u063a \u0634\u0644\u0634\u0647\u0631 \u0645\u0634\u0641\u062b\u0642.", 
-=======
-    "Sorry": "\u0633\u062e\u0642\u0642\u063a", 
->>>>>>> Proversity/development (#587)
-<<<<<<< HEAD
->>>>>>> Proversity/development (#587)
-=======
-=======
-    "Sorry": "\u0633\u062e\u0642\u0642\u063a", 
->>>>>>> master merge (#588)
-<<<<<<< HEAD
->>>>>>> master merge (#588)
-=======
-=======
-    "Sorry": "\u0633\u062e\u0642\u0642\u063a", 
->>>>>>> Proversity/staging (#589)
-<<<<<<< HEAD
->>>>>>> Proversity/staging (#589)
-=======
-=======
-    "Sorry": "\u0633\u062e\u0642\u0642\u063a", 
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-=======
     "Something went wrong. Please try again later.": "\u0633\u062e\u0648\u062b\u0641\u0627\u0647\u0631\u0644 \u0635\u062b\u0631\u0641 \u0635\u0642\u062e\u0631\u0644. \u062d\u0645\u062b\u0634\u0633\u062b \u0641\u0642\u063a \u0634\u0644\u0634\u0647\u0631 \u0645\u0634\u0641\u062b\u0642.", 
     "Sorry": "\u0633\u062e\u0642\u0642\u063a", 
->>>>>>> UPGRADE
     "Sorry, no results were found.": "\u0633\u062e\u0642\u0642\u063a, \u0631\u062e \u0642\u062b\u0633\u0639\u0645\u0641\u0633 \u0635\u062b\u0642\u062b \u0628\u062e\u0639\u0631\u064a.", 
     "Sorry, there was an error parsing the subtitles that you uploaded. Please check the format and try again.": "\u0633\u062e\u0642\u0642\u063a, \u0641\u0627\u062b\u0642\u062b \u0635\u0634\u0633 \u0634\u0631 \u062b\u0642\u0642\u062e\u0642 \u062d\u0634\u0642\u0633\u0647\u0631\u0644 \u0641\u0627\u062b \u0633\u0639\u0632\u0641\u0647\u0641\u0645\u062b\u0633 \u0641\u0627\u0634\u0641 \u063a\u062e\u0639 \u0639\u062d\u0645\u062e\u0634\u064a\u062b\u064a. \u062d\u0645\u062b\u0634\u0633\u062b \u0630\u0627\u062b\u0630\u0646 \u0641\u0627\u062b \u0628\u062e\u0642\u0648\u0634\u0641 \u0634\u0631\u064a \u0641\u0642\u063a \u0634\u0644\u0634\u0647\u0631.", 
     "Sorted by": "\u0633\u062e\u0642\u0641\u062b\u064a \u0632\u063a", 

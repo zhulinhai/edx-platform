@@ -118,52 +118,7 @@ def _assets_json(request, course_key):
     '''
     request_options = _parse_request_to_dictionary(request)
 
-<<<<<<< HEAD
     filter_parameters = {}
-=======
-    filter_parameters = None
-<<<<<<< HEAD
-=======
-    """
-    requested_page = int(request.GET.get('page', 0))
-    requested_page_size = int(request.GET.get('page_size', 50))
-    requested_sort = request.GET.get('sort', 'date_added')
-    requested_filter = request.GET.get('asset_type', '')
-    filter_criteria = request.GET.get('filter_criteria', '')
-
-    requested_file_types = settings.FILES_AND_UPLOAD_TYPE_FILTERS.get(
-        requested_filter, None)
-
-    filter_params = {}
-    if requested_filter:
-        if requested_filter == 'OTHER':
-            all_filters = settings.FILES_AND_UPLOAD_TYPE_FILTERS
-            where = []
-            for all_filter in all_filters:
-                extension_filters = all_filters[all_filter]
-                where.extend(
-                    ["JSON.stringify(this.contentType).toUpperCase() != JSON.stringify('{}').toUpperCase()".format(
-                        extension_filter) for extension_filter in extension_filters])
-            filter_params = {
-                "$where": ' && '.join(where),
-            }
-        else:
-            where = ["JSON.stringify(this.contentType).toUpperCase() == JSON.stringify('{}').toUpperCase()".format(
-                req_filter) for req_filter in requested_file_types]
-            filter_params = {
-                "$where": ' || '.join(where),
-            }
-
-    if len(filter_criteria) > 0:
-        filter_params.update({'displayname': { '$regex': filter_criteria, '$options': 'i' }})
-
-    sort_direction = DESCENDING
-    if request.GET.get('direction', '').lower() == 'asc':
-        sort_direction = ASCENDING
->>>>>>> add filter to assets library in studio
->>>>>>> add filter to assets library in studio
-=======
->>>>>>> upstream master merge
 
     if request_options['requested_asset_type']:
         filters_are_invalid_error = _get_error_if_invalid_parameters(request_options['requested_asset_type'])

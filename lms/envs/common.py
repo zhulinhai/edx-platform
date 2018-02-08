@@ -435,51 +435,15 @@ FEATURES = {
 
     # Whether HTML XBlocks/XModules return HTML content with the Course Blocks API student_view_data
     'ENABLE_HTML_XBLOCK_STUDENT_VIEW_DATA': False,
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     # Whether to send an email for failed password reset attempts or not. This is mainly useful for notifying users
     # that they don't have an account associated with email addresses they believe they've registered with.
     'ENABLE_PASSWORD_RESET_FAILURE_EMAIL': False,
-=======
-=======
-=======
-=======
-    # Enable footer banner for cookie consent.
-    # See https://cookieconsent.insites.com/ for more.
-    'ENABLE_COOKIE_CONSENT': False,
->>>>>>> add cookie consent popup banner feature
->>>>>>> add cookie consent popup banner feature
-<<<<<<< HEAD
->>>>>>> add cookie consent popup banner feature
-<<<<<<< HEAD
->>>>>>> add cookie consent popup banner feature
-=======
-=======
-=======
-=======
->>>>>>> UPGRADE
-    
-    # Enable footer banner for cookie consent.
-    # See https://cookieconsent.insites.com/ for more.
-    'ENABLE_COOKIE_CONSENT': False,
-<<<<<<< HEAD
->>>>>>> merge fixes
->>>>>>> merge fixes
-<<<<<<< HEAD
->>>>>>> merge fixes
-=======
-=======
 
     # Enable footer banner for cookie consent.
     # See https://cookieconsent.insites.com/ for more.
     'ENABLE_COOKIE_CONSENT': False,
 
->>>>>>> upstream master merge
->>>>>>> upstream master merge
-=======
-    
->>>>>>> UPGRADE
 }
 
 # Settings for the course reviews tool template and identification key, set either to None to disable course reviews
@@ -3079,28 +3043,6 @@ COURSE_CATALOG_VISIBILITY_PERMISSION = 'see_in_catalog'
 # visible. We default this to the legacy permission 'see_exists'.
 COURSE_ABOUT_VISIBILITY_PERMISSION = 'see_about_page'
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-DEFAULT_COURSE_VISIBILITY_IN_CATALOG = "both"
-=======
-<<<<<<< HEAD
->>>>>>> change catalog visibility default to none
-=======
-<<<<<<< HEAD
->>>>>>> change catalog visibility default to none
-=======
-<<<<<<< HEAD
->>>>>>> set default course visibility in catalog
-=======
-<<<<<<< HEAD
->>>>>>> upstream master merge
-=======
->>>>>>> UPGRADE
-DEFAULT_MOBILE_AVAILABLE = True
-
 DEFAULT_COURSE_VISIBILITY_IN_CATALOG = "none"
 
 DEFAULT_MOBILE_AVAILABLE = False
@@ -3576,52 +3518,16 @@ EDX_PLATFORM_REVISION = 'unknown'
 # (0.0 = 0%, 1.0 = 100%)
 COMPLETION_VIDEO_COMPLETE_PERCENTAGE = 0.95
 
-############### Settings for Django Rate limit #####################
-RATELIMIT_ENABLE = True
-<<<<<<< HEAD
-RATELIMIT_RATE = '120/m'
-
 ############### Settings for django-fernet-fields ##################
 FERNET_KEYS = [
     'DUMMY KEY CHANGE BEFORE GOING TO PRODUCTION',
 ]
 
-############## Plugin Django Apps #########################
-
-from openedx.core.djangoapps.plugins import plugin_apps, plugin_settings, constants as plugin_constants
-INSTALLED_APPS.extend(plugin_apps.get_apps(plugin_constants.ProjectType.LMS))
-plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.LMS, plugin_constants.SettingsType.COMMON)
-=======
-RATELIMIT_RATE = '30/m'
-
-
-############## Plugin Django Apps #########################
-
-from openedx.core.djangolib.django_plugins import DjangoAppRegistry, ProjectType, SettingsType
-INSTALLED_APPS.extend(DjangoAppRegistry.get_plugin_apps(ProjectType.LMS))
-DjangoAppRegistry.add_plugin_settings(__name__, ProjectType.LMS, SettingsType.COMMON)
-
 ############## Settings for Bibblio ####################################
 
 BIBBLIO_CLIENT_ID = 'bibblio_client_id'
 BIBBLIO_CLIENT_SECRET = 'bibblio_client_secret'
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-EDX_PLATFORM_REVISION = os.environ.get('EDX_PLATFORM_REVISION')
-if not EDX_PLATFORM_REVISION:
-    try:
-        # Get git revision of the current file
-        EDX_PLATFORM_REVISION = dealer.git.Backend(path=REPO_ROOT).revision
-    except TypeError:
-        # Not a git repository
-        EDX_PLATFORM_REVISION = 'unknown'
->>>>>>> Proversity/subscription (#614)
->>>>>>> Proversity/subscription (#614)
-<<<<<<< HEAD
->>>>>>> Proversity/subscription (#614)
-=======
-=======
 ############### Settings for Django Rate limit #####################
 RATELIMIT_ENABLE = True
 RATELIMIT_RATE = '30/m'
@@ -3631,7 +3537,3 @@ RATELIMIT_RATE = '30/m'
 from openedx.core.djangolib.django_plugins import DjangoAppRegistry, ProjectType, SettingsType
 INSTALLED_APPS.extend(DjangoAppRegistry.get_plugin_apps(ProjectType.LMS))
 DjangoAppRegistry.add_plugin_settings(__name__, ProjectType.LMS, SettingsType.COMMON)
->>>>>>> UPGRADE
->>>>>>> UPGRADE
-=======
->>>>>>> upstream master merge fix

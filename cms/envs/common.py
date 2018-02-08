@@ -117,14 +117,6 @@ from lms.envs.common import (
     PASSWORD_RESET_SUPPORT_LINK,
     ACTIVATION_EMAIL_SUPPORT_LINK,
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    DEFAULT_COURSE_VISIBILITY_IN_CATALOG,
-=======
-<<<<<<< HEAD
->>>>>>> change catalog visibility default to none
-=======
->>>>>>> UPGRADE
     DEFAULT_MOBILE_AVAILABLE,
 
     DEFAULT_COURSE_VISIBILITY_IN_CATALOG,

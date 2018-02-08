@@ -83,8 +83,6 @@
                                     url: 'accomplishments'
                                 })
                             }
-<<<<<<< HEAD
-                        ];
 
                         // Build the accomplishments Tab and fill with data
                         this.options.badgeListContainer.collection.fetch().done(function() {
@@ -104,7 +102,7 @@
                             $wrapperProfileBioElement,
                             HtmlUtils.HTML($tabbedViewElement)
                         );
-=======
+
                         } else if (accomplishmentsShared) {
                             tabs = [
                                 {view: this.sectionTwoView, title: gettext('About Me'), url: 'about_me'},
@@ -115,7 +113,6 @@
                                 }
                             ];
                         }
->>>>>>> ENH: view linked in profile
 
                         if (tabs && tabs.length > 0) {
                             // Build the accomplishments Tab and fill with data

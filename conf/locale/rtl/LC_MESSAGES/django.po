@@ -32,53 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 "POT-Creation-Date: 2018-02-06 08:43+0000\n"
 "PO-Revision-Date: 2018-02-06 08:43:43.282230\n"
-=======
-=======
->>>>>>> master merge (#588)
-=======
->>>>>>> Proversity/staging (#589)
-=======
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-<<<<<<< HEAD
-"POT-Creation-Date: 2018-01-10 10:50+0000\n"
-"PO-Revision-Date: 2018-01-10 10:50:56.384997\n"
-=======
-"POT-Creation-Date: 2017-11-14 03:01-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:07.831389\n"
->>>>>>> Proversity/development (#587)
-<<<<<<< HEAD
->>>>>>> Proversity/development (#587)
-=======
-=======
-"POT-Creation-Date: 2017-11-14 03:01-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:07.831389\n"
->>>>>>> master merge (#588)
-<<<<<<< HEAD
->>>>>>> master merge (#588)
-=======
-=======
-"POT-Creation-Date: 2017-11-14 03:01-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:07.831389\n"
->>>>>>> Proversity/staging (#589)
-<<<<<<< HEAD
->>>>>>> Proversity/staging (#589)
-=======
-=======
-"POT-Creation-Date: 2017-11-14 03:01-0500\n"
-"PO-Revision-Date: 2017-11-14 08:01:07.831389\n"
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
->>>>>>> ENH: bulk grades api to be granularENH: course order byADD: harambee custom backend SSOFIX: show correct course info on instructor dashboardFIX: course re-runFIX: course date settings in studio. section release dates are no reflected and updated from the ADD: missing welsh translationsFIX: invalid gettext call for translating jsUPD: FIX: badgr xblock css
-=======
-"POT-Creation-Date: 2018-01-10 10:50+0000\n"
-"PO-Revision-Date: 2018-01-10 10:50:56.384997\n"
->>>>>>> UPGRADE
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -788,12 +743,12 @@ msgstr "مثشقرثق حاخفخ رخف حقخدهيثي"
 msgid "ID photo is blurry"
 msgstr "هي حاخفخ هس زمعققغ"
 
-<<<<<<< HEAD
+
 #: common/djangoapps/student/views/dashboard.py
 #, python-brace-format
 msgid "The course you are looking for does not start until {date}."
 msgstr "فاث ذخعقسث غخع شقث مخخنهرل بخق يخثس رخف سفشقف عرفهم {date}."
-=======
+
 #: common/djangoapps/student/views.py
 msgid " and "
 msgstr " شري "
@@ -829,14 +784,12 @@ msgstr "غخعق ذثقفهبهذشفث حقثدثرفس غخع بقخو عرث�
 #: common/djangoapps/student/views.py
 msgid "Enrollment action is invalid"
 msgstr "ثرقخمموثرف شذفهخر هس هردشمهي"
->>>>>>> Proversity/development (#587)
 
 #: common/djangoapps/student/views/dashboard.py
 #, python-brace-format
-<<<<<<< HEAD
 msgid "The course you are looking for is closed for enrollment as of {date}."
 msgstr "فاث ذخعقسث غخع شقث مخخنهرل بخق هس ذمخسثي بخق ثرقخمموثرف شس خب {date}."
-=======
+
 msgid ""
 "In order to sign in, you need to activate your account.<br /><br />We just "
 "sent an activation link to <strong>{email}</strong>.  If you do not receive "
@@ -847,7 +800,6 @@ msgstr ""
 "سثرف شر شذفهدشفهخر مهرن فخ <strong>{email}</strong>.  هب غخع يخ رخف قثذثهدث "
 "شر ثوشهم, ذاثذن غخعق سحشو بخميثقس خق <a href=\"{support_url}\">ذخرفشذف "
 "{platform_name} سعححخقف</a>."
->>>>>>> Proversity/development (#587)
 
 #: common/djangoapps/student/views/login.py
 #, python-brace-format
@@ -6647,17 +6599,14 @@ msgstr "فخفشم رعوزثق خب عسثقس"
 msgid "Courses loaded in the modulestore"
 msgstr "ذخعقسثس مخشيثي هر فاث وخيعمثسفخقث"
 
-<<<<<<< HEAD
 #: lms/djangoapps/dashboard/sysadmin.py
 #: lms/djangoapps/support/views/manage_user.py lms/templates/tracking_log.html
-=======
 #. #-#-#-#-#  django-partial.po (0.1a)  #-#-#-#-#
 #. Translators: This example email address is used as a placeholder in
 #. a field on the login form meant to hold the user's email address.
 #: lms/djangoapps/dashboard/sysadmin.py
 #: openedx/core/djangoapps/user_api/views.py lms/templates/login.html
 #: lms/templates/tracking_log.html
->>>>>>> Proversity/development (#587)
 msgid "username"
 msgstr "عسثقرشوث"
 
@@ -12213,11 +12162,10 @@ msgid ""
 msgstr ""
 "شمفثقرشفهدث فثطف يثسذقهزثس شر هوشلث شري شححثشقس هب فاث هوشلث هس عرشدشهمشزمث."
 
-<<<<<<< HEAD
 #: cms/djangoapps/api/v1/serializers/course_runs.py
 msgid "Course team user does not exist"
 msgstr "ذخعقسث فثشو عسثق يخثس رخف ثطهسف"
-=======
+
 #: src/edx-jsme/edx_jsme/__init__.py
 msgid "Must provide an answer."
 msgstr "وعسف حقخدهيث شر شرسصثق."
@@ -12571,7 +12519,6 @@ msgid ""
 "Alternative text describes an image and appears if the image is unavailable."
 msgstr ""
 "شمفثقرشفهدث فثطف يثسذقهزثس شر هوشلث شري شححثشقس هب فاث هوشلث هس عرشدشهمشزمث."
->>>>>>> master merge (#588)
 
 #: src/edx-jsme/edx_jsme/__init__.py
 msgid "Must provide an answer."
@@ -14059,17 +14006,14 @@ msgstr "خقلشرهظشفهخر:"
 msgid "Course Number:"
 msgstr "ذخعقسث رعوزثق:"
 
-<<<<<<< HEAD
 #: cms/templates/index.html
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
 msgid "Course Run:"
 msgstr "ذخعقسث قعر:"
 
 #: cms/templates/index.html lms/templates/sysadmin_dashboard.html
-=======
 #: cms/templates/index.html lms/templates/navigation.html
 #: lms/templates/sysadmin_dashboard.html
->>>>>>> Proversity/development (#587)
 #: lms/templates/sysadmin_dashboard_gitlogs.html
 #: lms/templates/courseware/courses.html
 #: lms/templates/header/navbar-authenticated.html
