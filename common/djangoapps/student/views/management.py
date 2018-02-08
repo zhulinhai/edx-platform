@@ -187,6 +187,21 @@ def index(request, extra_context=None, user=AnonymousUser()):
     # allow for theme override of the courses list
     context['courses_list'] = theming_helpers.get_template_path('courses_list.html')
 
+    carousel_courses = []
+    carousel_courses.append([])
+    current_index = 0
+    limit = 4
+
+    for course in courses:
+        if len(carousel_courses[current_index]) < limit:
+            carousel_courses[current_index].append(course)
+        else:
+            carousel_courses.append([])
+            current_index += 1
+            carousel_courses[current_index].append(course)
+
+    context["carousel_courses"] = carousel_courses
+
     # Insert additional context for use in the template
     context.update(extra_context)
 
