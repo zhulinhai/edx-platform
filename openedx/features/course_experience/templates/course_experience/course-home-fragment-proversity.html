@@ -5,7 +5,6 @@
 
 <%!
 import json
-import waffle
 
 from django.conf import settings
 from django.utils.translation import ugettext as _
@@ -16,7 +15,7 @@ from django_comment_client.permissions import has_permission
 from openedx.core.djangolib.js_utils import dump_js_escaped_json, js_escaped_string
 from openedx.core.djangolib.markup import HTML
 from openedx.features.course_experience import UNIFIED_COURSE_TAB_FLAG, SHOW_REVIEWS_TOOL_FLAG
-
+from openedx.features.learner_analytics import ENABLE_DASHBOARD_TAB
 from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
 %>
 
@@ -27,6 +26,14 @@ profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
 %>
 
 <section role="courseware">
+
+	% if ENABLE_DASHBOARD_TAB.is_enabled(course_key):
+        ${static.renderReact(
+          component="UpsellExperimentModal",
+          id="upsell-modal",
+          props={},
+        )}
+    % endif
 
   <div class="container no-border">
 
@@ -92,3 +99,17 @@ profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
     $("link[href*='/static/css/lms-main-v1']").remove();
   });
 </script>
+<%static:webpack entry="CourseHome">
+    new CourseHome({
+        courseRunKey: "${course_key | n, js_escaped_string}",
+        resumeCourseLink: ".action-resume-course",
+        courseToolLink: ".course-tool-link",
+        goalApiUrl: "${goal_api_url | n, js_escaped_string}",
+        username: "${username | n, js_escaped_string}",
+        courseId: "${course.id | n, js_escaped_string}",
+    });
+</%static:webpack>
+
+<%static:webpack entry="Enrollment">
+    new CourseEnrollment('.enroll-btn', '${course_key | n, js_escaped_string}');
+</%static:webpack>

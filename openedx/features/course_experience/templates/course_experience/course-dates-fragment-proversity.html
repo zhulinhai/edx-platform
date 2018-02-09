@@ -12,21 +12,9 @@ from django.utils.translation import ugettext as _
 
 % for course_date in course_date_blocks:
 
-    % if course_date.title:
-        % if course_date.title == 'current_datetime':
-            <p class="localized-datetime" data-datetime="${course_date.date}" data-string="${_(u'Today is {date}')}" data-timezone="${user_timezone}" data-language="${user_language}"></p>
-        % else:
-            <p>${course_date.title}</p>
-        % endif
-    % endif
-    % if course_date.date and course_date.title != 'current_datetime':
-        <p class="localized-datetime" data-format="shortDate" data-datetime="${course_date.date}" data-timezone="${user_timezone}" data-language="${user_language}" data-string="${_(course_date.relative_datestring)}"></p>
-    % endif
-    % if course_date.description:
-      <p>${course_date.description}</p>
-    % endif
-    % if course_date.link and course_date.link_text:
-        <a href="${course_date.link}">${course_date.link_text}</a>
-    % endif
+    <%include file="dates-summary.html" args="course_date=course_date" />
 
 % endfor
+<%static:require_module_async module_name="js/dateutil_factory" class_name="DateUtilFactory">
+    DateUtilFactory.transform('.localized-datetime');
+</%static:require_module_async>

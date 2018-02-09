@@ -38,7 +38,7 @@ profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
                     <ol class="outline-item focusable" role="group" tabindex="0">
                         % for subsection in section.get('children', []):
                             <li
-                                class="subsection ${ 'current' if subsection['last_accessed'] else '' }"
+                                class="subsection ${ 'current' if subsection['resume_block'] else '' }"
                                 role="treeitem"
                                 tabindex="-1"
                                 aria-expanded="true"
@@ -51,7 +51,31 @@ profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
                                     <div class="subsection-text">
                                         ## Subsection title
                                         <span class="subsection-title"></span>
-
+											% if subsection['id'] in gated_content:
+                                                % if gated_content[subsection['id']]['completed_prereqs']:
+                                                    <span class="menu-icon icon fa fa-unlock"
+                                                        aria-hidden="true">
+                                                    </span>
+                                                    <span class="subsection-title-name">
+                                                        ${ subsection['display_name'] }
+                                                    </span>
+                                                    <span class="sr">&nbsp;${_("Unlocked")}</span>
+                                                % else:
+                                                    <span class="menu-icon icon fa fa-lock" 
+                                                    aria-hidden="true">
+                                                    </span>
+                                                    <span class="subsection-title-name">
+                                                        ${ subsection['display_name'] }
+                                                    </span>
+                                                    <span class="details">
+                                                        ${ _("(Prerequisite required)") }
+                                                    </span>
+                                                % endif
+                                            % else:
+                                                <span class="subsection-title-name">
+                                                    ${ subsection['display_name'] }
+                                                </span>
+                                            % endif
                                         <div class="details">
                                             ## There are behavior differences between rendering of subsections which have
                                             ## exams (timed, graded, etc) and those that do not.
@@ -115,7 +139,7 @@ profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
                                     </div> <!-- /subsection-text -->
                                     <div class="subsection-actions">
                                         ## Resume button (if last visited section)
-                                        % if subsection['last_accessed']:
+                                        % if subsection['resume_block']:
                                             <span class="sr-only">${ _("This is your last visited course section.") }</span>
                                             <span class="resume-right">
                                                 <b>${ _("Resume Course") }</b>
@@ -140,24 +164,24 @@ profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
         % for section in blocks.get('children'):
 
             <li class="course-section">
-                % if section['last_accessed']:
+                % if section['resume_block']:
                     <span class="section-id-img"><img class="img-responsive" src="${profile_image_url}" alt="${username}" /></span>
                 % else:
                     <span class="section-id">${loop.index + 1}</span>
                 % endif
                 
 
-                % if section['last_accessed']:
+                % if section['resume_block']:
                     <div class="${loop.cycle('section-content section-content-left section-current-left', 'section-content section-content-opposite section-content-right section-current-right')}">
                 % else:
-                    <div class="${loop.cycle('section-content section-content-left', 'section-content section-content-opposite section-content-right')} ${ 'section-current' if section['last_accessed'] else '' }">
+                    <div class="${loop.cycle('section-content section-content-left', 'section-content section-content-opposite section-content-right')} ${ 'section-current' if section['resume_block'] else '' }">
                 % endif
 
                     <h2 class="section-heading">${ section['display_name'] }</h2>
                     <div class="section-text">
                         % for subsection in section.get('children', []):
 
-                            <div class="${ 'current' if subsection['last_accessed'] else '' }">
+                            <div class="${ 'current' if subsection['resume_block'] else '' }">
                                 <a href="${ subsection['lms_web_url'] }" id="${ subsection['id'] }">
                                     <p>${ subsection['display_name'] }</p>
                                 </a>
@@ -203,7 +227,7 @@ profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
                                 % endif
 
                                 ## Resume button (if last visited section)
-                                % if subsection['last_accessed']:
+                                % if subsection['resume_block']:
                                     <a href="${ subsection['lms_web_url'] }" class="btn btn-primary">
                                         ${ _("Resume Course") }
                                         <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
