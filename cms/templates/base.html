@@ -141,7 +141,7 @@ from openedx.core.djangolib.markup import HTML
                   name: "${context_library.display_name_with_default | n, js_escaped_string}",
                   revision: "${context_library.location.revision | n, js_escaped_string}",
                   self_paced: true
-                })
+                });
               % endif
               % if user.is_authenticated():
                   require(['js/sock']);
@@ -150,7 +150,6 @@ from openedx.core.djangolib.markup import HTML
           });
       });
     </script>
-    </%block>
     <%include file="widgets/segment-io-footer.html" />
     <div class="modal-cover"></div>
   </body>
