@@ -7,58 +7,12 @@
 # Pin packaging tools the same as edxapp.  Keep them in sync for our sanity.
 setuptools==37.0.0
 pip==9.0.1
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 nltk==3.2.5
-=======
->>>>>>> Pin sandbox packaging tools in sync with edxapp venv
-numpy==1.6.2
-=======
 numpy==1.12.1
->>>>>>> UPD: upping versions for requirements installation to work
 networkx==1.7
 sympy==0.7.1
 pyparsing==2.0.7
 cryptography==1.9
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
-=======
-=======
->>>>>>> Proversity/staging (#380)
-<<<<<<< HEAD
-=======
 matplotlib==2.0.2
->>>>>>> UPD: upping versions for requirements installation to work
-<<<<<<< HEAD
->>>>>>> UPD: upping versions for requirements installation to work
-<<<<<<< HEAD
->>>>>>> UPD: upping versions for requirements installation to work
-=======
-=======
-=======
-matplotlib==2.0.2
->>>>>>> Proversity/staging (#380)
->>>>>>> Proversity/staging (#380)
-<<<<<<< HEAD
->>>>>>> Proversity/staging (#380)
-=======
-=======
-matplotlib==2.0.2
-
->>>>>>> merge fixes
->>>>>>> merge fixes
-=======
-matplotlib==2.0.2
->>>>>>> UPGRADE
-
 # We forked NLTK just to make it work with setuptools instead of distribute
-<<<<<<< HEAD
-#git+https://github.com/edx/nltk.git@2.0.6#egg=nltk==2.0.6
->>>>>>> removing nltk to try and fix version conflicts
-=======
-git+https://github.com/edx/nltk.git@2.0.6#egg=nltk==2.0.6
->>>>>>> uncomment nltk for sanbox [ci skip]
+

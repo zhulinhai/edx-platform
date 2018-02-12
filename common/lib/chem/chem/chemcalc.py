@@ -53,23 +53,7 @@ grammar = """
 
   suffixed -> unsuffixed | unsuffixed suffix
 """
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 parser = nltk.ChartParser(nltk.CFG.fromstring(grammar))
-=======
-parser = nltk.ChartParser(CFG.fromstring(grammar))
->>>>>>> fix chemcalc for new nltk syntax
-=======
-parser = nltk.ChartParser(nltk.parse_cfg(grammar))
->>>>>>> FIX: nltk update, version conlicting badly due to edx changes and forking
-=======
-parser = nltk.ChartParser(CFG.fromstring(grammar))
->>>>>>> reverting nltk change
-=======
-parser = nltk.ChartParser(nltk.parse_cfg(grammar))
->>>>>>> [ci skip] CFG fix
 
 
 def _clean_parse_tree(tree):

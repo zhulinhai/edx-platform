@@ -50,33 +50,11 @@
 
 # Third-party:
 git+https://github.com/jazzband/django-pipeline.git@d068a019169c9de5ee20ece041a6dea236422852#egg=django-pipeline==1.5.3
-<<<<<<< HEAD
-<<<<<<< HEAD
 -e git+https://github.com/edx/django-wiki.git@v0.0.17#egg=django-wiki
-=======
-<<<<<<< HEAD
-=======
->>>>>>> UPGRADE
--e git+https://github.com/edx/django-wiki.git@v0.0.16#egg=django-wiki
->>>>>>> upstream master merge
 git+https://github.com/edx/django-openid-auth.git@0.14#egg=django-openid-auth==0.14
 git+https://github.com/edx/MongoDBProxy.git@25b99097615bda06bd7cdfe5669ed80dc2a7fed0#egg=MongoDBProxy==0.1.0
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-#git+https://github.com/edx/nltk.git@2.0.6#egg=nltk==2.0.6
->>>>>>> removing nltk to try and fix version conflicts
-=======
 git+https://github.com/edx/nltk.git@2.0.6#egg=nltk==2.0.6
->>>>>>> FIX: nltk update, version conlicting badly due to edx changes and forking
-=======
-#git+https://github.com/edx/nltk.git@2.0.6#egg=nltk==2.0.6
->>>>>>> reverting nltk change
-=======
 git+https://github.com/edx/nltk.git@2.0.6#egg=nltk==2.0.6
->>>>>>> reverting nltk back to v2.0.6
 -e git+https://github.com/dementrock/pystache_custom.git@776973740bdaad83a3b029f96e415a7d1e8bec2f#egg=pystache_custom-dev
 -e git+https://github.com/appliedsec/pygeoip.git@95e69341cebf5a6a9fbf7c4f5439d458898bdc3b#egg=pygeoip
 -e git+https://github.com/jazkarta/edx-jsme.git@690dbf75441fa91c7c4899df0b83d77f7deb5458#egg=edx-jsme
@@ -118,17 +96,6 @@ git+https://github.com/edx/xblock-utils.git@v1.0.5#egg=xblock-utils==1.0.5
 -e git+https://github.com/edx-solutions/xblock-google-drive.git@138e6fa0bf3a2013e904a085b9fed77dab7f3f21#egg=xblock-google-drive
 git+https://github.com/edx/edx-user-state-client.git@1.0.2#egg=edx-user-state-client==1.0.2
 git+https://github.com/edx/xblock-lti-consumer.git@v1.1.6#egg=lti_consumer-xblock==1.1.6
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> dependencies update
-<<<<<<< HEAD
-git+https://github.com/edx/edx-proctoring.git@1.3.6#egg=edx-proctoring==1.3.6
->>>>>>> UPGRADE
-=======
->>>>>>> latest master update
 # This is here because all of the other XBlocks are located here. However, it is published to PyPI and will be installed that way
 xblock-review==1.1.4
 -e git+https://github.com/proversity-org/edx-proctoring.git@v1.3.6#egg=edx-proctoring==1.3.6
