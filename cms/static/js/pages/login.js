@@ -5,4 +5,3 @@ define(
         invokePageFactory('LoginFactory', LoginFactory);
     }
 );
-
