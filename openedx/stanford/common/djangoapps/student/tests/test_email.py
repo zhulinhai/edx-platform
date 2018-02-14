@@ -3,9 +3,10 @@ import json
 from django.test.client import RequestFactory
 
 from student.tests.factories import UserFactory
-from student.views import notify_enrollment_by_email
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
+
+from openedx.stanford.common.djangoapps.student.views import notify_enrollment_by_email
 
 
 class EnrollmentEmailTests(ModuleStoreTestCase):
