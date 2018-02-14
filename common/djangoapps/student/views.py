@@ -92,7 +92,6 @@ from openedx.core.djangoapps.external_auth.login_and_register import (
 )
 
 from bulk_email.models import Optout
-from cme_registration.views import cme_register_user, cme_create_account
 
 import track.views
 
@@ -484,8 +483,6 @@ def signin_user(request):
 @ensure_csrf_cookie
 def register_user(request, extra_context=None):
     """Deprecated. To be replaced by :class:`student_account.views.login_and_registration_form`."""
-    if settings.FEATURES.get('USE_CME_REGISTRATION'):
-        return cme_register_user(request, extra_context=extra_context)
 
     # Determine the URL to redirect to following login:
     redirect_to = get_next_url_for_login_page(request)
@@ -2063,8 +2060,6 @@ def create_account(request, post_override=None):
     Used by form in signup_modal.html, which is included into navigation.html
     """
     warnings.warn("Please use RegistrationView instead.", DeprecationWarning)
-    if settings.FEATURES.get('USE_CME_REGISTRATION'):
-        return cme_create_account(request, post_override=post_override)
 
     try:
         user = create_account_with_params(request, post_override or request.POST)

@@ -15,9 +15,6 @@ from badges.events.course_complete import get_completion_badge
 from xmodule.modulestore.django import modulestore
 from certificates.api import regenerate_user_certificates
 
-use_cme = settings.FEATURES.get('USE_CME_REGISTRATION', False)
-if use_cme:
-    from cme_registration.models import CmeUserProfile
 if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
     from openedx.stanford.djangoapps.register_cme.models import ExtraInfo
 
@@ -119,10 +116,6 @@ class Command(BaseCommand):
 
         designation = options['designation']
 
-        if not designation and use_cme:
-            designations = CmeUserProfile.objects.filter(user=student).values('professional_designation')
-            if len(designations):
-                designation = designations[0]['professional_designation']
         if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
             designation = options['designation'] or ExtraInfo.lookup_professional_designation(student)
 
