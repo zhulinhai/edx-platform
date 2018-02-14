@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.conf.urls import include
 from django.conf.urls import url
 
 
@@ -19,8 +20,7 @@ urlpatterns = [
 if settings.FEATURES.get('ENABLE_SUPERUSER_LOGIN_AS'):
     urlpatterns += [
         url(
-            r'^su_login_as/(?P<username>[\w.@+-]+)/?$',
-            'student.views.superuser_login_as',
-            name='impersonate',
+            r'',
+            include('openedx.stanford.djangoapps.superuser_login_as.urls'),
         ),
     ]
