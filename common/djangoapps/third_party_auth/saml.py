@@ -5,11 +5,12 @@ import logging
 
 import requests
 from django.contrib.sites.models import Site
-from django.contrib.auth.models import User
 from django.http import Http404
 from django.utils.functional import cached_property
 from social_core.backends.saml import OID_EDU_PERSON_ENTITLEMENT, SAMLAuth, SAMLIdentityProvider
 from social_core.exceptions import AuthForbidden
+
+from utils import generate_username
 
 from openedx.core.djangoapps.theming.helpers import get_current_request
 
@@ -275,19 +276,15 @@ def get_saml_idp_class(idp_identifier_string):
     return choices.get(idp_identifier_string, EdXSAMLIdentityProvider)
 
 
-class SAMLAuthBackendCampus(SAMLAuthBackend):
+class HintedUsernameSAMLAuthBackend(SAMLAuthBackend):
 
     def get_user_details(self, response):
-        user_details = super(SAMLAuthBackendCampus, self).get_user_details(response)
+        user_details = super(HintedUsernameSAMLAuthBackend, self).get_user_details(response)
         fullname = user_details['fullname']
         username = self.hint_username(fullname)
         user_details.update({'username': username})
         return user_details
 
     def hint_username(self, fullname):
-        fullname = fullname.strip().lower()
-        validate_user = User.objects.filter(username=fullname)
-        if validate_user:
-            pass
-        else:
-            return fullname
+        username = fullname.replace(" ", "").lower()
+        return generate_username(username)
