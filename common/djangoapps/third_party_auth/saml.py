@@ -10,7 +10,7 @@ from django.utils.functional import cached_property
 from social_core.backends.saml import OID_EDU_PERSON_ENTITLEMENT, SAMLAuth, SAMLIdentityProvider
 from social_core.exceptions import AuthForbidden
 
-from utils import generate_username
+from utils import GeneratorUsername, generate_username
 
 from openedx.core.djangoapps.theming.helpers import get_current_request
 
@@ -286,5 +286,6 @@ class HintedUsernameSAMLAuthBackend(SAMLAuthBackend):
         return user_details
 
     def hint_username(self, fullname):
-        username = fullname.replace(" ", "").lower()
-        return generate_username(username)
+        generator = GeneratorUsername()
+        separator = generator.separator(fullname)
+        return generate_username(separator)
