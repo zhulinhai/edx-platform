@@ -1,3 +1,0 @@
-"""
-CME Registration app
-"""

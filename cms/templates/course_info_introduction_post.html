@@ -1,0 +1,11 @@
+<%!
+from django.utils.translation import ugettext as _
+from openedx.core.djangolib.markup import HTML, Text
+%>
+
+<p>
+    <strong>${Text(_('Updates support {link_start}keyword substitution{link_end}.')).format(
+        link_start=HTML('<a rel="modal" href="#keyword-sub-modal">'),
+        link_end=HTML('</a>'),
+    )}</strong>
+</p>

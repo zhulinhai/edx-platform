@@ -11,7 +11,6 @@ from .test_form import FORM_DATA_REQUIRED
 
 
 TEST_FEATURES = settings.FEATURES.copy()
-TEST_FEATURES['USE_CME_REGISTRATION'] = True
 
 
 @override_settings(FEATURES=TEST_FEATURES)

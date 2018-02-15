@@ -6,8 +6,6 @@ from contentstore.views.tests.utils import StudioPageTestCase
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.tests.factories import ItemFactory
 from xmodule.x_module import STUDENT_VIEW
-from courseware.tests import render_to_string
-from courseware.tests import XModuleRenderingTestBase
 
 
 class UnitPageTestCase(StudioPageTestCase):

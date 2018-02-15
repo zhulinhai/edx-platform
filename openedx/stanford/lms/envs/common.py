@@ -35,7 +35,6 @@ FEATURES.update({
     'ENABLE_PROGRESS_SUMMARY': True,
     'ENABLE_SUPERUSER_LOGIN_AS': False,
     'SHOW_ABOUT_LINK': True,
-    'USE_CME_REGISTRATION': False,
     # Sends the user's deanonymized email address to xqueue with code responses
     # DO NOT SET if you don't want the anonymous user id to be linked
     #   with user.email in xqueue (Stanford does)
@@ -68,13 +67,14 @@ INLINE_ANALYTICS_SUPPORTED_TYPES = {
 }
 INSTALLED_APPS += (
     'branding_stanford',
-    'cme_registration',
     'settings_context_processor',
     'sneakpeek_deeplink',
     # Added here to allow translations
     'freetextresponse',
 )
 MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
+MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
+MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'lms/djangoapps/*/templates')
 MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
 MIDDLEWARE_CLASSES += (
     'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
@@ -94,13 +94,14 @@ PAYMENT_PLATFORM_NAME = 'PAYMENT PLATFORM NAME'
 PROGRESS_SUCCESS_BUTTON_URL = 'http://<domain>/<path>/{course_id}'
 PROGRESS_SUCCESS_BUTTON_TEXT_OVERRIDE = None
 REGISTRATION_EXTRA_FIELDS['privacy_policy'] = 'hidden'
-SHIB_ONLY_SITE = False
 SHIB_REDIRECT_DOMAIN_WHITELIST = {
     # Mapping of hosts to a list of safe redirect domains from that host
     # (not including itself); e.g.
     # 'suclass.stanford.edu': ['studio.suclass.stanford.edu']
 }
 STATICFILES_DIRS += glob(STANFORD_ROOT / 'djangoapps/*/static')
+STATICFILES_DIRS += glob(STANFORD_ROOT / 'common/djangoapps/*/static')
+STATICFILES_DIRS += glob(STANFORD_ROOT / 'lms/djangoapps/*/static')
 STUDENT_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
 STUDENT_RESPONSES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
@@ -118,6 +119,8 @@ TEMPLATE_VISIBLE_SETTINGS = [
     'FEATURES',
 ]
 TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'lms/djangoapps/*/templates')
 TEMPLATES[0]['OPTIONS']['context_processors'] += [
     # Include TEMPLATE_VISIBLE_SETTINGS in templates
     'settings_context_processor.context_processors.settings',
