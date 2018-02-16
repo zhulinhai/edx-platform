@@ -1,7 +1,8 @@
 from celery import task
 from logging import getLogger
 
-from celery_utils.persist_on_failure import LoggedPersistOnFailureTask
+from celery_utils.logged_task import LoggedTask
+from celery_utils.persist_on_failure import PersistOnFailureTask
 from django.contrib.auth.models import User
 from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
 from opaque_keys.edx.keys import CourseKey
@@ -11,7 +12,7 @@ from .api import generate_user_certificates
 logger = getLogger(__name__)
 
 
-@task(base=LoggedPersistOnFailureTask, bind=True, default_retry_delay=30, max_retries=2)
+@task(base=_BaseCertificateTask, bind=True, default_retry_delay=30, max_retries=2)
 def generate_certificate(self, **kwargs):
     """
     Generates a certificate for a single user.

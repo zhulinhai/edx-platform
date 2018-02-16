@@ -1,7 +1,8 @@
 import logging
 
 from celery import task
-from celery_utils.persist_on_failure import LoggedPersistOnFailureTask
+from celery_utils.logged_task import LoggedTask
+from celery_utils.persist_on_failure import PersistOnFailureTask
 from django.conf import settings
 
 from opaque_keys.edx.keys import CourseKey
@@ -22,6 +23,12 @@ DEFAULT_FORCE_UPDATE = False
 
 def chunks(sequence, chunk_size):
     return (sequence[index: index + chunk_size] for index in xrange(0, len(sequence), chunk_size))
+
+class _BaseTask(PersistOnFailureTask, LoggedTask):  # pylint: disable=abstract-method
+    """
+    Include persistence features, as well as logging of task invocation.
+    """
+    abstract = True
 
 
 def _task_options(routing_key):
@@ -56,7 +63,7 @@ def enqueue_async_course_overview_update_tasks(
         )
 
 
-@task(base=LoggedPersistOnFailureTask)
+@task(base=_BaseTask)
 def async_course_overview_update(*args, **kwargs):
     course_keys = [CourseKey.from_string(arg) for arg in args]
     CourseOverview.update_select_courses(course_keys, force_update=kwargs['force_update'])

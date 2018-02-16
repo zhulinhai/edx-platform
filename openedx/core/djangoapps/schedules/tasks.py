@@ -2,7 +2,7 @@ import datetime
 import logging
 
 import analytics
-from celery import task
+from celery.task import task, Task
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
@@ -11,7 +11,6 @@ from django.core.exceptions import ValidationError
 from django.db.utils import DatabaseError
 
 from celery_utils.logged_task import LoggedTask
-from celery_utils.persist_on_failure import LoggedPersistOnFailureTask
 from edx_ace import ace
 from edx_ace.message import Message
 from edx_ace.utils.date import deserialize, serialize
@@ -38,7 +37,7 @@ UPGRADE_REMINDER_LOG_PREFIX = 'Upgrade Reminder'
 COURSE_UPDATE_LOG_PREFIX = 'Course Update'
 
 
-@task(base=LoggedPersistOnFailureTask, bind=True, default_retry_delay=30, routing_key=ROUTING_KEY)
+@task(bind=True, default_retry_delay=30, routing_key=ROUTING_KEY)
 def update_course_schedules(self, **kwargs):
     course_key = CourseKey.from_string(kwargs['course_id'])
     new_start_date = deserialize(kwargs['new_start_date_str'])
@@ -101,7 +100,7 @@ class ScheduleMessageBaseTask(LoggedTask):
                 override_recipient_email,
             )
             cls.log_info('Launching task with args = %r', task_args)
-            cls().apply_async(
+            cls.apply_async(
                 task_args,
                 retry=False,
             )

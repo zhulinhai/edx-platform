@@ -9,7 +9,8 @@ import requests
 
 from celery import task
 from celery_utils.logged_task import LoggedTask
-from celery_utils.persist_on_failure import LoggedPersistOnFailureTask, PersistOnFailureTask
+from celery_utils.logged_task import LoggedTask
+from celery_utils.persist_on_failure import PersistOnFailureTask
 from courseware.model_data import get_score
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -77,8 +78,6 @@ SUBSECTION_GRADE_TIMEOUT_SECONDS = 300
 
 USER_MODEL = get_user_model()
 
-@task(base=LoggedPersistOnFailureTask, routing_key=settings.POLICY_CHANGE_GRADES_ROUTING_KEY)
-
 #################################################
 
 
@@ -113,7 +112,7 @@ def compute_all_grades_for_course(**kwargs):
 
 @task(
     bind=True,
-    base=LoggedPersistOnFailureTask,
+    base=_BaseTask,
     default_retry_delay=RETRY_DELAY_SECONDS,
     max_retries=1,
     time_limit=COURSE_GRADE_TIMEOUT_SECONDS
@@ -141,7 +140,7 @@ def compute_grades_for_course_v2(self, **kwargs):
         raise self.retry(kwargs=kwargs, exc=exc)
 
 
-@task(base=LoggedPersistOnFailureTask)
+@task(base=_BaseTask)
 def compute_grades_for_course(course_key, offset, batch_size, **kwargs):  # pylint: disable=unused-argument
     """
     Compute and save grades for a set of students in the specified course.
@@ -260,7 +259,7 @@ def get_user_course_response_task(users, course_str, depth, callback_url):
 
 @task(
     bind=True,
-    base=LoggedPersistOnFailureTask,
+    base=_BaseTask,
     time_limit=SUBSECTION_GRADE_TIMEOUT_SECONDS,
     max_retries=2,
     default_retry_delay=RETRY_DELAY_SECONDS,
