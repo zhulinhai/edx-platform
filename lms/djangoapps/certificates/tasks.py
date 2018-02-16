@@ -11,6 +11,12 @@ from .api import generate_user_certificates
 
 logger = getLogger(__name__)
 
+class _BaseCertificateTask(PersistOnFailureTask, LoggedTask):  # pylint: disable=abstract-method
+    """
+    Include persistence features, as well as logging of task invocation.
+    """
+    abstract = True
+
 
 @task(base=_BaseCertificateTask, bind=True, default_retry_delay=30, max_retries=2)
 def generate_certificate(self, **kwargs):
