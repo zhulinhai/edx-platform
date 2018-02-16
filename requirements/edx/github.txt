@@ -105,8 +105,8 @@ git+https://github.com/mitodl/edx-sga.git@d019b8a050c056db535e3ff13c93096145a932
 git+https://github.com/proversity-org/xblock-poll.git@v1.4.0#egg=xblock-poll==1.4.0
 git+https://github.com/proversity-org/xblock-drag-and-drop-v2.git@v2.1.0#egg=xblock-drag-and-drop-v2==2.1.0
 git+https://github.com/proversity-org/edx-xblock-bibblio.git#egg=edx-xblock-bibblio
-git+https://github.com/proversity-org/xblock-free-text-response.git@v0.3.0#egg=xblock-free-text-response==0.3.0
-git+https://github.com/proversity-org/recap-xblock.git@0.3.0#egg=recap-xblock==0.3.0
+git+https://github.com/proversity-org/xblock-free-text-response.git@0.2.1#egg=xblock-free-text-response==0.2.1
+git+https://github.com/proversity-org/recap-xblock.git#egg=recap-xblock
 git+https://github.com/proversity-org/badger-xblock.git@0.2.3#egg=badger-xblock==0.2.3
 git+https://github.com/eduNEXT/flow-control-xblock@v0.2.0#egg=flow-control-xblock==0.2.0
 git+https://github.com/proversity-org/xblock-pdf.git@v1.0.0#egg=xblock-pdf==1.0.0
