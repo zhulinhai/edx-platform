@@ -5,39 +5,61 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from django.contrib.auth.models import User
 
 
-class GeneratorUsername(object):
+class UsernameGenerator(object):
+    """Allows customize the way that the username is created based on the fullname"""
 
     def __init__(self):
         self.separator_character = '_'
         self.in_lowercase = True
         self.random = True
 
-    def separator(self, fullname):
+    def insert_separator(self, fullname):
+        """
+        Allows set a custom separator character for each whitespac
+        in the fullname string. By default, all whitespaces are removed.
+        """
         username = fullname.replace(' ', self.separator_character)
         return username
 
     def lower(self, username):
+        """
+        Allows setting the username in lowercase. If not configured,
+        it will take the original username that SAML providers give.
+        """
         if self.in_lowercase:
             return username.lower()
         else:
             return username
 
-    def consecutive_or_random(self):
+    def consecutive_or_random(self, current_number=0):
+        """
+        If a username already exists, a subsecuent number will be
+        append at the end of the username string. This method allows
+        if this subsecuent number be a random or consecutive.
+        """
         if self.random:
-            random = ''.join(["%s" % randint(0, 9) for num in range(0, 4)])
-            return random
+            subsequent_number = ''.join(["%s" % randint(0, 9) for num in range(0, 4)])
+        else:
+            subsequent_number = current_number + 1
+
+        return subsequent_number
 
 
 def generate_username(username):
+    """Util function that generates the username"""
     new_username = username
     user_exists = User.objects.filter(username=new_username).exists()
+    generator = UsernameGenerator()
+    initial_username = generator.lower(username)
 
-    generator = GeneratorUsername()
-    new_username = generator.lower(username)
+    if not user_exists:
+        new_username = initial_username
 
+    counter = 1
     while user_exists:
-        subsequent_number = generator.consecutive_or_random()
-        new_username = new_username + '_{}'.format(subsequent_number)
+        subsequent_number = generator.consecutive_or_random(counter)
+        new_username = initial_username + '_{}'.format(subsequent_number)
         user_exists = User.objects.filter(username=new_username).exists()
+        counter = counter + 1
 
     return new_username
