@@ -56,8 +56,7 @@ MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
 MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
 MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'cms/djangoapps/*/templates')
 MIDDLEWARE_CLASSES += (
-    # Log out sneakpeek users
-    'sneakpeek.middleware.SneakPeekLogoutMiddleware',
+    'openedx.stanford.djangoapps.sneakpeek.middleware.SneakPeekLogoutMiddleware',
 )
 SHIB_ONLY_SITE = False
 SHIB_REDIRECT_DOMAIN_WHITELIST = {}
