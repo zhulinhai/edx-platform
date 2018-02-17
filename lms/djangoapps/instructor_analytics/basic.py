@@ -3,9 +3,6 @@ Student and course analytics.
 
 Serve miscellaneous course and student data
 """
-from itertools import chain
-import logging
-
 import json
 import datetime
 from shoppingcart.models import (
@@ -30,11 +27,6 @@ from lms.djangoapps.grades.context import grading_context_for_course
 from lms.djangoapps.verify_student.models import SoftwareSecurePhotoVerification
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
-from courseware.models import StudentModule
-from student.models import CourseEnrollment
-
-
-log = logging.getLogger(__name__)
 
 STUDENT_FEATURES = ('id', 'username', 'first_name', 'last_name', 'is_staff', 'email')
 PROFILE_FEATURES = ('name', 'language', 'location', 'year_of_birth', 'gender',
@@ -540,77 +532,3 @@ def dump_grading_context(course):
     msg += "length=%d\n" % len(gcontext['all_graded_blocks'])
     msg = '<pre>%s</pre>' % msg.replace('<', '&lt;')
     return msg
-
-
-def iterate_problem_components(course):
-    """ Helper function for iterating through all problems of a course """
-
-    for section in course.get_children():
-        section_name = section.display_name_with_default
-        for subsection in section.get_children():
-            subsection_name = subsection.display_name_with_default
-            for unit in subsection.get_children():
-                unit_name = unit.display_name_with_default
-
-                parent_metadata = [section_name, subsection_name, unit_name]
-                for component in unit.get_children():
-                    if component.category in settings.STUDENT_RESPONSES_REPORT_SUPPORTED_TYPES:
-                        yield component, parent_metadata
-                    elif component.category in settings.TYPES_WITH_CHILD_PROBLEMS_LIST:
-                        for library_problem in component.get_children():
-                            if library_problem.category in settings.STUDENT_RESPONSES_REPORT_SUPPORTED_TYPES:
-                                yield library_problem, parent_metadata
-
-
-def student_responses(course):
-    """
-    Yields student responses for all problems in course for writing out to a CSV file.
-    """
-    order = 1
-    for problem_component, parent_metadata in iterate_problem_components(course):
-        problem_component_info = parent_metadata + [problem_component.display_name_with_default, order, problem_component.location]
-        modules = StudentModule.objects.filter(
-            course_id=course.id,
-            grade__isnull=False,
-            module_state_key=problem_component.location,
-        ).order_by('student__username')
-        if modules:
-            has_answer = False
-            for module in modules:
-                try:
-                    state_dict = json.loads(module.state) if module.state else {}
-                except ValueError:
-                    log.error("Student responses: Could not parse module state for " +
-                              "StudentModule id={module_id}, course={course_id}".format(module_id=module.id, course_id=course.id))
-                    continue
-
-                # Include other problems, e.g. Free Text Response, Submit And Compare Xblocks
-                # that write 'student_answer' to the state.
-                if 'student_answers' in state_dict:
-                    raw_answers = state_dict['student_answers']
-                    pretty_answers = u', '.join([
-                        u"{problem}={answer}".format(
-                            problem=problem,
-                            answer=answer,
-                        )
-                        for (problem, answer) in raw_answers.items()
-                    ])
-                elif 'student_answer' in state_dict:
-                    raw_answer = state_dict['student_answer']
-                    pretty_answers = u"{answer}".format(answer=raw_answer)
-                else:
-                    raw_answers = {}
-                    pretty_answers = None
-
-                yield problem_component_info + [module.student.username, pretty_answers]
-                if not has_answer:
-                    has_answer = True
-            if has_answer:
-                order += 1
-
-
-def student_response_rows(course):
-    """ Wrapper to return all (header and data) rows for student responses reports for a course """
-    header = ["Section", "Subsection", "Unit", "Problem", "Order In Course", "Location", "Student", "Response"]
-    rows = chain([header], student_responses(course))
-    return rows

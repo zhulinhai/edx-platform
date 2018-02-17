@@ -25,6 +25,7 @@ from django.db import models, transaction
 
 from openedx.core.storage import get_storage
 from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
+from openedx.stanford.lms.djangoapps.instructor_task.models import DeleteFileMixin
 
 
 # define custom states used by InstructorTask
@@ -222,7 +223,7 @@ class ReportStore(object):
             yield [unicode(item).encode('utf-8') for item in row]
 
 
-class DjangoStorageReportStore(ReportStore):
+class DjangoStorageReportStore(ReportStore, DeleteFileMixin):
     """
     ReportStore implementation that delegates to django's storage api.
     """
@@ -270,13 +271,6 @@ class DjangoStorageReportStore(ReportStore):
         csvwriter.writerows(self._get_utf8_encoded_rows(rows))
         output_buffer.seek(0)
         self.store(course_id, filename, output_buffer)
-
-    def delete_file(self, course_id, filename):
-        """
-        Given the `course_id` and `filename` for the report, this method deletes the report
-        """
-        path = self.path_to(course_id, filename)
-        self.storage.delete(path)
 
     def links_for(self, course_id):
         """

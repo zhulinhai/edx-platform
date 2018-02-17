@@ -13,7 +13,6 @@ urlpatterns = patterns(
         'lms.djangoapps.instructor.views.api.register_and_enroll_students', name="register_and_enroll_students"),
     url(r'^list_course_role_members$',
         'lms.djangoapps.instructor.views.api.list_course_role_members', name="list_course_role_members"),
-
     url(r'^modify_access$',
         'lms.djangoapps.instructor.views.api.modify_access', name="modify_access"),
     url(r'^bulk_beta_modify_access$',
@@ -22,7 +21,6 @@ urlpatterns = patterns(
         'lms.djangoapps.instructor.views.api.get_problem_responses', name="get_problem_responses"),
     url(r'^get_grading_config$',
         'lms.djangoapps.instructor.views.api.get_grading_config', name="get_grading_config"),
-
     url(r'^get_students_features(?P<csv>/csv)?$',
         'lms.djangoapps.instructor.views.api.get_students_features', name="get_students_features"),
     url(r'^get_issued_certificates/$',
@@ -98,10 +96,6 @@ urlpatterns = patterns(
     url(r'problem_grade_report$',
         'lms.djangoapps.instructor.views.api.problem_grade_report', name="problem_grade_report"),
 
-    # Student responses for questions
-    url(r'^get_student_responses$',
-        'instructor.views.api.get_student_responses', name="get_student_responses"),
-
     # Financial Report downloads..
     url(r'^list_financial_report_downloads$',
         'lms.djangoapps.instructor.views.api.list_financial_report_downloads', name="list_financial_report_downloads"),
@@ -136,40 +130,6 @@ urlpatterns = patterns(
 
     url(r'^gradebook/(?P<offset>[0-9]+)$',
         'lms.djangoapps.instructor.views.gradebook_api.spoc_gradebook', name='spoc_gradebook'),
-
-    # Blank LTI csv
-    url(
-        r'^get_blank_lti$',
-        'instructor.views.api.get_blank_lti',
-        name='get_blank_lti',
-    ),
-
-    # Upload LTI csv
-    url(
-        r'^upload_lti$',
-        'instructor.views.api.upload_lti',
-        name='upload_lti',
-    ),
-
-    # Collect student forums data
-    url(r'get_student_forums_usage',
-        'instructor.views.api.get_student_forums_usage', name='get_student_forums_usage'),
-
-    # Delete Report Download
-    url(r'delete_report_download',
-        'instructor.views.api.delete_report_download', name='delete_report_download'),
-
-    # Collect ora2 data
-    url(r'get_ora2_responses/(?P<include_email>\w+)/$',
-        'instructor.views.api.get_ora2_responses', name="get_ora2_responses"),
-
-    # Collect course forums data
-    url(r'get_course_forums_usage',
-        'instructor.views.api.get_course_forums_usage', name="get_course_forums_usage"),
-
-    # Generating course forums usage graph
-    url(r'^graph_course_forums_usage',
-        'instructor.views.api.graph_course_forums_usage', name="graph_course_forums_usage"),
 
     # Cohort management
     url(r'add_users_to_cohorts$',
@@ -208,3 +168,5 @@ urlpatterns = patterns(
         'lms.djangoapps.instructor.views.api.certificate_invalidation_view',
         name='certificate_invalidation_view'),
 )
+from django.conf.urls import include
+urlpatterns += (url(r'', include('openedx.stanford.lms.djangoapps.instructor.urls')),)
