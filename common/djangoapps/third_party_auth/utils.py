@@ -2,6 +2,7 @@ from random import randint
 
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
+from django.conf import settings
 from django.contrib.auth.models import User
 
 
@@ -9,21 +10,27 @@ class UsernameGenerator(object):
     """Allows customize the way that the username is created based on the fullname"""
 
     def __init__(self):
-        self.separator_character = '_'
-        self.in_lowercase = True
-        self.random = True
+        default_settings = {
+            'SEPERATOR':'_',
+            'LOWER': True,
+            'RANDOM': True
+        }
+        custom_settings = configuration_helpers.get_value('GENERATOR_USERNAME', settings.FEATURES.get('GENERATOR_USERNAME', default_settings))
+        self.separator_character = custom_settings['SEPERATOR']
+        self.in_lowercase = custom_settings['LOWER']
+        self.random = custom_settings['RANDOM']
 
     def insert_separator(self, fullname):
         """
-        Allows set a custom separator character for each whitespac
-        in the fullname string. By default, all whitespaces are removed.
+        Allows set a custom separator character for each whitespace
+        in the fullname string. By default, the separator characte is underscore.
         """
         username = fullname.replace(' ', self.separator_character)
         return username
 
     def lower(self, username):
         """
-        Allows setting the username in lowercase. If not configured,
+        Allows set the username in lowercase. If value is False,
         it will take the original username that SAML providers give.
         """
         if self.in_lowercase:
