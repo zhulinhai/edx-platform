@@ -1,0 +1,41 @@
+
+@import 'lms/theme/variables-v1';
+
+// Unsupported browser alert
+$browser-update-background: $header-graphic-super-color !important;
+$browser-update-ok-button: $button-color;
+$browser-update-ignore-button: $action-primary-disabled-bg;
+
+.buorg {
+  background-position: 8px 17px;
+  position:absolute;
+  position:fixed;
+  z-index:111111;
+  width:100%;
+  top:0px;
+  left:0px;
+  border-bottom:1px solid #A29330;
+  cursor:pointer;
+  background-color: $browser-update-background;
+  font: 17px Calibri,Helvetica,Arial,sans-serif;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+  #buorgul{
+    background-color: $browser-update-ok-button;
+  }
+
+  #buorgig{
+   background-color: $browser-update-ignore-button;
+  }
+
+}
+
+@media only screen and (max-width: 700px){
+.buorg div {
+  padding:5px 12px 5px 9px; 
+  text-indent: 22px;
+  line-height: 1.3em;
+}
+.buorg {
+  background-position: 9px 8px;}
+}
