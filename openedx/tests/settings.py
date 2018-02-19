@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'djcelery',
     'openedx.core.djangoapps.video_config',
     'openedx.core.djangoapps.video_pipeline',
@@ -62,6 +63,7 @@ INSTALLED_APPS = (
     'edxval',
     'courseware',
     'student',
+    'openedx.core.djangoapps.site_configuration',
     'lms.djangoapps.certificates.apps.CertificatesConfig',
     'openedx.core.djangoapps.user_api',
     'course_modes.apps.CourseModesConfig',
@@ -73,7 +75,9 @@ INSTALLED_APPS = (
     'openedx.core.djangoapps.self_paced',
     'milestones',
     'celery_utils',
-    'lms.djangoapps.completion.apps.CompletionAppConfig',
+
+    # Django 1.11 demands to have imported models supported by installed apps.
+    'completion',
 )
 
 LMS_ROOT_URL = 'http://localhost:8000'

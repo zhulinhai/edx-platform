@@ -601,6 +601,7 @@ class TestMakoTemplateLinter(TestLinter):
         results = FileResults('')
 
         mako_template = textwrap.dedent("""
+            <%page expression_filter="h"/>
             ${x | n, strip_all_tags_but_br}
         """)
 
@@ -756,7 +757,7 @@ class TestMakoTemplateLinter(TestLinter):
                 ${x | h}
             </%static:require_module>
             ${x | h}
-            <%static:studiofrontend page="${x}" lang="en">
+            <%static:studiofrontend page="${x}">
                 ${x | h}
             </%static:studiofrontend>
             ${x | h}

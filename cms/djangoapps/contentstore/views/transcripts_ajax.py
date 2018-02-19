@@ -18,6 +18,7 @@ from django.http import Http404, HttpResponse
 from django.utils.translation import ugettext as _
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import UsageKey
+from six import text_type
 
 from student.auth import has_course_author_access
 from util.json_request import JsonResponse
@@ -133,7 +134,7 @@ def upload_transcripts(request):
             response['subs'] = item.sub
             response['status'] = 'Success'
         except Exception as ex:
-            return error_response(response, ex.message)
+            return error_response(response, text_type(ex))
     else:
         return error_response(response, 'Empty video sources.')
 
@@ -172,26 +173,23 @@ def download_transcripts(request):
             item.location.course_key,
             'subs_{filename}.srt.sjson'.format(filename=filename),
         )
-        sjson_transcript = contentstore().find(content_location).data
+        input_format = Transcript.SJSON
+        transcript_content = contentstore().find(content_location).data
     except NotFoundError:
         # Try searching in VAL for the transcript as a last resort
         transcript = None
         if is_val_transcript_feature_enabled_for_course(item.location.course_key):
-            transcript = get_video_transcript_content(
-                language_code=u'en',
-                edx_video_id=item.edx_video_id,
-                youtube_id_1_0=item.youtube_id_1_0,
-                html5_sources=item.html5_sources,
-            )
+            transcript = get_video_transcript_content(edx_video_id=item.edx_video_id, language_code=u'en')
 
         if not transcript:
             raise Http404
 
-        filename = os.path.splitext(os.path.basename(transcript['file_name']))[0].encode('utf8')
-        sjson_transcript = transcript['content']
+        name_and_extension = os.path.splitext(transcript['file_name'])
+        filename, input_format = name_and_extension[0], name_and_extension[1][1:]
+        transcript_content = transcript['content']
 
     # convert sjson content into srt format.
-    transcript_content = Transcript.convert(sjson_transcript, input_format='sjson', output_format='srt')
+    transcript_content = Transcript.convert(transcript_content, input_format=input_format, output_format=Transcript.SRT)
     if not transcript_content:
         raise Http404
 
@@ -242,7 +240,7 @@ def check_transcripts(request):
     try:
         __, videos, item = _validate_transcripts_data(request)
     except TranscriptsRequestValidationException as e:
-        return error_response(transcripts_presence, e.message)
+        return error_response(transcripts_presence, text_type(e))
 
     transcripts_presence['status'] = 'Success'
 
@@ -308,12 +306,7 @@ def check_transcripts(request):
     if command == 'not_found':
         # Try searching in VAL for the transcript as a last resort
         if is_val_transcript_feature_enabled_for_course(item.location.course_key):
-            video_transcript = get_video_transcript_content(
-                language_code=u'en',
-                edx_video_id=item.edx_video_id,
-                youtube_id_1_0=item.youtube_id_1_0,
-                html5_sources=item.html5_sources,
-            )
+            video_transcript = get_video_transcript_content(edx_video_id=item.edx_video_id, language_code=u'en')
             command = 'found' if video_transcript else command
 
     transcripts_presence.update({
@@ -400,7 +393,7 @@ def choose_transcripts(request):
     try:
         data, videos, item = _validate_transcripts_data(request)
     except TranscriptsRequestValidationException as e:
-        return error_response(response, e.message)
+        return error_response(response, text_type(e))
 
     html5_id = data.get('html5_id')  # html5_id chosen by user
 
@@ -433,7 +426,7 @@ def replace_transcripts(request):
     try:
         __, videos, item = _validate_transcripts_data(request)
     except TranscriptsRequestValidationException as e:
-        return error_response(response, e.message)
+        return error_response(response, text_type(e))
 
     youtube_id = videos['youtube']
     if not youtube_id:
@@ -442,7 +435,7 @@ def replace_transcripts(request):
     try:
         download_youtube_subs(youtube_id, item, settings)
     except GetTranscriptsFromYouTubeException as e:
-        return error_response(response, e.message)
+        return error_response(response, text_type(e))
 
     item.sub = youtube_id
     item.save_with_metadata(request.user)
@@ -504,7 +497,7 @@ def rename_transcripts(request):
     try:
         __, videos, item = _validate_transcripts_data(request)
     except TranscriptsRequestValidationException as e:
-        return error_response(response, e.message)
+        return error_response(response, text_type(e))
 
     old_name = item.sub
 

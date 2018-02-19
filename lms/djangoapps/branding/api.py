@@ -179,7 +179,7 @@ def _footer_connect_links():
         }
         for link_name, link_url, link_title in [
             ("blog", marketing_link("BLOG"), _("Blog")),
-            ("contact", marketing_link("CONTACT"), _("Contact Us")),
+            ("contact", reverse("support:contact_us"), _("Contact Us")),
             ("help-center", settings.SUPPORT_SITE_LINK, _("Help Center")),
             ("media_kit", marketing_link("MEDIA_KIT"), _("Media Kit")),
             ("donate", marketing_link("DONATE"), _("Donate")),
@@ -204,7 +204,7 @@ def _footer_navigation_links():
             ("blog", marketing_link("BLOG"), _("Blog")),
             ("news", marketing_link("NEWS"), _("News")),
             ("help-center", settings.SUPPORT_SITE_LINK, _("Help Center")),
-            ("contact", marketing_link("CONTACT"), _("Contact")),
+            ("contact", reverse("support:contact_us"), _("Contact")),
             ("careers", marketing_link("CAREERS"), _("Careers")),
             ("donate", marketing_link("DONATE"), _("Donate")),
         ]
@@ -273,6 +273,7 @@ def _footer_more_info_links():
         ("terms_of_service_and_honor_code", marketing_link("TOS_AND_HONOR"), _("Terms of Service & Honor Code")),
         ("privacy_policy", marketing_link("PRIVACY"), _("Privacy Policy")),
         ("accessibility_policy", marketing_link("ACCESSIBILITY"), _("Accessibility Policy")),
+        ("trademarks", marketing_link("TRADEMARKS"), _("Trademarks")),
         ("sitemap", marketing_link("SITE_MAP"), _("Sitemap")),
     ]
 

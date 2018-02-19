@@ -14,6 +14,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
+from six import text_type
 
 from course_modes.models import CourseMode
 from enrollment import api
@@ -75,7 +76,7 @@ class EnrollmentUserThrottle(UserRateThrottle, ApiKeyPermissionMixIn):
     """Limit the number of requests users can make to the enrollment API."""
     THROTTLE_RATES = {
         'user': '40/minute',
-        'staff': '600/minute',
+        'staff': '1200/minute',
     }
 
     def allow_request(self, request, view):
@@ -604,7 +605,7 @@ class EnrollmentListView(APIView, ApiKeyPermissionMixIn):
                 except EnterpriseApiException as error:
                     log.exception("An unexpected error occurred while creating the new EnterpriseCourseEnrollment "
                                   "for user [%s] in course run [%s]", username, course_id)
-                    raise CourseEnrollmentError(error.message)
+                    raise CourseEnrollmentError(text_type(error))
                 kwargs = {
                     'username': username,
                     'course_id': unicode(course_id),

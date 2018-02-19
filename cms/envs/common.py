@@ -132,7 +132,6 @@ from lms.envs.common import (
     _make_locale_paths,
 )
 from path import Path as path
-from warnings import simplefilter
 
 from lms.djangoapps.lms_xblock.mixin import LmsBlockMixin
 from cms.lib.xblock.authoring_mixin import AuthoringMixin
@@ -441,11 +440,6 @@ XQUEUE_INTERFACE = {
     'basic_auth': None,
 }
 
-################################# Deprecation warnings #####################
-
-# Ignore deprecation warnings (so we don't clutter Jenkins builds/production)
-simplefilter('ignore')
-
 ################################# Middleware ###################################
 
 # TODO: Remove Django 1.11 upgrade shim
@@ -457,7 +451,7 @@ else:
 
 MIDDLEWARE_CLASSES = [
     'crum.CurrentRequestUserMiddleware',
-    'request_cache.middleware.RequestCache',
+    'openedx.core.djangoapps.request_cache.middleware.RequestCache',
 
     'openedx.core.djangoapps.monitoring_utils.middleware.MonitoringMemoryMiddleware',
 
@@ -981,9 +975,6 @@ INSTALLED_APPS = [
     # Monitor the status of services
     'openedx.core.djangoapps.service_status',
 
-    # Bookmarks
-    'openedx.core.djangoapps.bookmarks.apps.BookmarksConfig',
-
     # Video module configs (This will be moved to Video once it becomes an XBlock)
     'openedx.core.djangoapps.video_config',
 
@@ -1091,7 +1082,7 @@ INSTALLED_APPS = [
     'courseware',
     'survey',
     'lms.djangoapps.verify_student.apps.VerifyStudentConfig',
-    'lms.djangoapps.completion.apps.CompletionAppConfig',
+    'completion',
 
     # Microsite configuration application
     'microsite_configuration',
@@ -1372,6 +1363,8 @@ XBLOCK_SETTINGS = {
     }
 }
 
+STUDIO_FRONTEND_CONTAINER_URL = None
+
 ################################ Settings for Credit Course Requirements ################################
 # Initial delay used for retrying tasks.
 # Additional retries use longer delays.
@@ -1456,6 +1449,8 @@ USER_TASKS_MAX_AGE = timedelta(days=7)
 ENTERPRISE_ENROLLMENT_API_URL = LMS_ROOT_URL + LMS_ENROLLMENT_API_PATH
 ENTERPRISE_SERVICE_WORKER_USERNAME = 'enterprise_worker'
 ENTERPRISE_API_CACHE_TIMEOUT = 3600  # Value is in seconds
+# The default value of this needs to be a 16 character string
+ENTERPRISE_REPORTING_SECRET = '0000000000000000'
 
 ############## Settings for the Discovery App ######################
 

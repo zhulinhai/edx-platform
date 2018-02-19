@@ -13,6 +13,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST, require_http_methods
 from opaque_keys.edx.keys import AssetKey, CourseKey
 from pymongo import ASCENDING, DESCENDING
+from six import text_type
 from xmodule.contentstore.content import StaticContent
 from xmodule.contentstore.django import contentstore
 from xmodule.exceptions import NotFoundError
@@ -78,7 +79,7 @@ def assets_handler(request, course_key_string=None, asset_key_string=None):
         return _update_asset(request, course_key, asset_key)
 
     elif request.method == 'GET':  # assume html
-        return _asset_index(course_key)
+        return _asset_index(request, course_key)
 
     return HttpResponseNotFound()
 
@@ -91,7 +92,7 @@ def _request_response_format_is_json(request, response_format):
     return response_format == 'json' or 'application/json' in request.META.get('HTTP_ACCEPT', 'application/json')
 
 
-def _asset_index(course_key):
+def _asset_index(request, course_key):
     '''
     Display an editable asset library.
 
@@ -100,6 +101,7 @@ def _asset_index(course_key):
     course_module = modulestore().get_course(course_key)
 
     return render_to_response('asset_index.html', {
+        'language_code': request.LANGUAGE_CODE,
         'waffle_flag_enabled': NewAssetsPageFlag.feature_enabled(course_key),
         'context_course': course_module,
         'max_file_size_in_mbs': settings.MAX_ASSET_UPLOAD_FILE_SIZE_IN_MB,
@@ -402,7 +404,7 @@ def _upload_asset(request, course_key):
     try:
         content = update_course_run_asset(course_key, upload_file)
     except AssetSizeTooLargeException as exception:
-        return JsonResponse({'error': exception.message}, status=413)
+        return JsonResponse({'error': text_type(exception)}, status=413)
 
     # readback the saved content - we need the database timestamp
     readback = contentstore().find(content.location)

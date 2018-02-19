@@ -35,7 +35,6 @@ import os
 
 import django
 from path import Path as path
-from warnings import simplefilter
 from django.utils.translation import ugettext_lazy as _
 
 from openedx.core.djangoapps.theming.helpers_dirs import (
@@ -674,8 +673,7 @@ derived_collection_entry('DEFAULT_TEMPLATE_ENGINE', 'DIRS')
 
 ###############################################################################################
 
-# use the ratelimit backend to prevent brute force attacks
-AUTHENTICATION_BACKENDS = ['ratelimitbackend.backends.RateLimitModelBackend']
+AUTHENTICATION_BACKENDS = ['openedx.core.djangoapps.oauth_dispatch.dot_overrides.validators.EdxRateLimitedAllowAllUsersModelBackend']
 STUDENT_FILEUPLOAD_MAX_SIZE = 4 * 1000 * 1000  # 4 MB
 MAX_FILEUPLOADS_PER_INPUT = 20
 
@@ -1256,11 +1254,6 @@ FOOTER_BROWSER_CACHE_MAX_AGE = 5 * 60
 # Credit api notification cache timeout
 CREDIT_NOTIFICATION_CACHE_TIMEOUT = 5 * 60 * 60
 
-################################# Deprecation warnings #####################
-
-# Ignore deprecation warnings (so we don't clutter Jenkins builds/production)
-simplefilter('ignore')
-
 ################################# Middleware ###################################
 
 # TODO: Remove Django 1.11 upgrade shim
@@ -1273,7 +1266,7 @@ else:
 MIDDLEWARE_CLASSES = [
     'crum.CurrentRequestUserMiddleware',
 
-    'request_cache.middleware.RequestCache',
+    'openedx.core.djangoapps.request_cache.middleware.RequestCache',
     'openedx.core.djangoapps.monitoring_utils.middleware.MonitoringCustomMetrics',
 
     'mobile_api.middleware.AppVersionUpgrade',
@@ -2136,9 +2129,6 @@ INSTALLED_APPS = [
     # edX Video Pipeline integration
     'openedx.core.djangoapps.video_pipeline',
 
-    # Bookmarks
-    'openedx.core.djangoapps.bookmarks.apps.BookmarksConfig',
-
     # Our courseware
     'courseware',
     'student',
@@ -2363,9 +2353,6 @@ INSTALLED_APPS = [
     # Course Goals
     'lms.djangoapps.course_goals',
 
-    # Completion
-    'lms.djangoapps.completion.apps.CompletionAppConfig',
-
     # Features
     'openedx.features.course_bookmarks',
     'openedx.features.course_experience',
@@ -2373,6 +2360,7 @@ INSTALLED_APPS = [
     'openedx.features.enterprise_support.apps.EnterpriseSupportConfig',
     'openedx.features.learner_profile',
     'openedx.features.learner_analytics',
+    'openedx.features.portfolio_project',
 
     'experiments',
 
@@ -3300,9 +3288,6 @@ CCX_MAX_STUDENTS_ALLOWED = 200
 FINANCIAL_ASSISTANCE_MIN_LENGTH = 800
 FINANCIAL_ASSISTANCE_MAX_LENGTH = 2500
 
-# Course Content Bookmarks Settings
-MAX_BOOKMARKS_PER_COURSE = 100
-
 #### Registration form extension. ####
 # Only used if combined login/registration is enabled.
 # This can be used to add fields to the registration page.
@@ -3338,7 +3323,7 @@ AUDIT_CERT_CUTOFF_DATE = None
 CREDENTIALS_SERVICE_USERNAME = 'credentials_service_user'
 CREDENTIALS_GENERATION_ROUTING_KEY = HIGH_PRIORITY_QUEUE
 
-WIKI_REQUEST_CACHE_MIDDLEWARE_CLASS = "request_cache.middleware.RequestCache"
+WIKI_REQUEST_CACHE_MIDDLEWARE_CLASS = "openedx.core.djangoapps.request_cache.middleware.RequestCache"
 
 # Settings for Comprehensive Theming app
 
@@ -3468,10 +3453,16 @@ EDX_PLATFORM_REVISION = 'unknown'
 # Once a user has watched this percentage of a video, mark it as complete:
 # (0.0 = 0%, 1.0 = 100%)
 COMPLETION_VIDEO_COMPLETE_PERCENTAGE = 0.95
+COMPLETION_BY_VIEWING_DELAY_MS = 5000
 
 ############### Settings for Django Rate limit #####################
 RATELIMIT_ENABLE = True
 RATELIMIT_RATE = '120/m'
+
+############### Settings for django-fernet-fields ##################
+FERNET_KEYS = [
+    'DUMMY KEY CHANGE BEFORE GOING TO PRODUCTION',
+]
 
 ############## Plugin Django Apps #########################
 

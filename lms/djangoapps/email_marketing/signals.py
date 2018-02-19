@@ -3,6 +3,7 @@ This module contains signals needed for email integration
 """
 import datetime
 import logging
+from random import randint
 
 import crum
 from django.conf import settings
@@ -96,6 +97,9 @@ def add_email_marketing_cookies(sender, response=None, user=None,
         return response
     except SailthruClientError as exc:
         log.error("Exception attempting to obtain cookie from Sailthru: %s", unicode(exc))
+        return response
+    except Exception:
+        log.error("Exception Connecting to celery task for %s", user.email)
         return response
 
     if not cookie:
@@ -207,6 +211,7 @@ def _create_sailthru_user_vars(user, profile, registration=None):
 
     if registration:
         sailthru_vars['activation_key'] = registration.activation_key
+        sailthru_vars['signupNumber'] = randint(0, 9)
 
     return sailthru_vars
 

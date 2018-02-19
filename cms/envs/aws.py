@@ -256,7 +256,6 @@ WIKI_ENABLED = ENV_TOKENS.get('WIKI_ENABLED', WIKI_ENABLED)
 
 LOGGING = get_logger_config(LOG_DIR,
                             logging_env=ENV_TOKENS['LOGGING_ENV'],
-                            debug=False,
                             service_variant=SERVICE_VARIANT)
 
 #theming start:
@@ -568,6 +567,14 @@ MIDDLEWARE_CLASSES.extend(ENV_TOKENS.get('EXTRA_MIDDLEWARE_CLASSES', []))
 COMPLETION_VIDEO_COMPLETE_PERCENTAGE = ENV_TOKENS.get(
     'COMPLETION_VIDEO_COMPLETE_PERCENTAGE',
     COMPLETION_VIDEO_COMPLETE_PERCENTAGE,
+)
+
+####################### Enterprise Settings ######################
+# A shared secret to be used for encrypting passwords passed from the enterprise api
+# to the enteprise reporting script.
+ENTERPRISE_REPORTING_SECRET = AUTH_TOKENS.get(
+    'ENTERPRISE_REPORTING_SECRET',
+    ENTERPRISE_REPORTING_SECRET
 )
 
 ####################### Plugin Settings ##########################

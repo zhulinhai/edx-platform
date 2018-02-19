@@ -8,8 +8,8 @@ Includes:
 from config_models.models import ConfigurationModel
 from django.db.models import TextField
 
-from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
-from request_cache.middleware import request_cached
+from opaque_keys.edx.django.models import CourseKeyField
+from openedx.core.djangoapps.request_cache.middleware import request_cached
 
 
 class StudioConfig(ConfigurationModel):

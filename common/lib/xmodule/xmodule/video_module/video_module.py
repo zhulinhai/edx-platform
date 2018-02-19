@@ -212,6 +212,7 @@ class VideoModule(VideoFields, VideoTranscriptsMixin, VideoStudentViewHandlers, 
         return track_url, transcript_language, sorted_languages
 
     def get_html(self):
+
         track_status = (self.download_track and self.track)
         transcript_download_format = self.transcript_download_format if not track_status else None
         sources = filter(None, self.html5_sources)
@@ -934,6 +935,7 @@ class VideoDescriptor(VideoFields, VideoTranscriptsMixin, VideoStudioViewHandler
             xml (lxml object): xml representation of video to be imported
             course_id (str): course id
         """
+        edx_video_id = ''
         if self.edx_video_id is not None:
             edx_video_id = self.edx_video_id.strip()
 

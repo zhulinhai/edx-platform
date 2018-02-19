@@ -24,9 +24,9 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.db import models, transaction
+from opaque_keys.edx.django.models import CourseKeyField
 from six import text_type
 
-from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
 from openedx.core.storage import get_storage
 
 logger = logging.getLogger(__name__)
@@ -149,7 +149,7 @@ class InstructorTask(models.Model):
         Truncation is indicated by adding "..." to the end of the value.
         """
         tag = '...'
-        task_progress = {'exception': type(exception).__name__, 'message': unicode(exception.message)}
+        task_progress = {'exception': type(exception).__name__, 'message': text_type(exception)}
         if traceback_string is not None:
             # truncate any traceback that goes into the InstructorTask model:
             task_progress['traceback'] = traceback_string

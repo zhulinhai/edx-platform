@@ -28,7 +28,7 @@ from capa.responsetypes import (StudentInputError, LoncapaProblemError,
                                 ResponseError)
 from capa.xqueue_interface import XQueueInterface
 from xmodule.capa_module import CapaModule, CapaDescriptor, ComplexEncoder
-from opaque_keys.edx.locations import Location
+from opaque_keys.edx.locator import BlockUsageLocator, CourseLocator
 from xblock.field_data import DictFieldData
 from xblock.fields import ScopeIds
 from xblock.scorable import Score
@@ -101,13 +101,11 @@ class CapaFactory(object):
 
             attempts: also added to instance state.  Will be converted to an int.
         """
-        location = Location(
-            "edX",
-            "capa_test",
-            "2012_Fall",
+        location = BlockUsageLocator(
+            CourseLocator("edX", "capa_test", "2012_Fall", deprecated=True),
             "problem",
             "SampleProblem{0}".format(cls.next_num()),
-            None
+            deprecated=True,
         )
         if xml is None:
             xml = cls.sample_problem_xml
@@ -880,7 +878,7 @@ class CapaModuleTest(unittest.TestCase):
                         '  File "<string>", line 65, in check_func\\n'
                         'Exception: test error\\n\' with status code: 1',)
                 except ResponseError as err:
-                    mock_grade.side_effect = exception_class(err.message)
+                    mock_grade.side_effect = exception_class(six.text_type(err))
                 get_request_dict = {CapaFactory.input_key(): '3.14'}
                 result = module.submit_problem(get_request_dict)
 

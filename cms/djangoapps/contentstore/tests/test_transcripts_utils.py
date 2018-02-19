@@ -12,6 +12,7 @@ from django.test.utils import override_settings
 from django.utils import translation
 from mock import Mock, patch
 from nose.plugins.skip import SkipTest
+from six import text_type
 
 from contentstore.tests.utils import mock_requests_get
 from xmodule.contentstore.content import StaticContent
@@ -425,7 +426,7 @@ class TestGenerateSubsFromSource(TestDownloadYoutubeSubs):
 
         with self.assertRaises(transcripts_utils.TranscriptsGenerationException) as cm:
             transcripts_utils.generate_subs_from_source(youtube_subs, 'BAD_FORMAT', srt_filedata, self.course)
-        exception_message = cm.exception.message
+        exception_message = text_type(cm.exception)
         self.assertEqual(exception_message, "We support only SubRip (*.srt) transcripts format.")
 
     def test_fail_bad_subs_filedata(self):
@@ -439,7 +440,7 @@ class TestGenerateSubsFromSource(TestDownloadYoutubeSubs):
 
         with self.assertRaises(transcripts_utils.TranscriptsGenerationException) as cm:
             transcripts_utils.generate_subs_from_source(youtube_subs, 'srt', srt_filedata, self.course)
-        exception_message = cm.exception.message
+        exception_message = text_type(cm.exception)
         self.assertEqual(exception_message, "Something wrong with SubRip transcripts file during parsing.")
 
 
@@ -646,9 +647,9 @@ class TestTranscript(unittest.TestCase):
         """
         Tests that the srt transcript is successfully converted into sjson format.
         """
-        expected = json.loads(self.sjson_transcript)
+        expected = self.sjson_transcript
         actual = transcripts_utils.Transcript.convert(self.srt_transcript, 'srt', 'sjson')
-        self.assertDictEqual(actual, expected)
+        self.assertDictEqual(json.loads(actual), json.loads(expected))
 
     def test_convert_invalid_srt_to_sjson(self):
         """

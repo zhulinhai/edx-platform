@@ -8,6 +8,20 @@ $grouping-border: #d8d8d8;
 $trophy-gold: #f39c12;
 
 .content-wrapper {
+  .learner-analytics-header {
+      border-bottom: none;
+
+    .title {
+      margin-bottom: 0;
+      font-size: 1.75em;
+      font-weight: 600;
+    }
+
+    .lock-icon {
+      margin-right: 5px;
+    }
+  }
+
   .page-content.learner-analytics-dashboard-wrapper {
     flex-direction: column;
     background: #fff;
@@ -244,7 +258,7 @@ $trophy-gold: #f39c12;
     color: $font-color;
 
     .streak-icon-wrapper {
-      margin-bottom: 10px;
+      margin: 10px 0;
     }
 
     .fa-trophy {
@@ -255,6 +269,14 @@ $trophy-gold: #f39c12;
 
     .section-heading {
       margin-bottom: 0;
+    }
+
+    .streak-encouragement {
+      margin-bottom: 5px;
+    }
+
+    .streak-criteria {
+      margin-bottom: 20px;
     }
   }
 

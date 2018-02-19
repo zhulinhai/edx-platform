@@ -41,6 +41,7 @@ from django_countries.fields import CountryField
 from edx_rest_api_client.exceptions import SlumberBaseException
 from eventtracking import tracker
 from model_utils.models import TimeStampedModel
+from opaque_keys.edx.django.models import CourseKeyField
 from opaque_keys.edx.keys import CourseKey
 from pytz import UTC
 from six import text_type
@@ -48,7 +49,6 @@ from slumber.exceptions import HttpClientError, HttpServerError
 
 import dogstats_wrapper as dog_stats_api
 import lms.lib.comment_client as cc
-import request_cache
 from student.signals import UNENROLL_DONE, ENROLL_STATUS_CHANGE, ENROLLMENT_TRACK_UPDATED
 from lms.djangoapps.certificates.models import GeneratedCertificate
 from course_modes.models import CourseMode
@@ -60,8 +60,9 @@ from courseware.models import (
 from enrollment.api import _default_course_mode
 
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+from openedx.core.djangoapps.request_cache import clear_cache, get_cache
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-from openedx.core.djangoapps.xmodule_django.models import CourseKeyField, NoneToEmptyManager
+from openedx.core.djangoapps.xmodule_django.models import NoneToEmptyManager
 from track import contexts
 from util.milestones_helpers import is_entrance_exams_enabled
 from util.model_utils import emit_field_changed_events, get_changed_fields_dict
@@ -1870,7 +1871,7 @@ class CourseEnrollment(models.Model):
         """
         # before populating the cache with another bulk set of data,
         # remove previously cached entries to keep memory usage low.
-        request_cache.clear_cache(cls.MODE_CACHE_NAMESPACE)
+        clear_cache(cls.MODE_CACHE_NAMESPACE)
 
         records = cls.objects.filter(user__in=users, course_id=course_key).select_related('user')
         cache = cls._get_mode_active_request_cache()
@@ -1883,7 +1884,7 @@ class CourseEnrollment(models.Model):
         """
         Returns the request-specific cache for CourseEnrollment
         """
-        return request_cache.get_cache(cls.MODE_CACHE_NAMESPACE)
+        return get_cache(cls.MODE_CACHE_NAMESPACE)
 
     @classmethod
     def _get_enrollment_in_request_cache(cls, user, course_key):

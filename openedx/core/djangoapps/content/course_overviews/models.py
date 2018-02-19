@@ -13,6 +13,8 @@ from django.template import defaultfilters
 
 from ccx_keys.locator import CCXLocator
 from model_utils.models import TimeStampedModel
+from opaque_keys.edx.django.models import CourseKeyField, UsageKeyField
+from six import text_type
 
 from config_models.models import ConfigurationModel
 from lms.djangoapps import django_comment_client
@@ -24,7 +26,6 @@ from xmodule import course_metadata_utils, block_metadata_utils
 from xmodule.course_module import CourseDescriptor, DEFAULT_START_DATE
 from xmodule.error_module import ErrorDescriptor
 from xmodule.modulestore.django import modulestore
-from openedx.core.djangoapps.xmodule_django.models import CourseKeyField, UsageKeyField
 
 log = logging.getLogger(__name__)
 
@@ -528,7 +529,7 @@ class CourseOverview(TimeStampedModel):
                 log.exception(
                     'An error occurred while generating course overview for %s: %s',
                     unicode(course_key),
-                    ex.message,
+                    text_type(ex),
                 )
 
         log.info('Finished generating course overviews.')

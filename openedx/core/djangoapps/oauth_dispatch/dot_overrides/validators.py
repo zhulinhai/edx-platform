@@ -5,12 +5,14 @@ from __future__ import unicode_literals
 
 from datetime import datetime
 
+import django
 from django.contrib.auth import authenticate, get_user_model
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from oauth2_provider.models import AccessToken
 from oauth2_provider.oauth2_validators import OAuth2Validator
 from pytz import utc
+from ratelimitbackend.backends import RateLimitMixin
 
 from ..models import RestrictedApplication
 
@@ -27,6 +29,30 @@ def on_access_token_presave(sender, instance, *args, **kwargs):  # pylint: disab
     is_application_restricted = RestrictedApplication.objects.filter(application=instance.application).exists()
     if is_application_restricted:
         RestrictedApplication.set_access_token_as_expired(instance)
+
+
+# TODO: Remove Django 1.11 upgrade shim
+# SHIM: Allow users that are inactive to still authenticate while keeping rate-limiting functionality.
+if django.VERSION < (1, 10):
+    # Old backend which allowed inactive users to authenticate prior to Django 1.10.
+    from django.contrib.auth.backends import ModelBackend as UserModelBackend
+else:
+    # Django 1.10+ ModelBackend disallows inactive users from authenticating, so instead we use
+    # AllowAllUsersModelBackend which is the closest alternative.
+    from django.contrib.auth.backends import AllowAllUsersModelBackend as UserModelBackend
+
+
+class EdxRateLimitedAllowAllUsersModelBackend(RateLimitMixin, UserModelBackend):
+    """
+    Authentication backend needed to incorporate rate limiting of login attempts - but also
+    enabling users with is_active of False in the Django auth_user model to still authenticate.
+    This is necessary for mobile users using 3rd party auth who have not activated their accounts,
+    Inactive users who use 1st party auth (username/password auth) will still fail login attempts,
+    just at a higher layer, in the login_user view.
+
+    See: https://openedx.atlassian.net/browse/TNL-4516
+    """
+    pass
 
 
 class EdxOAuth2Validator(OAuth2Validator):
@@ -50,8 +76,8 @@ class EdxOAuth2Validator(OAuth2Validator):
 
     def _authenticate(self, username, password):
         """
-        Authenticate the user, allowing the user to identify themself either by
-        username or email
+        Authenticate the user, allowing the user to identify themselves either
+        by username or email
         """
 
         authenticated_user = authenticate(username=username, password=password)
@@ -67,8 +93,11 @@ class EdxOAuth2Validator(OAuth2Validator):
 
     def save_bearer_token(self, token, request, *args, **kwargs):
         """
-        Ensure that access tokens issued via client credentials grant are associated with the owner of the
-        ``Application``.
+        Ensure that access tokens issued via client credentials grant are
+        associated with the owner of the ``Application``.
+
+        Also, update the `expires_in` value in the token response for
+        RestrictedApplications.
         """
         grant_type = request.grant_type
         user = request.user
@@ -94,7 +123,7 @@ class EdxOAuth2Validator(OAuth2Validator):
             utc_now = datetime.utcnow().replace(tzinfo=utc)
             expires_in = (access_token.expires - utc_now).total_seconds()
 
-            # assert that RestriectedApplications only issue expired tokens
+            # assert that RestrictedApplications only issue expired tokens
             # blow up processing if we see otherwise
             assert expires_in < 0
 
