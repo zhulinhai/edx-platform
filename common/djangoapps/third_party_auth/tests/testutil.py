@@ -318,7 +318,7 @@ class GenerateUsernameTestCase(TestCase):
         )
         self.fullname = 'My Self User'
 
-    @override_settings(FEATURES={'GENERATOR_USERNAME':{'SEPARATOR':'_', 'LOWER':True, 'RANDOM': False}})
+    @override_settings(FEATURES={'USERNAME_GENERATOR':{'SEPARATOR': '_', 'LOWER': True, 'RANDOM': False}})
     def test_separator(self):
         """
         The first step to generate a hinted username is the separator character of the
@@ -329,26 +329,26 @@ class GenerateUsernameTestCase(TestCase):
         username = generator.insert_separator(self.fullname)
         return self.assertEqual(username, "My_Self_User")
 
-    @override_settings(FEATURES={"GENERATOR_USERNAME":{'SEPARATOR':'_', 'LOWER':True, 'RANDOM': False}})
+    @override_settings(FEATURES={"USERNAME_GENERATOR":{'SEPARATOR': '_', 'LOWER':True, 'RANDOM': False}})
     def test_generate_username_in_lowercase(self):
         """
         Test if the full name that comes from insert_separator method
         it's converted in lowercase.
         """
-        new_username = generate_username('My_Self_Username')
-        return self.assertEqual('my_self_username', new_username)
+        new_username = generate_username('My_Self_User')
+        return self.assertEqual(new_username, 'my_self_user')
 
-    @override_settings(FEATURES={"GENERATOR_USERNAME":{'SEPARATOR':'_', 'LOWER':False, 'RANDOM': False}})
-    def test_generate_username_in_lowercase(self):
+    @override_settings(FEATURES={"USERNAME_GENERATOR":{'SEPARATOR': '_', 'LOWER': False, 'RANDOM': False}})
+    def test_generate_username_not_lowercase(self):
         """
         Test if the full name that comes from insert_separator method
         is not converted in lowercase and preserves their original lowercases and
         uppers cases.
         """
-        new_username = generate_username('My_Self_Username')
-        return self.assertEqual('My_Self_Username', new_username)
+        new_username = generate_username('My_Self_User')
+        return self.assertEqual(new_username, 'My_Self_User')
 
-    @override_settings(FEATURES={'GENERATOR_USERNAME':{'SEPARATOR':'_', 'LOWER':True, 'RANDOM': False}})
+    @override_settings(FEATURES={'USERNAME_GENERATOR':{'SEPARATOR': '_', 'LOWER': True, 'RANDOM': False}})
     def test_generate_username_with_consecutive(self):
         """
         It should return a new user with a consecutive number.
@@ -364,3 +364,14 @@ class GenerateUsernameTestCase(TestCase):
         # not neccesary append an differentiator. We expect a new user with
         # the consecutive number 6.
         return self.assertEqual(new_username, 'my_self_user_6')
+
+    @override_settings(FEATURES={'USERNAME_GENERATOR':{'SEPARATOR': '_', 'LOWER': True, 'RANDOM': True}})
+    @patch('third_party_auth.utils.UsernameGenerator.consecutive_or_random')
+    def test_generate_username_with_random(self, mock_random):
+        """
+        It should return a username with a random integer
+        at the end of the username generated.
+        """
+        mock_random.return_value = 4589
+        new_username = generate_username(self.user.username)
+        return self.assertEqual(new_username, 'my_self_user_4589')

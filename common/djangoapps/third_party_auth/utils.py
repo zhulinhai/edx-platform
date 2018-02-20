@@ -11,12 +11,12 @@ class UsernameGenerator(object):
 
     def __init__(self):
         default_settings = {
-            'SEPERATOR':'_',
+            'SEPARATOR':'_',
             'LOWER': True,
             'RANDOM': True
         }
-        custom_settings = configuration_helpers.get_value('GENERATOR_USERNAME', settings.FEATURES.get('GENERATOR_USERNAME', default_settings))
-        self.separator_character = custom_settings['SEPERATOR']
+        custom_settings = configuration_helpers.get_value('USERNAME_GENERATOR', settings.FEATURES.get('USERNAME_GENERATOR', default_settings))
+        self.separator_character = custom_settings['SEPARATOR']
         self.in_lowercase = custom_settings['LOWER']
         self.random = custom_settings['RANDOM']
 
@@ -26,9 +26,9 @@ class UsernameGenerator(object):
         in the fullname string. By default, the separator characte is underscore.
         """
         username = fullname.replace(' ', self.separator_character)
-        return username
+        return  username
 
-    def lower(self, username):
+    def process_username(self, username):
         """
         Allows set the username in lowercase. If value is False,
         it will take the original username that SAML providers give.
@@ -57,7 +57,7 @@ def generate_username(username):
     new_username = username
     user_exists = User.objects.filter(username=new_username).exists()
     generator = UsernameGenerator()
-    initial_username = generator.lower(username)
+    initial_username = generator.process_username(username)
 
     if not user_exists:
         new_username = initial_username
