@@ -2,24 +2,33 @@
 @import 'lms/theme/variables-v1';
 
 // Unsupported browser alert
-$browser-update-background: $header-graphic-super-color !important;
+$browser-update-background: #fff !important;
 $browser-update-ok-button: $button-color;
 $browser-update-ignore-button: $action-primary-disabled-bg;
 
 .buorg {
+  background-color: $browser-update-background;
   background-position: 8px 17px;
+  border-bottom:1px solid #c5c6c7;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  cursor:pointer;
+  font-family: 'Open Sans','Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  left:0px;
   position:absolute;
   position:fixed;
-  z-index:111111;
-  width:100%;
   top:0px;
-  left:0px;
-  border-bottom:1px solid #A29330;
-  cursor:pointer;
-  background-color: $browser-update-background;
-  font: 17px Calibri,Helvetica,Arial,sans-serif;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  width:100%;
+  z-index:2;
 
+  a {
+    color: #fff;
+
+    &:hover {
+      color: #fff !important;
+    }
+  }
+  
   #buorgul{
     background-color: $browser-update-ok-button;
   }
