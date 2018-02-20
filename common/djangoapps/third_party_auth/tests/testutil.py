@@ -9,7 +9,9 @@ from contextlib import contextmanager
 
 import django.test
 import mock
+from mock import MagicMock, patch
 from django.conf import settings
+from django.test import TestCase, override_settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from mako.template import Template
@@ -26,6 +28,7 @@ from third_party_auth.models import (
     SAMLProviderConfig
 )
 from third_party_auth.saml import EdXSAMLIdentityProvider, get_saml_idp_class
+from third_party_auth.utils import generate_username, UsernameGenerator
 
 AUTH_FEATURES_KEY = 'ENABLE_THIRD_PARTY_AUTH'
 AUTH_FEATURE_ENABLED = AUTH_FEATURES_KEY in settings.FEATURES
@@ -305,3 +308,59 @@ def simulate_running_pipeline(pipeline_target, backend, email=None, fullname=Non
     finally:
         pipeline_get.stop()
         pipeline_running.stop()
+
+
+class GenerateUsernameTestCase(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(
+            username='my_self_user'
+        )
+        self.fullname = 'My Self User'
+
+    @override_settings(FEATURES={'GENERATOR_USERNAME':{'SEPARATOR':'_', 'LOWER':True, 'RANDOM': False}})
+    def test_separator(self):
+        """
+        The first step to generate a hinted username is the separator character of the
+        full name string. This test makes sure that we are generating a username replacing
+        all whitespaces by a character configured in settings or in site_configurations.
+        """
+        generator = UsernameGenerator()
+        username = generator.insert_separator(self.fullname)
+        return self.assertEqual(username, "My_Self_User")
+
+    @override_settings(FEATURES={"GENERATOR_USERNAME":{'SEPARATOR':'_', 'LOWER':True, 'RANDOM': False}})
+    def test_generate_username_in_lowercase(self):
+        """
+        Test if the full name that comes from insert_separator method
+        it's converted in lowercase.
+        """
+        new_username = generate_username('My_Self_Username')
+        return self.assertEqual('my_self_username', new_username)
+
+    @override_settings(FEATURES={"GENERATOR_USERNAME":{'SEPARATOR':'_', 'LOWER':False, 'RANDOM': False}})
+    def test_generate_username_in_lowercase(self):
+        """
+        Test if the full name that comes from insert_separator method
+        is not converted in lowercase and preserves their original lowercases and
+        uppers cases.
+        """
+        new_username = generate_username('My_Self_Username')
+        return self.assertEqual('My_Self_Username', new_username)
+
+    @override_settings(FEATURES={'GENERATOR_USERNAME':{'SEPARATOR':'_', 'LOWER':True, 'RANDOM': False}})
+    def test_generate_username_with_consecutive(self):
+        """
+        It should return a new user with a consecutive number.
+        """
+        for i in range (1, 6):
+            User.objects.create(
+                username='my_self_user_{}'.format(i)
+            )
+        new_username = generate_username(self.user.username)
+        # We have 6 users: Five created in the loop with a consecutive
+        # number and another one that comes from initial setUp,
+        # the first has not consecutive number due to is
+        # not neccesary append an differentiator. We expect a new user with
+        # the consecutive number 6.
+        return self.assertEqual(new_username, 'my_self_user_6')
