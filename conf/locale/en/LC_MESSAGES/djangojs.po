@@ -1,33 +1,33 @@
 # #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
 # edX translation file.
-# Copyright (C) 2018 EdX
+# Copyright (C) 2017 EdX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
-# EdX Team <info@edx.org>, 2018.
+# EdX Team <info@edx.org>, 2017.
 # 
 # #-#-#-#-#  djangojs-studio.po (0.1a)  #-#-#-#-#
 # edX translation file.
-# Copyright (C) 2018 EdX
+# Copyright (C) 2017 EdX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
-# EdX Team <info@edx.org>, 2018.
+# EdX Team <info@edx.org>, 2017.
 # 
 # #-#-#-#-#  underscore.po (0.1a)  #-#-#-#-#
 # edX translation file
-# Copyright (C) 2018 edX
+# Copyright (C) 2017 edX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
-# EdX Team <info@edx.org>, 2018.
+# EdX Team <info@edx.org>, 2017.
 # 
 # #-#-#-#-#  underscore-studio.po (0.1a)  #-#-#-#-#
 # edX translation file
-# Copyright (C) 2018 edX
+# Copyright (C) 2017 edX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
-# EdX Team <info@edx.org>, 2018
+# EdX Team <info@edx.org>, 2017.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
-"POT-Creation-Date: 2018-02-06 08:37+0000\n"
-"PO-Revision-Date: 2018-02-06 08:43:43.668350\n"
+"POT-Creation-Date: 2017-11-14 02:56-0500\n"
+"PO-Revision-Date: 2017-11-14 08:01:09.055399\n"
 "Last-Translator: \n"
 "Language-Team: openedx-translation <openedx-translation@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -36,13 +36,9 @@ msgstr ""
 "Generated-By: Babel 1.3\n"
 "Language: en\n"
 
-#: cms/static/cms/js/main.js cms/static/js/views/active_video_upload_list.js
-#: cms/static/js/views/video_transcripts.js common/static/bundles/Import.js
-#: common/static/bundles/Import.js
-#: src/recap-xblock/recap/static/js/src/recap_edit.js
 #: cms/static/cms/js/main.js cms/static/coffee/src/main.js
 #: cms/static/js/views/active_video_upload_list.js
-
+#: common/static/bundles/Import.js
 msgid ""
 "This may be happening because of an error with our server or your internet "
 "connection. Try refreshing the page or making sure you are online."
@@ -67,31 +63,6 @@ msgstr ""
 #: cms/static/js/views/utils/xblock_utils.js lms/static/js/ccx/schedule.js
 #: lms/static/js/views/fields.js
 msgid "Saving"
-msgstr ""
-
-#: cms/static/js/certificates/views/signatory_editor.js
-#: cms/static/js/views/asset.js cms/static/js/views/list_item.js
-#: cms/static/js/views/manage_users_and_roles.js
-#: cms/static/js/views/show_textbook.js
-#: common/static/js/vendor/ova/catch/js/catch.js
-#: lms/djangoapps/teams/static/teams/js/views/instructor_tools.js
-#: cms/templates/js/certificate-details.underscore
-#: cms/templates/js/certificate-editor.underscore
-#: cms/templates/js/content-group-editor.underscore
-#: cms/templates/js/course-instructor-details.underscore
-#: cms/templates/js/course-outline.underscore
-#: cms/templates/js/course-settings-learning-fields.underscore
-#: cms/templates/js/course_grade_policy.underscore
-#: cms/templates/js/course_info_update.underscore
-#: cms/templates/js/group-configuration-details.underscore
-#: cms/templates/js/group-configuration-editor.underscore
-#: cms/templates/js/partition-group-details.underscore
-#: cms/templates/js/show-textbook.underscore
-#: cms/templates/js/signatory-editor.underscore
-#: cms/templates/js/video-transcripts.underscore
-#: cms/templates/js/xblock-outline.underscore
-#: common/static/common/templates/discussion/forum-action-delete.underscore
-msgid "Delete"
 msgstr ""
 
 #. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
@@ -138,18 +109,6 @@ msgstr ""
 #: lms/djangoapps/support/static/support/templates/enrollment-modal.underscore
 #: lms/djangoapps/teams/static/teams/templates/edit-team.underscore
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
-#: lms/templates/learner_dashboard/verification_popover.underscore
-#: test_root/staticfiles/common/templates/discussion/new-post.underscore
-#: test_root/staticfiles/common/templates/discussion/response-comment-edit.underscore
-#: test_root/staticfiles/common/templates/discussion/thread-edit.underscore
-#: test_root/staticfiles/common/templates/discussion/thread-response-edit.underscore
-#: test_root/staticfiles/support/templates/enrollment-modal.underscore
-#: test_root/staticfiles/teams/templates/edit-team.underscore
-#: test_root/staticfiles/templates/instructor/instructor_dashboard_2/cohort-form.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/response-comment-edit.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/thread-edit.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/thread-response-edit.underscore
 msgid "Cancel"
 msgstr ""
 
@@ -244,7 +203,6 @@ msgstr ""
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/active_video_upload.js
 #: cms/static/js/views/modals/edit_xblock.js
-#: cms/static/js/views/video_transcripts.js
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
 #: lms/static/js/student_account/tos_modal.js
 #: cms/templates/js/course-video-settings.underscore
@@ -274,35 +232,9 @@ msgstr ""
 msgid "Choose File"
 msgstr ""
 
-#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
-#. Translators: this is a message from the raw HTML editor displayed in the
-#. browser when a user needs to edit HTML
-#: cms/static/js/views/course_info_update.js cms/static/js/views/tabs.js
-#: common/lib/xmodule/xmodule/js/src/html/edit.js
-#: lms/static/js/Markdown.Editor.js
-#: common/static/common/templates/discussion/alert-popup.underscore
-#: lms/templates/learner_dashboard/verification_popover.underscore
-#: test_root/staticfiles/common/templates/discussion/alert-popup.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/alert-popup.underscore
-msgid "OK"
-msgstr ""
-
-#. #-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#
-#. Translators: this is a message from the raw HTML editor displayed in the
-#. browser when a user needs to edit HTML
-#: cms/static/js/views/course_video_settings.js
-#: common/lib/xmodule/xmodule/js/src/html/edit.js
-#: cms/templates/js/timed-examination-preference-editor.underscore
-msgid "None"
-msgstr ""
-
-msgid "OK"
-msgstr ""
-
 #: cms/static/js/views/course_video_settings.js
 #: cms/static/js/views/metadata.js
 #: cms/static/js/views/previous_video_upload.js
-#: cms/static/js/views/video_transcripts.js
 #: lms/djangoapps/teams/static/teams/js/views/edit_team_members.js
 #: lms/static/js/views/image_field.js
 #: cms/templates/js/video/metadata-translations-item.underscore
@@ -330,7 +262,6 @@ msgstr ""
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
 #: cms/static/js/views/modals/base_modal.js
-#: cms/static/js/views/modals/course_outline_modals.js
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
 #: cms/templates/js/certificate-editor.underscore
 #: cms/templates/js/content-group-editor.underscore
@@ -340,7 +271,6 @@ msgstr ""
 #: cms/templates/js/section-name-edit.underscore
 #: cms/templates/js/signatory-actions.underscore
 #: cms/templates/js/xblock-string-field-editor.underscore
-#: lms/templates/fields/field_dropdown.underscore
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 #: lms/templates/instructor/instructor_dashboard_2/divided-discussions-course-wide.underscore
 #: lms/templates/instructor/instructor_dashboard_2/divided-discussions-inline.underscore
@@ -357,7 +287,7 @@ msgid "Advanced"
 msgstr ""
 
 #: cms/static/js/views/previous_video_upload.js
-#: cms/static/js/views/video_transcripts.js lms/static/js/views/image_field.js
+#: lms/static/js/views/image_field.js
 msgid "Removing"
 msgstr ""
 
@@ -1443,7 +1373,6 @@ msgstr ""
 #. browser when a user needs to edit HTML
 #: common/lib/xmodule/xmodule/js/src/html/edit.js
 #: cms/templates/js/metadata-file-uploader-item.underscore
-#: cms/templates/js/video-transcripts.underscore
 #: cms/templates/js/video/metadata-translations-item.underscore
 msgid "Replace"
 msgstr ""
@@ -1859,11 +1788,6 @@ msgid "Speed"
 msgstr ""
 
 #: common/lib/xmodule/xmodule/js/src/video/00_i18n.js
-#: common/lib/xmodule/xmodule/js/src/video/08_video_auto_advance_control.js
-msgid "Auto-advance"
-msgstr ""
-
-#: common/lib/xmodule/xmodule/js/src/video/00_i18n.js
 #: common/lib/xmodule/xmodule/js/src/video/07_video_volume_control.js
 msgid "Volume"
 msgstr ""
@@ -2043,198 +1967,26 @@ msgstr ""
 msgid "Turn off transcripts"
 msgstr ""
 
-#: common/static/bundles/AssetsPage.bace7aaf2adb48c51598.js
-msgid "end"
-msgstr ""
-
-#: common/static/bundles/CourseGoals.c4996c40fda9d3059c82.js
-#: common/static/bundles/CourseGoals.b56f05f27734759a3a6a.js
 #: common/static/bundles/CourseGoals.js
 msgid "Thank you for setting your course goal to "
 msgstr ""
 
-#: common/static/bundles/CourseGoals.c4996c40fda9d3059c82.js
-#: common/static/bundles/CourseGoals.b56f05f27734759a3a6a.js
 #: common/static/bundles/CourseGoals.js
 msgid ""
 "There was an error in setting your goal, please reload the page and try "
 "again."
 msgstr ""
 
-#: common/static/bundles/CourseHome.8f43ec4ffa54018648ac.js
-#: common/static/bundles/CourseHome.a5e2414bdecbf3f88196.js
 #: common/static/bundles/CourseHome.js
 #: openedx/features/course_experience/static/course_experience/js/CourseHome.js
 msgid "You have successfully updated your goal."
 msgstr ""
 
-#: common/static/bundles/CourseHome.8f43ec4ffa54018648ac.js
-#: common/static/bundles/CourseHome.a5e2414bdecbf3f88196.js
 #: common/static/bundles/CourseHome.js
 #: openedx/features/course_experience/static/course_experience/js/CourseHome.js
 msgid "There was an error updating your goal."
 msgstr ""
 
-#: common/static/bundles/CourseHome.8f43ec4ffa54018648ac.js
-#: common/static/bundles/CourseHome.a5e2414bdecbf3f88196.js
-#: common/static/bundles/CourseHome.js
-msgid "Show more"
-msgstr ""
-
-#: common/static/bundles/CourseHome.8f43ec4ffa54018648ac.js
-#: common/static/bundles/CourseHome.a5e2414bdecbf3f88196.js
-#: common/static/bundles/CourseHome.js
-msgid "Show less"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Please fix the following errors:"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Files that you upload must be smaller than 5MB in size."
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid ""
-"Files that you upload must be PDFs or image files in .gif, .jpg, .jpeg, or "
-".png format."
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Something went wrong. Please try again later."
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Add Attachment"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "(Optional)"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Remove file"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Course Name"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "What can we help you with, "
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-#: lms/static/js/instructor_dashboard/util.js
-msgid "Subject"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Details"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "The more you tell us, the more quickly and helpfully we can respond!"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-#: common/static/common/templates/discussion/new-post.underscore
-#: common/static/common/templates/discussion/thread-response.underscore
-#: common/static/common/templates/discussion/thread.underscore
-#: lms/templates/verify_student/incourse_reverify.underscore
-#: test_root/staticfiles/common/templates/discussion/new-post.underscore
-#: test_root/staticfiles/common/templates/discussion/thread-response.underscore
-#: test_root/staticfiles/common/templates/discussion/thread.underscore
-#: test_root/staticfiles/templates/verify_student/incourse_reverify.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/thread-response.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/thread.underscore
-msgid "Submit"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Sign in to "
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-#: lms/templates/student_account/hinted_login.underscore
-#: lms/templates/student_account/login.underscore
-#: test_root/staticfiles/templates/student_account/hinted_login.underscore
-#: test_root/staticfiles/templates/student_account/login.underscore
-msgid "Sign in"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Create an "
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Enter a valid email address."
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Enter a subject for your support request."
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Enter some details for your support request."
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Contact Us"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Find answers to the top questions asked by learners."
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Go to my Dashboard"
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Go to "
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid ""
-"Thank you for submitting a request! We will contact you within 24 hours."
-msgstr ""
-
-#: common/static/bundles/SingleSupportForm.24c3e19077ebd20ce989.js
-#: common/static/bundles/SingleSupportForm.js
-msgid "Cancel upload"
-msgstr ""
-
-#: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
-
-#: common/static/bundles/StudioIndex.ae56ffd9f272143aaf03.js
-#: common/static/bundles/CourseHome.a5e2414bdecbf3f88196.js
 #: common/static/bundles/CourseHome.js
 #: openedx/features/course_experience/static/course_experience/js/CourseHome.js
 msgid "Show more"
@@ -2245,46 +1997,26 @@ msgstr ""
 msgid "Show less"
 msgstr ""
 
-
-#: common/static/bundles/StudioIndex.ae56ffd9f272143aaf03.js
-#: common/static/bundles/StudioIndex.ea0f4fe6177806c1c647.js
 #: common/static/bundles/StudioIndex.js
 msgid "Organization:"
 msgstr ""
 
-
-#: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
-#: common/static/bundles/StudioIndex.ae56ffd9f272143aaf03.js
-#: common/static/bundles/StudioIndex.ea0f4fe6177806c1c647.js
 #: common/static/bundles/StudioIndex.js
 msgid "Course Number:"
 msgstr ""
 
-
-#: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
-#: common/static/bundles/StudioIndex.ae56ffd9f272143aaf03.js
-#: common/static/bundles/StudioIndex.ea0f4fe6177806c1c647.js
 #: common/static/bundles/StudioIndex.js
 msgid "Course Run:"
 msgstr ""
 
-#: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
-#: common/static/bundles/StudioIndex.ae56ffd9f272143aaf03.js
-#: common/static/bundles/StudioIndex.ea0f4fe6177806c1c647.js
 #: common/static/bundles/StudioIndex.js
 msgid "(Read-only)"
 msgstr ""
 
-#: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
-#: common/static/bundles/StudioIndex.ae56ffd9f272143aaf03.js
-#: common/static/bundles/StudioIndex.ea0f4fe6177806c1c647.js
 #: common/static/bundles/StudioIndex.js
 msgid "Re-run Course"
 msgstr ""
 
-#: common/static/bundles/StudioIndex.06cf9a104f002c871bbd.js
-#: common/static/bundles/StudioIndex.ae56ffd9f272143aaf03.js
-#: common/static/bundles/StudioIndex.ea0f4fe6177806c1c647.js
 #: common/static/bundles/StudioIndex.js
 #: cms/templates/js/show-textbook.underscore
 msgid "View Live"
@@ -2872,12 +2604,6 @@ msgstr ""
 #: lms/djangoapps/discussion/static/discussion/templates/search.underscore
 #: lms/djangoapps/support/static/support/templates/certificates.underscore
 #: lms/djangoapps/support/static/support/templates/enrollment.underscore
-#: lms/djangoapps/support/static/support/templates/manage_user.underscore
-#: test_root/staticfiles/common/templates/components/search-field.underscore
-#: test_root/staticfiles/discussion/templates/search.underscore
-#: test_root/staticfiles/support/templates/certificates.underscore
-#: test_root/staticfiles/support/templates/enrollment.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/components/search-field.underscore
 msgid "Search"
 msgstr ""
 
@@ -3341,12 +3067,6 @@ msgid "HTML preview of post"
 msgstr ""
 
 #: lms/static/coffee/src/customwmd.js
-#: common/static/common/templates/discussion/new-post.underscore
-#: test_root/staticfiles/common/templates/discussion/new-post.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post.underscore
-msgid "Your question or idea (required)"
-msgstr ""
-
 msgid "Post body"
 msgstr ""
 
@@ -4109,15 +3829,11 @@ msgstr ""
 #: lms/static/js/instructor_dashboard/membership.js
 #: lms/static/js/student_account/views/account_settings_factory.js
 #: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
-#: cms/templates/js/transcript-organization-credentials.underscore
-#: lms/djangoapps/support/static/support/templates/manage_user.underscore
 #: lms/templates/financial-assistance/financial_assessment_form.underscore
 msgid "Username"
 msgstr ""
 
 #: lms/static/js/instructor_dashboard/membership.js
-#: lms/djangoapps/support/static/support/templates/manage_user.underscore
-#: test_root/staticfiles/proctoring/templates/course_allowances.underscore
 msgid "Email"
 msgstr ""
 
@@ -4654,83 +4370,6 @@ msgid ""
 "sensitive nature of student information."
 msgstr ""
 
-#: lms/static/js/learner_dashboard/models/course_card_model.js
-msgid "(Self-paced) Starts {start}"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/models/course_card_model.js
-msgid "(Self-paced) Started {start}"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/models/course_card_model.js
-msgid "(Self-paced) Ends {end}"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/models/course_card_model.js
-msgid "(Self-paced) Ended {end}"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/models/course_card_model.js
-msgid "Starts {start}"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/models/course_card_model.js
-msgid "Started {start}"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/models/course_card_model.js
-msgid "Ends {end}"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/course_entitlement_view.js
-msgid "You must select a session to access the course."
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/course_entitlement_view.js
-msgid "There was an error. Please reload the page and try again."
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/course_entitlement_view.js
-#: lms/templates/learner_dashboard/course_entitlement.underscore
-msgid "Change Session"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/course_entitlement_view.js
-#: lms/templates/learner_dashboard/course_entitlement.underscore
-msgid "Select Session"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/course_entitlement_view.js
-msgid "Leave Current Session"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/course_entitlement_view.js
-msgid "Are you sure you want to select this session?"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/course_entitlement_view.js
-msgid "Are you sure you want to change to a different session?"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/course_entitlement_view.js
-msgid "Any course progress or grades from your current session will be lost."
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/course_entitlement_view.js
-msgid "Are you sure that you want to leave this session?"
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/entitlement_unenrollment_view.js
-msgid ""
-"Your unenrollment request could not be processed. Please try again later."
-msgstr ""
-
-#: lms/static/js/learner_dashboard/views/entitlement_unenrollment_view.js
-msgid ""
-"Are you sure you want to unenroll from {courseName} ({courseNumber})? You "
-"will be refunded the amount you paid."
-msgstr ""
-
 #: lms/static/js/learner_dashboard/views/program_details_sidebar_view.js
 msgid "{type} Progress"
 msgstr ""
@@ -4903,47 +4542,17 @@ msgid ""
 msgstr ""
 
 #: lms/static/js/student_account/views/account_settings_factory.js
-msgid ""
-"Your profile settings are managed by {enterprise_name}. Contact your "
-"administrator or {link_start}edX Support{link_end} for help."
-msgstr ""
-
-#: lms/static/js/student_account/views/account_settings_factory.js
-msgid "Email Address (Sign In)"
+msgid "Email Address"
 msgstr ""
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid ""
-"You receive messages from {platform_name} and course teams at this address."
-msgstr ""
-
-#: lms/static/js/student_account/views/account_settings_factory.js
-#: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
-msgid "Full Name"
 "The email address you use to sign in. Communications from {platform_name} "
 "and your courses are sent to this address."
 msgstr ""
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid ""
-"The name that is used for ID verification and that appears on your "
-"certificates."
-msgstr ""
-
-#: lms/static/js/student_account/views/account_settings_factory.js
-msgid "Country or Region of Residence"
-msgstr ""
-
-#: lms/static/js/student_account/views/account_settings_factory.js
-msgid "The country or region where you live."
-msgstr ""
-
-#: lms/static/js/student_account/views/account_settings_factory.js
-msgid "Basic Account Information"
-msgstr ""
-
-#: lms/static/js/student_account/views/account_settings_factory.js
-msgid "These settings include basic information about your account."
 "The email address you use to sign in. Communications from {platform_name} "
 "and your courses are sent to this address.  To change the email address, "
 "please contact {contact_email}."
@@ -4970,8 +4579,11 @@ msgstr ""
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid ""
-"The name that identifies you on {platform_name}. You cannot change your "
-"username."
+"The name that is used for ID verification and that appears on your "
+"certificates. Other learners see your full name if you have selected "
+"{bold_start}Full Profile{bold_end} for profile visibility. Make sure to "
+"enter your name exactly as it appears on your photo ID, including any non-"
+"Roman characters."
 msgstr ""
 
 #: lms/static/js/student_account/views/account_settings_factory.js
@@ -4984,9 +4596,6 @@ msgid "Reset Your Password"
 msgstr ""
 
 #: lms/static/js/student_account/views/account_settings_factory.js
-msgid "Check your email account for instructions to reset your password."
-msgstr ""
-
 msgid ""
 "When you select \"Reset Your Password\", a message will be sent to the email"
 " address for your {platform_name} account. Click the link in the message to "
@@ -4996,8 +4605,7 @@ msgstr ""
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid ""
 "The language used throughout this site. This site is currently available in "
-"a limited number of languages. Changing the value of this field will cause "
-"the page to refresh."
+"a limited number of languages."
 msgstr ""
 
 #: lms/static/js/student_account/views/account_settings_factory.js
@@ -5396,14 +5004,6 @@ msgstr ""
 msgid "Bookmark this page"
 msgstr ""
 
-#: openedx/features/course_experience/static/course_experience/js/CourseHome.js
-msgid "You have successfully updated your goal."
-msgstr ""
-
-#: openedx/features/course_experience/static/course_experience/js/CourseHome.js
-msgid "There was an error updating your goal."
-msgstr ""
-
 #: openedx/features/course_search/static/course_search/js/views/search_results_view.js
 msgid "{total_results} result"
 msgid_plural "{total_results} results"
@@ -5492,17 +5092,6 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: cms/static/cms/js/main.js cms/static/js/views/active_video_upload_list.js
-#: cms/static/js/views/video_transcripts.js
-msgid ""
-"This may be happening because of an error with our server or your internet "
-"connection. Try refreshing the page or making sure you are online."
-msgstr ""
-
-#: cms/static/cms/js/main.js
-msgid "Studio's having trouble saving your work"
-msgstr ""
-
 #: src/edx-reverification-block/edx_reverification_block/xblock/static/js/checkpoint_edit.js
 msgid "The Verification Checkpoint Name field cannot be empty."
 msgstr ""
@@ -5522,10 +5111,6 @@ msgstr ""
 
 #: src/edx-reverification-block/edx_reverification_block/xblock/static/js/checkpoint_edit.js
 msgid "An unexpected error occurred. Select Save to try again."
-msgstr ""
-
-#: src/recap-xblock/recap/static/js/src/recap_edit.js
-msgid "Unable to update settings"
 msgstr ""
 
 #: cms/static/cms/js/xblock/cms.runtime.v1.js
@@ -5679,51 +5264,6 @@ msgstr ""
 #: cms/static/js/factories/textbooks.js
 #: cms/static/js/views/pages/group_configurations.js
 msgid "You have unsaved changes. Do you really want to leave this page?"
-msgstr ""
-
-#: cms/static/js/features/import/factories/import.js
-msgid "There was an error during the upload process."
-msgstr ""
-
-#: cms/static/js/features/import/factories/import.js
-msgid "There was an error while unpacking the file."
-msgstr ""
-
-#: cms/static/js/features/import/factories/import.js
-msgid "There was an error while verifying the file you submitted."
-msgstr ""
-
-#: cms/static/js/features/import/factories/import.js
-msgid "Choose new file"
-msgstr ""
-
-#: cms/static/js/features/import/factories/import.js
-msgid ""
-"File format not supported. Please upload a file with a {ext} extension."
-msgstr ""
-
-#: cms/static/js/features/import/factories/import.js
-msgid "There was an error while importing the new library to our database."
-msgstr ""
-
-#: cms/static/js/features/import/factories/import.js
-msgid "There was an error while importing the new course to our database."
-msgstr ""
-
-#: cms/static/js/features/import/factories/import.js
-msgid "Your import has failed."
-msgstr ""
-
-#: cms/static/js/features/import/views/import.js
-msgid "Your import is in progress; navigating away will abort it."
-msgstr ""
-
-#: cms/static/js/features/import/views/import.js
-msgid "Error importing course"
-msgstr ""
-
-#: cms/static/js/features/import/views/import.js
-msgid "There was an error with the upload"
 msgstr ""
 
 #: cms/static/js/maintenance/force_publish_course.js
@@ -6008,14 +5548,10 @@ msgid "Processing Re-run Request"
 msgstr ""
 
 #: cms/static/js/views/course_video_settings.js
-msgid "An error has occurred. Wait a few minutes, and then try again."
-msgstr ""
-
 #: lms/djangoapps/support/static/support/templates/enrollment.underscore
 #: lms/templates/ccx/schedule.underscore
 msgid "N/A"
 msgstr ""
-
 
 #: cms/static/js/views/course_video_settings.js
 msgid "Select turnaround"
@@ -6034,25 +5570,11 @@ msgid "Press Remove to remove language"
 msgstr ""
 
 #: cms/static/js/views/course_video_settings.js
-msgid "Settings updated"
-msgstr ""
-
-#: cms/static/js/views/course_video_settings.js
-#: cms/templates/js/course-video-settings-update-settings-footer.underscore
 #: cms/templates/js/course-video-settings.underscore
 msgid "Last updated"
 msgstr ""
 
 #: cms/static/js/views/course_video_settings.js
-msgid "Required"
-msgstr ""
-
-#: cms/static/js/views/course_video_settings.js
-msgid "Automatic transcripts are disabled."
-msgstr ""
-
-#: cms/static/js/views/course_video_settings.js
-msgid "{selectedProvider} credentials saved"
 msgid "Settings updated"
 msgstr ""
 
@@ -6060,6 +5582,9 @@ msgstr ""
 msgid "Error saving data"
 msgstr ""
 
+#: cms/static/js/views/course_video_settings.js
+msgid "Required"
+msgstr ""
 
 #: cms/static/js/views/edit_chapter.js
 msgid "Upload a new PDF to “<%= name %>”"
@@ -6303,22 +5828,6 @@ msgid "Publish"
 msgstr ""
 
 #: cms/static/js/views/modals/course_outline_modals.js
-msgid "Highlights for {display_name}"
-msgstr ""
-
-#: cms/static/js/views/modals/course_outline_modals.js
-msgid "Enable Weekly Highlight Emails"
-msgstr ""
-
-#: cms/static/js/views/modals/course_outline_modals.js
-msgid "Enable"
-msgstr ""
-
-#: cms/static/js/views/modals/course_outline_modals.js
-msgid "Not yet"
-msgstr ""
-
-#: cms/static/js/views/modals/course_outline_modals.js
 msgid "All Learners and Staff"
 msgstr ""
 
@@ -6414,8 +5923,6 @@ msgid "Publishing"
 msgstr ""
 
 #: cms/static/js/views/pages/container_subviews.js
-#: cms/templates/js/course-video-settings-update-org-credentials-footer.underscore
-#: cms/templates/js/course-video-settings-update-settings-footer.underscore
 #: cms/templates/js/publish-xblock.underscore
 msgid "Discard Changes"
 msgstr ""
@@ -6866,39 +6373,6 @@ msgstr ""
 msgid "Image upload failed. "
 msgstr ""
 
-#: cms/static/js/views/video_transcripts.js
-msgid "The file could not be uploaded."
-msgstr ""
-
-#: cms/static/js/views/video_transcripts.js
-msgid "Hide transcripts ({transcriptCount})"
-msgstr ""
-
-#: cms/static/js/views/video_transcripts.js
-msgid "Show transcripts ({transcriptCount})"
-msgstr ""
-
-#: cms/static/js/views/video_transcripts.js
-msgid ""
-"This file type is not supported. Supported file type is "
-"{supportedFileFormat}."
-msgstr ""
-
-#: cms/static/js/views/video_transcripts.js
-#: cms/templates/js/video-transcripts.underscore
-msgid "{transcriptClientTitle}_{transcriptLanguageCode}.{fileExtension}"
-msgstr ""
-
-#: cms/static/js/views/video_transcripts.js
-msgid "Are you sure you want to remove this transcript?"
-msgstr ""
-
-#: cms/static/js/views/video_transcripts.js
-msgid ""
-"If you remove this transcript, the transcript will not be available for any "
-"components that use this video."
-msgstr ""
-
 #: cms/static/js/views/xblock_editor.js
 msgid "Editor"
 msgstr ""
@@ -6953,7 +6427,6 @@ msgid "Status"
 msgstr ""
 
 #: cms/templates/js/previous-video-upload-list.underscore
-#: lms/djangoapps/support/static/support/templates/manage_user.underscore
 #: lms/templates/instructor/instructor_dashboard_2/certificate-invalidation.underscore
 #: lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
 msgid "Action"
@@ -7045,15 +6518,11 @@ msgid "Error posting your message."
 msgstr ""
 
 #: common/static/common/templates/discussion/new-post-visibility.underscore
-#: test_root/staticfiles/common/templates/discussion/new-post-visibility.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post-visibility.underscore
 #, python-format
 msgid "This post will be visible only to %(group_name)s."
 msgstr ""
 
 #: common/static/common/templates/discussion/new-post-visibility.underscore
-#: test_root/staticfiles/common/templates/discussion/new-post-visibility.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post-visibility.underscore
 msgid "This post will be visible to everyone."
 msgstr ""
 
@@ -7082,8 +6551,6 @@ msgid ""
 msgstr ""
 
 #: common/static/common/templates/discussion/new-post.underscore
-#: test_root/staticfiles/common/templates/discussion/new-post.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post.underscore
 msgid "Your question or idea (required)"
 msgstr ""
 
@@ -7107,16 +6574,8 @@ msgstr ""
 #: common/static/common/templates/discussion/thread-response.underscore
 #: common/static/common/templates/discussion/thread.underscore
 #: lms/templates/verify_student/incourse_reverify.underscore
-#: test_root/staticfiles/common/templates/discussion/new-post.underscore
-#: test_root/staticfiles/common/templates/discussion/thread-response.underscore
-#: test_root/staticfiles/common/templates/discussion/thread.underscore
-#: test_root/staticfiles/templates/verify_student/incourse_reverify.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/thread-response.underscore
-#: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/thread.underscore
 msgid "Submit"
 msgstr ""
-
 
 #: common/static/common/templates/discussion/post-user-display.underscore
 msgid "(Community TA)"
@@ -7496,27 +6955,7 @@ msgid "Last modified by"
 msgstr ""
 
 #: lms/djangoapps/support/static/support/templates/enrollment.underscore
-#: lms/templates/ccx/schedule.underscore
-#: test_root/staticfiles/support/templates/enrollment.underscore
-#: test_root/staticfiles/templates/ccx/schedule.underscore
-msgid "N/A"
-msgstr ""
-
-#: lms/djangoapps/support/static/support/templates/enrollment.underscore
-#: test_root/staticfiles/support/templates/enrollment.underscore
 msgid "Change Enrollment"
-msgstr ""
-
-#: lms/djangoapps/support/static/support/templates/manage_user.underscore
-msgid "Date Joined"
-msgstr ""
-
-#: lms/djangoapps/support/static/support/templates/manage_user.underscore
-msgid "Password Status"
-msgstr ""
-
-#: lms/djangoapps/support/static/support/templates/manage_user.underscore
-msgid "Disable Account"
 msgstr ""
 
 #: lms/djangoapps/teams/static/teams/templates/edit-team.underscore
@@ -7776,11 +7215,6 @@ msgstr ""
 
 #: lms/templates/courseware/proctored-exam-status.underscore
 msgid "End My Exam"
-msgstr ""
-
-#: lms/templates/courseware/proctored-exam-status.underscore
-#: test_root/staticfiles/templates/courseware/proctored-exam-status.underscore
-msgid "Hide Timer"
 msgstr ""
 
 #: lms/templates/discovery/course_card.underscore
@@ -8221,32 +7655,6 @@ msgstr ""
 msgid "Certificate Purchased"
 msgstr ""
 
-#: lms/templates/learner_dashboard/course_card.underscore
-msgid "Change or Leave Session"
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_card.underscore
-msgid "You must select a session by {expiration_date} to access the course."
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_card.underscore
-msgid "You can no longer change sessions."
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_card.underscore
-msgid "You can change sessions until {expiration_date}."
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_enroll.underscore
-#: test_root/staticfiles/templates/learner_dashboard/course_enroll.underscore
-msgid "Final Grade"
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_enroll.underscore
-#: test_root/staticfiles/templates/learner_dashboard/course_enroll.underscore
-msgid "for {courseName}"
-msgstr ""
-
 #: lms/templates/learner_dashboard/course_enroll.underscore
 msgid "View Archived Course"
 msgstr ""
@@ -8256,9 +7664,6 @@ msgid "View Course"
 msgstr ""
 
 #: lms/templates/learner_dashboard/course_enroll.underscore
-msgid "Select a session:"
-msgstr ""
-
 msgid "Choose a course run:"
 msgstr ""
 
@@ -8276,38 +7681,6 @@ msgstr ""
 
 #: lms/templates/learner_dashboard/course_enroll.underscore
 msgid "Not Currently Available"
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_entitlement.underscore
-msgid "More sessions coming soon."
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_entitlement.underscore
-msgid "Change to a different session or leave the current session."
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_entitlement.underscore
-msgid "To access the course, select a session."
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_entitlement.underscore
-msgid "Session Selection Dropdown for {courseName}"
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_entitlement.underscore
-msgid "{sessionDates} - Currently Selected"
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_entitlement.underscore
-msgid "{sessionDates} (Open until {enrollmentEnd})"
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_entitlement.underscore
-msgid "More sessions coming soon"
-msgstr ""
-
-#: lms/templates/learner_dashboard/course_entitlement.underscore
-msgid "Leave the current session and decide later"
 msgstr ""
 
 #: lms/templates/learner_dashboard/empty_programs_list.underscore
@@ -8442,13 +7815,6 @@ msgstr ""
 
 #: lms/templates/student_account/hinted_login.underscore
 #: lms/templates/student_account/login.underscore
-#: test_root/staticfiles/templates/student_account/hinted_login.underscore
-#: test_root/staticfiles/templates/student_account/login.underscore
-msgid "Sign in"
-msgstr ""
-
-#: lms/templates/student_account/hinted_login.underscore
-#: test_root/staticfiles/templates/student_account/hinted_login.underscore
 msgid "Sign in"
 msgstr ""
 
@@ -8496,36 +7862,6 @@ msgid "Create an Account."
 msgstr ""
 
 #: lms/templates/student_account/login.underscore
-msgid "Sign in to continue learning as {email}"
-msgstr ""
-
-#: lms/templates/student_account/login.underscore
-msgid "Sign in to continue learning"
-msgstr ""
-
-#: lms/templates/student_account/login.underscore
-msgid ""
-"You already have an edX account with your {enterprise_name} email address."
-msgstr ""
-
-#: lms/templates/student_account/login.underscore
-msgid ""
-"Going forward, your account information will be updated and maintained by "
-"{enterprise_name}."
-msgstr ""
-
-#: lms/templates/student_account/login.underscore
-msgid ""
-"You can view your information or unlink from {enterprise_name} anytime in "
-"your Account Settings."
-msgstr ""
-
-#: lms/templates/student_account/login.underscore
-msgid "To continue learning with this account, sign in below."
-msgstr ""
-
-#: lms/templates/student_account/login.underscore
-#: test_root/staticfiles/templates/student_account/login.underscore
 msgid "Sign In"
 msgstr ""
 
@@ -8580,7 +7916,6 @@ msgid "Sign in."
 msgstr ""
 
 #: lms/templates/student_account/register.underscore
-#: test_root/staticfiles/templates/student_account/register.underscore
 msgid "Create an Account"
 msgstr ""
 
@@ -8595,15 +7930,6 @@ msgstr ""
 
 #: lms/templates/student_account/register.underscore
 msgid "or create a new one here"
-msgstr ""
-
-#: lms/templates/student_account/register.underscore
-msgid "Create an Account"
-msgstr ""
-
-#: lms/templates/student_account/register.underscore
-#: test_root/staticfiles/templates/student_account/register.underscore
-msgid "Support education research by providing additional information"
 msgstr ""
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore
@@ -9187,79 +8513,6 @@ msgid ""
 "your backpack.</li>"
 msgstr ""
 
-#: test_root/staticfiles/proctoring/templates/add-new-allowance.underscore
-msgid "Add a New Allowance"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/add-new-allowance.underscore
-msgid "Special Exam"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/add-new-allowance.underscore
-#: test_root/staticfiles/proctoring/templates/student-proctored-exam-attempts.underscore
-#, python-format
-msgid " %(exam_display_name)s "
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/add-new-allowance.underscore
-msgid "Exam Type"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/add-new-allowance.underscore
-#: test_root/staticfiles/proctoring/templates/course_allowances.underscore
-msgid "Allowance Type"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/add-new-allowance.underscore
-msgid "Additional Time (minutes)"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/add-new-allowance.underscore
-msgid "Value"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/add-new-allowance.underscore
-msgid "Username or Email"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/course_allowances.underscore
-msgid "Allowances"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/course_allowances.underscore
-msgid "Add Allowance"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/course_allowances.underscore
-#: test_root/staticfiles/proctoring/templates/student-proctored-exam-attempts.underscore
-msgid "Exam Name"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/course_allowances.underscore
-msgid "Allowance Value"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/student-proctored-exam-attempts.underscore
-msgid "Time Limit"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/student-proctored-exam-attempts.underscore
-msgid "Started At"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/student-proctored-exam-attempts.underscore
-msgid "Completed At"
-msgstr ""
-
-#: test_root/staticfiles/proctoring/templates/student-proctored-exam-attempts.underscore
-#, python-format
-msgid " %(username)s "
-msgstr ""
-
-#: test_root/staticfiles/templates/learner_dashboard/course_enroll.underscore
-msgid "Choose a course run:"
-msgstr ""
-
 #: cms/templates/js/access-editor.underscore
 msgid "Limit Access"
 msgstr ""
@@ -9588,18 +8841,6 @@ msgid ""
 "hidden."
 msgstr ""
 
-#: cms/templates/js/course-highlights-enable.underscore
-msgid "Weekly Highlight Emails"
-msgstr ""
-
-#: cms/templates/js/course-highlights-enable.underscore
-msgid "Enabled"
-msgstr ""
-
-#: cms/templates/js/course-highlights-enable.underscore
-msgid "Enable Now"
-msgstr ""
-
 #: cms/templates/js/course-instructor-details.underscore
 msgid "Instructor Name"
 msgstr ""
@@ -9748,11 +8989,6 @@ msgid "Scheduled:"
 msgstr ""
 
 #: cms/templates/js/course-outline.underscore
-#: cms/templates/js/highlights-editor.underscore
-msgid "Section Highlights"
-msgstr ""
-
-#: cms/templates/js/course-outline.underscore
 msgid "Graded as:"
 msgstr ""
 
@@ -9787,27 +9023,6 @@ msgstr ""
 msgid "Add a learning outcome here"
 msgstr ""
 
-#: cms/templates/js/course-video-settings-update-org-credentials-footer.underscore
-msgid "Press discard changes to discard your changes."
-msgstr ""
-
-#: cms/templates/js/course-video-settings-update-org-credentials-footer.underscore
-#: cms/templates/js/course-video-settings-update-settings-footer.underscore
-msgid "Update Settings"
-msgstr ""
-
-#: cms/templates/js/course-video-settings-update-org-credentials-footer.underscore
-msgid "Press update settings to update the information for your organization."
-msgstr ""
-
-#: cms/templates/js/course-video-settings-update-settings-footer.underscore
-msgid "Press discard changes to discard changes."
-msgstr ""
-
-#: cms/templates/js/course-video-settings-update-settings-footer.underscore
-msgid "Press update settings to update course video settings"
-msgstr ""
-
 #: cms/templates/js/course-video-settings.underscore
 msgid "Press close to hide course video settings"
 msgstr ""
@@ -9816,23 +9031,6 @@ msgstr ""
 msgid "Course Video Settings"
 msgstr ""
 
-#: cms/templates/js/course-video-transcript-preferences.underscore
-msgid "Transcript Turnaround"
-msgstr ""
-
-#: cms/templates/js/course-video-transcript-preferences.underscore
-msgid "Transcript Fidelity"
-msgstr ""
-
-#: cms/templates/js/course-video-transcript-preferences.underscore
-msgid "Video Source Language"
-msgstr ""
-
-#: cms/templates/js/course-video-transcript-preferences.underscore
-msgid "Transcript Languages"
-msgstr ""
-
-#: cms/templates/js/course-video-transcript-preferences.underscore
 #: cms/templates/js/course-video-settings.underscore
 msgid "Transcript Provider"
 msgstr ""
@@ -9858,26 +9056,6 @@ msgstr ""
 #: cms/templates/js/metadata-list-entry.underscore
 #: cms/templates/js/video/metadata-translations-entry.underscore
 msgid "Add"
-msgstr ""
-
-#: cms/templates/js/course-video-transcript-preferences.underscore
-msgid "Press Add to language"
-msgstr ""
-
-#: cms/templates/js/course-video-transcript-provider-empty.underscore
-msgid "Automated Transcripts"
-msgstr ""
-
-#: cms/templates/js/course-video-transcript-provider-selected.underscore
-msgid "Transcript Provider"
-msgstr ""
-
-#: cms/templates/js/course-video-transcript-provider-selected.underscore
-msgid "Change"
-msgstr ""
-
-#: cms/templates/js/course-video-transcript-provider-selected.underscore
-msgid "Press change to change selected transcript provider."
 msgstr ""
 
 #: cms/templates/js/course-video-settings.underscore
@@ -10117,26 +9295,6 @@ msgstr ""
 msgid "delete group"
 msgstr ""
 
-#: cms/templates/js/highlights-editor.underscore
-msgid ""
-"This feature is currently in testing. Course teams can enter highlights, but"
-" learners will not receive email messages."
-msgstr ""
-
-#: cms/templates/js/highlights-editor.underscore
-msgid ""
-"Enter 3-5 highlights to include in the email message that learners receive "
-"for this section (250 character limit)."
-msgstr ""
-
-#: cms/templates/js/highlights-editor.underscore
-msgid "Highlight {highlight_index}"
-msgstr ""
-
-#: cms/templates/js/highlights-editor.underscore
-msgid "A highlight to look forward to this week."
-msgstr ""
-
 #: cms/templates/js/license-selector.underscore
 msgid "License Type"
 msgstr ""
@@ -10196,7 +9354,6 @@ msgid "Component Location ID"
 msgstr ""
 
 #: cms/templates/js/metadata-file-uploader-item.underscore
-#: cms/templates/js/video-transcripts.underscore
 #: cms/templates/js/video/metadata-translations-item.underscore
 msgid "Download"
 msgstr ""
@@ -10249,10 +9406,6 @@ msgstr ""
 
 #: cms/templates/js/previous-video-upload-list.underscore
 msgid "Video ID"
-msgstr ""
-
-#: cms/templates/js/previous-video-upload-list.underscore
-msgid "Transcripts"
 msgstr ""
 
 #: cms/templates/js/previous-video-upload.underscore
@@ -10420,10 +9573,6 @@ msgstr ""
 msgid ""
 "If the subsection does not have a due date, learners always see their scores"
 " when they submit answers to assessments."
-msgstr ""
-
-#: cms/templates/js/show-textbook.underscore
-msgid "View Live"
 msgstr ""
 
 #: cms/templates/js/signatory-details.underscore
@@ -10620,27 +9769,6 @@ msgid ""
 "before the learners start the exam."
 msgstr ""
 
-#: cms/templates/js/transcript-organization-credentials.underscore
-msgid "Account"
-msgstr ""
-
-#: cms/templates/js/transcript-organization-credentials.underscore
-msgid ""
-"This action updates the {provider} information for your entire organization."
-msgstr ""
-
-#: cms/templates/js/transcript-organization-credentials.underscore
-msgid "Enter the account information for your organization."
-msgstr ""
-
-#: cms/templates/js/transcript-organization-credentials.underscore
-msgid "API Key"
-msgstr ""
-
-#: cms/templates/js/transcript-organization-credentials.underscore
-msgid "API Secret"
-msgstr ""
-
 #: cms/templates/js/unit-access-editor.underscore
 msgid "Unit Access"
 msgstr ""
@@ -10700,18 +9828,6 @@ msgstr ""
 msgid ""
 "Recommended image resolution is {imageResolution}, maximum image file size "
 "should be {maxFileSize} and format must be one of {supportedImageFormats}."
-msgstr ""
-
-#: cms/templates/js/video-transcript-upload-status.underscore
-msgid "Read more"
-msgstr ""
-
-#: cms/templates/js/video-transcripts.underscore
-msgid "Show transcripts ({totalTranscripts})"
-msgstr ""
-
-#: cms/templates/js/video-transcripts.underscore
-msgid "No transcript uploaded."
 msgstr ""
 
 #: cms/templates/js/xblock-access-editor.underscore
@@ -10874,4 +9990,22 @@ msgstr ""
 
 #: cms/templates/js/video/transcripts/messages/transcripts-use-existing.underscore
 msgid "Use Current Transcript"
+msgstr ""
+
+
+msgid "Twitter"
+msgstr ""
+
+
+msgid "Facebook"
+msgstr ""
+
+
+msgid "LinkedIn"
+msgstr ""
+
+msgid " username or the URL to your "
+msgstr ""
+
+msgid " page. Delete the URL to remove the link."
 msgstr ""
