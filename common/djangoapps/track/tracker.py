@@ -98,16 +98,16 @@ def send(event):
             backend.send(event)
             
     if settings.ANALITICA_ACTIVE:
-       event['time'] = time.time()
-       
-       if 'created_at' in event['event']:
-           event['event']['created_at'] = time.time()
-       if 'submitted_at' in event['event']:
-           event['event']['submitted_at'] = time.time()
-
-       event['event'] = json.loads(event.get('event'))
-
        try:
+            event['time'] = time.time()
+
+            if 'created_at' in event['event']:
+                event['event']['created_at'] = time.time()
+            if 'submitted_at' in event['event']:
+                event['event']['submitted_at'] = time.time()
+
+            event['event'] = json.loads(event.get('event'))
+
            r =\
               requests.post(
                   settings.ANALITICA_TRACK_URL,
