@@ -99,14 +99,14 @@ def send(event):
             
     if settings.ANALITICA_ACTIVE:
        try:
-            event['time'] = time.time()
+           event['time'] = time.time()
 
-            if 'created_at' in event['event']:
-                event['event']['created_at'] = time.time()
-            if 'submitted_at' in event['event']:
-                event['event']['submitted_at'] = time.time()
+           if 'created_at' in event['event']:
+               event['event']['created_at'] = time.time()
+           if 'submitted_at' in event['event']:
+               event['event']['submitted_at'] = time.time()
 
-            event['event'] = json.loads(event.get('event'))
+           event['event'] = json.loads(event.get('event'))
 
            r =\
               requests.post(
