@@ -84,6 +84,17 @@
                                 })
                             }
 
+                        } else if (accomplishmentsShared) {
+                            tabs = [
+                                {view: this.sectionTwoView, title: gettext('About Me'), url: 'about_me'},
+                                {
+                                    view: this.options.badgeListContainer,
+                                    title: gettext('Accomplishments'),
+                                    url: 'accomplishments'
+                                }
+                            ];
+                        }
+
                         // Build the accomplishments Tab and fill with data
                         this.options.badgeListContainer.collection.fetch().done(function() {
                             self.options.badgeListContainer.render();
@@ -103,46 +114,16 @@
                             HtmlUtils.HTML($tabbedViewElement)
                         );
 
-                        } else if (accomplishmentsShared) {
-                            tabs = [
-                                {view: this.sectionTwoView, title: gettext('About Me'), url: 'about_me'},
-                                {
-                                    view: this.options.badgeListContainer,
-                                    title: gettext('Accomplishments'),
-                                    url: 'accomplishments'
-                                }
-                            ];
-                        }
-
-                        if (tabs && tabs.length > 0) {
-                            // Build the accomplishments Tab and fill with data
-                            this.options.badgeListContainer.collection.fetch().done(function() {
-                                self.options.badgeListContainer.render();
-                            }).error(function() {
-                                self.options.badgeListContainer.renderError();
-                            });
-
-                            this.tabbedView = new TabbedView({
-                                tabs: tabs,
-                                router: this.router,
-                                viewLabel: gettext('Profile')
-                            });
-
-                            this.$el.find('.wrapper-profile-bio').html(this.tabbedView.render().el);
-
-                            if (this.firstRender) {
-                                this.router.on('route:loadTab', _.bind(this.setActiveTab, this));
-                                Backbone.history.start();
-                                this.firstRender = false;
-                                // Load from history.
-                                this.router.navigate((Backbone.history.getFragment() || 'about_me'), {trigger: true});
-                            } else {
-                                // Restart the router so the tab will be brought up anew.
-                                Backbone.history.stop();
-                                Backbone.history.start();
-                            }
+                        if (this.firstRender) {
+                            this.router.on('route:loadTab', _.bind(this.setActiveTab, this));
+                            Backbone.history.start();
+                            this.firstRender = false;
+                            // Load from history.
+                            this.router.navigate((Backbone.history.getFragment() || 'about_me'), {trigger: true});
                         } else {
-                            this.$el.find('.wrapper-profile-bio').html(this.sectionTwoView.render().el);
+                            // Restart the router so the tab will be brought up anew.
+                            Backbone.history.stop();
+                            Backbone.history.start();
                         }
                     } else {
                         // xss-lint: disable=javascript-jquery-html
