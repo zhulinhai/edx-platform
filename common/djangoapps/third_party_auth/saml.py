@@ -10,6 +10,8 @@ from django.utils.functional import cached_property
 from social_core.backends.saml import OID_EDU_PERSON_ENTITLEMENT, SAMLAuth, SAMLIdentityProvider
 from social_core.exceptions import AuthForbidden
 
+from utils import UsernameGenerator, generate_username
+
 from openedx.core.djangoapps.theming.helpers import get_current_request
 
 STANDARD_SAML_PROVIDER_KEY = 'standard_saml_provider'
@@ -272,3 +274,30 @@ def get_saml_idp_class(idp_identifier_string):
             idp_identifier_string
         )
     return choices.get(idp_identifier_string, EdXSAMLIdentityProvider)
+
+
+class HintUsernameSAMLAuthBackend(SAMLAuthBackend):
+    """Auth backend to hint a username"""
+
+    def get_user_details(self, response):
+        """
+        Overrides get_user_details method of Python-SAML
+        with the hinted username
+        """
+        user_details =\
+            super(HintUsernameSAMLAuthBackend, self).get_user_details(response)
+            
+        fullname = user_details['fullname']
+        username = self.hint_username(fullname)
+        user_details.update({'username': username})
+        return user_details
+
+    def hint_username(self, fullname):
+        """
+        First step to generates the username.
+        Returns the method that handles the job with the
+        hinted username.
+        """
+        generator = UsernameGenerator()
+        separator = generator.insert_separator(fullname)
+        return generate_username(separator)
