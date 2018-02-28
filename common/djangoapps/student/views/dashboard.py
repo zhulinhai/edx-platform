@@ -707,6 +707,23 @@ def student_dashboard(request):
             enr for enr in course_enrollments if entitlement.enrollment_course_run.course_id != enr.course_id
         ]
 
+    # sort the enrollment pairs by the flag USER_COURSE_ENROLLMENTS_ORDER_BY
+    if USER_COURSE_ENROLLMENTS_ORDER_BY == 'created':
+        course_enrollments.sort(key=lambda x: x.created, reverse=False)
+    elif USER_COURSE_ENROLLMENTS_ORDER_BY == 'created_reverse':
+        course_enrollments.sort(key=lambda x: x.created, reverse=True)
+    elif USER_COURSE_ENROLLMENTS_ORDER_BY == 'course_name':
+        course_enrollments.sort(
+            key=lambda x: x.course.display_name,
+            reverse=False
+        )
+    elif USER_COURSE_ENROLLMENTS_ORDER_BY == 'course_name_reverse':
+        course_enrollments.sort(
+            key=lambda x: x.course.display_name,
+            reverse=True
+        )
+
+
     if configuration_helpers.get_value("ENABLE_FILTER_COURSES_BY_USER_LANG",
                                     settings.FEATURES.get('ENABLE_FILTER_COURSES_BY_USER_LANG')):
         user_prefered_lang = request.LANGUAGE_CODE
