@@ -276,7 +276,7 @@ def get_saml_idp_class(idp_identifier_string):
     return choices.get(idp_identifier_string, EdXSAMLIdentityProvider)
 
 
-class HintedUsernameSAMLAuthBackend(SAMLAuthBackend):
+class HintUsernameSAMLAuthBackend(SAMLAuthBackend):
     """Auth backend to hint a username"""
 
     def get_user_details(self, response):
@@ -284,7 +284,7 @@ class HintedUsernameSAMLAuthBackend(SAMLAuthBackend):
         Overrides get_user_details method of Python-SAML
         with the hinted username
         """
-        user_details = super(HintedUsernameSAMLAuthBackend, self).get_user_details(response)
+        user_details = super(HintUsernameSAMLAuthBackend, self).get_user_details(response)
         fullname = user_details['fullname']
         username = self.hint_username(fullname)
         user_details.update({'username': username})
