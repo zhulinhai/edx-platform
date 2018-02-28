@@ -961,7 +961,7 @@ def dashboard(request):
 
     if configuration_helpers.get_value("ENABLE_FILTER_COURSES_BY_USER_LANG",
                                     settings.FEATURES.get('ENABLE_FILTER_COURSES_BY_USER_LANG')):
-        user_prefered_lang = request.LANGUAGE_CODE
+        user_prefered_lang = preferences_api.get_user_preferences(request.user)['pref-lang']
         for enrollment in course_enrollments[:]:
             course_language = modulestore().get_course(enrollment.course_id).language
             if course_language != user_prefered_lang:
