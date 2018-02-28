@@ -707,6 +707,15 @@ def student_dashboard(request):
             enr for enr in course_enrollments if entitlement.enrollment_course_run.course_id != enr.course_id
         ]
 
+    if configuration_helpers.get_value("ENABLE_FILTER_COURSES_BY_USER_LANG",
+                                    settings.FEATURES.get('ENABLE_FILTER_COURSES_BY_USER_LANG')):
+        user_prefered_lang = request.LANGUAGE_CODE
+        for enrollment in course_enrollments[:]:
+            course_language = modulestore().get_course(enrollment.course_id).language
+            if course_language != user_prefered_lang:
+                course_enrollments.remove(enrollment)
+
+
     context = {
         'urls': urls,
         'programs_data': programs_data,
