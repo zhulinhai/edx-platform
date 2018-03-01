@@ -2305,7 +2305,7 @@ msgstr ""
 
 #: common/static/common/js/discussion/views/discussion_thread_list_view.js
 msgid "No posts matched your query."
-msgstr ""
+msgstr "لا توجد مشاركات تتطابق مع استعلامك"
 
 #: common/static/common/js/discussion/views/discussion_thread_list_view.js
 msgid "Show posts by {username}."
@@ -4633,7 +4633,7 @@ msgstr "نأسف لحدوث خطأ. "
 #. profile forms.
 #: lms/static/js/student_account/views/FormView.js
 msgid "(optional)"
-msgstr ""
+msgstr "(اختياري)"
 
 #: lms/static/js/student_account/views/LoginView.js
 msgid "We couldn't sign you in."
@@ -4680,7 +4680,7 @@ msgstr "لم نتمكّن من إنشاء حسابك. "
 #: lms/static/js/student_account/views/RegisterView.js
 #: lms/templates/student_account/register.underscore
 msgid "Create Account"
-msgstr ""
+msgstr "إنشاء حساب"
 
 #: lms/static/js/student_account/views/RegisterView.js
 msgid "(required)"
@@ -4837,11 +4837,11 @@ msgstr "وإن أحببت يمكنك ربط حساباتك على منصات ا�
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid " Link"
-msgstr ""
+msgstr "رابط"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid "Enter your "
-msgstr ""
+msgstr "اكتب اسمك الذي تستخدمه على  "
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 #: lms/static/js/student_account/views/account_settings_view.js
@@ -6956,7 +6956,7 @@ msgstr "نوع المنشور"
 msgid ""
 "Questions raise issues that need answers. Discussions share ideas and start "
 "conversations. (Required)"
-msgstr ""
+msgstr "تسلط الأسئلة الضوء على مسائل تحتاج إلى إجابات. نقاش وتبادل للأفكار ومن ثم يبدأ الحوار (مطلوب)"
 
 #: common/static/common/templates/discussion/thread-type.underscore
 msgid "Question"
@@ -8177,16 +8177,21 @@ msgid "Reset my password"
 msgstr "تغيير كلمة المرور"
 
 #: lms/templates/student_account/register.underscore
+msgid "Already have an {platform_name} account?"
+msgstr "لديك بالفعل حساب ‎على ‏{platform_name}؟ تسجيل الدخول"
+
+#: lms/templates/student_account/register.underscore
 msgid "Already have an {platformName} account?"
-msgstr ""
+msgstr "لديك بالفعل حساب ‎على ‏{platformName}؟ تسجيل الدخول"
 
 #: lms/templates/student_account/register.underscore
 msgid "Sign in."
-msgstr ""
+msgstr "تسجيل الدخول."
 
 #: lms/templates/student_account/register.underscore
 msgid "Create an Account"
 msgstr "إنشاء حساب"
+
 
 #: lms/templates/student_account/register.underscore
 msgid "Create an account using"
@@ -10381,3 +10386,22 @@ msgid ""
 "not include a certificate."
 msgstr ""
 "أنت الآن مسجل في مسار التدقيق لهذه الدورة. لا يتضمن مسار التدقيق شهادة."
+
+#: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
+msgid "About Me"
+msgstr "نبذة عني"
+
+msgid "Twitter"
+msgstr "التويتر"
+
+msgid "Facebook"
+msgstr "الفيس بوك"
+
+msgid "LinkedIn"
+msgstr "اللينكدإن"
+
+msgid " username or the URL to your "
+msgstr " أو عنوان صفحتك على "
+
+msgid " page. Delete the URL to remove the link."
+msgstr ". احذف عنوان صفحتك لإزالة الرابط"

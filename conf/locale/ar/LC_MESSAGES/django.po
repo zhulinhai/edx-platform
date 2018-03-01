@@ -2479,7 +2479,7 @@ msgstr "صحيح جزئياً "
 
 #: common/lib/xmodule/xmodule/capa_base.py
 msgid "Answer submitted."
-msgstr ""
+msgstr "تم إرسال الجواب"
 
 #. Translators: 'closed' means the problem's due date has passed. You may no
 #. longer attempt to solve the problem.
@@ -9020,7 +9020,7 @@ msgstr "لم يُحدَّد عنوان بريد إلكتروني."
 
 #: lms/djangoapps/student_account/views.py
 msgid "Create Account"
-msgstr ""
+msgstr "إنشاء حساب"
 
 #: lms/templates/peer_grading/peer_grading_problem.html
 msgid "Continue"
@@ -9369,7 +9369,7 @@ msgstr "كوسوفو"
 #: lms/envs/common.py
 #, python-brace-format
 msgid "Welcome to {platform_name}."
-msgstr ""
+msgstr "أهلاً بك في {platform_name}"
 
 #: lms/envs/common.py
 #, python-brace-format
@@ -10640,7 +10640,7 @@ msgstr ""
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 #, python-brace-format
 msgid "Username must be between {min} and {max} characters long."
-msgstr ""
+msgstr "يجب أن يكون طول كلمة المرور ما بين {min} إلى {max} حرفاً أو رمزاً"
 
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 #, python-brace-format
@@ -10649,7 +10649,7 @@ msgstr ""
 
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 msgid "Enter a password."
-msgstr ""
+msgstr "أدخل كلمة المرور"
 
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 msgid "Password is not long enough."
@@ -10706,7 +10706,7 @@ msgstr ""
 
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 msgid "Select the highest level of education you have completed."
-msgstr ""
+msgstr "حدد أعلى مستوى تعلميي حصلت عليه"
 
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 msgid "Enter your mailing address."
@@ -11067,6 +11067,10 @@ msgstr ""
 #: lms/templates/student_account/register.underscore
 msgid "Sign in"
 msgstr "تسجيل الدخول"
+
+msgid "Sign in."
+msgstr "تسجيل الدخول."
+
 
 #: openedx/features/course_experience/views/course_home_messages.py
 #, python-brace-format
@@ -16239,18 +16243,18 @@ msgstr "الفلترة:"
 #. Translators: This is a menu option for showing all forum threads unfiltered
 #: lms/templates/discussion/_thread_list_template.html
 msgid "Show all posts"
-msgstr ""
+msgstr "إظهار كل المشاركات"
 
 #. Translators: This is a menu option for showing only unread forum threads
 #: lms/templates/discussion/_thread_list_template.html
 msgid "Unread posts"
-msgstr ""
+msgstr "مشاركة غير مقروء"
 
 #. Translators: This is a menu option for showing only unanswered forum
 #. question threads
 #: lms/templates/discussion/_thread_list_template.html
 msgid "Unanswered posts"
-msgstr ""
+msgstr "مشاركة بدون جواب"
 
 #. Translators: This is a menu option for showing only forum threads flagged
 #. for abuse
@@ -18659,7 +18663,7 @@ msgstr "تعديل درجات الطالب في مسألة محددة"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid "Location of problem in course"
-msgstr ""
+msgstr "مكان المسألة في المساق"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid "Example"
@@ -18707,11 +18711,11 @@ msgstr ""
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid ""
 "New score for problem, out of the total points available for the problem"
-msgstr ""
+msgstr "علامة جديدة للمسألة، مستقلة عن مجموع نقاط المسألة"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid "Override Learner's Score"
-msgstr ""
+msgstr "تجاوز درجة المتعلم"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid "Problem History"
@@ -24996,3 +25000,38 @@ msgstr "11. شواغل الخصوصية"
 #: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
 msgid "About me"
 msgstr "نبذة عني"
+
+#: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
+msgid "About Me"
+msgstr "نبذة عني"
+
+msgid "Twitter Link"
+msgstr "رابط التويتر"
+
+msgid ""
+"Enter your Twitter username or the URL to your Twitter page. Delete the URL "
+"to remove the link."
+msgstr "اكتب اسمك الذي تستخدمه على  تويتر أو عنوان صفحتك على تويتر. احذف عنوان صفحتك لإزالة الرابط"
+
+msgid "Facebook Link"
+msgstr "رابط الفيس بوك"
+
+msgid ""
+"Enter your Facebook username or the URL to your Facebook page. Delete the "
+"URL to remove the link."
+msgstr ""
+"اكتب اسمك الذي تستخدمه على  الفيس بوك أو عنوان صفحتك على الفيس بوك. احذف عنوان صفحتك لإزالة الرابط"
+
+msgid "LinkedIn Link"
+msgstr "رابط اللينكدإن"
+
+msgid ""
+"Enter your LinkedIn username or the URL to your LinkedIn page. Delete the "
+"URL to remove the link."
+msgstr ""
+"اكتب اسمك الذي تستخدمه على  لينكدإن أو عنوان صفحتك على لينكدإن. احذف عنوان صفحتك لإزالة الرابط"
+
+
+#: lms/templates/courseware/courses.html
+msgid "Find your course"
+msgstr "ابحث عن المساق"

@@ -735,6 +735,7 @@ class LinkedInProfile(ViewSet):
                         r = requests.get(url, params=params, headers=headers)
                         if r.status_code == 200:
                             user_profile = UserProfile.objects.get(user=user)
+                            linkedin_profile = {"linkedin_profile": r.json()}
                             if len(user_profile.meta) > 0:
                                 previous_meta = json.loads(user_profile.meta)
                                 mixed_dicts =\
