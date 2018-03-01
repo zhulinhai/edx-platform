@@ -707,6 +707,11 @@ def student_dashboard(request):
             enr for enr in course_enrollments if entitlement.enrollment_course_run.course_id != enr.course_id
         ]
 
+
+    USER_COURSE_ENROLLMENTS_ORDER_BY = configuration_helpers.get_value(
+                'USER_COURSE_ENROLLMENTS_ORDER_BY',
+                settings.USER_COURSE_ENROLLMENTS_ORDER_BY
+            )
     # sort the enrollment pairs by the flag USER_COURSE_ENROLLMENTS_ORDER_BY
     if USER_COURSE_ENROLLMENTS_ORDER_BY == 'created':
         course_enrollments.sort(key=lambda x: x.created, reverse=False)
