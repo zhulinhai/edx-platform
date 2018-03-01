@@ -40,6 +40,7 @@ from student.models import CourseEnrollment, UserProfile, Registration
 import track.views
 from xmodule.modulestore.django import modulestore
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 
 
 log = logging.getLogger(__name__)
@@ -493,6 +494,7 @@ class Courses(SysadminDashboardView):
             if course_found:
                 # delete course that is stored with mongodb backend
                 self.def_ms.delete_course(course.id, request.user.id)
+                CourseOverview.objects.filter(id=course.id).delete()
                 # don't delete user permission groups, though
                 self.msg += \
                     u"<font color='red'>{0} {1} = {2} ({3})</font>".format(
