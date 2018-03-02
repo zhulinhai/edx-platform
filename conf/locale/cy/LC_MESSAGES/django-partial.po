@@ -139,6 +139,11 @@ msgstr "Rydych wedi'ch cofrestru fel myfyriwr côd anrhydedd"
 msgid "Honor Code"
 msgstr "Côd anrhydedd"
 
+#: common/djangoapps/course_modes/helpers.py lms/djangoapps/branding/api.py
+#: openedx/core/djangoapps/user_api/views.py
+msgid "Honour Code"
+msgstr "Côd anrhydedd"
+
 #: common/djangoapps/course_modes/helpers.py
 msgid "You're enrolled as a professional education student"
 msgstr "Rydych wedi'ch cofrestru fel myfyriwr addysg broffesiynol"
