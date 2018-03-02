@@ -8480,6 +8480,13 @@ msgstr "Cwestiynau cyffredin"
 msgid "Honor Code"
 msgstr "Côd anrhydedd"
 
+#: lms/templates/static_templates/honor.html
+#: lms/templates/static_templates/honor.html
+#: themes/stanford-style/lms/templates/footer.html
+#: themes/stanford-style/lms/templates/static_templates/tos.html
+msgid "Honour Code"
+msgstr "Côd anrhydedd"
+
 #: lms/templates/static_templates/jobs.html
 #: lms/templates/static_templates/jobs.html
 #: themes/red-theme/lms/templates/footer.html
@@ -9060,7 +9067,10 @@ msgid "Review the Terms of Service and Honor Code"
 msgstr "Adolygu'r Telerau Gwasanaeth a Chod Honor"
 
 msgid "I agree to the {platform_name} Terms of Service and Honor Code"
-msgstr "Rwy'n cytuno i Amodau Gwasanaeth {platform_name} a Honor Cod"
+msgstr "Rwy'n cytuno i Amodau Gwasanaeth {platform_name} a Honor Code"
+
+msgid "I agree to the {platform_name} Terms of Service and Honour Code"
+msgstr "Rwy'n cytuno i Amodau Gwasanaeth {platform_name} a Honor Code"
 
 msgid "CREATE ACCOUNT"
 msgstr "Creu cyfrif"

@@ -313,6 +313,14 @@ msgstr "إنّك مسجَّل كطالب يحمل شهادة ميثاق الشر
 msgid "Honor Code"
 msgstr "ميثاق الشرف الأكاديمي"
 
+#: common/djangoapps/course_modes/helpers.py lms/djangoapps/branding/api.py
+#: openedx/core/djangoapps/user_api/api.py
+#: lms/templates/static_templates/honor.html
+#: themes/stanford-style/lms/templates/footer.html
+#: themes/stanford-style/lms/templates/static_templates/tos.html
+msgid "Honour Code"
+msgstr "ميثاق الشرف الأكاديمي"
+
 #: common/djangoapps/course_modes/helpers.py
 msgid "You're enrolled as a professional education student"
 msgstr "إنّك مسجَّل كطالب تعليم مهني."
@@ -5171,6 +5179,10 @@ msgstr "تبرَّع"
 msgid "Terms of Service & Honor Code"
 msgstr "شروط الخدمة وميثاق الشرف الأكاديمي"
 
+#: lms/djangoapps/branding/api.py
+msgid "Terms of Service & Honour Code"
+msgstr "شروط الخدمة وميثاق الشرف الأكاديمي"
+
 #. #-#-#-#-#  django-partial.po (edx-platform)  #-#-#-#-#
 #. Translators: A 'Privacy Policy' is a legal document/statement describing a
 #. website's use of personal information
@@ -5523,6 +5535,12 @@ msgstr "شهادة غير صالحة"
 #. be ignored
 #: lms/djangoapps/certificates/views/webview.py
 msgid "Terms of Service &amp; Honor Code"
+msgstr "شروط الخدمة وميثاق الشرف الأكاديمي"
+
+#. Translators: The &amp; characters represent an ampersand character and can
+#. be ignored
+#: lms/djangoapps/certificates/views/webview.py
+msgid "Terms of Service &amp; Honour Code"
 msgstr "شروط الخدمة وميثاق الشرف الأكاديمي"
 
 #. Translators: This line appears as a byline to a header image and describes
@@ -10875,14 +10893,28 @@ msgstr "حدد بلد أو منطقة إقامتك. البلد أو منطقة �
 msgid "Review the Honor Code"
 msgstr "استعراض ميثاق الشرف"
 
+#: openedx/core/djangoapps/user_api/api.py
+msgid "Review the Honour Code"
+msgstr "استعراض ميثاق الشرف"
+
 #. Translators: This is a legal document users must agree to
 #. in order to register a new account.
 #: openedx/core/djangoapps/user_api/api.py
 msgid "Terms of Service and Honor Code"
 msgstr "شروط الخدمة وميثاق الشرف الأكاديمي"
 
+#. Translators: This is a legal document users must agree to
+#. in order to register a new account.
+#: openedx/core/djangoapps/user_api/api.py
+msgid "Terms of Service and Honour Code"
+msgstr "شروط الخدمة وميثاق الشرف الأكاديمي"
+
 #: openedx/core/djangoapps/user_api/api.py
 msgid "Review the Terms of Service and Honor Code"
+msgstr "استعراض شروط الخدمة وميثاق الشرف"
+
+#: openedx/core/djangoapps/user_api/api.py
+msgid "Review the Terms of Service and Honour Code"
 msgstr "استعراض شروط الخدمة وميثاق الشرف"
 
 #. Translators: "Terms of Service" is a legal document users must agree to
@@ -24935,6 +24967,11 @@ msgstr "ميثاق الشرف"
 
 #: lms/templates/static_templates/honor.html
 #: lms/templates/static_templates/tos.html
+msgid "HONOUR CODE"
+msgstr "ميثاق الشرف"
+
+#: lms/templates/static_templates/honor.html
+#: lms/templates/static_templates/tos.html
 msgid "1. Collaboration Policy"
 msgstr "1. سياسة التعاون"
 
@@ -24946,6 +24983,11 @@ msgstr "2. عهد الشرف"
 #: lms/templates/static_templates/honor.html
 #: lms/templates/static_templates/tos.html
 msgid "3. Changing the Honor Code"
+msgstr "3. تغيير ميثاق الشرف"
+
+#: lms/templates/static_templates/honor.html
+#: lms/templates/static_templates/tos.html
+msgid "3. Changing the Honour Code"
 msgstr "3. تغيير ميثاق الشرف"
 
 #: lms/templates/static_templates/privacy.html
@@ -25035,3 +25077,26 @@ msgstr ""
 #: lms/templates/courseware/courses.html
 msgid "Find your course"
 msgstr "ابحث عن المساق"
+
+msgid "Checking..."
+msgstr "التحقق"
+
+msgid "Your response must be between {min} and {max} word."
+msgid_plural "Your response must be between {min} and {max} words."
+msgstr[0] "10 عدد الكلمات غير صالح، يتراوح عدد كلمات الجواب ما بين كلمة واحدة وحتى "
+msgstr[1] "10 عدد الكلمات غير صالح، يتراوح عدد كلمات الجواب ما بين كلمة واحدة وحتى "
+
+msgid "Invalid Word Count. {word_count_message}"
+msgstr "آلاف كلمة {word_count_message}"
+
+msgid "Answer submitted"
+msgstr "تم إرسال الجواب"
+
+msgid "Your submission has been received"
+msgstr "تم استلام ما أرسلته"
+
+msgid "Nothing to recap."
+msgstr "لايوجد شيء لتلخيصه"
+
+msgid "You have used {count_attempts} of {max_attempts} submission"
+msgstr "استخدمت {count_attempts}  من {max_attempts}  من محاولات الإرسال"

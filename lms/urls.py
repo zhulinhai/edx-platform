@@ -1100,7 +1100,9 @@ if settings.BRANCH_IO_KEY:
 
 urlpatterns.extend(plugin_urls.get_patterns(plugin_constants.ProjectType.LMS))
 
-
-urlpatterns += (
-    url(r'^subscription/', include('agnosticcontentxblock.urls')),
-)
+try:
+    urlpatterns += (
+        url(r'^subscription/', include('agnosticcontentxblock.urls')),
+    )
+except:
+    pass

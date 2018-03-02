@@ -138,6 +138,11 @@ msgstr "Rydych wedi'ch cofrestru fel myfyriwr côd anrhydedd"
 msgid "Honor Code"
 msgstr "Côd anrhydedd"
 
+#: common/djangoapps/course_modes/helpers.py lms/djangoapps/branding/api.py
+#: openedx/core/djangoapps/user_api/views.py
+msgid "Honour Code"
+msgstr "Côd anrhydedd"
+
 #: common/djangoapps/course_modes/helpers.py
 msgid "You're enrolled as a professional education student"
 msgstr "Rydych wedi'ch cofrestru fel myfyriwr addysg broffesiynol"
@@ -4935,6 +4940,10 @@ msgstr "Rhoddi"
 msgid "Terms of Service & Honor Code"
 msgstr "Telerau Gwasanaeth a Chôd Anrhydedd"
 
+#: lms/djangoapps/branding/api.py
+msgid "Terms of Service & Honour Code"
+msgstr "Telerau Gwasanaeth a Chôd Anrhydedd"
+
 #: cms/templates/widgets/footer.html
 #: lms/templates/static_templates/privacy.html
 #: themes/red-theme/lms/templates/footer.html
@@ -5277,6 +5286,12 @@ msgstr "Tystysgrif annilys"
 #. be ignored
 #: lms/djangoapps/certificates/views/webview.py
 msgid "Terms of Service &amp; Honor Code"
+msgstr "Telerau gwasanaeth &amp; Côd anrhydedd"
+
+#. Translators: The &amp; characters represent an ampersand character and can
+#. be ignored
+#: lms/djangoapps/certificates/views/webview.py
+msgid "Terms of Service &amp; Honour Code"
 msgstr "Telerau gwasanaeth &amp; Côd anrhydedd"
 
 #. Translators: This line appears as a byline to a header image and describes
@@ -10458,14 +10473,28 @@ msgstr "Dewiswch eich gwlad."
 msgid "Review the Honor Code"
 msgstr "Adolygu'r côd anrhydedd"
 
+#: openedx/core/djangoapps/user_api/views.py
+msgid "Review the Honour Code"
+msgstr "Adolygu'r côd anrhydedd"
+
 #. Translators: This is a legal document users must agree to
 #. in order to register a new account.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Terms of Service and Honor Code"
 msgstr "Telerau Gwasanaeth a Chôd Anrhydedd"
 
+#. Translators: This is a legal document users must agree to
+#. in order to register a new account.
+#: openedx/core/djangoapps/user_api/views.py
+msgid "Terms of Service and Honour Code"
+msgstr "Telerau Gwasanaeth a Chôd Anrhydedd"
+
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Review the Terms of Service and Honor Code"
+msgstr "Adolygu Telerau Gwasanaeth a Chôd Anrhydedd"
+
+#: openedx/core/djangoapps/user_api/views.py
+msgid "Review the Terms of Service and Honour Code"
 msgstr "Adolygu Telerau Gwasanaeth a Chôd Anrhydedd"
 
 #. Translators: "Terms of Service" is a legal document users must agree to
