@@ -1,6 +1,9 @@
 from cms.envs.aws import *
 
 
+CMS_BASE = ENV_TOKENS.get(
+    'CMS_BASE',
+)
 COPYRIGHT_EMAIL = ENV_TOKENS.get(
     'COPYRIGHT_EMAIL',
     COPYRIGHT_EMAIL
