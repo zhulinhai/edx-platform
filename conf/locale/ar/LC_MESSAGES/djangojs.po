@@ -4605,7 +4605,11 @@ msgstr "يُرجى التحقق من بريدك الإلكتروني لتأكي�
 
 #: lms/static/js/student_account/tos_modal.js
 msgid "Terms of Service and Honor Code"
-msgstr ""
+msgstr "شروط الخدمة وميثاق الشرف الأكاديمي"
+
+#: lms/static/js/student_account/tos_modal.js
+msgid "Terms of Service and Honour Code"
+msgstr "شروط الخدمة وميثاق الشرف الأكاديمي"
 
 #: lms/static/js/student_account/views/FinishAuthView.js
 msgid "Saving your email preference"

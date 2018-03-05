@@ -181,7 +181,6 @@ def login_and_registration_form(request, initial_mode="login"):
 
     response = render_to_response('student_account/login_and_register.html', context)
     
-    log.error("rendering respone {}".format(response))
     handle_enterprise_cookies_for_logistration(request, response, context)
 
     return response
