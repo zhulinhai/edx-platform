@@ -1,32 +1,29 @@
 from random import randint
 
-from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-
-from django.conf import settings
 from django.contrib.auth.models import User
 
 
 class UsernameGenerator(object):
-    """Allows customize the way that the username is created based on the fullname"""
+    """It Allows to customize the way the username is created based on the fullname"""
 
-    def __init__(self):
+    def __init__(self, generator_settings={}):
         default_settings = {
-            'SEPARATOR':'_',
+            'SEPARATOR': '_',
             'LOWER': True,
-            'RANDOM': True
+            'RANDOM': False
         }
-        custom_settings = configuration_helpers.get_value('USERNAME_GENERATOR', settings.FEATURES.get('USERNAME_GENERATOR', default_settings))
-        self.separator_character = custom_settings['SEPARATOR']
-        self.in_lowercase = custom_settings['LOWER']
-        self.random = custom_settings['RANDOM']
 
-    def insert_separator(self, fullname):
+        self.separator_character = generator_settings.get('SEPARATOR', default_settings['SEPARATOR'])
+        self.in_lowercase = generator_settings.get('LOWER', default_settings['LOWER'])
+        self.random = generator_settings.get('RANDOM', default_settings['RANDOM'])
+
+    def replace_separator(self, fullname):
         """
         Allows set a custom separator character for each whitespace
         in the fullname string. By default, the separator characte is underscore.
         """
         username = fullname.replace(' ', self.separator_character)
-        return  username
+        return username
 
     def process_username(self, username):
         """
@@ -51,22 +48,28 @@ class UsernameGenerator(object):
 
         return subsequent_number
 
-
-def generate_username(username):
-    """Util function that generates the username"""
-    new_username = username
-    user_exists = User.objects.filter(username=new_username).exists()
-    generator = UsernameGenerator()
-    initial_username = generator.process_username(username)
-
-    if not user_exists:
-        new_username = initial_username
-
-    counter = 1
-    while user_exists:
-        subsequent_number = generator.consecutive_or_random(counter)
-        new_username = initial_username + '_{}'.format(subsequent_number)
+    def generate_username(self, username):
+        """Util function that generates the username"""
+        new_username = username
         user_exists = User.objects.filter(username=new_username).exists()
-        counter = counter + 1
+        initial_username = self.process_username(username)
 
-    return new_username
+        if not user_exists:
+            new_username = initial_username
+
+        counter = 1
+        while user_exists:
+            subsequent_number = self.consecutive_or_random(counter)
+            new_username = '{}_{}'.format(initial_username, subsequent_number)
+            user_exists = User.objects.filter(username=new_username).exists()
+            counter = counter + 1
+
+        return new_username
+
+    def hint_username(self, fullname):
+        """.
+        Returns a unique username based on the provided
+        full name string.
+        """
+        username = self.replace_separator(fullname)
+        return self.generate_username(username)
