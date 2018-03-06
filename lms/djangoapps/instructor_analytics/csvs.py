@@ -31,7 +31,7 @@ def create_csv_response(filename, header, datarows):
         quoting=csv.QUOTE_ALL)
 
     disclaimer = SensitiveMessageOnReports()
-    send_disclaimer = disclaimer.csv_direct(csvwriter)
+    csvwriter = disclaimer.csv_direct(csvwriter)
 
     encoded_header = [unicode(s).encode('utf-8') for s in header]
     csvwriter.writerow(encoded_header)

@@ -33,7 +33,7 @@ def upload_csv_to_report_store(rows, csv_name, course_id, timestamp, config_name
     """
     report_store = ReportStore.from_config(config_name)
     disclaimer = SensitiveMessageOnReports()
-    if disclaimer.display_msg:
+    if disclaimer.should_msg_be_displayed:
         # Append the new row above the headers.
         send_disclaimer = disclaimer.with_report_store()
         rows = [send_disclaimer] + rows
@@ -66,13 +66,13 @@ class SensitiveMessageOnReports(object):
     """
 
     def __init__(self):
-        self.display_msg = configuration_helpers.get_value('DISPLAY_SENSITIVE_DATA_MSG_FOR_DOWNLOADS', settings.FEATURES.get('DISPLAY_SENSITIVE_DATA_MSG_FOR_DOWNLOADS', False))
+        self.should_msg_be_displayed = configuration_helpers.get_value('DISPLAY_SENSITIVE_DATA_MSG_FOR_DOWNLOADS', settings.FEATURES.get('DISPLAY_SENSITIVE_DATA_MSG_FOR_DOWNLOADS', False))
 
     def csv_direct(self, writer):
         """
         Writes the row immediately in the CSV.
         """
-        if self.display_msg:
+        if self.should_msg_be_displayed:
             msg = self.process_message()
             encode = unicode(msg).encode('utf-8')
             return writer.writerow([encode])
