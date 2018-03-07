@@ -10,7 +10,7 @@ from django.utils.functional import cached_property
 from social_core.backends.saml import OID_EDU_PERSON_ENTITLEMENT, SAMLAuth, SAMLIdentityProvider
 from social_core.exceptions import AuthForbidden
 
-from utils import UsernameGenerator, generate_username
+from utils import UsernameGenerator
 
 from openedx.core.djangoapps.theming.helpers import get_current_request
 
@@ -114,10 +114,20 @@ class EdXSAMLIdentityProvider(SAMLIdentityProvider):
         """
         details = super(EdXSAMLIdentityProvider, self).get_user_details(attributes)
         extra_field_definitions = self.conf.get('extra_field_definitions', [])
+        
         details.update({
             field['name']: attributes[field['urn']][0] if field['urn'] in attributes else None
             for field in extra_field_definitions
         })
+        
+        # TODO: ADD FEATURE FLAG
+        username_generator_settings = self.conf.get('USERNAME_GENERATOR', {})
+
+        fullname = details['fullname']
+        username_generator = UsernameGenerator(username_generator_settings)
+        username = username_generator.hint_username(fullname)
+        details.update({'username': username})
+
         return details
 
 
@@ -274,30 +284,3 @@ def get_saml_idp_class(idp_identifier_string):
             idp_identifier_string
         )
     return choices.get(idp_identifier_string, EdXSAMLIdentityProvider)
-
-
-class HintUsernameSAMLAuthBackend(SAMLAuthBackend):
-    """Auth backend to hint a username"""
-
-    def get_user_details(self, response):
-        """
-        Overrides get_user_details method of Python-SAML
-        with the hinted username
-        """
-        user_details =\
-            super(HintUsernameSAMLAuthBackend, self).get_user_details(response)
-            
-        fullname = user_details['fullname']
-        username = self.hint_username(fullname)
-        user_details.update({'username': username})
-        return user_details
-
-    def hint_username(self, fullname):
-        """
-        First step to generates the username.
-        Returns the method that handles the job with the
-        hinted username.
-        """
-        generator = UsernameGenerator()
-        separator = generator.insert_separator(fullname)
-        return generate_username(separator)
