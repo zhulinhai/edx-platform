@@ -111,7 +111,7 @@ class GenerateUsernameTestCase(testutil.TestCase):
             )
         
         generator = UsernameGenerator(saml.other_settings)
-        new_username = generator.generate_username(self.user.username)
+        new_username = generator.generate_username(self.fullname)
         # We have 6 users: Five created in the loop with a consecutive
         # number and another one that comes from initial setUp,
         # the first has not consecutive number due to is
@@ -134,7 +134,7 @@ class GenerateUsernameTestCase(testutil.TestCase):
         )
         mock_random.return_value = 4589
         generator = UsernameGenerator(saml.other_settings)
-        new_username = generator.generate_username(self.user.username)
+        new_username = generator.generate_username(self.fullname)
         return self.assertEqual(new_username, 'my_self_user_4589')
 
     def test_username_without_modifications(self):
@@ -143,6 +143,7 @@ class GenerateUsernameTestCase(testutil.TestCase):
         in database, should return the username without
         any modifications of suffix number.
         """
+    
         saml = self.configure_saml_provider(
             enabled=True,
             name="Saml Test",
@@ -151,8 +152,9 @@ class GenerateUsernameTestCase(testutil.TestCase):
             other_settings= {'RANDOM': True}
         )
 
-        not_existing_username = 'another_myself'
+        not_existing_user = 'Another Myself'
         generator = UsernameGenerator(saml.other_settings)
-        new_username = generator.generate_username(not_existing_username)
+        new_username = generator.generate_username(not_existing_user)
 
         return self.assertEqual(new_username, 'another_myself')
+

@@ -40,8 +40,9 @@ class UsernameGenerator(object):
         random = "%04d" % randint(0, 9999)
         return random
 
-    def generate_username(self, username):
+    def generate_username(self, fullname):
         """Utility function which generates a unique username based on the provided string."""
+        username = self.replace_separator(fullname)
         initial_username = self.process_case(username)
         user_exists = User.objects.filter(username=initial_username).exists()
 
@@ -60,8 +61,3 @@ class UsernameGenerator(object):
             counter = counter + 1
 
         return new_username
-
-    def hint_username(self, fullname):
-        """Returns a unique username based on the provided full name string."""
-        username = self.replace_separator(fullname)
-        return self.generate_username(username)
