@@ -1,10 +1,11 @@
+
 from random import randint
 
 from django.contrib.auth.models import User
 
 
 class UsernameGenerator(object):
-    """It Allows to customize the way the username is created based on the fullname"""
+    """Generates a unique username based on the provided full name."""
 
     def __init__(self, generator_settings={}):
         default_settings = {
@@ -19,16 +20,16 @@ class UsernameGenerator(object):
 
     def replace_separator(self, fullname):
         """
-        Allows set a custom separator character for each whitespace
-        in the fullname string. By default, the separator characte is underscore.
+        Replaces spaces with a custom separator.
+        The default separator character is an underscore.
         """
         username = fullname.replace(' ', self.separator_character)
         return username
 
-    def process_username(self, username):
+    def process_case(self, username):
         """
-        Allows set the username in lowercase. If value is False,
-        it will take the original username that SAML providers give.
+        If in_lowercase setting is enabled, returns the string downcased,
+        otherwise returns the string unmodified.
         """
         if self.in_lowercase:
             return username.lower()
@@ -37,9 +38,8 @@ class UsernameGenerator(object):
 
     def consecutive_or_random(self, current_number=0):
         """
-        If a username already exists, a subsecuent number will be
-        append at the end of the username string. This method allows
-        if this subsecuent number be a random or consecutive.
+        Returns username suffix. Based on the settings it returns
+        either the next integer or a random 4-digit number.
         """
         if self.random:
             subsequent_number = ''.join(["%s" % randint(0, 9) for num in range(0, 4)])
@@ -49,10 +49,10 @@ class UsernameGenerator(object):
         return subsequent_number
 
     def generate_username(self, username):
-        """Util function that generates the username"""
+        """Utility function which generates a unique username based on the provided string."""
         new_username = username
         user_exists = User.objects.filter(username=new_username).exists()
-        initial_username = self.process_username(username)
+        initial_username = self.process_case(username)
 
         if not user_exists:
             new_username = initial_username
@@ -67,9 +67,6 @@ class UsernameGenerator(object):
         return new_username
 
     def hint_username(self, fullname):
-        """.
-        Returns a unique username based on the provided
-        full name string.
-        """
+        """Returns a unique username based on the provided full name string."""
         username = self.replace_separator(fullname)
         return self.generate_username(username)
