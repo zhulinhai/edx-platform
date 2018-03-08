@@ -119,7 +119,7 @@ class GenerateUsernameTestCase(testutil.TestCase):
         # the consecutive number 6.
         return self.assertEqual(new_username, 'my_self_user_6')
 
-    @patch('third_party_auth.utils.UsernameGenerator.consecutive_or_random')
+    @patch('third_party_auth.utils.UsernameGenerator.get_random')
     def test_generate_username_with_random(self, mock_random):
         """
         It should return a username with a random integer
@@ -136,3 +136,23 @@ class GenerateUsernameTestCase(testutil.TestCase):
         generator = UsernameGenerator(saml.other_settings)
         new_username = generator.generate_username(self.user.username)
         return self.assertEqual(new_username, 'my_self_user_4589')
+
+    def test_username_without_modifications(self):
+        """
+        If the provided username does not exists
+        in database, should return the username without
+        any modifications of suffix number.
+        """
+        saml = self.configure_saml_provider(
+            enabled=True,
+            name="Saml Test",
+            idp_slug="test",
+            backend_name="saml_backend",
+            other_settings= {'RANDOM': True}
+        )
+
+        not_existing_username = 'another_myself'
+        generator = UsernameGenerator(saml.other_settings)
+        new_username = generator.generate_username(not_existing_username)
+
+        return self.assertEqual(new_username, 'another_myself')
