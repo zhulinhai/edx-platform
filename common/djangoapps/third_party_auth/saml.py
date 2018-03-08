@@ -5,6 +5,7 @@ import logging
 
 import requests
 from django.contrib.sites.models import Site
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from django.http import Http404
 from django.utils.functional import cached_property
 from social_core.backends.saml import OID_EDU_PERSON_ENTITLEMENT, SAMLAuth, SAMLIdentityProvider
@@ -120,13 +121,15 @@ class EdXSAMLIdentityProvider(SAMLIdentityProvider):
             for field in extra_field_definitions
         })
 
-        # TODO: ADD FEATURE FLAG
-        username_generator_settings = self.conf.get('USERNAME_GENERATOR', {})
+        if configuration_helpers.get_value(
+                'ENABLE_REGISTRATION_SUGGESTION_USERNAME',
+                settings.FEATURES.get('ENABLE_REGISTRATION_SUGGESTION_USERNAME', False)):
 
-        fullname = details['fullname']
-        username_generator = UsernameGenerator(username_generator_settings)
-        username = username_generator.hint_username(fullname)
-        details.update({'username': username})
+            username_generator_settings = self.conf.get('USERNAME_GENERATOR', {})
+            fullname = details['fullname']
+            username_generator = UsernameGenerator(username_generator_settings)
+            username = username_generator.hint_username(fullname)
+            details.update({'username': username})
 
         return details
 
