@@ -116,7 +116,7 @@
                 this.searchAlertCollection.on('add', function(searchAlert) {
                     var content;
                     content = edx.HtmlUtils.template($('#search-alert-template').html())({
-                        messageHtml: searchAlert.attributes.message,
+                        messageHtml: gettext(searchAlert.attributes.message),
                         cid: searchAlert.cid,
                         css_class: searchAlert.attributes.css_class
                     });
