@@ -20,7 +20,6 @@ from django.utils.html import escape
 from django.http import Http404, HttpResponseServerError
 from django.conf import settings
 from util.json_request import JsonResponse
-from util.keyword_substitution import get_keywords_supported
 from mock import patch
 
 from openedx.core.lib.xblock_utils import wrap_xblock
@@ -545,10 +544,10 @@ def _section_student_admin(course, access):
         'list_instructor_tasks_url': reverse('list_instructor_tasks', kwargs={'course_id': unicode(course_key)}),
         'list_entrace_exam_instructor_tasks_url': reverse('list_entrance_exam_instructor_tasks',
                                                           kwargs={'course_id': unicode(course_key)}),
-        'get_blank_lti_url': reverse('get_blank_lti', kwargs={'course_id': unicode(course_key)}),
-        'upload_lti_url': reverse('upload_lti', kwargs={'course_id': unicode(course_key)}),
         'spoc_gradebook_url': reverse('spoc_gradebook', kwargs={'course_id': unicode(course_key)}),
     }
+    from openedx.stanford.lms.djangoapps.instructor.views.instructor_dashboard import student_admin_section_data
+    section_data.update(student_admin_section_data(course_key))
     return section_data
 
 
@@ -580,14 +579,6 @@ def _section_data_download(course, access):
         'section_key': 'data_download',
         'section_display_name': _('Data Download'),
         'access': access,
-        'delete_report_download_url': reverse('delete_report_download', kwargs={'course_id': unicode(course_key)}),
-        'get_student_responses_url': reverse('get_student_responses', kwargs={'course_id': course_key.to_deprecated_string()}),
-        'get_student_forums_usage_url': reverse('get_student_forums_usage', kwargs={'course_id': unicode(course_key)}),
-        'get_ora2_responses_url': reverse('get_ora2_responses', kwargs={'course_id': course_key.to_deprecated_string(), 'include_email': False}),
-        'get_ora2_email_responses_url': reverse('get_ora2_responses', kwargs={'course_id': course_key.to_deprecated_string(), 'include_email': True}),
-        'get_course_forums_usage_url': reverse('get_course_forums_usage', kwargs={'course_id': course_key.to_deprecated_string()}),
-        'graph_course_forums_usage_url': reverse('graph_course_forums_usage',
-                                                 kwargs={'course_id': unicode(course_key)}),
         'show_generate_proctored_exam_report_button': show_proctored_report_button,
         'get_problem_responses_url': reverse('get_problem_responses', kwargs={'course_id': unicode(course_key)}),
         'get_grading_config_url': reverse('get_grading_config', kwargs={'course_id': unicode(course_key)}),
@@ -608,6 +599,8 @@ def _section_data_download(course, access):
         'course_survey_results_url': reverse('get_course_survey_results', kwargs={'course_id': unicode(course_key)}),
         'export_ora2_data_url': reverse('export_ora2_data', kwargs={'course_id': unicode(course_key)}),
     }
+    from openedx.stanford.lms.djangoapps.instructor.views.instructor_dashboard import data_download_section_data
+    section_data.update(data_download_section_data(course_key))
     return section_data
 
 
@@ -648,7 +641,6 @@ def _section_send_email(course, access):
     section_data = {
         'section_key': 'send_email',
         'section_display_name': _('Email'),
-        'keywords_supported': get_keywords_supported(),
         'access': access,
         'send_email': reverse('send_email', kwargs={'course_id': unicode(course_key)}),
         'editor': email_editor,
@@ -664,6 +656,8 @@ def _section_send_email(course, access):
             'list_email_content', kwargs={'course_id': unicode(course_key)}
         ),
     }
+    from openedx.stanford.lms.djangoapps.instructor.views.instructor_dashboard import send_email_section_data
+    section_data.update(send_email_section_data())
     return section_data
 
 
@@ -700,6 +694,7 @@ def _section_metrics(course, access):
         'get_students_opened_subsection_url': reverse('get_students_opened_subsection'),
         'get_students_problem_grades_url': reverse('get_students_problem_grades'),
         'post_metrics_data_csv_url': reverse('post_metrics_data_csv'),
-        'enrollment': CourseEnrollment.num_enrolled_in(course_key),
     }
+    from openedx.stanford.lms.djangoapps.instructor.views.instructor_dashboard import metrics_section_data
+    section_data.update(metrics_section_data(course_key))
     return section_data

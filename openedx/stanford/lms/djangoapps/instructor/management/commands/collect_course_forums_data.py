@@ -1,5 +1,5 @@
 """
-Command to retrieve aggregated student forums data in a .csv
+Command to retrieve aggregated course forums data in a .csv
 """
 import csv
 import optparse
@@ -10,15 +10,15 @@ from django.core.management.base import BaseCommand, CommandError
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 
-from instructor.utils import collect_student_forums_data
+from openedx.stanford.lms.djangoapps.instructor_task.tasks_helper import collect_course_forums_data
 
 
 class Command(BaseCommand):
     """
-    Retrieve aggregated student forums data, write to .csv
+    Retrieve aggregated course forums data, write to .csv
     """
 
-    help = ('Usage: collect_course_forums_data <course_id> --output-dir=<output_dir>')
+    help = __doc__
     args = '<course_id>'
     option_list = BaseCommand.option_list + (
         optparse.make_option(
@@ -34,28 +34,34 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if not args:
             raise CommandError('Course ID must be specified to fetch data')
-
         try:
             course_id = SlashSeparatedCourseKey.from_deprecated_string(args[0])
         except InvalidKeyError:
             raise CommandError('The course ID given was invalid')
-
-        file_name = "{course_id}-student-forums.csv".format(course_id=args[0].replace("/", "-"))
-
+        file_name = "{course_id}-course-forums.csv".format(course_id=args[0].replace('/', '-'))
+        csv_file = self.stdout
         if options['output_dir']:
-            csv_file = open(os.path.join(options['output_dir'], file_name), 'wb')
+            with open(os.path.join(options['output_dir'], file_name), 'wb') as csv_file:
+                _write(csv_file, course_id)
         else:
-            csv_file = self.stdout
-
-        writer = csv.writer(csv_file, dialect='excel', quotechar='"', quoting=csv.QUOTE_ALL)
-
-        header, rows = collect_student_forums_data(course_id)
-
-        writer.writerow(header)
-        for row in rows:
-            writer.writerow(_utf8_encoded_row(row))
+            _write(csv_file, course_id)
 
 
 def _utf8_encoded_row(row):
-    """Encodes a row to utf-8"""
-    return [unicode(item).encode('utf-8') for item in row]
+    return [
+        unicode(item).encode('utf-8')
+        for item in row
+    ]
+
+
+def _write(csv_file, course_id):
+    writer = csv.writer(
+        csv_file,
+        dialect='excel',
+        quotechar='"',
+        quoting=csv.QUOTE_ALL,
+    )
+    header, rows = collect_course_forums_data(course_id)
+    writer.writerow(header)
+    for row in rows:
+        writer.writerow(_utf8_encoded_row(row))

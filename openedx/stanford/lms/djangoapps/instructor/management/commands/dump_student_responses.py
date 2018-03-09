@@ -6,10 +6,11 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand, CommandError
 
-from instructor_analytics.basic import student_response_rows
-from xmodule.modulestore.django import modulestore
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from xmodule.modulestore.django import modulestore
+
+from openedx.stanford.lms.djangoapps.instructor_task.tasks_helper import student_response_rows
 
 
 class Command(BaseCommand):
@@ -29,26 +30,21 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
-        if not args:
-            raise CommandError("course_id not specified")
-
-        store = modulestore()
-
-        try:
-            course_id = SlashSeparatedCourseKey.from_deprecated_string(args[0])
-        except InvalidKeyError:
-            raise CommandError("Invalid course_id")
-
-        course = store.get_course(course_id)
-        if course is None:
-            raise CommandError("Invalid course_id")
-
-        rows = student_response_rows(course)
-
         def _utf8_encoded_rows(rows):
             for row in rows:
                 yield [unicode(item).encode('utf-8') for item in row]
 
+        if not args:
+            raise CommandError("course_id not specified")
+        store = modulestore()
+        try:
+            course_id = SlashSeparatedCourseKey.from_deprecated_string(args[0])
+        except InvalidKeyError:
+            raise CommandError("Invalid course_id")
+        course = store.get_course(course_id)
+        if course is None:
+            raise CommandError("Invalid course_id")
+        rows = student_response_rows(course)
         if not options['filename']:
             csvwriter = csv.writer(self.stdout, dialect='excel', quotechar='"', quoting=csv.QUOTE_ALL)
             csvwriter.writerows(_utf8_encoded_rows(rows))

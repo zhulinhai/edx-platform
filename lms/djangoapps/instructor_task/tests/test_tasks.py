@@ -29,21 +29,12 @@ from lms.djangoapps.instructor_task.tasks import (
     rescore_problem,
     reset_problem_attempts,
     delete_problem_state,
-    get_ora2_responses,
-    get_course_forums_usage,
-    get_student_forums_usage,
     generate_certificates,
     export_ora2_data,
 )
 from lms.djangoapps.instructor_task.tasks_helper import (
     UpdateProblemModuleStateError,
     upload_ora2_data,
-)
-
-from lms.djangoapps.instructor_task.tasks_helper import (
-    push_ora2_responses_to_s3,
-    push_course_forums_data_to_s3,
-    push_student_forums_data_to_s3,
 )
 
 PROBLEM_URL_NAME = "test_urlname"
@@ -72,6 +63,7 @@ class TestInstructorTasks(InstructorTaskModuleTestCase):
             task_input['student'] = student_ident
         if include_email:
             task_input['include_email'] = include_email
+
         course_id = course_id or self.course.id
         instructor_task = InstructorTaskFactory.create(course_id=course_id,
                                                        requester=self.instructor,
@@ -531,89 +523,6 @@ class TestDeleteStateInstructorTask(TestInstructorTasks):
                 StudentModule.objects.get(course_id=self.course.id,
                                           student=student,
                                           module_state_key=self.location)
-
-
-class TestOra2ResponsesInstructorTask(TestInstructorTasks):
-    """Tests instructor task that fetches ora2 response data."""
-
-    def test_ora2_missing_current_task(self):
-        self._test_missing_current_task(get_ora2_responses)
-
-    def test_ora2_with_failure(self):
-        self._test_run_with_failure(get_ora2_responses, 'We expected this to fail')
-
-    def test_ora2_with_long_error_msg(self):
-        self._test_run_with_long_error_msg(get_ora2_responses)
-
-    def test_ora2_with_short_error_msg(self):
-        self._test_run_with_short_error_msg(get_ora2_responses)
-
-    def test_ora2_runs_task(self):
-        task_entry = self._create_input_entry()
-        task_xmodule_args = self._get_xmodule_instance_args()
-
-        with patch('lms.djangoapps.instructor_task.tasks.run_main_task') as mock_main_task:
-            get_ora2_responses(task_entry.id, task_xmodule_args)
-
-            action_name = ugettext_noop('generated')
-            task_fn = partial(push_ora2_responses_to_s3, task_xmodule_args)
-
-            mock_main_task.assert_called_once_with_args(task_entry.id, task_fn, action_name)
-
-
-class TestCourseForumsUsageInstructorTask(TestInstructorTasks):
-    """Tests instructor task that fetches ora2 response data."""
-
-    def test_course_forums_missing_current_task(self):
-        self._test_missing_current_task(get_course_forums_usage)
-
-    def test_course_forums_with_failure(self):
-        self._test_run_with_failure(get_course_forums_usage, 'We expected this to fail')
-
-    def test_course_forums_with_long_error_msg(self):
-        self._test_run_with_long_error_msg(get_course_forums_usage)
-
-    def test_course_forums_with_short_error_msg(self):
-        self._test_run_with_short_error_msg(get_course_forums_usage)
-
-    def test_course_forums_runs_task(self):
-        task_entry = self._create_input_entry()
-        task_xmodule_args = self._get_xmodule_instance_args()
-
-        with patch('lms.djangoapps.instructor_task.tasks.run_main_task') as mock_main_task:
-            get_course_forums_usage(task_entry.id, task_xmodule_args)
-
-            action_name = ugettext_noop('generated')
-            task_fn = partial(push_course_forums_data_to_s3, task_xmodule_args)
-
-            mock_main_task.assert_called_once_with_args(task_entry.id, task_fn, action_name)
-
-
-class TestStudentForumsUsageInstructorTask(TestInstructorTasks):
-    """Tests instructor task that fetches student forums data."""
-
-    def test_student_forums_missing_current_task(self):
-        self._test_missing_current_task(get_student_forums_usage)
-
-    def test_student_forums_with_failure(self):
-        self._test_run_with_failure(get_student_forums_usage, 'We expected this to fail')
-
-    def test_student_forums_with_long_error_msg(self):
-        self._test_run_with_long_error_msg(get_student_forums_usage)
-
-    def test_student_forums_with_short_error_msg(self):
-        self._test_run_with_short_error_msg(get_student_forums_usage)
-
-    def test_student_forums_runs_task(self):
-        task_entry = self._create_input_entry()
-        task_xmodule_args = self._get_xmodule_instance_args()
-
-        with patch('lms.djangoapps.instructor_task.tasks.run_main_task') as mock_main_task:
-            get_student_forums_usage(task_entry.id, task_xmodule_args)
-            action_name = ugettext_noop('generated')
-            task_fn = partial(push_student_forums_data_to_s3, task_xmodule_args)
-
-            mock_main_task.assert_called_once_with_args(task_entry.id, task_fn, action_name)
 
 
 class TestCertificateGenerationnstructorTask(TestInstructorTasks):

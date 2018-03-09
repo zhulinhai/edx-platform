@@ -19,9 +19,6 @@ from lms.djangoapps.instructor_task.api import (
     submit_delete_problem_state_for_all_students,
     submit_delete_entrance_exam_state_for_student,
     submit_bulk_course_email,
-    submit_ora2_request_task,
-    submit_student_forums_usage_task,
-    submit_course_forums_usage_task,
     submit_calculate_problem_responses_csv,
     submit_calculate_students_features_csv,
     submit_cohort_students,
@@ -33,12 +30,6 @@ from lms.djangoapps.instructor_task.api import (
     regenerate_certificates,
     submit_export_ora2_data,
     SpecificStudentIdMissingError,
-)
-
-from lms.djangoapps.instructor_task.tasks import (
-    get_ora2_responses,
-    get_course_forums_usage,
-    get_student_forums_usage,
 )
 
 from lms.djangoapps.instructor_task.api_helper import AlreadyRunningError
@@ -255,33 +246,6 @@ class InstructorTaskCourseSubmitTest(TestReportMixin, InstructorTaskCourseTestCa
             features=[]
         )
         self._test_resubmission(api_call)
-
-    def test_submit_ora2_request_task(self):
-        request = self.create_task_request(self.instructor)
-
-        with patch('lms.djangoapps.instructor_task.api.submit_task') as mock_submit_task:
-            mock_submit_task.return_value = MagicMock()
-            submit_ora2_request_task(request, self.course.id, "True")
-
-            mock_submit_task.assert_called_once_with(request, 'ora2_responses', get_ora2_responses, self.course.id, {'include_email': 'True'}, '')
-
-    def test_submit_ora2_email_request_task(self):
-        request = self.create_task_request(self.instructor)
-
-        with patch('lms.djangoapps.instructor_task.api.submit_task') as mock_submit_task:
-            mock_submit_task.return_value = MagicMock()
-            submit_ora2_request_task(request, self.course.id, "False")
-
-            mock_submit_task.assert_called_once_with(request, 'ora2_responses', get_ora2_responses, self.course.id, {'include_email': 'False'}, '')
-
-    def test_submit_student_forums_usage_task(self):
-        request = self.create_task_request(self.instructor)
-
-        with patch('lms.djangoapps.instructor_task.api.submit_task') as mock_submit_task:
-            mock_submit_task.return_value = MagicMock()
-            submit_student_forums_usage_task(request, self.course.id)
-
-            mock_submit_task.assert_called_once_with(request, 'student_forums', get_student_forums_usage, self.course.id, {}, '')
 
     def test_submit_enrollment_report_features_csv(self):
         api_call = lambda: submit_detailed_enrollment_features_csv(self.create_task_request(self.instructor),

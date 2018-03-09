@@ -6,7 +6,7 @@ import tempfile
 
 from django.utils.translation import ugettext as _
 
-from instructor import lti_connection
+from openedx.stanford.lms.djangoapps.instructor import lti_connection
 
 
 class LTIGrader(object):
