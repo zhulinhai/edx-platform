@@ -1,39 +1,22 @@
 import json
-
-import os.path
-from contextlib import contextmanager
-
-import django.test
 import mock
+
 from mock import MagicMock, patch
+
 from django.conf import settings
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
-from mako.template import Template
-from provider import constants
-from provider.oauth2.models import Client as OAuth2Client
-from storages.backends.overwrite import OverwriteStorage
 
-from third_party_auth.models import cache as config_cache
-from third_party_auth.models import (
-    LTIProviderConfig,
-    OAuth2ProviderConfig,
-    ProviderApiPermissions,
-    SAMLConfiguration,
-    SAMLProviderConfig
-)
-from third_party_auth.saml import EdXSAMLIdentityProvider, get_saml_idp_class
 from third_party_auth.utils import UsernameGenerator
 from third_party_auth.tests import testutil
-from third_party_auth.models import SAMLProviderConfig
 
-from third_party_auth.models import SAMLProviderConfig
 
 AUTH_FEATURES_KEY = 'ENABLE_THIRD_PARTY_AUTH'
 AUTH_FEATURE_ENABLED = AUTH_FEATURES_KEY in settings.FEATURES
 
 
+@override_settings(FEATURES={"ENABLE_REGISTRATION_USERNAME_SUGGESTION":True})
 class GenerateUsernameTestCase(testutil.TestCase):
 
     def setUp(self):
@@ -104,12 +87,10 @@ class GenerateUsernameTestCase(testutil.TestCase):
             backend_name="saml_backend",
             other_settings= {'RANDOM': False}
         )
-
         for i in range (1, 6):
             User.objects.create(
                 username='my_self_user_{}'.format(i)
             )
-        
         generator = UsernameGenerator(saml.other_settings)
         new_username = generator.generate_username(self.fullname)
         # We have 6 users: Five created in the loop with a consecutive
@@ -137,13 +118,12 @@ class GenerateUsernameTestCase(testutil.TestCase):
         new_username = generator.generate_username(self.fullname)
         return self.assertEqual(new_username, 'my_self_user_4589')
 
-    def test_username_without_modifications(self):
+    @patch('third_party_auth.utils.UsernameGenerator.get_random')
+    def test_generate_username_with_repetitive_random(self, mock_random):
         """
-        If the provided username does not exists
-        in database, should return the username without
-        any modifications of suffix number.
+        If a random generated number is repeated, should append
+        a suffix with another random that does not exists.
         """
-    
         saml = self.configure_saml_provider(
             enabled=True,
             name="Saml Test",
@@ -151,10 +131,27 @@ class GenerateUsernameTestCase(testutil.TestCase):
             backend_name="saml_backend",
             other_settings= {'RANDOM': True}
         )
+        mock_random.side_effect = [4589, 9819]
+        user_1 = User.objects.create(username='my_self')
+        user_2 = User.objects.create(username='my_self_4589')
+        generator = UsernameGenerator(saml.other_settings)
+        new_username = generator.generate_username('My Self')
+        return self.assertEqual(new_username, 'my_self_9819')
 
+    def test_username_without_modifications(self):
+        """
+        If the provided username does not exists
+        in database, should return the username without
+        any modifications of suffix number.
+        """
+        saml = self.configure_saml_provider(
+            enabled=True,
+            name="Saml Test",
+            idp_slug="test",
+            backend_name="saml_backend",
+            other_settings= {'RANDOM': True}
+        )
         not_existing_user = 'Another Myself'
         generator = UsernameGenerator(saml.other_settings)
         new_username = generator.generate_username(not_existing_user)
-
         return self.assertEqual(new_username, 'another_myself')
-
