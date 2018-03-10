@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from lms.djangoapps.ccx.overrides import get_current_ccx
+from openedx.core.djangolib.js_utils import js_escaped_string
 from openedx.core.djangolib.markup import HTML, Text
 
 # App that handles subdomain specific branding
@@ -46,11 +47,17 @@ site_status_msg = get_site_status_msg(course_id)
 % endif
 </%block>
 
-% if configuration_helpers.get_value('ENABLE_UNSUPPORTED_BROWSER_ALERT', settings.FEATURES.get('ENABLE_UNSUPPORTED_BROWSER_ALERT', False)):
+<%
+  enable_unsupported_browser_alert = configuration_helpers.get_value('ENABLE_UNSUPPORTED_BROWSER_ALERT', settings.FEATURES.get('ENABLE_UNSUPPORTED_BROWSER_ALERT', False))
+  unsupported_browser_alert_versions = configuration_helpers.get_value('UNSUPPORTED_BROWSER_ALERT_VERSIONS', settings.FEATURES.get('UNSUPPORTED_BROWSER_ALERT_VERSIONS'))
+%>
+% if enable_unsupported_browser_alert:
   <script>
-  var $buoop = {notify:${configuration_helpers.get_value('UNSUPPORTED_BROWSER_ALERT_VERSIONS', settings.FEATURES.get('UNSUPPORTED_BROWSER_ALERT_VERSIONS'))|h},
+  var $buoop = {
+    notify:${unsupported_browser_alert_versions | n, decode.utf8},
     api:5,
-    reminder:0};
+    reminder:0
+  };
   function $buo_f(){
    var e = document.createElement("script");
    e.src = "//browser-update.org/update.min.js";
