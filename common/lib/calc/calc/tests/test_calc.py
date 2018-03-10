@@ -440,7 +440,7 @@ class EvaluatorTest(unittest.TestCase):
         """
         Substitution of variables into simple equations
         """
-        variables = {'x': 9.72, 'y': 7.91, 'loooooong': 6.4}
+        variables = {'x': 9.72, 'y': 7.91, 'loooooong': 6.4, "f_0'": 2.0, "T_{ijk}^{123}''": 5.2}
 
         # Should not change value of constant
         # even with different numbers of variables...
@@ -452,6 +452,8 @@ class EvaluatorTest(unittest.TestCase):
         self.assertEqual(calc.evaluator(variables, {}, 'x'), 9.72)
         self.assertEqual(calc.evaluator(variables, {}, 'y'), 7.91)
         self.assertEqual(calc.evaluator(variables, {}, 'loooooong'), 6.4)
+        self.assertEqual(calc.evaluator(variables, {}, "f_0'"), 2.0)
+        self.assertEqual(calc.evaluator(variables, {}, "T_{ijk}^{123}''"), 5.2)
 
         # Test a simple equation
         self.assertAlmostEqual(
@@ -554,3 +556,12 @@ class EvaluatorTest(unittest.TestCase):
             calc.evaluator({'r1': 5}, {}, "r1+r2")
         with self.assertRaisesRegexp(calc.UndefinedVariable, 'r1 r3'):
             calc.evaluator(variables, {}, "r1*r3", case_sensitive=True)
+
+    def test_mismatched_parens(self):
+        """
+        Check to see if the evaluator catches mismatched parens
+        """
+        with self.assertRaisesRegexp(calc.UnmatchedParenthesis, 'opened but never closed'):
+            calc.evaluator({}, {}, "(1+2")
+        with self.assertRaisesRegexp(calc.UnmatchedParenthesis, 'no matching opening parenthesis'):
+            calc.evaluator({}, {}, "(1+2))")

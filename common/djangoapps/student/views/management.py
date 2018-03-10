@@ -9,16 +9,20 @@ import uuid
 import warnings
 from collections import namedtuple
 
+import analytics
+import dogstats_wrapper as dog_stats_api
+from bulk_email.models import Optout
+from courseware.courses import get_courses, sort_by_announcement, sort_by_start_date
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, load_backend, login as django_login, logout
+from django.contrib.auth import login as django_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth.views import password_reset_confirm
 from django.core import mail
-from django.core.urlresolvers import NoReverseMatch, reverse, reverse_lazy
+from django.core.urlresolvers import reverse
 from django.core.validators import ValidationError, validate_email
-from django.db import IntegrityError, transaction
+from django.db import transaction
 from django.db.models.signals import post_save
 from django.dispatch import Signal, receiver
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
@@ -26,12 +30,15 @@ from django.shortcuts import redirect
 from django.template.context_processors import csrf
 from django.template.response import TemplateResponse
 from django.utils.encoding import force_bytes, force_text
-from django.utils.http import base36_to_int, is_safe_url, urlencode, urlsafe_base64_encode
-from django.utils.translation import ugettext as _
+from django.utils.http import base36_to_int, urlsafe_base64_encode
 from django.utils.translation import get_language, ungettext
+from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
+from eventtracking import tracker
 from ipware.ip import get_ip
+# Note that this lives in LMS, so this dependency should be refactored.
+from notification_prefs.views import enable_notifications
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from pytz import UTC
@@ -39,19 +46,14 @@ from requests import HTTPError
 from six import text_type, iteritems
 from social_core.exceptions import AuthAlreadyAssociated, AuthException
 from social_django import utils as social_utils
+from xmodule.modulestore.django import modulestore
 
-import analytics
-import dogstats_wrapper as dog_stats_api
 import openedx.core.djangoapps.external_auth.views
 import third_party_auth
 import track.views
-from bulk_email.models import Optout  # pylint: disable=import-error
 from course_modes.models import CourseMode
-from courseware.courses import get_courses, sort_by_announcement, sort_by_start_date  # pylint: disable=import-error
 from edxmako.shortcuts import render_to_response, render_to_string
-from eventtracking import tracker
-# Note that this lives in LMS, so this dependency should be refactored.
-from notification_prefs.views import enable_notifications
+from entitlements.models import CourseEntitlement
 from openedx.core.djangoapps import monitoring_utils
 from openedx.core.djangoapps.catalog.utils import (
     get_programs_with_type,
@@ -64,7 +66,8 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from openedx.core.djangoapps.theming import helpers as theming_helpers
 from openedx.core.djangoapps.user_api import accounts as accounts_settings
 from openedx.core.djangoapps.user_api.preferences import api as preferences_api
-from openedx.core.djangolib.markup import HTML
+from openedx.core.djangoapps.user_api.config.waffle import PREVENT_AUTH_USER_WRITES, SYSTEM_MAINTENANCE_MSG, waffle
+from openedx.core.djangolib.markup import HTML, Text
 from student.cookies import set_logged_in_cookies
 from student.forms import AccountCreationForm, PasswordResetFormNoActive, get_registration_extension_form
 from student.helpers import (
@@ -80,10 +83,7 @@ from student.helpers import (
     get_next_url_for_login_page
 )
 from student.models import (
-    ALLOWEDTOENROLL_TO_ENROLLED,
     CourseEnrollment,
-    CourseEnrollmentAllowed,
-    ManualEnrollmentAudit,
     PasswordHistory,
     PendingEmailChange,
     Registration,
@@ -103,7 +103,6 @@ from util.bad_request_rate_limiter import BadRequestRateLimiter
 from util.db import outer_atomic
 from util.json_request import JsonResponse
 from util.password_policy_validators import validate_password_length, validate_password_strength
-from xmodule.modulestore.django import modulestore
 
 log = logging.getLogger("edx.student")
 
@@ -111,7 +110,7 @@ AUDIT_LOG = logging.getLogger("audit")
 ReverifyInfo = namedtuple(
     'ReverifyInfo',
     'course_id course_name course_number date status display'
-)  # pylint: disable=invalid-name
+)
 SETTING_CHANGE_INITIATED = 'edx.user.settings.change_initiated'
 # Used as the name of the user attribute for tracking affiliate registrations
 REGISTRATION_AFFILIATE_ID = 'registration_affiliate_id'
@@ -402,6 +401,9 @@ def change_enrollment(request, check_access=True):
         )
         if redirect_url:
             return HttpResponse(redirect_url)
+
+        if CourseEntitlement.check_for_existing_entitlement_and_enroll(user=user, course_run_key=course_id):
+            return HttpResponse(reverse('courseware', args=[unicode(course_id)]))
 
         # Check that auto enrollment is allowed for this course
         # (= the course is NOT behind a paywall)
@@ -727,7 +729,7 @@ def create_account_with_params(request, params):
     if hasattr(settings, 'LMS_SEGMENT_KEY') and settings.LMS_SEGMENT_KEY:
         tracking_context = tracker.get_tracker().resolve_context()
         identity_args = [
-            user.id,  # pylint: disable=no-member
+            user.id,
             {
                 'email': user.email,
                 'username': user.username,
@@ -779,7 +781,6 @@ def create_account_with_params(request, params):
 
     if skip_email:
         registration.activate()
-        _enroll_user_in_pending_courses(user)  # Enroll student in any pending courses
     else:
         compose_and_send_activation_email(user, profile, registration)
 
@@ -873,25 +874,6 @@ def skip_activation_email(user, do_external_auth, running_pipeline, third_party_
     )
 
 
-def _enroll_user_in_pending_courses(student):
-    """
-    Enroll student in any pending courses he/she may have.
-    """
-    ceas = CourseEnrollmentAllowed.objects.filter(email=student.email)
-    for cea in ceas:
-        if cea.auto_enroll:
-            enrollment = CourseEnrollment.enroll(student, cea.course_id)
-            manual_enrollment_audit = ManualEnrollmentAudit.get_manual_enrollment_by_email(student.email)
-            if manual_enrollment_audit is not None:
-                # get the enrolled by user and reason from the ManualEnrollmentAudit table.
-                # then create a new ManualEnrollmentAudit table entry for the same email
-                # different transition state.
-                ManualEnrollmentAudit.create_manual_enrollment_audit(
-                    manual_enrollment_audit.enrolled_by, student.email, ALLOWEDTOENROLL_TO_ENROLLED,
-                    manual_enrollment_audit.reason, enrollment
-                )
-
-
 def record_affiliate_registration_attribution(request, user):
     """
     Attribute this user's registration to the referring affiliate, if
@@ -953,6 +935,9 @@ def create_account(request, post_override=None):
     ):
         return HttpResponseForbidden(_("Account creation not allowed."))
 
+    if waffle().is_enabled(PREVENT_AUTH_USER_WRITES):
+        return HttpResponseForbidden(SYSTEM_MAINTENANCE_MSG)
+
     warnings.warn("Please use RegistrationView instead.", DeprecationWarning)
 
     try:
@@ -1010,7 +995,26 @@ def activate_account(request, key):
             extra_tags='account-activation aa-icon'
         )
     else:
-        if not registration.user.is_active:
+        if registration.user.is_active:
+            messages.info(
+                request,
+                HTML(_('{html_start}This account has already been activated.{html_end}')).format(
+                    html_start=HTML('<p class="message-title">'),
+                    html_end=HTML('</p>'),
+                ),
+                extra_tags='account-activation aa-icon',
+            )
+        elif waffle().is_enabled(PREVENT_AUTH_USER_WRITES):
+            messages.error(
+                request,
+                HTML(u'{html_start}{message}{html_end}').format(
+                    message=Text(SYSTEM_MAINTENANCE_MSG),
+                    html_start=HTML('<p class="message-title">'),
+                    html_end=HTML('</p>'),
+                ),
+                extra_tags='account-activation aa-icon',
+            )
+        else:
             registration.activate()
             # Success message for logged in users.
             message = _('{html_start}Success{html_end} You have activated your account.')
@@ -1032,18 +1036,6 @@ def activate_account(request, key):
                 ),
                 extra_tags='account-activation aa-icon',
             )
-        else:
-            messages.info(
-                request,
-                HTML(_('{html_start}This account has already been activated.{html_end}')).format(
-                    html_start=HTML('<p class="message-title">'),
-                    html_end=HTML('</p>'),
-                ),
-                extra_tags='account-activation aa-icon',
-            )
-
-        # Enroll student in any pending courses he/she may have if auto_enroll flag is set
-        _enroll_user_in_pending_courses(registration.user)
 
     return redirect('dashboard')
 
@@ -1064,11 +1056,11 @@ def activate_account_studio(request, key):
         user_logged_in = request.user.is_authenticated()
         already_active = True
         if not registration.user.is_active:
+            if waffle().is_enabled(PREVENT_AUTH_USER_WRITES):
+                return render_to_response('registration/activation_invalid.html',
+                                          {'csrf': csrf(request)['csrf_token']})
             registration.activate()
             already_active = False
-
-        # Enroll student in any pending courses he/she may have if auto_enroll flag is set
-        _enroll_user_in_pending_courses(registration.user)
 
         return render_to_response(
             "registration/activation_complete.html",
@@ -1180,8 +1172,6 @@ def validate_password_security_policy(user, password):
             num_distinct = settings.ADVANCED_SECURITY_CONFIG['MIN_DIFFERENT_STAFF_PASSWORDS_BEFORE_REUSE']
         else:
             num_distinct = settings.ADVANCED_SECURITY_CONFIG['MIN_DIFFERENT_STUDENT_PASSWORDS_BEFORE_REUSE']
-        # Because of how ngettext is, splitting the following into shorter lines would be ugly.
-        # pylint: disable=line-too-long
         err_msg = ungettext(
             "You are re-using a password that you have used recently. "
             "You must have {num} distinct password before reusing a previous password.",
@@ -1193,8 +1183,6 @@ def validate_password_security_policy(user, password):
     # also, check to see if passwords are getting reset too frequent
     if PasswordHistory.is_password_reset_too_soon(user):
         num_days = settings.ADVANCED_SECURITY_CONFIG['MIN_TIME_IN_DAYS_BETWEEN_ALLOWED_RESETS']
-        # Because of how ngettext is, splitting the following into shorter lines would be ugly.
-        # pylint: disable=line-too-long
         err_msg = ungettext(
             "You are resetting passwords too frequently. Due to security policies, "
             "{num} day must elapse between password resets.",
@@ -1225,6 +1213,18 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
         # password_reset_confirm function handle it.
         return password_reset_confirm(
             request, uidb64=uidb64, token=token, extra_context=platform_name
+        )
+
+    if waffle().is_enabled(PREVENT_AUTH_USER_WRITES):
+        context = {
+            'validlink': False,
+            'form': None,
+            'title': _('Password reset unsuccessful'),
+            'err_msg': SYSTEM_MAINTENANCE_MSG,
+        }
+        context.update(platform_name)
+        return TemplateResponse(
+            request, 'registration/password_reset_confirm.html', context
         )
 
     if request.method == 'POST':
@@ -1350,7 +1350,7 @@ def do_email_change_request(user, new_email, activation_key=None):
     )
     try:
         mail.send_mail(subject, message, from_address, [pec.new_email])
-    except Exception:  # pylint: disable=broad-except
+    except Exception:
         log.error(u'Unable to send email activation link to user from "%s"', from_address, exc_info=True)
         raise ValueError(_('Unable to send email activation link. Please try again later.'))
 
@@ -1374,6 +1374,9 @@ def confirm_email_change(request, key):  # pylint: disable=unused-argument
     User requested a new e-mail. This is called when the activation
     link is clicked. We confirm with the old e-mail, and update
     """
+    if waffle().is_enabled(PREVENT_AUTH_USER_WRITES):
+        return render_to_response('email_change_failed.html', {'err_msg': SYSTEM_MAINTENANCE_MSG})
+
     with transaction.atomic():
         try:
             pec = PendingEmailChange.objects.get(activation_key=key)

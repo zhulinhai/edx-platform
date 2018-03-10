@@ -5,11 +5,12 @@ from django.contrib.admin import autodiscover as django_autodiscover
 from django.utils.translation import ugettext_lazy as _
 
 import contentstore.views
+from cms.djangoapps.contentstore.views.organization import OrganizationListView
 import openedx.core.djangoapps.common_views.xblock
 import openedx.core.djangoapps.debug.views
 import openedx.core.djangoapps.external_auth.views
 import openedx.core.djangoapps.lang_pref.views
-from cms.djangoapps.contentstore.views.organization import OrganizationListView
+
 from ratelimitbackend import admin
 
 django_autodiscover()
@@ -157,7 +158,6 @@ urlpatterns = [
     url(r'^api/val/v0/', include('edxval.urls')),
     url(r'^api/tasks/v0/', include('user_tasks.urls')),
     url(r'^accessibility$', contentstore.views.accessibility, name='accessibility'),
-    url(r'^zendesk_proxy/', include('openedx.core.djangoapps.zendesk_proxy.urls')),
 ]
 
 JS_INFO_DICT = {

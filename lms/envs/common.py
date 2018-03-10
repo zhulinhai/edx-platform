@@ -37,6 +37,7 @@ import django
 from path import Path as path
 from django.utils.translation import ugettext_lazy as _
 
+from openedx.core.constants import COURSE_KEY_REGEX, COURSE_KEY_PATTERN, COURSE_ID_PATTERN
 from openedx.core.djangoapps.theming.helpers_dirs import (
     get_themes_unchecked,
     get_theme_base_dirs_from_settings
@@ -715,15 +716,6 @@ COURSE_MODE_DEFAULTS = {
 # TODO (vshnayder): Will probably need to change as we get real access control in.
 LMS_MIGRATION_ALLOWED_IPS = []
 
-# These are standard regexes for pulling out info like course_ids, usage_ids, etc.
-# They are used so that URLs with deprecated-format strings still work.
-# Note: these intentionally greedily grab all chars up to the next slash including any pluses
-# DHM: I really wanted to ensure the separators were the same (+ or /) but all patts I tried had
-# too many inadvertent side effects :-(
-COURSE_KEY_PATTERN = r'(?P<course_key_string>[^/+]+(/|\+)[^/+]+(/|\+)[^/?]+)'
-COURSE_ID_PATTERN = COURSE_KEY_PATTERN.replace('course_key_string', 'course_id')
-COURSE_KEY_REGEX = COURSE_KEY_PATTERN.replace('P<course_key_string>', ':')
-
 USAGE_KEY_PATTERN = r'(?P<usage_key_string>(?:i4x://?[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+))'
 ASSET_KEY_PATTERN = r'(?P<asset_key_string>(?:/?c4x(:/)?/[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+))'
 USAGE_ID_PATTERN = r'(?P<usage_id>(?:i4x://?[^/]+/[^/]+/[^/]+/[^@]+(?:@[^/]+)?)|(?:[^/]+))'
@@ -1157,7 +1149,6 @@ FEEDBACK_SUBMISSION_EMAIL = None
 ZENDESK_URL = None
 ZENDESK_USER = None
 ZENDESK_API_KEY = None
-ZENDESK_OAUTH_ACCESS_TOKEN = None
 ZENDESK_CUSTOM_FIELDS = {}
 
 ##### EMBARGO #####
@@ -2131,7 +2122,7 @@ INSTALLED_APPS = [
 
     # Our courseware
     'courseware',
-    'student',
+    'student.apps.StudentConfig',
 
     'static_template_view',
     'staticbook',
@@ -2195,7 +2186,6 @@ INSTALLED_APPS = [
     'django_comment_client',
     'django_comment_common',
     'discussion_api',
-    'lms.djangoapps.discussion.apps.DiscussionConfig',
 
     # Notes
     'notes',
@@ -2379,7 +2369,7 @@ CSRF_COOKIE_SECURE = False
 ######################### Django Rest Framework ########################
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'openedx.core.lib.api.paginators.DefaultPagination',
+    'DEFAULT_PAGINATION_CLASS': 'edx_rest_framework_extensions.paginators.DefaultPagination',
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
@@ -3285,7 +3275,7 @@ CCX_MAX_STUDENTS_ALLOWED = 200
 
 # Maximum and minimum length of answers, in characters, for the
 # financial assistance form
-FINANCIAL_ASSISTANCE_MIN_LENGTH = 800
+FINANCIAL_ASSISTANCE_MIN_LENGTH = 250
 FINANCIAL_ASSISTANCE_MAX_LENGTH = 2500
 
 #### Registration form extension. ####
@@ -3453,7 +3443,6 @@ EDX_PLATFORM_REVISION = 'unknown'
 # Once a user has watched this percentage of a video, mark it as complete:
 # (0.0 = 0%, 1.0 = 100%)
 COMPLETION_VIDEO_COMPLETE_PERCENTAGE = 0.95
-COMPLETION_BY_VIEWING_DELAY_MS = 5000
 
 ############### Settings for Django Rate limit #####################
 RATELIMIT_ENABLE = True

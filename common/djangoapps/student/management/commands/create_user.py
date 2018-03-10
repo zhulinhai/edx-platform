@@ -8,8 +8,9 @@ from opaque_keys.edx.keys import CourseKey
 from six import text_type
 
 from student.forms import AccountCreationForm
+from student.helpers import do_create_account
 from student.models import CourseEnrollment, create_comments_service_user
-from student.views import _do_create_account, AccountValidationError
+from student.views import AccountValidationError
 from track.management.tracked_command import TrackedCommand
 
 
@@ -33,7 +34,7 @@ class Command(TrackedCommand):
         parser.add_argument('-u', '--username',
                             metavar='USERNAME',
                             help='Username, defaults to "user" in the email')
-        parser.add_argument('-n', '--name',
+        parser.add_argument('-n', '--proper_name',
                             metavar='NAME',
                             help='Name, defaults to "user" in the email')
         parser.add_argument('-p', '--password',
@@ -53,7 +54,7 @@ class Command(TrackedCommand):
 
     def handle(self, *args, **options):
         username = options['username'] if options['username'] else options['email'].split('@')[0]
-        name = options['name'] if options['name'] else options['email'].split('@')[0]
+        name = options['proper_name'] if options['proper_name'] else options['email'].split('@')[0]
 
         # parse out the course into a coursekey
         course = CourseKey.from_string(options['course']) if options['course'] else None
@@ -75,7 +76,7 @@ class Command(TrackedCommand):
         translation.activate(settings.LANGUAGE_CODE)
 
         try:
-            user, _, reg = _do_create_account(form)
+            user, _, reg = do_create_account(form)
             if options['staff']:
                 user.is_staff = True
                 user.save()

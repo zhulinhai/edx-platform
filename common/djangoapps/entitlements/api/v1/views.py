@@ -1,13 +1,12 @@
-import datetime
 import logging
 
 from django.db import IntegrityError, transaction
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from edx_rest_framework_extensions.authentication import JwtAuthentication
+from edx_rest_framework_extensions.paginators import DefaultPagination
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
-from pytz import UTC
 from rest_framework import permissions, viewsets, status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
@@ -16,13 +15,13 @@ from entitlements.api.v1.filters import CourseEntitlementFilter
 from entitlements.api.v1.permissions import IsAdminOrAuthenticatedReadOnly
 from entitlements.api.v1.serializers import CourseEntitlementSerializer
 from entitlements.models import CourseEntitlement
-from entitlements.utils import is_course_run_entitlement_fullfillable
+from entitlements.utils import is_course_run_entitlement_fulfillable
 from lms.djangoapps.commerce.utils import refund_entitlement
 from openedx.core.djangoapps.catalog.utils import get_course_runs_for_course
 from openedx.core.djangoapps.cors_csrf.authentication import SessionAuthenticationCrossDomainCsrf
-from openedx.core.lib.api.paginators import DefaultPagination
 from student.models import CourseEnrollment
 from student.models import CourseEnrollmentException, AlreadyEnrolledError
+from course_modes.models import CourseMode
 
 log = logging.getLogger(__name__)
 
@@ -263,7 +262,10 @@ class EntitlementEnrollmentViewSet(viewsets.GenericViewSet):
             enrollment = CourseEnrollment.get_enrollment(user, course_run_key)
             if enrollment.mode == entitlement.mode:
                 entitlement.set_enrollment(enrollment)
-            # Else the User is already enrolled in another Mode and we should
+            elif enrollment.mode not in [mode.slug for mode in CourseMode.paid_modes_for_course(course_run_key)]:
+                enrollment.update_enrollment(mode=entitlement.mode)
+                entitlement.set_enrollment(enrollment)
+            # Else the User is already enrolled in another paid Mode and we should
             # not do anything else related to Entitlements.
         except CourseEnrollmentException:
             message = (
@@ -332,7 +334,7 @@ class EntitlementEnrollmentViewSet(viewsets.GenericViewSet):
             )
 
         # Verify that the run is fullfillable
-        if not is_course_run_entitlement_fullfillable(course_run_key, entitlement):
+        if not is_course_run_entitlement_fulfillable(course_run_key, entitlement):
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={

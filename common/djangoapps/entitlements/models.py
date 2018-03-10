@@ -1,15 +1,25 @@
+"""Entitlement Models"""
+
+import logging
 import uuid as uuid_tools
 from datetime import timedelta
-from util.date_utils import strftime_localized
 
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.db import models
+from django.db import transaction
 from django.utils.timezone import now
+from model_utils.models import TimeStampedModel
 
 from lms.djangoapps.certificates.models import GeneratedCertificate
-from model_utils.models import TimeStampedModel
+from openedx.core.djangoapps.catalog.utils import get_course_uuid_for_course
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+from student.models import CourseEnrollment
+from student.models import CourseEnrollmentException
+from util.date_utils import strftime_localized
+from entitlements.utils import is_course_run_entitlement_fulfillable
+
+log = logging.getLogger("common.entitlements.models")
 
 
 class CourseEntitlementPolicy(models.Model):
@@ -253,6 +263,23 @@ class CourseEntitlement(TimeStampedModel):
         self.enrollment_course_run = enrollment
         self.save()
 
+    def reinstate(self):
+        """
+        Unenrolls a user from the run in which they have spent the given entitlement and
+        sets the entitlement's expired_at date to null.
+
+        Returns:
+            CourseOverview: course run from which the user has been unenrolled
+        """
+        unenrolled_run = self.enrollment_course_run.course
+        self.expired_at = None
+        CourseEnrollment.unenroll(
+            user=self.enrollment_course_run.user, course_id=unenrolled_run.id, skip_refund=True
+        )
+        self.enrollment_course_run = None
+        self.save()
+        return unenrolled_run
+
     @classmethod
     def unexpired_entitlements_for_user(cls, user):
         return cls.objects.filter(user=user, expired_at=None).select_related('user')
@@ -302,11 +329,98 @@ class CourseEntitlement(TimeStampedModel):
             enrollment_course_run=None
         ).select_related('user').select_related('enrollment_course_run')
 
+    @classmethod
+    def get_fulfillable_entitlements(cls, user):
+        """
+        Returns all fulfillable entitlements for a User
+
+        Arguments:
+            user (User): The user we are looking at the entitlements of.
+
+        Returns
+            Queryset: A queryset of course Entitlements ordered descending by creation date that a user can enroll in.
+            These must not be expired and not have a course run already assigned to it.
+        """
+
+        return cls.objects.filter(
+            user=user,
+        ).exclude(
+            expired_at__isnull=False,
+            enrollment_course_run__isnull=False
+        ).order_by('-created')
+
+    @classmethod
+    def get_fulfillable_entitlement_for_user_course_run(cls, user, course_run_key):
+        """
+        Retrieves a fulfillable entitlement for the user and the given course run.
+
+        Arguments:
+            user (User): The user that we are inspecting the entitlements for.
+            course_run_key (CourseKey): The course run Key.
+
+        Returns:
+            CourseEntitlement: The most recent fulfillable CourseEntitlement, None otherwise.
+        """
+        # Check if the User has any fulfillable entitlements.
+        # Note: Wait to retrieve the Course UUID until we have confirmed the User has fulfillable entitlements.
+        # This was done to avoid calling the APIs when the User does not have an entitlement.
+        entitlements = cls.get_fulfillable_entitlements(user)
+        if entitlements:
+            course_uuid = get_course_uuid_for_course(course_run_key)
+            if course_uuid:
+                entitlement = entitlements.filter(course_uuid=course_uuid).first()
+                if (is_course_run_entitlement_fulfillable(course_run_key=course_run_key, entitlement=entitlement) and
+                        entitlement.is_entitlement_redeemable()):
+                    return entitlement
+        return None
+
+    @classmethod
+    @transaction.atomic
+    def enroll_user_and_fulfill_entitlement(cls, entitlement, course_run_key):
+        """
+        Enrolls the user in the Course Run and updates the entitlement with the new Enrollment.
+
+        Returns:
+            bool: True if successfully fulfills given entitlement by enrolling the user in the given course run.
+        """
+        try:
+            enrollment = CourseEnrollment.enroll(
+                user=entitlement.user,
+                course_key=course_run_key,
+                mode=entitlement.mode
+            )
+        except CourseEnrollmentException:
+            log.exception('Login for Course Entitlement {uuid} failed'.format(uuid=entitlement.uuid))
+            return False
+
+        entitlement.set_enrollment(enrollment)
+        return True
+
+    @classmethod
+    def check_for_existing_entitlement_and_enroll(cls, user, course_run_key):
+        """
+        Looks at the User's existing entitlements to see if the user already has a Course Entitlement for the
+        course run provided in the course_key.  If the user does have an Entitlement with no run set, the User is
+        enrolled in the mode set in the Entitlement.
+
+        Arguments:
+            user (User): The user that we are inspecting the entitlements for.
+            course_run_key (CourseKey): The course run Key.
+        Returns:
+            bool: True if the user had an eligible course entitlement to which an enrollment in the
+            given course run was applied.
+        """
+        entitlement = cls.get_fulfillable_entitlement_for_user_course_run(user, course_run_key)
+        if entitlement:
+            return cls.enroll_user_and_fulfill_entitlement(entitlement, course_run_key)
+        return False
+
 
 class CourseEntitlementSupportDetail(TimeStampedModel):
     """
     Table recording support interactions with an entitlement
     """
+    # Reasons deprecated
     LEAVE_SESSION = 'LEAVE'
     CHANGE_SESSION = 'CHANGE'
     LEARNER_REQUEST_NEW = 'LEARNER_NEW'
@@ -319,10 +433,21 @@ class CourseEntitlementSupportDetail(TimeStampedModel):
         (COURSE_TEAM_REQUEST_NEW, u'Course team requested entitlement for learnerg'),
         (OTHER, u'Other'),
     )
+
+    REISSUE = 'REISSUE'
+    CREATE = 'CREATE'
+    ENTITLEMENT_SUPPORT_ACTIONS = (
+        (REISSUE, 'Re-issue entitlement'),
+        (CREATE, 'Create new entitlement'),
+    )
+
     entitlement = models.ForeignKey('entitlements.CourseEntitlement')
     support_user = models.ForeignKey(settings.AUTH_USER_MODEL)
 
+    #Deprecated: use action instead.
     reason = models.CharField(max_length=15, choices=ENTITLEMENT_SUPPORT_REASONS)
+    action = models.CharField(max_length=15, choices=ENTITLEMENT_SUPPORT_ACTIONS)
+
     comments = models.TextField(null=True)
 
     unenrolled_run = models.ForeignKey(
@@ -334,9 +459,22 @@ class CourseEntitlementSupportDetail(TimeStampedModel):
 
     def __unicode__(self):
         """Unicode representation of an Entitlement"""
-        return u'Course Entitlement Suppor Detail: entitlement: {}, support_user: {}, reason: {}'\
-            .format(
-                self.entitlement,
-                self.support_user,
-                self.reason,
-            )
+        return u'Course Entitlement Support Detail: entitlement: {}, support_user: {}, reason: {}'.format(
+            self.entitlement,
+            self.support_user,
+            self.reason,
+        )
+
+    @classmethod
+    def get_support_actions_list(cls):
+        """
+        Method for retrieving a serializable version of the entitlement support reasons
+
+        Returns
+            list: Containing the possible support actions
+        """
+        return [
+            action[0]  # get just the action code, not the human readable description.
+            for action
+            in cls.ENTITLEMENT_SUPPORT_ACTIONS
+        ]

@@ -262,9 +262,6 @@ FEATURES = {
     # Enable credit eligibility feature
     'ENABLE_CREDIT_ELIGIBILITY': ENABLE_CREDIT_ELIGIBILITY,
 
-    # Can the visibility of the discussion tab be configured on a per-course basis?
-    'ALLOW_HIDING_DISCUSSION_TAB': False,
-
     # Special Exams, aka Timed and Proctored Exams
     'ENABLE_SPECIAL_EXAMS': False,
 
@@ -460,6 +457,9 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     _csrf_middleware,
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
+
+    # Allows us to define redirects via Django admin
+    'django_sites_extensions.middleware.RedirectMiddleware',
 
     # Instead of SessionMiddleware, we use a more secure version
     # 'django.contrib.sessions.middleware.SessionMiddleware',
@@ -987,7 +987,7 @@ INSTALLED_APPS = [
     'openedx.core.djangoapps.contentserver',
     'course_creators',
     'openedx.core.djangoapps.external_auth',
-    'student',  # misleading name due to sharing with lms
+    'student.apps.StudentConfig',  # misleading name due to sharing with lms
     'openedx.core.djangoapps.course_groups',  # not used in cms (yet), but tests run
     'xblock_config.apps.XBlockConfig',
 
@@ -1493,7 +1493,6 @@ VIDEO_IMAGE_ASPECT_RATIO_ERROR_MARGIN = 0.1
 ZENDESK_URL = None
 ZENDESK_USER = None
 ZENDESK_API_KEY = None
-ZENDESK_OAUTH_ACCESS_TOKEN = None
 ZENDESK_CUSTOM_FIELDS = {}
 
 

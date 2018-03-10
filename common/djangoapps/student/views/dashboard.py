@@ -6,6 +6,8 @@ import datetime
 import logging
 from collections import defaultdict
 
+from completion.exceptions import UnavailableCompletionData
+from completion.utilities import get_key_to_last_completed_course_block
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -13,6 +15,7 @@ from django.core.urlresolvers import NoReverseMatch, reverse, reverse_lazy
 from django.shortcuts import redirect
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+
 from opaque_keys.edx.keys import CourseKey
 from pytz import UTC
 from six import text_type, iteritems
@@ -453,6 +456,24 @@ def _credit_statuses(user, course_enrollments):
     return statuses
 
 
+def _get_urls_for_resume_buttons(user, enrollments):
+    '''
+    Checks whether a user has made progress in any of a list of enrollments.
+    '''
+    resume_button_urls = []
+    for enrollment in enrollments:
+        try:
+            block_key = get_key_to_last_completed_course_block(user, enrollment.course_id)
+            url_to_block = reverse(
+                'jump_to',
+                kwargs={'course_id': enrollment.course_id, 'location': block_key}
+            )
+        except UnavailableCompletionData:
+            url_to_block = ''
+        resume_button_urls.append(url_to_block)
+    return resume_button_urls
+
+
 @login_required
 @ensure_csrf_cookie
 def student_dashboard(request):
@@ -473,6 +494,7 @@ def student_dashboard(request):
         return redirect(reverse('account_settings'))
 
     platform_name = configuration_helpers.get_value("platform_name", settings.PLATFORM_NAME)
+
     enable_verified_certificates = configuration_helpers.get_value(
         'ENABLE_VERIFIED_CERTIFICATES',
         settings.FEATURES.get('ENABLE_VERIFIED_CERTIFICATES')
@@ -526,7 +548,6 @@ def student_dashboard(request):
     enrollment_message = _create_recent_enrollment_message(
         course_enrollments, course_modes_by_course
     )
-
     course_optouts = Optout.objects.filter(user=user).values_list('course_id', flat=True)
 
     sidebar_account_activation_message = ''
@@ -590,20 +611,18 @@ def student_dashboard(request):
 
     # TODO: Delete this code and the relevant HTML code after testing LEARNER-3072 is complete
     if bundles_on_dashboard_flag.is_enabled() and inverted_programs and inverted_programs.items():
-        for program in inverted_programs.values():
-            try:
-                program_uuid = program[0]['uuid']
-                program_data = get_programs(request.site, uuid=program_uuid)
-                program_data = ProgramDataExtender(program_data, request.user).extend()
-                skus = program_data.get('skus')
-                program_data['completeProgramURL'] = ecommerce_service.get_checkout_page_url(*skus) + '&bundle=' + program_data.get('uuid')
-                programs_data[program_uuid] = program_data
-            except:
-                pass
-        try:
-            programs_data = json.dumps(programs_data)
-        except:
-            programs_data = {}
+        if len(course_enrollments) < 4:
+            for program in inverted_programs.values():
+                try:
+                    program_uuid = program[0]['uuid']
+                    program_data = get_programs(request.site, uuid=program_uuid)
+                    program_data = ProgramDataExtender(program_data, request.user).extend()
+                    skus = program_data.get('skus')
+                    checkout_page_url = ecommerce_service.get_checkout_page_url(*skus)
+                    program_data['completeProgramURL'] = checkout_page_url + '&bundle=' + program_data.get('uuid')
+                    programs_data[program_uuid] = program_data
+                except:  # pylint: disable=bare-except
+                    pass
 
     # Construct a dictionary of course mode information
     # used to render the course list.  We re-use the course modes dict
@@ -758,6 +777,15 @@ def student_dashboard(request):
             'use_ecommerce_payment_flow': True,
             'ecommerce_payment_page': ecommerce_service.payment_page_url(),
         })
+
+    # Gather urls for course card resume buttons.
+    resume_button_urls = _get_urls_for_resume_buttons(user, course_enrollments)
+    # There must be enough urls for dashboard.html. Template creates course
+    # cards for "enrollments + entitlements".
+    resume_button_urls += ['' for entitlement in course_entitlements]
+    context.update({
+        'resume_button_urls': resume_button_urls
+    })
 
     response = render_to_response('dashboard.html', context)
     set_user_info_cookie(response, request)

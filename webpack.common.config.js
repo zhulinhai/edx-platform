@@ -7,12 +7,7 @@ var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
 var StringReplace = require('string-replace-webpack-plugin');
 
-var namespacedRequireFiles = [
-    path.resolve(__dirname, 'common/static/common/js/components/views/feedback_notification.js'),
-    path.resolve(__dirname, 'common/static/common/js/components/views/feedback_prompt.js'),
-    path.resolve(__dirname, 'common/static/common/js/components/views/feedback.js'),
-    path.resolve(__dirname, 'common/static/common/js/components/utils/view_utils.js')
-];
+var files = require('./webpack-config/file-lists.js');
 
 var defineHeader = /\(function ?\(define(, require)?\) ?\{/;
 var defineFooter = /\}\)\.call\(this, define \|\| RequireJS\.define(, require \|\| RequireJS\.require)?\);/;
@@ -25,6 +20,8 @@ module.exports = {
         Import: './cms/static/js/features/import/factories/import.js',
         CourseOrLibraryListing: './cms/static/js/features_jsx/studio/CourseOrLibraryListing.jsx',
         'js/pages/login': './cms/static/js/pages/login.js',
+        'js/pages/textbooks': './cms/static/js/pages/textbooks.js',
+        'js/sock': './cms/static/js/sock.js',
 
         // LMS
         SingleSupportForm: './lms/static/support/jsx/single_support_form.jsx',
@@ -32,7 +29,13 @@ module.exports = {
         LearnerAnalyticsDashboard: './lms/static/js/learner_analytics_dashboard/LearnerAnalyticsDashboard.jsx',
         UpsellExperimentModal: './lms/static/common/js/components/UpsellExperimentModal.jsx',
         PortfolioExperimentUpsellModal: './lms/static/common/js/components/PortfolioExperimentUpsellModal.jsx',
-        ViewedEvent: './lms/static/completion/js/ViewedEvent.js',
+
+        // Learner Dashboard
+        EntitlementFactory: './lms/static/js/learner_dashboard/course_entitlement_factory.js',
+        EntitlementUnenrollmentFactory: './lms/static/js/learner_dashboard/entitlement_unenrollment_factory.js',
+        ProgramDetailsFactory: './lms/static/js/learner_dashboard/program_details_factory.js',
+        ProgramListFactory: './lms/static/js/learner_dashboard/program_list_factory.js',
+        UnenrollmentFactory: './lms/static/js/learner_dashboard/unenrollment_factory.js',
 
         // Features
         CourseGoals: './openedx/features/course_experience/static/course_experience/js/CourseGoals.js',
@@ -69,7 +72,8 @@ module.exports = {
             _: 'underscore',
             $: 'jquery',
             jQuery: 'jquery',
-            'window.jQuery': 'jquery'
+            'window.jQuery': 'jquery',
+            Popper: 'popper.js' // used by bootstrap
         }),
 
         // Note: Until karma-webpack releases v3, it doesn't play well with
@@ -98,7 +102,7 @@ module.exports = {
         ],
         rules: [
             {
-                test: namespacedRequireFiles,
+                test: files.namespacedRequire,
                 loader: StringReplace.replace(
                     ['babel-loader'],
                     {
@@ -116,10 +120,25 @@ module.exports = {
                 )
             },
             {
+                test: files.textBangUnderscore,
+                loader: StringReplace.replace(
+                    ['babel-loader'],
+                    {
+                        replacements: [
+                            {
+                                pattern: /text!(.*\.underscore)/,
+                                replacement: function(match, p1) { return p1; }
+                            }
+                        ]
+                    }
+                )
+            },
+            {
                 test: /\.(js|jsx)$/,
                 exclude: [
                     /node_modules/,
-                    namespacedRequireFiles
+                    files.namespacedRequire,
+                    files.textBangUnderscore
                 ],
                 use: 'babel-loader'
             },
@@ -131,9 +150,16 @@ module.exports = {
                 use: 'babel-loader'
             },
             {
-                test: /\.coffee$/,
-                exclude: /node_modules/,
-                use: 'coffee-loader'
+                test: path.resolve(__dirname, 'common/static/coffee/src/ajax_prefix.js'),
+                use: [
+                    'babel-loader',
+                    {
+                        loader: 'exports-loader',
+                        options: {
+                            'this.AjaxPrefix': true
+                        }
+                    }
+                ]
             },
             {
                 test: /\.underscore$/,
@@ -143,13 +169,34 @@ module.exports = {
                 // This file is used by both RequireJS and Webpack and depends on window globals
                 // This is a dirty hack and shouldn't be replicated for other files.
                 test: path.resolve(__dirname, 'cms/static/cms/js/main.js'),
-                use: {
-                    loader: 'imports-loader',
-                    options: {
-                        AjaxPrefix:
-                            'exports-loader?this.AjaxPrefix!../../../../common/static/coffee/src/ajax_prefix.coffee'
+                loader: StringReplace.replace(
+                    ['babel-loader'],
+                    {
+                        replacements: [
+                            {
+                                pattern: /\(function\(AjaxPrefix\) {/,
+                                replacement: function() { return ''; }
+                            },
+                            {
+                                pattern: /], function\(domReady, \$, str, Backbone, gettext, NotificationView\) {/,
+                                replacement: function() {
+                                    // eslint-disable-next-line
+                                    return '], function(domReady, $, str, Backbone, gettext, NotificationView, AjaxPrefix) {';
+                                }
+                            },
+                            {
+                                pattern: /'..\/..\/common\/js\/components\/views\/feedback_notification',/,
+                                replacement: function() {
+                                    return "'../../common/js/components/views/feedback_notification', 'AjaxPrefix',";
+                                }
+                            },
+                            {
+                                pattern: /}\).call\(this, AjaxPrefix\);/,
+                                replacement: function() { return ''; }
+                            }
+                        ]
                     }
-                }
+                )
             },
             {
                 test: /\.(woff2?|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
@@ -159,23 +206,33 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.js', '.jsx', '.json', '.coffee'],
+        extensions: ['.js', '.jsx', '.json'],
         alias: {
+            AjaxPrefix: 'ajax_prefix',
             'edx-ui-toolkit': 'edx-ui-toolkit/src/',  // @TODO: some paths in toolkit are not valid relative paths
             'jquery.ui': 'jQuery-File-Upload/js/vendor/jquery.ui.widget.js',
             jquery: 'jquery/src/jquery',  // Use the non-dist form of jQuery for better debugging + optimization
+            'backbone.associations': 'backbone-associations/backbone-associations-min',
 
             // See sinon/webpack interaction weirdness:
             // https://github.com/webpack/webpack/issues/304#issuecomment-272150177
             // (I've tried every other suggestion solution on that page, this
             // was the only one that worked.)
-            sinon: __dirname + '/node_modules/sinon/pkg/sinon.js'
+            sinon: __dirname + '/node_modules/sinon/pkg/sinon.js',
+            'jquery.smoothScroll': 'jquery.smooth-scroll.min',
+            'jquery.timepicker': 'timepicker/jquery.timepicker',
+            datepair: 'timepicker/datepair',
+            accessibility: 'accessibility_tools',
+            ieshim: 'ie_shim'
         },
         modules: [
             'node_modules',
-            'common/static/js/vendor/',
             'cms/static',
-            'common/static/js/src'
+            'common/static',
+            'common/static/js/src',
+            'common/static/js/vendor/',
+            'common/static/js/vendor/jQuery-File-Upload/js/',
+            'common/static/coffee/src'
         ]
     },
 
