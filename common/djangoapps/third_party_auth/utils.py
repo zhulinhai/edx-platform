@@ -1,4 +1,3 @@
-
 from random import randint
 
 from django.contrib.auth.models import User
@@ -36,37 +35,29 @@ class UsernameGenerator(object):
         else:
             return username
 
-    def consecutive_or_random(self, current_number=0):
-        """
-        Returns username suffix. Based on the settings it returns
-        either the next integer or a random 4-digit number.
-        """
-        if self.random:
-            subsequent_number = ''.join(["%s" % randint(0, 9) for num in range(0, 4)])
-        else:
-            subsequent_number = current_number + 1
+    def get_random(self):
+        """Returns username a random 4-digit number."""
+        random = "%04d" % randint(0, 9999)
+        return random
 
-        return subsequent_number
-
-    def generate_username(self, username):
+    def generate_username(self, fullname):
         """Utility function which generates a unique username based on the provided string."""
-        new_username = username
-        user_exists = User.objects.filter(username=new_username).exists()
+        username = self.replace_separator(fullname)
         initial_username = self.process_case(username)
+        user_exists = User.objects.filter(username=initial_username).exists()
 
         if not user_exists:
             new_username = initial_username
 
         counter = 1
         while user_exists:
-            subsequent_number = self.consecutive_or_random(counter)
-            new_username = '{}_{}'.format(initial_username, subsequent_number)
+            if self.random:
+                suffix = self.get_random()
+            else:
+                suffix = counter
+
+            new_username = '{}{}{}'.format(initial_username, self.separator_character, suffix)
             user_exists = User.objects.filter(username=new_username).exists()
             counter = counter + 1
 
         return new_username
-
-    def hint_username(self, fullname):
-        """Returns a unique username based on the provided full name string."""
-        username = self.replace_separator(fullname)
-        return self.generate_username(username)
