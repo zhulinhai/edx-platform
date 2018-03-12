@@ -2,6 +2,7 @@ from bson.son import SON
 from datetime import datetime
 from datetime import date
 from itertools import chain
+import logging
 from textwrap import dedent
 import urllib
 
@@ -25,6 +26,7 @@ from util.query import get_read_replica_cursor_if_available
 FORUMS_MONGO_PARAMS = settings.FORUM_MONGO_PARAMS
 FORUMS_MONGO_PARAMS = settings.FORUM_MONGO_PARAMS
 ORA2_ANSWER_PART_SEPARATOR = '\n-----\n'
+TASK_LOG = logging.getLogger('stanford.celery.task')
 
 
 def generate_student_forums_query(course_id):
@@ -218,8 +220,8 @@ def _push_csv_responses_to_s3(csv_fn, filename, course_id, action_name):
         header, datarows = csv_fn(course_id)
         rows = [header] + [row for row in datarows]
     # Update progress to failed regardless of error type
-    # pylint: disable=bare-except
-    except:
+    except Exception as error:
+        TASK_LOG.error(error)
         num_failed = 1
         update_task_progress()
         return UPDATE_STATUS_FAILED
