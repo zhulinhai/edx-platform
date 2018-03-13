@@ -35,7 +35,6 @@ except ImportError:
 # OBSOLETE: This obsoletes 'type'
 class_priority = ['video', 'problem']
 
-
 from django.utils.translation import ugettext_noop as _
 
 
