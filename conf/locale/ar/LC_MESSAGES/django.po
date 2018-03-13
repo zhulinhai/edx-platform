@@ -10664,7 +10664,7 @@ msgstr "يجب أن يكون طول كلمة المرور ما بين {min} إل
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 #, python-brace-format
 msgid "Enter a valid email address that contains at least {min} characters."
-msgstr ""
+msgstr "أدخل {min} وان بريد إلكتروني صالح يتضمن على الأقل 3 حروف"
 
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 msgid "Enter a password."
@@ -10689,7 +10689,7 @@ msgstr ""
 #. into the required field or enter it incorrectly.
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 msgid "Enter your full name."
-msgstr ""
+msgstr "أدخل اسمك الكامل"
 
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 msgid "The email addresses do not match."
@@ -10697,7 +10697,7 @@ msgstr ""
 
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 msgid "Select your country or region of residence."
-msgstr ""
+msgstr "اختر بلدك أو مكان إقامتك"
 
 #: openedx/core/djangoapps/user_api/accounts/__init__.py
 msgid "Select your profession."
@@ -18731,11 +18731,11 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid "Score Override"
-msgstr ""
+msgstr "تغيير درجة العلامات"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid "For the specified problem, override the learner's score."
-msgstr ""
+msgstr "من أجل المسألة المحددة، غيّر درجة علامات المتعلم"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid ""
@@ -25415,3 +25415,12 @@ msgstr "لايوجد شيء لتلخيصه"
 
 msgid "You have used {count_attempts} of {max_attempts} submission"
 msgstr "استخدمت {count_attempts}  من {max_attempts}  من محاولات الإرسال"
+
+msgid "I agree to the {link_start}Terms of Service and Honor Code{link_end}"
+msgstr "أوافق على {link_start} بنود الخدمة ورمز الشرف {link_end}"
+
+msgid "You must complete the section '{prereq_section_name}' with the required score before you are able to view this content."
+msgstr "يجب استكمال قسم  '{prereq_section_name}' وبمعدل العلامات المطلوب كي تتمكن من الاطلاع على هذا المحتوى"
+
+msgid "Have a question about something? You can contact the support team directly:"
+msgstr "هل لديك سؤال عن موضوع معين؟ بإمكانك الاتصال مع فريق الدعم مباشرة"
