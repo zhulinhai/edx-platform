@@ -25,7 +25,6 @@ from util.file import course_filename_prefix_generator
 from util.query import get_read_replica_cursor_if_available
 
 FORUMS_MONGO_PARAMS = settings.FORUM_MONGO_PARAMS
-FORUMS_MONGO_PARAMS = settings.FORUM_MONGO_PARAMS
 ORA2_ANSWER_PART_SEPARATOR = '\n-----\n'
 TASK_LOG = logging.getLogger('stanford.celery.task')
 
