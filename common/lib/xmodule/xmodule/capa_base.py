@@ -12,6 +12,7 @@ import sys
 import traceback
 
 from django.conf import settings
+from django.utils.translation import ugettext_noop as _
 # We don't want to force a dependency on datadog, so make the import conditional
 try:
     import dogstats_wrapper as dog_stats_api
@@ -41,10 +42,6 @@ try:
     from submissions import api as sub_api
 except ImportError:
     sub_api = None
-
-# Make '_' a no-op so we can scrape strings. Using lambda instead of
-#  `django.utils.translation.ugettext_noop` because Django cannot be imported in this file
-_ = lambda text: text
 
 # Generate this many different variants of problems with rerandomize=per_student
 NUM_RANDOMIZATION_BINS = 20

@@ -461,8 +461,8 @@ msgstr "الردّ على الملاحظات التوضيحية"
 #: common/lib/xmodule/xmodule/js/src/capa/display.js
 msgid "%(num_points)s point possible (graded, results hidden)"
 msgid_plural "%(num_points)s points possible (graded, results hidden)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num_points) نقاط محتملة (متدرج, نتائج مخفية)"
+msgstr[1] "%(num_points) نقاط محتملة (متدرج, نتائج مخفية"
 msgstr[2] ""
 msgstr[3] ""
 msgstr[4] ""
@@ -473,8 +473,8 @@ msgstr[5] ""
 #: common/lib/xmodule/xmodule/js/src/capa/display.js
 msgid "%(num_points)s point possible (ungraded, results hidden)"
 msgid_plural "%(num_points)s points possible (ungraded, results hidden)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num_points) نقاط محتملة (متدرج، نتائج مخفية)"
+msgstr[1] "%(num_points) (نقاط محتملة (متدرج، نتائج مخفية"
 msgstr[2] ""
 msgstr[3] ""
 msgstr[4] ""
@@ -3431,24 +3431,24 @@ msgstr ""
 msgid ""
 "Are you sure you want to unenroll from the purchased course %(courseName)s "
 "(%(courseNumber)s)?"
-msgstr ""
+msgstr "هل أنت متأكد من انسحابك من مساق %(courseName) الذي سجلت ودفعت من أجله"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
 "Are you sure you want to unenroll from %(courseName)s (%(courseNumber)s)?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك تريد الانسحاب من مساق  %(courseName) رقم %(courseNumber)؟"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
 "Are you sure you want to unenroll from the verified %(certNameLong)s  track "
 "of %(courseName)s  (%(courseNumber)s)?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك ستنسحب من المسار الذي سيمنحك شهادة %(certNameLong) باسم %(courseName)  ورقم %(courseNumber)؟"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
 "Are you sure you want to unenroll from the verified %(certNameLong)s track "
 "of %(courseName)s (%(courseNumber)s)?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك ستنسحب من المسار الذي سيمنحك شهادة %(certNameLong) باسم %(courseName)  ورقم %(courseNumber)؟"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
@@ -3515,10 +3515,13 @@ msgid ""
 "Use cohorts as the basis for dividing discussions. All learners, regardless "
 "of cohort, see the same discussion topics, but within divided topics, only "
 "members of the same cohort see and respond to each others’ posts. "
-msgstr "استخدم مسارات التسجيل كأساس لتقسيم المناقشات. يشاهد جميع المتعلمين -- بغض النظر عن مسار التسجيل -- موضوعات المناقشة نفسها؛ لكن في الموضوعات المقسمة، لا يمكن لغير المتعلمين من مسار التسجيل نفسه مشاهدة منشورات غيرهم من الزملاء والرد عليها. "
+msgstr ""
 
 #: lms/static/js/discussions_management/views/discussions.js
 msgid "Discussion topics in the course are not divided."
+msgstr ""
+
+msgid "There are no posts in this topic yet."
 msgstr ""
 
 #: lms/static/js/discussions_management/views/discussions.js
@@ -3780,7 +3783,7 @@ msgid ""
 "'{verifiedCohortName}'. To change the configuration for verified track "
 "cohorts, contact your edX partner manager."
 msgstr ""
-"هذه الدورة التدريبية تستخدم نظام تكوين شعب بشكل تلقائي للمتعلمين المثبتين في"
+"هذه المساقالتدريبية تستخدم نظام تكوين شعب بشكل تلقائي للمتعلمين المثبتين في"
 " المسار. لا يمكنك تعطيل الشعب ولا يمكنك تسمية الشعبة اليدوية باسم "
 "'{verifiedCohortName}'. لتغيير التكوين لشعب المسار المثبت، اتصل بمدير الشريك"
 " edX الخاص بك.   "
@@ -3791,7 +3794,7 @@ msgid ""
 " the required cohort does not exist. You must create a manually-assigned "
 "cohort named '{verifiedCohortName}' for the feature to work."
 msgstr ""
-"تم في هذه الدورة التدريبية تمكين نظام تكوين الشعب التلقائي للمتعلمين "
+"تم في هذه المساقالتدريبية تمكين نظام تكوين الشعب التلقائي للمتعلمين "
 "المثبتين في المسار، ولكن الشعبة المطلوبة غير موجودة. يجب عليك إنشاء شعبة "
 "معينة يدويًا باسم '{verifiedCohortName}' حتى تعمل هذه الخاصية."
 
@@ -3800,7 +3803,7 @@ msgid ""
 "This course has automatic cohorting enabled for verified track learners, but"
 " cohorts are disabled. You must enable cohorts for the feature to work."
 msgstr ""
-"تم  في هذه الدورة التدريبية تمكين نظام تكوين الشعب التلقائي للمتعلمين "
+"تم  في هذه المساقالتدريبية تمكين نظام تكوين الشعب التلقائي للمتعلمين "
 "المثبتين في المسار، ولكن تم تعطيل الشعب. يجب عليك تفعيل الشعب حتى تعمل هذه "
 "الخاصية."
 
@@ -3957,7 +3960,7 @@ msgid ""
 "must create and activate their accounts before they can be assigned a role."
 msgstr ""
 "خطأ: '<%- username %>' لم يفعل حسابه بعد. على المستخدمين إنشاء وتفعيل "
-"حساباتهم قبل أن يُسند إليهم أي دور في الدورة التدريبية."
+"حساباتهم قبل أن يُسند إليهم أي دور في المساقالتدريبية."
 
 #: lms/static/js/instructor_dashboard/membership.js
 msgid "Error: You cannot remove yourself from the Instructor group!"
@@ -4129,11 +4132,11 @@ msgstr "نفسك"
 
 #: lms/static/js/instructor_dashboard/send_email.js
 msgid "Everyone who has staff privileges in this course"
-msgstr "كل فرد لديه مزايا الموظفين في هذه الدورة التدريبية"
+msgstr "كل فرد لديه مزايا الموظفين في هذه المساقالتدريبية"
 
 #: lms/static/js/instructor_dashboard/send_email.js
 msgid "All learners who are enrolled in this course"
-msgstr "كل المتعلمين المنضمين إلى هذه الدورة التدريبية ."
+msgstr "كل المتعلمين المنضمين إلى هذه المساقالتدريبية ."
 
 #: lms/static/js/instructor_dashboard/send_email.js
 msgid "All learners in the {cohort_name} cohort"
@@ -4149,8 +4152,8 @@ msgid ""
 "large number of learners, email messages to learners might take up to an "
 "hour to be sent."
 msgstr ""
-"تم جدولة إرسال رسالتك بنجاح. قد يستغرق إرسال الرسالة لجميع متعلمي الدورة "
-"التدريبية ساعة كاملة، ويعتمد ذلك على عدد المتعلمين في الدورة التدريبية."
+"تم جدولة إرسال رسالتك بنجاح. قد يستغرق إرسال الرسالة لجميع متعلمي المساق"
+"التدريبية ساعة كاملة، ويعتمد ذلك على عدد المتعلمين في المساقالتدريبية."
 
 #: lms/static/js/instructor_dashboard/send_email.js
 msgid ""
@@ -4688,7 +4691,7 @@ msgstr "إنشاء حساب"
 
 #: lms/static/js/student_account/views/RegisterView.js
 msgid "(required)"
-msgstr ""
+msgstr "(مطلوب)"
 
 #: lms/static/js/student_account/views/RegisterView.js
 msgid "You've successfully signed into %(currentProvider)s."
@@ -4730,12 +4733,8 @@ msgid "These settings include basic information about your account."
 msgstr "تتمضن هذه الإعدادات المعلومات الأساسية حول حسابك"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
-msgid ""
-"The name that identifies you throughout {platform_name}. You cannot change "
-"your username."
-msgstr ""
-"الاسم الذي يعرّف عنك في المنصة {platform_name}. لا يمكنك تغيير اسم المستخدم "
-"الخاص بك."
+msgid "The name that identifies you throughout {platform_name}. You cannot change your username."
+msgstr "الاسم الذي يعرّف عنك في المنصة {platform_name}. لا يمكنك تغيير اسم المستخدم الخاص بك."
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 #: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
@@ -4773,14 +4772,10 @@ msgstr ""
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid ""
 "The language used throughout this site. This site is currently available in "
-"a limited number of languages."
+"a limited number of languages." 
 msgstr ""
 "اللغة المستخدمة في كافة أقسام هذا الموقع. يتوفّر هذا الموقع حاليًا بعدد "
 "محدود من اللغات."
-
-#: lms/static/js/student_account/views/account_settings_factory.js
-msgid "Country or Region of Residence"
-msgstr "الدولة أو منطقة الإقامة"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid "The country or region where you live."
@@ -4870,7 +4865,7 @@ msgstr "تم وضع الطلب"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid "TOTAL"
-msgstr "المجموع الكلي"
+msgstr "المجموع"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid "ORDER NUMBER"
@@ -5241,7 +5236,7 @@ msgstr "إمكانية عرض الملف الشخصي"
 
 #: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
 msgid "Limited Profile"
-msgstr ""
+msgstr "ملف شخصي محدود"
 
 #: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
 msgid "Full Profile"
@@ -7393,7 +7388,7 @@ msgstr "الكمّية"
 #: lms/templates/verify_student/make_payment_step_ab_testing.underscore
 #: lms/templates/verify_student/payment_confirmation_step.underscore
 msgid "Total"
-msgstr "المجموع "
+msgstr "المجموع"
 
 #: lms/templates/commerce/receipt.underscore
 #: lms/templates/verify_student/payment_confirmation_step.underscore
@@ -7426,7 +7421,7 @@ msgid ""
 "from your dashboard. You will receive periodic reminders from {platformName}"
 " to verify your identity."
 msgstr ""
-"إذا لن تقم بالتحقق من هويتك الآن، لا يزال بإمكانك استكشاف الدورة من خلال "
+"إذا لن تقم بالتحقق من هويتك الآن، لا يزال بإمكانك استكشاف المساقمن خلال "
 "لوحة المعلومات الخاصة بك. سوف تتلقى رسائل تذكير دورية من {platformName} "
 "للتحقق من هويتك."
 
@@ -7461,7 +7456,7 @@ msgstr "أنهي امتحاني"
 
 #: lms/templates/discovery/course_card.underscore
 msgid "LEARN MORE"
-msgstr "اعرف المزيد"
+msgstr "تعرّف أكثر"
 
 #: lms/templates/discovery/course_card.underscore
 #, python-format
@@ -7806,7 +7801,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "Only the parent course staff of a CCX can create content groups."
-msgstr "يمكن فقط لطاقم الدورة الأم لـ CCX إنشاء مجموعات المحتوى."
+msgstr "يمكن فقط لطاقم المساقالأم لـ CCX إنشاء مجموعات المحتوى."
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid "Create a content group"
@@ -7926,7 +7921,7 @@ msgstr "استعراض الدورة"
 
 #: lms/templates/learner_dashboard/course_enroll.underscore
 msgid "View Course"
-msgstr "استعرض الدورة "
+msgstr "استعرض المساق"
 
 #: lms/templates/learner_dashboard/course_enroll.underscore
 msgid "Choose a course run:"
@@ -8124,7 +8119,7 @@ msgstr "التسجيل من خلال edX"
 
 #: lms/templates/student_account/login.underscore
 msgid "First time here?"
-msgstr "المرة الأولى هنا؟"
+msgstr "إذا كانت هذه أول زیارة لك یرجى"
 
 #: lms/templates/student_account/login.underscore
 msgid "Create an Account."
@@ -8169,24 +8164,21 @@ msgid "Password assistance"
 msgstr "المساعدة بخصوص كلمة المرور"
 
 #: lms/templates/student_account/password_reset.underscore
-msgid ""
-"Please enter your email address below and we will send you instructions for "
-"setting a new password."
-msgstr ""
-"يُرجى إدخال عنوان بريدك الإلكتروني أدناه، وسنرسل لك تعليمات إعادة ضبط كلمة "
-"مرور جديدة."
-
-#: lms/templates/student_account/password_reset.underscore
 msgid "Reset my password"
 msgstr "تغيير كلمة المرور"
 
 #: lms/templates/student_account/register.underscore
 msgid "Already have an {platform_name} account?"
-msgstr "لديك بالفعل حساب ‎على ‏{platform_name}؟ تسجيل الدخول"
+msgstr "هل لديك بالفعل حساب {platform_name}؟"
 
 #: lms/templates/student_account/register.underscore
 msgid "Already have an {platformName} account?"
 msgstr "لديك بالفعل حساب ‎على ‏{platformName}؟ تسجيل الدخول"
+
+#: lms/templates/student_account/register.underscore
+#: test_root/staticfiles/templates/student_account/register.underscore
+msgid "Support education research by providing additional information"
+msgstr "ادعم البحوث التعليمية بتقديم معلومات إضافية"
 
 #: lms/templates/student_account/register.underscore
 msgid "Sign in."
@@ -8766,13 +8758,13 @@ msgstr "جرى وضع علامة مرجعيّة بتاريخ"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore
 msgid "You have not bookmarked any courseware pages yet"
-msgstr ""
+msgstr "لم تقم بوضع إشارة مرجعية على أي من صفحات المناهج التعليمية حتى الآن"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore
 msgid ""
 "Use bookmarks to help you easily return to courseware pages. To bookmark a "
 "page, click \"Bookmark this page\" under the page title."
-msgstr ""
+msgstr "استخدام الإشارات المرجعية لمساعدتك على العودة بسهولة إلى صفحات المناهج التعليمية. لإضافة إشارة إلى إحدى الصفحات، انقر على 'وضع إشارة على هذه الصفحة' أسفل عنوان الصفحة"
 
 #: openedx/features/course_search/static/course_search/templates/course_search_results.underscore
 #: openedx/features/course_search/static/course_search/templates/dashboard_search_results.underscore
@@ -9192,7 +9184,7 @@ msgid ""
 "Learners do not see the subsection in the course outline. The subsection is "
 "not included in grade calculations."
 msgstr ""
-"لا يرى المتعلمون القسم الفرعي في مخطط الدورة التدريبية. لم يتم تضمين القسم "
+"لا يرى المتعلمون القسم الفرعي في مخطط المساقالتدريبية. لم يتم تضمين القسم "
 "الفرعي في حسابات المستوى."
 
 #: cms/templates/js/content-visibility-editor.underscore
@@ -10213,8 +10205,8 @@ msgid ""
 "You have done a dry run of force publishing the course. Nothing has changed."
 " Had you run it, the following course versions would have been change."
 msgstr ""
-"لقد قمت بإجراء تنفيذ لنشر الدورة التدريبية. فلم يتغير شيء، عند التشغيل، "
-"إصدارات الدورة التالية قد يتم تغييرها."
+"لقد قمت بإجراء تنفيذ لنشر المساقالتدريبية. فلم يتغير شيء، عند التشغيل، "
+"إصدارات المساقالتالية قد يتم تغييرها."
 
 #: cms/templates/js/maintenance/force-published-course-response.underscore
 msgid ""
@@ -10408,4 +10400,121 @@ msgid " username or the URL to your "
 msgstr " أو عنوان صفحتك على "
 
 msgid " page. Delete the URL to remove the link."
-msgstr ". احذف عنوان صفحتك لإزالة الرابط"
+msgstr ". احذف عنوان صفحتك لإزالة الرابطسيتم استخدام هذا الاسم في أي شهادات تحصل عليها"
+
+msgid "Email (required)"
+msgstr "البريد الإلكتروني (مطلوب)"
+
+msgid "Email (required)!"
+msgstr "البريد الإلكتروني (مطلوب)!"
+
+msgid "This is what you will use to login"
+msgstr "هذا هو ما سوف تستخدمه لتسجيل الدخول"
+
+msgid "Enter a valid email address that contains at least 3 characters. This is what you will use to login"
+msgstr "أدخل عنوان بريد إلكتروني صالحًا يحتوي ‎على ثلاثة (3) أحرف على الأقل.‎ هذا هو ما سوف تستخدمه لتسجيل الدخول"
+
+msgid "Enter a valid email address that contains at least {min} characters."
+msgstr "أدخل عنوان بريد إلكتروني صالح يتضمن على الأقل (min3) حروف"
+
+msgid "Enter your full name."
+msgstr "Enter your full name"
+
+msgid "Select your country or region of residence."
+msgstr ""
+
+
+
+
+msgid "Full Name (required)"
+msgstr "الاسم الكامل (مطلوب)"
+
+msgid "Full Name (required)!"
+msgstr "الاسم الكامل (مطلوب)!"
+
+msgid "This name will be used on any certificates that you earn."
+msgstr "سيتم استخدام هذا الاسم في أي شهادات تحصل عليها"
+
+msgid "Enter your full name. This name will be used on any certificates that you earn"
+msgstr "أدخل اسمك بالكامل. ‎سيتم استخدام هذا الاسم في أي شهادات تحصل عليها"
+
+msgid "Public Username (required)"
+msgstr "ستخدم العام (مطلوب)"
+
+msgid "Public Username (required)!"
+msgstr "اسم المستخدم العام (مطلوب)"
+
+msgid "The name that will identify you in your courses. It cannot be changed later"
+msgstr "الاسم الذي سيتم تعريفك به في الدورات التدريبية. لا يمكن تغييره لاحقًا"
+
+msgid "Username must be between 2 and 30 characters long. The name that will identify you in your courses. It cannot be changed later"
+msgstr "يجب أن يتراوح اسم المستخدم ما بين 2-30 حرفاً. الاسم الذي سيتم تعريفك به في الدورات التدريبية. لا يمكن تغييره لاحقًا"
+
+msgid "Password (required)"
+msgstr "كلمة المرور ‎‏(مطلوب)"
+
+msgid "Password (required)!"
+msgstr "كلمة المرور (مطلوب)!"
+
+msgid "Enter a password."
+msgstr "أدخل كلمة مرور."
+
+msgid "Country or Region of Residence"
+msgstr "بلد أو منطقة الإقامة"
+
+msgid "Country or Region of Residence (required)!"
+msgstr "بلد أو منطقة الإقامة (مطلوب)!"
+
+msgid "Select your country or region of residence. The country or region where you live."
+msgstr "حدد بلد أو منطقة إقامتك. البلد أو منطقة الإقامة هي المكان الذي تعيش فيه."
+
+msgid "Select the highest level of education you have completed."
+msgstr "حدد أعلى مستوى تعليمي وصلت إليه."
+
+msgid "Gender (required)"
+msgstr "النوع (مطلوب)"
+
+msgid "Gender (required)!"
+msgstr "النوع (مطلوب)!"
+
+msgid "Year of birth (required)"
+msgstr "سنة الميلاد ‎‏(مطلوب)"
+
+msgid "Year of birth (required)!"
+msgstr "سنة الميلاد ‎‏(مطلوب)!"
+
+msgid "Highest level of education completed (required)"
+msgstr "أعلى مستوى تعليمي وصلت إليه (مطلوب)"
+
+msgid "Highest level of education completed (required)!"
+msgstr "أعلى مستوى تعليمي وصلت إليه (مطلوب)!"
+
+msgid "This section is a prerequisite. You must complete this section in order to unlock additional content."
+msgstr "هذا القسم هو جزء أساسي، لذا يجب استكماله لفتح المحتوى الإضافي "
+
+msgid "This subsection is unlocked for learners when they meet the prerequisite requirements."
+msgstr "هذا القسم الفرعي متاح للمتعلمين عند تحقيقهم للشروط الأساسية"
+
+msgid "Pass"
+msgstr "اجتياز"
+
+msgid 
+"Please enter your email address below and we will send you instructions for "
+"setting a new password."
+msgstr " يُرجى إدخال عنوان بريدك الإلكتروني في الحقل أدناه، وسنرسل لك تعليمات"
+"إعادة ضبط كلمة مرور جديدة"
+
+msgid "The name that is used for ID verification and that appears on your certificates."
+msgstr "الاسم الذي استخدمته في التعريف عن نفسك هو الذي سيظهر على شهاداتك"
+
+msgid "You receive messages from LearnApp by KHDA and course teams at this address."
+msgstr "ستتلقى على هذا العنوان رسائل من فريق المساق وتطبيق LearnApp"
+
+msgid "Check your email account for instructions to reset your password."
+msgstr "تفقد بريدك الإلكتروني بخصوص تعليمات المساعدة لإعادة ضبط كلمة المرور"
+
+msgid "The language used throughout this site. This site is currently available in a "
+"limited number of languages. Changing the value of this field will cause the page to refresh."
+msgstr "اللغة المستخدمة في هذا الموقع الإلكتروني. الموقع متوفر حالياً بعدد"
+"محدود من اللغات. تغير قيمة هذا الحقل ستؤدي إلى تحديث"
+"الصفحة"
