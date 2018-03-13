@@ -705,7 +705,7 @@ class VideoDescriptor(VideoFields, VideoTranscriptsMixin, VideoStudioViewHandler
         youtube_string = create_youtube_string(self)
         # Mild workaround to ensure that tests pass -- if a field
         # is set to its default value, we don't need to write it out.
-        if youtube_string and youtube_string != '1.00:2DpfBIp_-W0':
+        if youtube_string and youtube_string != '1.00:tPccVs9bg0c':
             xml.set('youtube', unicode(youtube_string))
         xml.set('url_name', self.url_name)
         attrs = {
