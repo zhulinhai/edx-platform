@@ -35,9 +35,8 @@ except ImportError:
 # OBSOLETE: This obsoletes 'type'
 class_priority = ['video', 'problem']
 
-# Make '_' a no-op so we can scrape strings. Using lambda instead of
-#  `django.utils.translation.ugettext_noop` because Django cannot be imported in this file
-from django.utils.translation import ugettext_lazy as _
+
+from django.utils.translation import ugettext_noop as _
 
 
 class SequenceFields(object):
