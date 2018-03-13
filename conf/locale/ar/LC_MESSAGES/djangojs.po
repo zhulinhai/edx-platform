@@ -461,8 +461,8 @@ msgstr "الردّ على الملاحظات التوضيحية"
 #: common/lib/xmodule/xmodule/js/src/capa/display.js
 msgid "%(num_points)s point possible (graded, results hidden)"
 msgid_plural "%(num_points)s points possible (graded, results hidden)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num_points) نقاط محتملة (متدرج, نتائج مخفية)"
+msgstr[1] "%(num_points) نقاط محتملة (متدرج, نتائج مخفية"
 msgstr[2] ""
 msgstr[3] ""
 msgstr[4] ""
@@ -473,8 +473,8 @@ msgstr[5] ""
 #: common/lib/xmodule/xmodule/js/src/capa/display.js
 msgid "%(num_points)s point possible (ungraded, results hidden)"
 msgid_plural "%(num_points)s points possible (ungraded, results hidden)"
-msgstr[0] "نقاط محتملة (متدرج، نتائج مخفية)"
-msgstr[1] "نقاط محتملة (متدرج، نتائج مخفية"
+msgstr[0] "%(num_points) نقاط محتملة (متدرج، نتائج مخفية)"
+msgstr[1] "%(num_points) (نقاط محتملة (متدرج، نتائج مخفية"
 msgstr[2] ""
 msgstr[3] ""
 msgstr[4] ""
@@ -3431,24 +3431,24 @@ msgstr ""
 msgid ""
 "Are you sure you want to unenroll from the purchased course %(courseName)s "
 "(%(courseNumber)s)?"
-msgstr ""
+msgstr "هل أنت متأكد من انسحابك من مساق %(courseName) الذي سجلت ودفعت من أجله"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
 "Are you sure you want to unenroll from %(courseName)s (%(courseNumber)s)?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك تريد الانسحاب من مساق  %(courseName) رقم %(courseNumber)؟"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
 "Are you sure you want to unenroll from the verified %(certNameLong)s  track "
 "of %(courseName)s  (%(courseNumber)s)?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك ستنسحب من المسار الذي سيمنحك شهادة %(certNameLong) باسم %(courseName)  ورقم %(courseNumber)؟"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
 "Are you sure you want to unenroll from the verified %(certNameLong)s track "
 "of %(courseName)s (%(courseNumber)s)?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك ستنسحب من المسار الذي سيمنحك شهادة %(certNameLong) باسم %(courseName)  ورقم %(courseNumber)؟"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
@@ -4691,7 +4691,7 @@ msgstr "إنشاء حساب"
 
 #: lms/static/js/student_account/views/RegisterView.js
 msgid "(required)"
-msgstr ""
+msgstr "(مطلوب)"
 
 #: lms/static/js/student_account/views/RegisterView.js
 msgid "You've successfully signed into %(currentProvider)s."
@@ -4733,12 +4733,8 @@ msgid "These settings include basic information about your account."
 msgstr "تتمضن هذه الإعدادات المعلومات الأساسية حول حسابك"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
-msgid ""
-"The name that identifies you throughout {platform_name}. You cannot change "
-"your username."
-msgstr ""
-"الاسم الذي يعرّف عنك في المنصة {platform_name}. لا يمكنك تغيير اسم المستخدم "
-"الخاص بك."
+msgid "The name that identifies you throughout {platform_name}. You cannot change your username."
+msgstr "الاسم الذي يعرّف عنك في المنصة {platform_name}. لا يمكنك تغيير اسم المستخدم الخاص بك."
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 #: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
@@ -4776,7 +4772,7 @@ msgstr ""
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid ""
 "The language used throughout this site. This site is currently available in "
-"a limited number of languages."
+"a limited number of languages." 
 msgstr ""
 "اللغة المستخدمة في كافة أقسام هذا الموقع. يتوفّر هذا الموقع حاليًا بعدد "
 "محدود من اللغات."
@@ -5240,7 +5236,7 @@ msgstr "إمكانية عرض الملف الشخصي"
 
 #: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
 msgid "Limited Profile"
-msgstr ""
+msgstr "ملف شخصي محدود"
 
 #: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
 msgid "Full Profile"
@@ -8173,7 +8169,7 @@ msgstr "تغيير كلمة المرور"
 
 #: lms/templates/student_account/register.underscore
 msgid "Already have an {platform_name} account?"
-msgstr "إذا كان لديك مسبقاً حساب على {platform_name} يرجى تسجيل الدخول."
+msgstr "هل لديك بالفعل حساب {platform_name}؟"
 
 #: lms/templates/student_account/register.underscore
 msgid "Already have an {platformName} account?"
@@ -10404,7 +10400,7 @@ msgid " username or the URL to your "
 msgstr " أو عنوان صفحتك على "
 
 msgid " page. Delete the URL to remove the link."
-msgstr ". احذف عنوان صفحتك لإزالة الرابط"
+msgstr ". احذف عنوان صفحتك لإزالة الرابطسيتم استخدام هذا الاسم في أي شهادات تحصل عليها"
 
 msgid "Email (required)"
 msgstr "البريد الإلكتروني (مطلوب)"
@@ -10418,11 +10414,11 @@ msgstr "هذا هو ما سوف تستخدمه لتسجيل الدخول"
 msgid "Enter a valid email address that contains at least 3 characters. This is what you will use to login"
 msgstr "أدخل عنوان بريد إلكتروني صالحًا يحتوي ‎على ثلاثة (3) أحرف على الأقل.‎ هذا هو ما سوف تستخدمه لتسجيل الدخول"
 
-msgid "Enter a valid email address that contains at least 3 characters."
-msgstr ""
+msgid "Enter a valid email address that contains at least {min} characters."
+msgstr "أدخل عنوان بريد إلكتروني صالح يتضمن على الأقل (min3) حروف"
 
 msgid "Enter your full name."
-msgstr ""
+msgstr "Enter your full name"
 
 msgid "Select your country or region of residence."
 msgstr ""
@@ -10508,3 +10504,17 @@ msgid
 msgstr " يُرجى إدخال عنوان بريدك الإلكتروني في الحقل أدناه، وسنرسل لك تعليمات"
 "إعادة ضبط كلمة مرور جديدة"
 
+msgid "The name that is used for ID verification and that appears on your certificates."
+msgstr "الاسم الذي استخدمته في التعريف عن نفسك هو الذي سيظهر على شهاداتك"
+
+msgid "You receive messages from LearnApp by KHDA and course teams at this address."
+msgstr "ستتلقى على هذا العنوان رسائل من فريق المساق وتطبيق LearnApp"
+
+msgid "Check your email account for instructions to reset your password."
+msgstr "تفقد بريدك الإلكتروني بخصوص تعليمات المساعدة لإعادة ضبط كلمة المرور"
+
+msgid "The language used throughout this site. This site is currently available in a "
+"limited number of languages. Changing the value of this field will cause the page to refresh."
+msgstr "اللغة المستخدمة في هذا الموقع الإلكتروني. الموقع متوفر حالياً بعدد"
+"محدود من اللغات. تغير قيمة هذا الحقل ستؤدي إلى تحديث"
+"الصفحة"
