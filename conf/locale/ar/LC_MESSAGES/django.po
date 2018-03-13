@@ -25390,7 +25390,6 @@ msgstr "نزل التَّطبيق وتمتع بالوصول إلى الدورا�
 msgid "This section is a prerequisite. You must complete this section in order to unlock additional content."
 msgstr "هذا القسم هو جزء أساسي، لذا يجب استكماله لفتح المحتوى الإضافي "
 
-
 msgid "Pass"
 msgstr "اجتياز"
 
@@ -25416,4 +25415,3 @@ msgstr "لايوجد شيء لتلخيصه"
 
 msgid "You have used {count_attempts} of {max_attempts} submission"
 msgstr "استخدمت {count_attempts}  من {max_attempts}  من محاولات الإرسال"
-
