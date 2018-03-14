@@ -3431,24 +3431,24 @@ msgstr ""
 msgid ""
 "Are you sure you want to unenroll from the purchased course %(courseName)s "
 "(%(courseNumber)s)?"
-msgstr "هل أنت متأكد من انسحابك من مساق %(courseName) الذي سجلت ودفعت من أجله"
+msgstr "هل أنت متأكد من انسحابك من مساق %(courseName)s الذي سجلت ودفعت من أجله (%(courseNumber)s)"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
 "Are you sure you want to unenroll from %(courseName)s (%(courseNumber)s)?"
-msgstr "هل أنت متأكد من أنك تريد الانسحاب من مساق  %(courseName) رقم %(courseNumber)؟"
+msgstr "هل أنت متأكد من أنك تريد الانسحاب من مساق  %(courseName)s رقم (%(courseNumber)s)؟"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
 "Are you sure you want to unenroll from the verified %(certNameLong)s  track "
 "of %(courseName)s  (%(courseNumber)s)?"
-msgstr "هل أنت متأكد من أنك ستنسحب من المسار الذي سيمنحك شهادة %(certNameLong) باسم %(courseName)  ورقم %(courseNumber)؟"
+msgstr "هل أنت متأكد من أنك ستنسحب من المسار الذي سيمنحك شهادة %(certNameLong)s باسم %(courseName)s  ورقم (%(courseNumber)s)؟"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
 "Are you sure you want to unenroll from the verified %(certNameLong)s track "
 "of %(courseName)s (%(courseNumber)s)?"
-msgstr "هل أنت متأكد من أنك ستنسحب من المسار الذي سيمنحك شهادة %(certNameLong) باسم %(courseName)  ورقم %(courseNumber)؟"
+msgstr "هل أنت متأكد من أنك ستنسحب من المسار الذي سيمنحك شهادة %(certNameLong)s باسم %(courseName)s  ورقم (%(courseNumber)s)؟"
 
 #: lms/static/js/dashboard/legacy.js
 msgid ""
@@ -7662,6 +7662,10 @@ msgstr "ملاحظات مكتوبة حرة"
 #: lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
 msgid "Generate Exception Certificates"
 msgstr "إنشاء شهادات استثنائية"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
+msgid "Certificate exceptions group selection"
+msgstr "استثناءات الشهادة لمجموعة مختارة"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
 msgid "All users on the Exception list who do not yet have a certificate"
