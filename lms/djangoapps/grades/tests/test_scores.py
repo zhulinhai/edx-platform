@@ -27,6 +27,8 @@ class TestScoredBlockTypes(TestCase):
         'freetextresponse',
         'image-coding',
         'inline-dropdown',
+        'problem-builder', 'pb-column', 'pb-mcq', 'pb-mrq', 'pb-rating', 'pb-table',
+        'step-builder', 'sb-review-step', 'sb-plot', 'sb-step',
         'stattutor',
         'submit-and-compare',
         'ubcpi',
