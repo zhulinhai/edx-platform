@@ -12,7 +12,7 @@ import sys
 import traceback
 
 from django.conf import settings
-from django.utils.translation import ugettext_noop as _
+from django.utils.translation import ugettext as _
 # We don't want to force a dependency on datadog, so make the import conditional
 try:
     import dogstats_wrapper as dog_stats_api
@@ -98,134 +98,132 @@ class CapaFields(object):
     Define the possible fields for a Capa problem
     """
     display_name = String(
-        display_name=_("Display Name"),
-        help=_("The display name for this component."),
+        display_name="Display Name",
+        help="The display name for this component.",
         scope=Scope.settings,
         # it'd be nice to have a useful default but it screws up other things; so,
         # use display_name_with_default for those
-        default=_("Blank Advanced Problem")
+        default="Blank Advanced Problem"
     )
     attempts = Integer(
-        help=_("Number of attempts taken by the student on this problem"),
+        help="Number of attempts taken by the student on this problem",
         default=0,
         scope=Scope.user_state
     )
     max_attempts = Integer(
-        display_name=_("Maximum Attempts"),
-        help=_("Defines the number of times a student can try to answer this problem. "
-               "If the value is not set, infinite attempts are allowed."),
+        display_name="Maximum Attempts",
+        help="Defines the number of times a student can try to answer this problem. "
+               "If the value is not set, infinite attempts are allowed.",
         values={"min": 0}, scope=Scope.settings
     )
-    due = Date(help=_("Date that this problem is due by"), scope=Scope.settings)
+    due = Date(help="Date that this problem is due by", scope=Scope.settings)
     graceperiod = Timedelta(
-        help=_("Amount of time after the due date that submissions will be accepted"),
+        help="Amount of time after the due date that submissions will be accepted",
         scope=Scope.settings
     )
     show_correctness = String(
-        display_name=_("Show Results"),
-        help=_("Defines when to show whether a learner's answer to the problem is correct. "
-               "Configured on the subsection."),
+        display_name="Show Results",
+        help="Defines when to show whether a learner's answer to the problem is correct. "
+               "Configured on the subsection.",
         scope=Scope.settings,
         default=ShowCorrectness.ALWAYS,
         values=[
-            {"display_name": _("Always"), "value": ShowCorrectness.ALWAYS},
-            {"display_name": _("Never"), "value": ShowCorrectness.NEVER},
-            {"display_name": _("Past Due"), "value": ShowCorrectness.PAST_DUE},
+            {"display_name": "Always", "value": ShowCorrectness.ALWAYS},
+            {"display_name": "Never", "value": ShowCorrectness.NEVER},
+            {"display_name": "Past Due", "value": ShowCorrectness.PAST_DUE},
         ],
     )
     showanswer = String(
-        display_name=_("Show Answer"),
-        help=_("Defines when to show the answer to the problem. "
-               "A default value can be set in Advanced Settings."),
+        display_name="Show Answer",
+        help="Defines when to show the answer to the problem. "
+               "A default value can be set in Advanced Settings.",
         scope=Scope.settings,
         default=SHOWANSWER.FINISHED,
         values=[
-            {"display_name": _("Always"), "value": SHOWANSWER.ALWAYS},
-            {"display_name": _("Answered"), "value": SHOWANSWER.ANSWERED},
-            {"display_name": _("Attempted"), "value": SHOWANSWER.ATTEMPTED},
-            {"display_name": _("Closed"), "value": SHOWANSWER.CLOSED},
-            {"display_name": _("Finished"), "value": SHOWANSWER.FINISHED},
-            {"display_name": _("Correct or Past Due"), "value": SHOWANSWER.CORRECT_OR_PAST_DUE},
-            {"display_name": _("Past Due"), "value": SHOWANSWER.PAST_DUE},
-            {"display_name": _("Never"), "value": SHOWANSWER.NEVER}]
+            {"display_name": "Always", "value": SHOWANSWER.ALWAYS},
+            {"display_name": "Answered", "value": SHOWANSWER.ANSWERED},
+            {"display_name": "Attempted", "value": SHOWANSWER.ATTEMPTED},
+            {"display_name": "Closed", "value": SHOWANSWER.CLOSED},
+            {"display_name": "Finished", "value": SHOWANSWER.FINISHED},
+            {"display_name": "Correct or Past Due", "value": SHOWANSWER.CORRECT_OR_PAST_DUE},
+            {"display_name": "Past Due", "value": SHOWANSWER.PAST_DUE},
+            {"display_name": "Never", "value": SHOWANSWER.NEVER}]
     )
     force_save_button = Boolean(
-        help=_("Whether to force the save button to appear on the page"),
+        help="Whether to force the save button to appear on the page",
         scope=Scope.settings,
         default=False
     )
     reset_key = "DEFAULT_SHOW_RESET_BUTTON"
     default_reset_button = getattr(settings, reset_key) if hasattr(settings, reset_key) else False
     show_reset_button = Boolean(
-        display_name=_("Show Reset Button"),
-        help=_("Determines whether a 'Reset' button is shown so the user may reset their answer. "
-               "A default value can be set in Advanced Settings."),
+        display_name="Show Reset Button",
+        help="Determines whether a 'Reset' button is shown so the user may reset their answer. "
+               "A default value can be set in Advanced Settings.",
         scope=Scope.settings,
         default=default_reset_button
     )
     rerandomize = Randomization(
-        display_name=_("Randomization"),
-        help=_(
-            'Defines when to randomize the variables specified in the associated Python script. '
-            'For problems that do not randomize values, specify \"Never\". '
-        ),
+        display_name="Randomization",
+        help='Defines when to randomize the variables specified in the associated Python script. '
+              'For problems that do not randomize values, specify \"Never\". ',
         default=RANDOMIZATION.NEVER,
         scope=Scope.settings,
         values=[
-            {"display_name": _("Always"), "value": RANDOMIZATION.ALWAYS},
-            {"display_name": _("On Reset"), "value": RANDOMIZATION.ONRESET},
-            {"display_name": _("Never"), "value": RANDOMIZATION.NEVER},
-            {"display_name": _("Per Student"), "value": RANDOMIZATION.PER_STUDENT}
+            {"display_name": "Always", "value": RANDOMIZATION.ALWAYS},
+            {"display_name": "On Reset", "value": RANDOMIZATION.ONRESET},
+            {"display_name": "Never", "value": RANDOMIZATION.NEVER},
+            {"display_name": "Per Student", "value": RANDOMIZATION.PER_STUDENT}
         ]
     )
     data = XMLString(
-        help=_("XML data for the problem"),
+        help="XML data for the problem",
         scope=Scope.content,
         enforce_type=FEATURES.get('ENABLE_XBLOCK_XML_VALIDATION', True),
         default="<problem></problem>"
     )
-    correct_map = Dict(help=_("Dictionary with the correctness of current student answers"),
+    correct_map = Dict(help="Dictionary with the correctness of current student answers",
                        scope=Scope.user_state, default={})
-    input_state = Dict(help=_("Dictionary for maintaining the state of inputtypes"), scope=Scope.user_state)
-    student_answers = Dict(help=_("Dictionary with the current student responses"), scope=Scope.user_state)
-    student_answers_text = String(help=_("Text of the current student answers"), scope=Scope.user_state, default="")
+    input_state = Dict(help="Dictionary for maintaining the state of inputtypes", scope=Scope.user_state)
+    student_answers = Dict(help="Dictionary with the current student responses", scope=Scope.user_state)
+    student_answers_text = String(help="Text of the current student answers", scope=Scope.user_state, default="")
 
     # enforce_type is set to False here because this field is saved as a dict in the database.
-    score = ScoreField(help=_("Dictionary with the current student score"), scope=Scope.user_state, enforce_type=False)
-    has_saved_answers = Boolean(help=_("Whether or not the answers have been saved since last submit"),
+    score = ScoreField(help="Dictionary with the current student score", scope=Scope.user_state, enforce_type=False)
+    has_saved_answers = Boolean(help="Whether or not the answers have been saved since last submit",
                                 scope=Scope.user_state, default=False)
-    done = Boolean(help=_("Whether the student has answered the problem"), scope=Scope.user_state, default=False)
-    seed = Integer(help=_("Random seed for this student"), scope=Scope.user_state)
-    last_submission_time = Date(help=_("Last submission time"), scope=Scope.user_state)
+    done = Boolean(help="Whether the student has answered the problem", scope=Scope.user_state, default=False)
+    seed = Integer(help="Random seed for this student", scope=Scope.user_state)
+    last_submission_time = Date(help="Last submission time", scope=Scope.user_state)
     submission_wait_seconds = Integer(
-        display_name=_("Timer Between Attempts"),
-        help=_("Seconds a student must wait between submissions for a problem with multiple attempts."),
+        display_name="Timer Between Attempts",
+        help="Seconds a student must wait between submissions for a problem with multiple attempts.",
         scope=Scope.settings,
         default=0)
     weight = Float(
-        display_name=_("Problem Weight"),
-        help=_("Defines the number of points each problem is worth. "
-               "If the value is not set, each response field in the problem is worth one point."),
+        display_name="Problem Weight",
+        help="Defines the number of points each problem is worth. "
+               "If the value is not set, each response field in the problem is worth one point.",
         values={"min": 0, "step": .1},
         scope=Scope.settings
     )
-    markdown = String(help=_("Markdown source of this module"), default=None, scope=Scope.settings)
+    markdown = String(help="Markdown source of this module", default=None, scope=Scope.settings)
     source_code = String(
-        help=_("Source code for LaTeX and Word problems. This feature is not well-supported."),
+        help="Source code for LaTeX and Word problems. This feature is not well-supported.",
         scope=Scope.settings
     )
     use_latex_compiler = Boolean(
-        help=_("Enable LaTeX templates?"),
+        help="Enable LaTeX templates?",
         default=False,
         scope=Scope.settings
     )
     matlab_api_key = String(
-        display_name=_("Matlab API key"),
-        help=_("Enter the API key provided by MathWorks for accessing the MATLAB Hosted Service. "
+        display_name="Matlab API key",
+        help="Enter the API key provided by MathWorks for accessing the MATLAB Hosted Service. "
                "This key is granted for exclusive use by this course for the specified duration. "
                "Please do not share the API key with other courses and notify MathWorks immediately "
                "if you believe the key is exposed or compromised. To obtain a key for your course, "
-               "or to report an issue, please contact moocsupport@mathworks.com"),
+               "or to report an issue, please contact moocsupport@mathworks.com",
         scope=Scope.settings
     )
     show_attempts = Boolean(
