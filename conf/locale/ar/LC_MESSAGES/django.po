@@ -2492,6 +2492,9 @@ msgstr "تم إرسال الجواب"
 msgid "Download"
 msgstr "تنزيل"
 
+msgid "Certificate exceptions group selection"
+msgstr "استثناءات الشهادة لمجموعة مختارة"
+
 #. Translators: 'closed' means the problem's due date has passed. You may no
 #. longer attempt to solve the problem.
 #: common/lib/xmodule/xmodule/capa_base.py
