@@ -11514,16 +11514,17 @@ msgid ""
 "can find lots of helpful information in the {platform_name} "
 "{link_start}FAQ{link_end}."
 msgstr ""
-"יש לך {strong_start}שאלות כלליות על {platform_name}{strong_end}? יש באפשרותך"
-" למצוא מידע רב ומועיל ב{platform_name} {link_start}שאלות הנפוצות{link_end}."
+"יש לך {strong_start}שאלות כלליות על {platform_name}{strong_end}? בקרוב נוסיף"
+" עמוד שאלות ותשובות ובו תוכל למצוא מידע רב ומועיל ב{platform_name} "
+"{link_start}שאלות הנפוצות{link_end}."
 
 #: lms/templates/help_modal.html
 msgid ""
 "Have a {strong_start}question about something specific{strong_end}? You can "
 "contact the {platform_name} general support team directly:"
 msgstr ""
-"יש לך {strong_start}שאלה אודות משהו ספציפי{strong_end}? תוכל ליצור קשר "
-"ישירות עם {platform_name} עם צוות התמיכה:"
+"יש לך {strong_start}שאלה ספציפית{strong_end}? תוכל ליצור קשר ישירות עם צוות "
+"התמיכה של ה{platform_name}:"
 
 #: lms/templates/help_modal.html
 msgid "Report a problem"
@@ -11543,12 +11544,12 @@ msgid ""
 "will do our best to address your inquiry in any language, our responses will"
 " be in English."
 msgstr ""
-"יש לשים לב: צוות התמיכה של {platform_name}  דובר אנגלית. למרות מאמצינו לתת "
-"מענה בכל שפה לשאלותיך, תשובותינו יהיו באנגלית. "
+"יש לשים לב: צוות התמיכה של {platform_name} דובר עברית ואנגלית. למרות מאמצינו"
+" לתת מענה בכל שפה לשאלותיך, תשובותינו יהיו בעברית או אנגלית. "
 
 #: lms/templates/help_modal.html
 msgid "Briefly describe your issue"
-msgstr "תאר בקצרה את בעייתך"
+msgstr "תאר בקצרה את הבעיה שנתקלת בה"
 
 #: lms/templates/help_modal.html
 msgid "Tell us the details"
@@ -11574,9 +11575,9 @@ msgid ""
 "our {link_start}detailed FAQs{link_end} where most questions have already "
 "been answered."
 msgstr ""
-"תודה על ההודעה או המשוב שלך. בדרך כלל אנו מגיבים לבקשה תוך יום עסקים אחד, "
-"מיום שני עד יום שישי. בינתיים,  אנא בדוק את  {link_start}detailed "
-"FAQs{link_end} שלנו, שם רוב השאלות כבר נענו."
+"תודה על הפניה שלך. בדרך כלל אנו מגיבים לבקשה תוך יום עסקים אחד, מיום ראשון "
+"עד יום חמישי. בקרוב תוכל לבדוק את {link_start}שאלות ותשובות{link_end} שלנו "
+"לפתרון בעיות נפוצות."
 
 #: lms/templates/help_modal.html
 msgid "- Select -"
@@ -23442,9 +23443,3 @@ msgid ""
 "A new revision was created: Merge between Revision #%(r1)d and Revision "
 "#%(r2)d"
 msgstr "גרסה חדשה נוצרה: מיזוג בין גרסה #%(r1)d וגרסה #%(r2)d"
-
-#: lms/templates/instructor/instructor_dashboard_2/sensitive_data_download_msg.txt
-msgid ""
-"Contains information protected under the Protection of Privacy Law - the "
-"wrongful transgressor commits an offense"
-msgstr "מכיל מידע מוגן לפי חוק הגנת הפרטיות - המוסר שלא כדין עובר עבירה"

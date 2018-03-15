@@ -142,13 +142,14 @@
 # Maurício Gonçalves Melara Camargo <mauriciogmc@gmail.com>, 2017
 # Paulo Romano <pauloromanocarvalho@gmail.com>, 2017
 # Evaldo klock <neto.nemesis@gmail.com>, 2017
+# Roger Gomes <roger@ucl.br>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.1a\n"
 "Report-Msgid-Bugs-To: openedx-translation@googlegroups.com\n"
 "POT-Creation-Date: 2017-08-18 20:39+0000\n"
 "PO-Revision-Date: 2017-08-18 20:39:14.191149\n"
-"Last-Translator: Evaldo klock <neto.nemesis@gmail.com>, 2017\n"
+"Last-Translator: Roger Gomes <roger@ucl.br>, 2018\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/open-edx/teams/6205/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -175,7 +176,7 @@ msgstr ""
 #: cms/djangoapps/contentstore/views/component.py
 #: common/lib/xmodule/xmodule/video_module/video_module.py
 msgid "Advanced"
-msgstr ""
+msgstr "Avançado"
 
 #: cms/djangoapps/contentstore/views/entrance_exam.py
 #: lms/djangoapps/courseware/tabs.py cms/templates/settings.html
@@ -188,18 +189,18 @@ msgstr ""
 #: lms/templates/ccx/schedule.html
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
 msgid "Section"
-msgstr ""
+msgstr "Seção"
 
 #: cms/djangoapps/contentstore/views/helpers.py
 #: lms/djangoapps/class_dashboard/dashboard_data.py
 #: lms/templates/ccx/schedule.html
 msgid "Subsection"
-msgstr ""
+msgstr "Subseção"
 
 #: cms/djangoapps/contentstore/views/helpers.py
 #: lms/djangoapps/instructor/views/tools.py lms/templates/ccx/schedule.html
 msgid "Unit"
-msgstr ""
+msgstr "Unidade"
 
 #: cms/djangoapps/contentstore/views/videos.py
 #: lms/djangoapps/class_dashboard/dashboard_data.py
@@ -209,7 +210,7 @@ msgstr ""
 #: lms/templates/shoppingcart/billing_details.html
 #: lms/templates/shoppingcart/receipt.html
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: cms/djangoapps/contentstore/views/videos.py
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py
@@ -220,7 +221,7 @@ msgstr ""
 #: lms/djangoapps/shoppingcart/reports.py
 #: lms/templates/shoppingcart/receipt.html
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. #-#-#-#-#  django-partial.po (0.1a)  #-#-#-#-#
 #. Translators: This is listed as the duration for a video that has not
@@ -229,7 +230,7 @@ msgstr ""
 #: cms/djangoapps/contentstore/views/videos.py
 #: openedx/core/djangoapps/api_admin/models.py cms/templates/index.html
 msgid "Pending"
-msgstr ""
+msgstr "Pendente"
 
 #: common/djangoapps/course_modes/admin.py
 #: common/djangoapps/course_modes/models.py
@@ -268,7 +269,7 @@ msgstr ""
 #: common/djangoapps/course_modes/helpers.py
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
 msgid "Verified"
-msgstr ""
+msgstr "Verificado"
 
 #: common/djangoapps/course_modes/helpers.py
 msgid "ID Verified Ribbon/Badge"
@@ -301,7 +302,7 @@ msgstr ""
 #: cms/templates/widgets/header.html lms/templates/help_modal.html
 #: lms/templates/courseware/courseware.html
 msgid "Course"
-msgstr ""
+msgstr "Curso"
 
 #: common/djangoapps/course_modes/models.py
 #: common/lib/xmodule/xmodule/annotatable_module.py
@@ -319,12 +320,12 @@ msgstr ""
 #: openedx/core/lib/xblock_builtin/xblock_discussion/xblock_discussion.py
 #: cms/templates/container.html cms/templates/library.html
 msgid "Display Name"
-msgstr ""
+msgstr "Nome de exibição"
 
 #: common/djangoapps/course_modes/models.py
 #: lms/templates/courseware/course_about.html
 msgid "Price"
-msgstr ""
+msgstr "Preço"
 
 #: common/djangoapps/course_modes/models.py
 msgid "Upgrade Deadline"
@@ -353,7 +354,7 @@ msgstr ""
 #: common/djangoapps/course_modes/models.py
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
 msgid "Honor"
-msgstr ""
+msgstr "Honra"
 
 #: common/djangoapps/course_modes/models.py
 msgid ""
@@ -21620,7 +21621,7 @@ msgstr ""
 
 #: wiki/views/article.py
 msgid "Your changes were saved."
-msgstr ""
+msgstr "As suas alterações foram salvas."
 
 #: wiki/views/article.py
 msgid "A new revision of the article was succesfully added."
@@ -21628,7 +21629,7 @@ msgstr ""
 
 #: wiki/views/article.py
 msgid "Restoring article"
-msgstr ""
+msgstr "Restaurando artigo"
 
 #: wiki/views/article.py
 #, python-format

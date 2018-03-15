@@ -53,7 +53,6 @@
 # Michael Orlov <mike.orlv@gmail.com>, 2017
 # Alexander Dyumin <a.dyumin@gmail.com>, 2017
 # Ничик Дмитрий Валерьевич <dmi.nichik@gmail.com>, 2017
-# Ned Batchelder <ned@edx.org>, 2017
 # Natalia Vavilina <nfgenius@gmail.com>, 2017
 # Olga <olg.makarova@gmail.com>, 2017
 # Yermek Alimzhanov <aermek81@gmail.com>, 2017
@@ -61,6 +60,7 @@
 # Павел Жилкин, 2017
 # Katerina <rosemaily@gmail.com>, 2017
 # NewEurasia <admin@neweurasia.net>, 2017
+# Ned Batchelder <ned@edx.org>, 2017
 # Maruschin Eugene <maruschin@gmail.com>, 2017
 # Андрей Сандлер <inactive+asandler@transifex.com>, 2017
 # Vladimir Osypets <v@osypets.com>, 2017
@@ -7211,7 +7211,7 @@ msgstr ""
 
 #: lms/templates/learner_dashboard/course_enroll.underscore
 msgid "View Course"
-msgstr ""
+msgstr "Просмотр курса"
 
 #: lms/templates/learner_dashboard/course_enroll.underscore
 msgid "Choose a course run:"

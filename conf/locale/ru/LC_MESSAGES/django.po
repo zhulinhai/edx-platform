@@ -4832,7 +4832,7 @@ msgstr ""
 #: lms/djangoapps/certificates/views/webview.py
 #, python-brace-format
 msgid "{month} {day}, {year}"
-msgstr ""
+msgstr "{day} {month} {year} года"
 
 #. Translators:  This text represents the verification of the certificate
 #: lms/djangoapps/certificates/views/webview.py
@@ -11199,7 +11199,7 @@ msgstr ""
 
 #: lms/templates/preview_menu.html
 msgid "Specific learner"
-msgstr ""
+msgstr "Определённый слушатель"
 
 #: lms/templates/preview_menu.html
 msgid "Learner in {content_group}"
@@ -11517,7 +11517,7 @@ msgstr ""
 
 #: lms/templates/seq_module.html
 msgid "Previous"
-msgstr "Вперёд"
+msgstr "Назад"
 
 #: lms/templates/seq_module.html
 msgid "Sequence"
