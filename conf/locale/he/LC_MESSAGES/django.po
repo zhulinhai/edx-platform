@@ -17788,6 +17788,7 @@ msgstr "אישור"
 msgid "modal open"
 msgstr "מודל פתוח"
 
+#: lms/templates/instructor/instructor_dashboard_2/data_download.html
 #: lms/templates/modal/accessible_confirm.html
 msgid "OK"
 msgstr "בסדר"
