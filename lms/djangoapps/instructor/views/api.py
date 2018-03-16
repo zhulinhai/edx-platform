@@ -150,7 +150,7 @@ SUCCESS_MESSAGE_TEMPLATE = _("The {report_type} report is being created. "
                              "To view the status of the report, see Pending Tasks below.")
 
 from django.template import Context
-from django.template.loader import get_template
+from django.template import loader 
 
 from django.contrib.auth import get_user_model
 USER_MODEL = get_user_model()
@@ -2662,13 +2662,14 @@ def send_email_to_specific_learners(course, learners, template_name, from_addr, 
     course_title = course.display_name
     course_end_date = get_default_time_display(course.end)
     course_root = reverse('course_root', kwargs={'course_id': course_id})
+    base_url = configuration_helpers.get_value('LMS_ROOT_URL', settings.LMS_ROOT_URL)
+    
     course_url = '{}{}'.format(
-        settings.LMS_ROOT_URL,
+        base_url,
         course_root
     )
 
-    course_email_template = CourseEmailTemplate.get_template(name=template_name)
-    image_url = u'{}{}'.format(settings.LMS_ROOT_URL, course_image_url(course))
+    image_url = u'{}{}'.format(base_url, course_image_url(course))
 
     for learner in learners:
 
@@ -2684,9 +2685,9 @@ def send_email_to_specific_learners(course, learners, template_name, from_addr, 
                 'course_url': course_url,
                 'course_image_url': '',
                 'course_end_date': course_end_date,
-                'account_settings_url': '{}{}'.format(settings.LMS_ROOT_URL, reverse('account_settings')),
-                'email_settings_url': '{}{}'.format(settings.LMS_ROOT_URL, reverse('dashboard')),
-                'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
+                'account_settings_url': '{}{}'.format(base_url, reverse('account_settings')),
+                'email_settings_url': '{}{}'.format(base_url, reverse('dashboard')),
+                'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
             }
 
             email_context['email'] = learner
@@ -2695,8 +2696,8 @@ def send_email_to_specific_learners(course, learners, template_name, from_addr, 
             email_context['course_id'] = course_id
 
             # Construct message content using templates and context:
-            plaintext_msg = course_email_template.render_plaintext(message, email_context)
-            html_msg = course_email_template.render_htmltext(message, email_context)
+            plaintext_msg = loader.render_to_string(template_name.replace('html','txt'), email_context)
+            html_msg = loader.render_to_string(template_name, email_context)
 
             # Create email:
             email_msg = EmailMultiAlternatives(
