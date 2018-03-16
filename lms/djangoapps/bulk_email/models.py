@@ -252,7 +252,7 @@ class CourseEmail(Email):
         # automatically generate the stripped version of the text from the HTML markup:
         if text_message is None:
             text_message = html_to_text(html_message)
-TODO: figure out how to build this part with the django template. have a switch some how.
+
         new_targets = []
         for target in targets:
             # split target, to handle cohort:cohort_name and track:mode_slug

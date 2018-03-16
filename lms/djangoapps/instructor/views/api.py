@@ -150,7 +150,6 @@ SUCCESS_MESSAGE_TEMPLATE = _("The {report_type} report is being created. "
                              "To view the status of the report, see Pending Tasks below.")
 
 from django.template import Context
-from django.template import loader 
 
 from django.contrib.auth import get_user_model
 USER_MODEL = get_user_model()
@@ -2669,6 +2668,7 @@ def send_email_to_specific_learners(course, learners, template_name, from_addr, 
         course_root
     )
 
+    course_email_template = CourseEmailTemplate.get_template(name=template_name)
     image_url = u'{}{}'.format(base_url, course_image_url(course))
 
     for learner in learners:
@@ -2696,8 +2696,8 @@ def send_email_to_specific_learners(course, learners, template_name, from_addr, 
             email_context['course_id'] = course_id
 
             # Construct message content using templates and context:
-            plaintext_msg = loader.render_to_string(template_name.replace('html','txt'), email_context)
-            html_msg = loader.render_to_string(template_name, email_context)
+            plaintext_msg = course_email_template.render_plaintext(message, email_context)
+            html_msg = course_email_template.render_htmltext(message, email_context)
 
             # Create email:
             email_msg = EmailMultiAlternatives(
