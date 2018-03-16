@@ -127,9 +127,9 @@ class EdXSAMLIdentityProvider(SAMLIdentityProvider):
                 settings.FEATURES.get('ENABLE_REGISTRATION_USERNAME_SUGGESTION', False)):
 
             username_generator_settings = self.conf.get('USERNAME_GENERATOR', {})
-            fullname = details['fullname']
+            username_base = details['username'] or details['fullname']
             username_generator = UsernameGenerator(username_generator_settings)
-            username = username_generator.generate_username(fullname)
+            username = username_generator.generate_username(username_base)
             details.update({'username': username})
 
         return details
