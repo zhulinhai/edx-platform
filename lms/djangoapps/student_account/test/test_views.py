@@ -17,7 +17,7 @@ from django.contrib.messages.middleware import MessageMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.core import mail
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpRequest
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -47,7 +47,6 @@ from openedx.core.djangoapps.user_api.accounts.api import activate_account, crea
 from openedx.core.djangolib.js_utils import dump_js_escaped_json
 from openedx.core.djangolib.markup import HTML, Text
 from openedx.core.djangolib.testing.utils import CacheIsolationTestCase
-from openedx.tests.util import expected_redirect_url
 from student.tests.factories import UserFactory
 from student_account.views import account_settings_context, get_user_orders
 from third_party_auth.tests.testutil import ThirdPartyAuthTestMixin, simulate_running_pipeline
@@ -164,13 +163,18 @@ class StudentAccountUpdateTest(CacheIsolationTestCase, UrlResetMixin):
         self.assertEqual(len(mail.outbox), 1)
 
         # Verify that the body contains the failed password reset message
-        email_body = mail.outbox[0].body
-        self.assertIn(
-            'However, there is currently no user account associated with your email address: {email}'.format(
+        sent_message = mail.outbox[0]
+        text_body = sent_message.body
+        html_body = sent_message.alternatives[0][0]
+
+        for email_body in [text_body, html_body]:
+            msg = 'However, there is currently no user account associated with your email address: {email}'.format(
                 email=bad_email
-            ),
-            email_body,
-        )
+            )
+
+            assert u'reset for your user account at {}'.format(settings.PLATFORM_NAME) in email_body
+            assert 'password_reset_confirm' not in email_body, 'The link should not be added if user was not found'
+            assert msg in email_body
 
     @ddt.data(True, False)
     def test_password_change_logged_out(self, send_email):
@@ -291,7 +295,7 @@ class StudentAccountUpdateTest(CacheIsolationTestCase, UrlResetMixin):
         self.assertFalse(dop_refresh_token.objects.filter(user=user).exists())
 
 
-@attr(shard=3)
+@attr(shard=7)
 @ddt.ddt
 class StudentAccountLoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMixin, ModuleStoreTestCase):
     """ Tests for the student account views that update the user's account information. """
@@ -499,7 +503,7 @@ class StudentAccountLoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMi
         kwargs.setdefault('name', provider_name)
         kwargs.setdefault('enabled', True)
         kwargs.setdefault('visible', True)
-        kwargs.setdefault('idp_slug', idp_slug)
+        kwargs.setdefault('slug', idp_slug)
         kwargs.setdefault('entity_id', 'https://idp.testshib.org/idp/shibboleth')
         kwargs.setdefault('metadata_source', 'https://mock.testshib.org/metadata/testshib-providers.xml')
         kwargs.setdefault('icon_class', 'fa-university')
@@ -593,16 +597,17 @@ class StudentAccountLoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMi
         ('register_user', 'register'),
     )
     @ddt.unpack
-    @pytest.mark.django111_expected_failure
     def test_hinted_login_dialog_disabled(self, url_name, auth_entry):
         """Test that the dialog doesn't show up for hinted logins when disabled. """
         self.google_provider.skip_hinted_login_dialog = True
         self.google_provider.save()
         params = [("next", "/courses/something/?tpa_hint=oa2-google-oauth2")]
         response = self.client.get(reverse(url_name), params, HTTP_ACCEPT="text/html")
+        expected_url = '/auth/login/google-oauth2/?auth_entry={}&next=%2Fcourses'\
+                       '%2Fsomething%2F%3Ftpa_hint%3Doa2-google-oauth2'.format(auth_entry)
         self.assertRedirects(
             response,
-            expected_redirect_url('auth/login/google-oauth2/?auth_entry={}&next=%2Fcourses%2Fsomething%2F%3Ftpa_hint%3Doa2-google-oauth2'.format(auth_entry)),
+            expected_url,
             target_status_code=302
         )
 
@@ -637,16 +642,17 @@ class StudentAccountLoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMi
         ('register_user', 'register'),
     )
     @ddt.unpack
-    @pytest.mark.django111_expected_failure
     def test_settings_tpa_hinted_login_dialog_disabled(self, url_name, auth_entry):
         """Test that the dialog doesn't show up for hinted logins when disabled via settings.THIRD_PARTY_AUTH_HINT. """
         self.google_provider.skip_hinted_login_dialog = True
         self.google_provider.save()
         params = [("next", "/courses/something/")]
         response = self.client.get(reverse(url_name), params, HTTP_ACCEPT="text/html")
+        expected_url = '/auth/login/google-oauth2/?auth_entry={}&next=%2Fcourses'\
+                       '%2Fsomething%2F%3Ftpa_hint%3Doa2-google-oauth2'.format(auth_entry)
         self.assertRedirects(
             response,
-            expected_redirect_url('auth/login/google-oauth2/?auth_entry={}&next=%2Fcourses%2Fsomething%2F%3Ftpa_hint%3Doa2-google-oauth2'.format(auth_entry)),
+            expected_url,
             target_status_code=302
         )
 
@@ -682,12 +688,16 @@ class StudentAccountLoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMi
         else:
             self.assertContains(response, text=enterprise_sidebar_div_id)
             welcome_message = settings.ENTERPRISE_SPECIFIC_BRANDED_WELCOME_TEMPLATE
-            expected_message = welcome_message.format(
-                start_bold=u'<b>',
-                end_bold=u'</b>',
-                line_break=u'<br/>',
+            expected_message = Text(welcome_message).format(
+                start_bold=HTML('<b>'),
+                end_bold=HTML('</b>'),
+                line_break=HTML('<br/>'),
                 enterprise_name=ec_name,
-                platform_name=settings.PLATFORM_NAME
+                platform_name=settings.PLATFORM_NAME,
+                privacy_policy_link_start=HTML("<a href='{pp_url}' target='_blank'>").format(
+                    pp_url=settings.MKTG_URLS.get('PRIVACY', 'https://www.edx.org/edx-privacy-policy')
+                ),
+                privacy_policy_link_end=HTML("</a>"),
             )
             self.assertContains(response, expected_message)
             if logo_url:

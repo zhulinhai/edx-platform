@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 import ddt
 import mock
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import QueryDict
 from django.utils.http import urlquote_plus
 from django.utils.timezone import now
@@ -175,7 +175,7 @@ class TestCourseHomePage(CourseHomePageTestCase):
         course_home_url(self.course)
 
         # Fetch the view and verify the query counts
-        with self.assertNumQueries(50, table_blacklist=QUERY_COUNT_TABLE_BLACKLIST):
+        with self.assertNumQueries(53, table_blacklist=QUERY_COUNT_TABLE_BLACKLIST):
             with check_mongo_calls(4):
                 url = course_home_url(self.course)
                 self.client.get(url)

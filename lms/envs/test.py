@@ -71,10 +71,6 @@ FEATURES['ENABLE_SHOPPING_CART'] = True
 
 FEATURES['ENABLE_VERIFIED_CERTIFICATES'] = True
 
-# Enable this feature for course staff grade downloads, to enable acceptance tests
-FEATURES['ENABLE_GRADE_DOWNLOADS'] = True
-FEATURES['ALLOW_COURSE_STAFF_GRADE_DOWNLOADS'] = True
-
 # Toggles embargo on for testing
 FEATURES['EMBARGO'] = True
 
@@ -99,8 +95,6 @@ PARENTAL_CONSENT_AGE_LIMIT = 13
 TEST_ROOT = path("test_root")
 # Want static files in the same dir for running on jenkins.
 STATIC_ROOT = TEST_ROOT / "staticfiles"
-INSTALLED_APPS = [app for app in INSTALLED_APPS if app != 'webpack_loader']
-INSTALLED_APPS.append('openedx.tests.util.webpack_loader')
 WEBPACK_LOADER['DEFAULT']['STATS_FILE'] = STATIC_ROOT / "webpack-stats.json"
 
 STATUS_MESSAGE_PATH = TEST_ROOT / "status_message.json"
@@ -368,6 +362,8 @@ FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
 ]
 
+BLOCK_STRUCTURES_SETTINGS['PRUNING_ACTIVE'] = True
+
 ########################### Server Ports ###################################
 
 # These ports are carefully chosen so that if the browser needs to
@@ -563,9 +559,6 @@ JWT_AUTH.update({
 
 COURSE_CATALOG_API_URL = 'https://catalog.example.com/api/v1'
 
-CREDENTIALS_INTERNAL_SERVICE_URL = 'https://credentials-internal.example.com'
-CREDENTIALS_PUBLIC_SERVICE_URL = 'https://credentials.example.com'
-
 COMPREHENSIVE_THEME_DIRS = [REPO_ROOT / "themes", REPO_ROOT / "common/test"]
 COMPREHENSIVE_THEME_LOCALE_PATHS = [REPO_ROOT / "themes/conf/locale", ]
 
@@ -578,6 +571,11 @@ ENTERPRISE_CONSENT_API_URL = 'http://enterprise.example.com/consent/api/v1/'
 ACTIVATION_EMAIL_FROM_ADDRESS = 'test_activate@edx.org'
 
 TEMPLATES[0]['OPTIONS']['debug'] = True
+
+########################### DRF default throttle rates ############################
+# Increasing rates to enable test cases hitting registration view succesfully.
+# Lower rate is causing view to get blocked, causing test case failure.
+REST_FRAMEWORK['DEFAULT_THROTTLE_RATES']['registration_validation'] = '100/minute'
 
 ########################## VIDEO TRANSCRIPTS STORAGE ############################
 VIDEO_TRANSCRIPTS_SETTINGS = dict(

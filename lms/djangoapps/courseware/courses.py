@@ -21,7 +21,7 @@ from courseware.date_summary import (
 from courseware.model_data import FieldDataCache
 from courseware.module_render import get_module
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import Http404, QueryDict
 from enrollment.api import get_course_enrollment_details
 from edxmako.shortcuts import render_to_string
@@ -224,6 +224,7 @@ def get_course_about_section(request, course, section_key):
 
     Valid keys:
     - overview
+    - about_sidebar_html
     - short_description
     - description
     - key_dates (includes start, end, exams, etc)
@@ -259,6 +260,7 @@ def get_course_about_section(request, course, section_key):
         'effort',
         'end_date',
         'prerequisites',
+        'about_sidebar_html',
         'ocw_links'
     }
 
@@ -593,3 +595,20 @@ def get_current_child(xmodule, min_depth=None, requested_child=None):
                 child = _get_default_child_module(children)
 
     return child
+
+
+def get_course_chapter_ids(course_key):
+    """
+    Extracts the chapter block keys from a course structure.
+
+    Arguments:
+        course_key (CourseLocator): The course key
+    Returns:
+        list (string): The list of string representations of the chapter block keys in the course.
+    """
+    try:
+        chapter_keys = modulestore().get_course(course_key).children
+    except Exception:  # pylint: disable=broad-except
+        log.exception('Failed to retrieve course from modulestore.')
+        return []
+    return [unicode(chapter_key) for chapter_key in chapter_keys if chapter_key.block_type == 'chapter']

@@ -14,7 +14,7 @@ from contracts import contract
 
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from pytz import UTC
 from django.utils.html import escape
 from django.contrib.auth.models import User
@@ -28,6 +28,8 @@ from xblock.scorable import ScorableXBlockMixin
 from xmodule.seq_module import SequenceModule
 from xmodule.vertical_block import VerticalBlock
 from xmodule.x_module import shim_xmodule_js, XModuleDescriptor, XModule, PREVIEW_VIEWS, STUDIO_VIEW
+
+import webpack_loader.utils
 
 log = logging.getLogger(__name__)
 
@@ -141,6 +143,11 @@ def wrap_xblock(
         template_context['js_init_parameters'] = json.dumps(frag.json_init_args).replace("/", r"\/")
     else:
         template_context['js_init_parameters'] = ""
+
+    if isinstance(block, (XModule, XModuleDescriptor)):
+        # Add the webpackified asset tags
+        for tag in webpack_loader.utils.get_as_tags(class_name):
+            frag.add_resource(tag, mimetype='text/html', placement='head')
 
     return wrap_fragment(frag, render_to_string('xblock_wrapper.html', template_context))
 
@@ -288,8 +295,8 @@ def sanitize_html_id(html_id):
     return sanitized_html_id
 
 
-@contract(user=User, has_instructor_access=bool, block=XBlock, view=basestring, frag=Fragment, context="dict|None")
-def add_staff_markup(user, has_instructor_access, disable_staff_debug_info, block, view, frag, context):  # pylint: disable=unused-argument
+@contract(user=User, block=XBlock, view=basestring, frag=Fragment, context="dict|None")
+def add_staff_markup(user, disable_staff_debug_info, block, view, frag, context):  # pylint: disable=unused-argument
     """
     Updates the supplied module with a new get_html function that wraps
     the output of the old get_html function with additional information
@@ -383,7 +390,6 @@ def add_staff_markup(user, has_instructor_access, disable_staff_debug_info, bloc
         'render_histogram': render_histogram,
         'block_content': frag.content,
         'is_released': is_released,
-        'has_instructor_access': has_instructor_access,
         'can_reset_attempts': 'attempts' in block.fields,
         'can_rescore_problem': hasattr(block, 'rescore'),
         'can_override_problem_score': isinstance(block, ScorableXBlockMixin),

@@ -427,9 +427,7 @@ def assert_opened_help_link_is_correct(test, url):
         url (str): url to verify.
     """
     test.browser.switch_to_window(test.browser.window_handles[-1])
-    WebDriverWait(test.browser, 10).until(lambda driver: driver.current_url != "about:blank")
-    # Assert that url in the browser is the same.
-    test.assertEqual(url, test.browser.current_url)
+    WebDriverWait(test.browser, 10).until(lambda driver: driver.current_url == url)
     # Check that the URL loads. Can't do this in the browser because it might
     # be loading a "Maze Found" missing content page.
     response = requests.get(url)
@@ -737,13 +735,43 @@ class AcceptanceTest(WebAppTest):
     """
 
     def __init__(self, *args, **kwargs):
-        if 'BOK_CHOY_HOSTNAME' not in os.environ:
-            # Hack until we upgrade Firefox and install geckodriver in Vagrant and Jenkins
-            DesiredCapabilities.FIREFOX['marionette'] = False
         super(AcceptanceTest, self).__init__(*args, **kwargs)
 
         # Use long messages so that failures show actual and expected values
         self.longMessage = True  # pylint: disable=invalid-name
+
+    def tearDown(self):
+        try:
+            self.browser.get('http://{}:{}'.format(
+                os.environ.get('BOK_CHOY_HOSTNAME', '127.0.0.1'),
+                os.environ.get('BOK_CHOY_LMS_PORT', 8003),
+            ))
+        except:  # pylint: disable=bare-except
+            self.browser.get('http://{}:{}'.format(
+                os.environ.get('BOK_CHOY_HOSTNAME', '127.0.0.1'),
+                os.environ.get('BOK_CHOY_CMS_PORT', 8031),
+            ))
+        logs = self.browser.execute_script("return window.localStorage.getItem('console_log_capture');")
+        if not logs:
+            return
+        logs = json.loads(logs)
+
+        log_dir = path('test_root') / 'log'
+        if 'shard' in os.environ:
+            log_dir /= "shard_{}".format(os.environ["SHARD"])
+        log_dir.mkdir_p()
+
+        with (log_dir / '{}.browser.log'.format(self.id()[:60])).open('w') as browser_log:
+            for (message, url, line_no, col_no, stack) in logs:
+                browser_log.write(u"{}:{}:{}: {}\n    {}\n".format(
+                    url,
+                    line_no,
+                    col_no,
+                    message,
+                    (stack or "").replace('\n', '\n    ')
+                ))
+
+        super(AcceptanceTest, self).tearDown()
 
 
 class UniqueCourseTest(AcceptanceTest):

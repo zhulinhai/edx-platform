@@ -113,6 +113,7 @@ FEATURES['ENABLE_DISCUSSION_SERVICE'] = False
 
 # Use the auto_auth workflow for creating users and logging them in
 FEATURES['AUTOMATIC_AUTH_FOR_TESTING'] = True
+FEATURES['RESTRICT_AUTOMATIC_AUTH'] = False
 
 # Enable third-party authentication
 FEATURES['ENABLE_THIRD_PARTY_AUTH'] = True
@@ -207,6 +208,7 @@ SECRET_KEY = uuid.uuid4().hex
 ############################### PIPELINE #######################################
 
 PIPELINE_ENABLED = False
+REQUIRE_DEBUG = True
 
 # We want to make sure that any new migrations are run
 # see https://groups.google.com/forum/#!msg/django-developers/PWPj3etj3-U/kCl6pMsQYYoJ

@@ -10,7 +10,7 @@ import mock
 import pytz
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser, User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test import TestCase, TransactionTestCase
 from django.test.client import RequestFactory
 from django.test.utils import override_settings
@@ -711,7 +711,7 @@ class TestCreateAccountValidation(TestCase):
 
         # Matching username
         params["username"] = params["password"] = "test_username_and_password"
-        assert_password_error("Password cannot be the same as the username")
+        assert_password_error("Password cannot be the same as the username.")
 
     def test_name(self):
         params = dict(self.minimal_params)

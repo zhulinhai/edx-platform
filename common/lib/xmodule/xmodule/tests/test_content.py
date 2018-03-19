@@ -100,6 +100,8 @@ class MockImage(Mock):
 
 @ddt.ddt
 class ContentTest(unittest.TestCase):
+    shard = 1
+
     def test_thumbnail_none(self):
         # We had a bug where a thumbnail location of None was getting transformed into a Location tuple, with
         # all elements being None. It is important that the location be just None for rendering.
@@ -219,7 +221,7 @@ class ContentTest(unittest.TestCase):
         Test that only one filename starts with 000.
         """
         output_root = path(u'common/static/xmodule/descriptors/js')
-        js_file_paths = _write_js(output_root, _list_descriptors())
-        js_file_paths = [file_path for file_path in js_file_paths if os.path.basename(file_path).startswith('000-')]
+        file_owners = _write_js(output_root, _list_descriptors())
+        js_file_paths = set(file_path for file_path in sum(file_owners.values(), []) if os.path.basename(file_path).startswith('000-'))
         self.assertEqual(len(js_file_paths), 1)
-        self.assertIn("XModule.Descriptor = (function() {", open(js_file_paths[0]).read())
+        self.assertIn("XModule.Descriptor = (function() {", open(js_file_paths.pop()).read())

@@ -12,6 +12,7 @@ file and check it in at the same time as your model changes. To do that,
 ASSUMPTIONS: modules have unique IDs, even across different module_types
 
 """
+import codecs
 import csv
 import hashlib
 import json
@@ -68,7 +69,7 @@ class InstructorTask(models.Model):
     task_id = models.CharField(max_length=255, db_index=True)  # max_length from celery_taskmeta
     task_state = models.CharField(max_length=50, null=True, db_index=True)  # max_length from celery_taskmeta
     task_output = models.CharField(max_length=1024, null=True)
-    requester = models.ForeignKey(User, db_index=True)
+    requester = models.ForeignKey(User, db_index=True, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True)
     subtasks = models.TextField(blank=True)  # JSON dictionary
@@ -270,6 +271,8 @@ class DjangoStorageReportStore(ReportStore):
         strings), write the rows to the storage backend in csv format.
         """
         output_buffer = ContentFile('')
+        # Adding unicode signature (BOM) for MS Excel 2013 compatibility
+        output_buffer.write(codecs.BOM_UTF8)
         csvwriter = csv.writer(output_buffer)
         csvwriter.writerows(self._get_utf8_encoded_rows(rows))
         output_buffer.seek(0)

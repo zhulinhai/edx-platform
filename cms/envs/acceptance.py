@@ -96,6 +96,7 @@ DATABASES = {
 
 # Use the auto_auth workflow for creating users and logging them in
 FEATURES['AUTOMATIC_AUTH_FOR_TESTING'] = True
+FEATURES['RESTRICT_AUTOMATIC_AUTH'] = False
 
 # Forums are disabled in test.py to speed up unit tests, but we do not have
 # per-test control for lettuce acceptance tests.
@@ -108,10 +109,6 @@ FEATURES['ENABLE_DISCUSSION_SERVICE'] = False
 # Setting this flag to false causes imports to not load correctly in the lettuce python files
 # We do not yet understand why this occurs. Setting this to true is a stopgap measure
 USE_I18N = True
-
-# Override the test stub webpack_loader that is installed in test.py.
-INSTALLED_APPS = [app for app in INSTALLED_APPS if app != 'openedx.tests.util.webpack_loader']
-INSTALLED_APPS.append('webpack_loader')
 
 # Include the lettuce app for acceptance testing, including the 'harvest' django-admin command
 # django.contrib.staticfiles used to be loaded by lettuce, now we must add it ourselves

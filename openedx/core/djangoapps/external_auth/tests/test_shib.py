@@ -8,7 +8,6 @@ import unittest
 from importlib import import_module
 from urllib import urlencode
 
-import django
 import pytest
 from ddt import ddt, data
 from django.conf import settings
@@ -16,14 +15,13 @@ from django.http import HttpResponseRedirect
 from django.test import TestCase
 from django.test.client import RequestFactory, Client as DjangoTestClient
 from django.test.utils import override_settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.models import AnonymousUser, User
 from openedx.core.djangoapps.external_auth.models import ExternalAuthMap
 from openedx.core.djangoapps.external_auth.views import (
     shib_login, course_specific_login, course_specific_register, _flatten_to_ascii
 )
 from openedx.core.djangoapps.user_api import accounts as accounts_settings
-from openedx.tests.util import expected_redirect_url
 from mock import patch
 from nose.plugins.attrib import attr
 from six import text_type
@@ -302,7 +300,6 @@ class ShibSPTest(CacheIsolationTestCase):
 
     @unittest.skipUnless(settings.FEATURES.get('AUTH_USE_SHIB'), "AUTH_USE_SHIB not set")
     @data(*gen_all_identities())
-    @pytest.mark.django111_expected_failure
     def test_registration_form_submit(self, identity):
         """
         Tests user creation after the registration form that pops is submitted.  If there is no shib
@@ -332,20 +329,22 @@ class ShibSPTest(CacheIsolationTestCase):
         self.assertEquals(len(audit_log_calls), 3)
         method_name, args, _kwargs = audit_log_calls[0]
         self.assertEquals(method_name, 'info')
-        self.assertEquals(len(args), 1)
-        self.assertIn(u'Login success on new account creation', args[0])
-        self.assertIn(u'post_username', args[0])
-        method_name, args, _kwargs = audit_log_calls[1]
-        self.assertEquals(method_name, 'info')
         self.assertEquals(len(args), 2)
         self.assertIn(u'User registered with external_auth', args[0])
         self.assertEquals(u'post_username', args[1])
-        method_name, args, _kwargs = audit_log_calls[2]
+
+        method_name, args, _kwargs = audit_log_calls[1]
         self.assertEquals(method_name, 'info')
         self.assertEquals(len(args), 3)
         self.assertIn(u'Updated ExternalAuthMap for ', args[0])
         self.assertEquals(u'post_username', args[1])
         self.assertEquals(u'test_user@stanford.edu', args[2].external_id)
+
+        method_name, args, _kwargs = audit_log_calls[2]
+        self.assertEquals(method_name, 'info')
+        self.assertEquals(len(args), 1)
+        self.assertIn(u'Login success on new account creation', args[0])
+        self.assertIn(u'post_username', args[0])
 
         user = User.objects.get(id=self.client.session['_auth_user_id'])
 
@@ -368,12 +367,7 @@ class ShibSPTest(CacheIsolationTestCase):
             if len(external_name.strip()) < accounts_settings.NAME_MIN_LENGTH:
                 self.assertEqual(profile.name, postvars['name'])
             else:
-                expected_name = external_name
-                # TODO: Remove Django 1.11 upgrade shim
-                # SHIM: form character fields strip leading and trailing whitespace by default in Django 1.9+
-                if django.VERSION >= (1, 9):
-                    expected_name = expected_name.strip()
-                self.assertEqual(profile.name, expected_name)
+                self.assertEqual(profile.name, external_name.strip())
                 self.assertNotIn(u';', profile.name)
         else:
             self.assertEqual(profile.name, self.client.session['ExternalAuthMap'].external_name)
@@ -585,7 +579,7 @@ class ShibSPTestModifiedCourseware(ModuleStoreTestCase):
         # successful login is a redirect to the URL that handles auto-enrollment
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response['location'],
-                         expected_redirect_url('/account/finish_auth?{}'.format(urlencode(params))))
+                         '/account/finish_auth?{}'.format(urlencode(params)))
 
 
 class ShibUtilFnTest(TestCase):

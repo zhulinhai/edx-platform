@@ -11,7 +11,7 @@ from smtplib import SMTPException
 import pytz
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.core.validators import validate_email
 from django.utils.translation import ugettext as _
 
@@ -319,32 +319,6 @@ def is_email(identifier):
     except ValidationError:
         return False
     return True
-
-
-def get_course_chapters(course_key):
-    """
-    Extracts the chapters from a course structure.
-    If the course does not exist returns None.
-    If the structure does not contain 1st level children,
-    it returns an empty list.
-
-    Args:
-        course_key (CourseLocator): the course key
-    Returns:
-        list (string): a list of string representing the chapters modules
-            of the course
-    """
-    if course_key is None:
-        return
-    try:
-        course_obj = CourseStructure.objects.get(course_id=course_key)
-    except CourseStructure.DoesNotExist:
-        return
-    course_struct = course_obj.structure
-    try:
-        return course_struct['blocks'][course_struct['root']].get('children', [])
-    except KeyError:
-        return []
 
 
 def add_master_course_staff_to_ccx(master_course, ccx_key, display_name, send_email=True):

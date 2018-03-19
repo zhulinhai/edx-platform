@@ -8,6 +8,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext_noop
+from jsonfield.fields import JSONField
 from opaque_keys.edx.django.models import CourseKeyField
 from six import text_type
 
@@ -137,7 +138,7 @@ def permission_blacked_out(course, role_names, permission_name):
 
 def all_permissions_for_user_in_course(user, course_id):  # pylint: disable=invalid-name
     """Returns all the permissions the user has in the given course."""
-    if not user.is_authenticated():
+    if not user.is_authenticated:
         return {}
 
     course = modulestore().get_course(course_id)
@@ -180,6 +181,11 @@ class CourseDiscussionSettings(models.Model):
         db_index=True,
         help_text="Which course are these settings associated with?",
     )
+    discussions_id_map = JSONField(
+        null=True,
+        blank=True,
+        help_text="Key/value store mapping discussion IDs to discussion XBlock usage keys.",
+    )
     always_divide_inline_discussions = models.BooleanField(default=False)
     _divided_discussions = models.TextField(db_column='divided_discussions', null=True, blank=True)  # JSON list
 
@@ -198,3 +204,24 @@ class CourseDiscussionSettings(models.Model):
     def divided_discussions(self, value):
         """Un-Jsonify the divided_discussions"""
         self._divided_discussions = json.dumps(value)
+
+
+class DiscussionsIdMapping(models.Model):
+    """This model is a performance optimization, updated on course publish."""
+    course_id = CourseKeyField(db_index=True, primary_key=True, max_length=255)
+    mapping = JSONField(
+        help_text="Key/value store mapping discussion IDs to discussion XBlock usage keys.",
+    )
+
+    @classmethod
+    def update_mapping(cls, course_key, discussions_id_map):
+        """Update the mapping of discussions IDs to XBlock usage key strings."""
+        mapping_entry, created = cls.objects.get_or_create(
+            course_id=course_key,
+            defaults={
+                'mapping': discussions_id_map,
+            },
+        )
+        if not created:
+            mapping_entry.mapping = discussions_id_map
+            mapping_entry.save()

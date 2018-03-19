@@ -49,6 +49,9 @@ update_module_store_settings(
 # Needed to enable licensing on video modules
 XBLOCK_SETTINGS.update({'VideoDescriptor': {'licensing_enabled': True}})
 
+# Capture the console log via template includes, until webdriver supports log capture again
+CAPTURE_CONSOLE_LOG = True
+
 ############################ STATIC FILES #############################
 
 # Enable debug so that static assets are served by Django
@@ -80,6 +83,7 @@ for log_name, log_level in LOG_OVERRIDES:
 
 # Use the auto_auth workflow for creating users and logging them in
 FEATURES['AUTOMATIC_AUTH_FOR_TESTING'] = True
+FEATURES['RESTRICT_AUTOMATIC_AUTH'] = False
 
 # Enable milestones app
 FEATURES['MILESTONES_APP'] = True
@@ -144,6 +148,16 @@ if RELEASE_LINE == "master":
         'learner': 'http://edx.readthedocs.io/projects/edx-guide-for-students',
         'course_author': 'http://edx.readthedocs.io/projects/edx-partner-course-staff',
     }
+
+########################## VIDEO TRANSCRIPTS STORAGE ############################
+VIDEO_TRANSCRIPTS_SETTINGS = dict(
+    VIDEO_TRANSCRIPTS_MAX_BYTES=3 * 1024 * 1024,    # 3 MB
+    STORAGE_KWARGS=dict(
+        location=MEDIA_ROOT,
+        base_url=MEDIA_URL,
+    ),
+    DIRECTORY_PREFIX='video-transcripts/',
+)
 
 #####################################################################
 # Lastly, see if the developer has any local overrides.

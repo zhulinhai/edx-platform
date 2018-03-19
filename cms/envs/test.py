@@ -54,8 +54,6 @@ TEST_ROOT = path('test_root')
 
 # Want static files in the same dir for running on jenkins.
 STATIC_ROOT = TEST_ROOT / "staticfiles"
-INSTALLED_APPS = [app for app in INSTALLED_APPS if app != 'webpack_loader']
-INSTALLED_APPS.append('openedx.tests.util.webpack_loader')
 WEBPACK_LOADER['DEFAULT']['STATS_FILE'] = STATIC_ROOT / "webpack-stats.json"
 
 GITHUB_REPO_ROOT = TEST_ROOT / "data"
@@ -316,9 +314,6 @@ SECRET_KEY = '85920908f28904ed733fe576320db18cabd7b6cd'
 ######### custom courses #########
 INSTALLED_APPS.append('openedx.core.djangoapps.ccxcon.apps.CCXConnectorConfig')
 FEATURES['CUSTOM_COURSES_EDX'] = True
-
-# API access management -- needed for simple-history to run.
-INSTALLED_APPS.append('openedx.core.djangoapps.api_admin')
 
 ########################## VIDEO IMAGE STORAGE ############################
 VIDEO_IMAGE_SETTINGS = dict(

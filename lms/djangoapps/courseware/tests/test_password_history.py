@@ -8,7 +8,7 @@ from uuid import uuid4
 import ddt
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test.utils import override_settings
 from django.utils import timezone
 from django.utils.http import int_to_base36
@@ -71,7 +71,7 @@ class TestPasswordHistory(LoginEnrollmentTestCase):
         history = PasswordHistory()
         history.create(user)
 
-    def assertPasswordResetError(self, response, error_message, valid_link=False):
+    def assertPasswordResetError(self, response, error_message, valid_link=True):
         """
         This method is a custom assertion that verifies that a password reset
         view returns an error response as expected.
@@ -343,7 +343,7 @@ class TestPasswordHistory(LoginEnrollmentTestCase):
 
     @ddt.data(
         ('foo', 'foobar', 'Error in resetting your password. Please try again.'),
-        ('', '', 'Password: Invalid Length'),
+        ('', '', 'Enter a password with at least'),
     )
     @ddt.unpack
     def test_password_reset_form_invalid(self, password1, password2, err_msg):
@@ -363,4 +363,4 @@ class TestPasswordHistory(LoginEnrollmentTestCase):
             'new_password1': password1,
             'new_password2': password2,
         }, follow=True)
-        self.assertPasswordResetError(resp, err_msg, valid_link=True)
+        self.assertPasswordResetError(resp, err_msg)

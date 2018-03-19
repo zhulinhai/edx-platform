@@ -13,16 +13,20 @@ from tempfile import NamedTemporaryFile, mkdtemp
 
 from celery.task import task
 from celery.utils.log import get_task_logger
+from celery_utils.chordable_django_backend import chord, chord_task
+from celery_utils.persist_on_failure import LoggedPersistOnFailureTask
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.core.exceptions import SuspiciousOperation
 from django.core.files import File
+from django.core.files.base import ContentFile
 from django.test import RequestFactory
 from django.utils.text import get_valid_filename
 from django.utils.translation import ugettext as _
 from djcelery.common import respect_language
 from opaque_keys.edx.keys import CourseKey
-from opaque_keys.edx.locator import LibraryLocator
+from opaque_keys.edx.locator import LibraryLocator, BlockUsageLocator
 from organizations.models import OrganizationCourse
 from path import Path as path
 from pytz import UTC
@@ -47,10 +51,246 @@ from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import DuplicateCourseError, ItemNotFoundError
 from xmodule.modulestore.xml_exporter import export_course_to_xml, export_library_to_xml
 from xmodule.modulestore.xml_importer import import_course_from_xml, import_library_from_xml
+from xmodule.video_module.transcripts_utils import (
+    Transcript,
+    clean_video_id,
+    get_transcript_from_contentstore,
+    TranscriptsGenerationException
+)
+from xmodule.modulestore import ModuleStoreEnum
+from xmodule.exceptions import NotFoundError
+from edxval.api import (
+    ValCannotCreateError,
+    create_video_transcript,
+    is_transcript_available,
+    create_or_update_video_transcript,
+    create_external_video,
+)
+
+User = get_user_model()
 
 LOGGER = get_task_logger(__name__)
 FILE_READ_CHUNK = 1024  # bytes
 FULL_COURSE_REINDEX_THRESHOLD = 1
+DEFAULT_ALL_COURSES = False
+DEFAULT_FORCE_UPDATE = False
+DEFAULT_COMMIT = False
+MIGRATION_LOGS_PREFIX = 'Transcript Migration'
+
+RETRY_DELAY_SECONDS = 30
+COURSE_LEVEL_TIMEOUT_SECONDS = 1200
+VIDEO_LEVEL_TIMEOUT_SECONDS = 300
+
+
+@chord_task
+def task_status_callback(results):
+    """
+    Callback for collating the results of chord.
+    """
+    try:
+        for result in results:
+            LOGGER.info("[%s] Result: %s", MIGRATION_LOGS_PREFIX, result)
+    except TypeError:
+        pass
+
+
+def enqueue_async_migrate_transcripts_tasks(course_keys, force_update=DEFAULT_FORCE_UPDATE, commit=DEFAULT_COMMIT):
+    """
+    Fires new Celery tasks for all the input courses or for all courses.
+
+    Arguments:
+        course_keys: Command line course ids as list of CourseKey objects,
+        force_update: Overwrite file in S3. Default is False,
+        commit: Update S3 or dry-run the command to see which transcripts will be affected. Default is False.
+    """
+    kwargs = {
+        'force_update': force_update,
+        'commit': commit
+    }
+
+    tasks = [
+        async_migrate_transcript.s(
+            unicode(course_key),
+            **kwargs
+        ) for course_key in course_keys
+    ]
+    callback = task_status_callback.s()
+    chord(tasks)(callback)
+
+
+def get_course_videos(course_key):
+    """
+    Returns all videos in a course as list.
+
+    Arguments:
+        course_key: CourseKey object
+    """
+    all_videos = []
+    store = modulestore()
+
+    # include published videos of the course.
+    all_videos += store.get_items(
+        course_key,
+        qualifiers={'category': 'video'},
+        revision=ModuleStoreEnum.RevisionOption.published_only,
+        include_orphans=False
+    )
+
+    # include draft videos of the course.
+    all_videos += store.get_items(
+        course_key,
+        qualifiers={'category': 'video'},
+        revision=ModuleStoreEnum.RevisionOption.draft_only,
+        include_orphans=False
+    )
+
+    return all_videos
+
+
+@chord_task(
+    bind=True,
+    base=LoggedPersistOnFailureTask,
+    default_retry_delay=RETRY_DELAY_SECONDS,
+    max_retries=1,
+    time_limit=COURSE_LEVEL_TIMEOUT_SECONDS
+)
+def async_migrate_transcript(self, course_key, **kwargs):   # pylint: disable=unused-argument
+    """
+    Migrates the transcripts of all videos in a course as a new celery task.
+    """
+    sub_tasks, force_update = [], kwargs['force_update']
+    course_videos = get_course_videos(CourseKey.from_string(course_key))
+
+    LOGGER.info(
+        "[%s] process for course %s started. Migrating transcripts from %s videos.",
+        MIGRATION_LOGS_PREFIX, course_key, len(course_videos)
+    )
+
+    for video in course_videos:
+        all_transcripts = video.transcripts
+        english_transcript = video.sub
+        if english_transcript:
+            all_transcripts.update({'en': video.sub})
+
+        for lang in all_transcripts.keys():
+            sub_tasks.append(async_migrate_transcript_subtask.s(unicode(video.location), lang, force_update, **kwargs))
+
+    LOGGER.info(
+        "[%s] Migrating %s transcripts for course %s.",
+        MIGRATION_LOGS_PREFIX, len(sub_tasks), course_key
+    )
+    callback = task_status_callback.s()
+    chord(sub_tasks)(callback)
+
+    LOGGER.info(
+        "[%s] task submission for course %s ended.",
+        MIGRATION_LOGS_PREFIX, course_key
+    )
+
+
+def save_transcript_to_storage(edx_video_id, language_code, transcript_content, file_format, force_update):
+    """
+    Pushes a given transcript's data to django storage.
+
+    Arguments:
+        edx_video_id: video ID
+        language_code: language code
+        transcript_content: content of the transcript
+        file_format: format of the transcript file
+        force_update: tells whether it needs to perform force update in
+        case of an existing transcript for the given video.
+    """
+    transcript_present = is_transcript_available(video_id=edx_video_id, language_code=language_code)
+    if transcript_present and force_update:
+        create_or_update_video_transcript(
+            edx_video_id,
+            language_code,
+            dict({'file_format': file_format}),
+            ContentFile(transcript_content)
+        )
+    elif not transcript_present:
+        create_video_transcript(
+            edx_video_id,
+            language_code,
+            file_format,
+            ContentFile(transcript_content)
+        )
+
+
+@chord_task(
+    bind=True,
+    base=LoggedPersistOnFailureTask,
+    default_retry_delay=RETRY_DELAY_SECONDS,
+    max_retries=2,
+    time_limit=VIDEO_LEVEL_TIMEOUT_SECONDS
+)
+def async_migrate_transcript_subtask(self, *args, **kwargs):  # pylint: disable=unused-argument
+    """
+    Migrates a transcript of a given video in a course as a new celery task.
+    """
+    video_location, language_code, force_update = args
+    store = modulestore()
+    video = store.get_item(usage_key=BlockUsageLocator.from_string(video_location))
+    commit = kwargs['commit']
+
+    if not commit:
+        return 'Language {language_code} transcript of video {edx_video_id} will be migrated'.format(
+            language_code=language_code,
+            edx_video_id=video.edx_video_id
+        )
+
+    # Start transcript's migration
+    edx_video_id = clean_video_id(video.edx_video_id)
+
+    LOGGER.info(
+        "[Transcript migration] migration process is started for video [%s] language [%s].",
+        edx_video_id, language_code
+    )
+
+    try:
+        transcripts_info = video.get_transcripts_info()
+        transcript_content, _, _ = get_transcript_from_contentstore(
+            video=video,
+            language=language_code,
+            output_format=Transcript.SJSON,
+            transcripts_info=transcripts_info,
+        )
+
+        if not edx_video_id:
+            edx_video_id = create_external_video('external-video')
+            video.edx_video_id = edx_video_id
+            store.update_item(video, ModuleStoreEnum.UserID.mgmt_command)
+
+        save_transcript_to_storage(
+            edx_video_id=edx_video_id,
+            language_code=language_code,
+            transcript_content=transcript_content,
+            file_format=Transcript.SJSON,
+            force_update=force_update,
+        )
+    except (NotFoundError, TranscriptsGenerationException, ValCannotCreateError) as exc:
+        LOGGER.exception(
+            '[Transcript migration] transcript migration failed for video [%s] and language [%s].',
+            edx_video_id, language_code
+        )
+        message = 'Failed: language {language} of video {video} with exception {exception}'.format(
+            language=language_code,
+            video=video.edx_video_id,
+            exception=text_type(exc)
+        )
+    except Exception:
+        LOGGER.exception(
+            '[Transcript migration] transcript migration failed for video [%s] and language [%s].',
+            edx_video_id, language_code
+        )
+        raise
+    else:
+        message = (
+            'Success: transcript (language: {language_code}, edx_video_id: {edx_video_id}) has been migrated '
+            'for video [{location}].'
+        ).format(edx_video_id=edx_video_id, language_code=language_code, location=unicode(video.location))
+
+    return message
 
 
 def clone_instance(instance, field_values):

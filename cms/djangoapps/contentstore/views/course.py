@@ -5,6 +5,7 @@ import copy
 import json
 import logging
 import random
+import re
 import string  # pylint: disable=deprecated-module
 
 import django.utils
@@ -13,7 +14,7 @@ from ccx_keys.locator import CCXLocator
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from django.shortcuts import redirect
 from django.utils.translation import ugettext as _
@@ -24,6 +25,8 @@ from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locator import BlockUsageLocator
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.waffle_utils import WaffleSwitchNamespace
+from openedx.features.course_experience.waffle import waffle as course_experience_waffle
+from openedx.features.course_experience.waffle import ENABLE_COURSE_ABOUT_SIDEBAR_HTML
 from six import text_type
 
 from contentstore.course_group_config import (
@@ -56,7 +59,6 @@ from milestones import api as milestones_api
 from models.settings.course_grading import CourseGradingModel
 from models.settings.course_metadata import CourseMetadata
 from models.settings.encoder import CourseSettingsEncoder
-from openedx.core.djangoapps.content.course_structures.api.v0 import api, errors
 from openedx.core.djangoapps.credit.api import get_credit_requirements, is_credit_course
 from openedx.core.djangoapps.credit.tasks import update_credit_course_requirements
 from openedx.core.djangoapps.models.course_details import CourseDetails
@@ -586,13 +588,18 @@ def _deprecated_blocks_info(course_module, deprecated_block_types):
         'advance_settings_url': reverse_course_url('advanced_settings_handler', course_module.id)
     }
 
-    try:
-        structure_data = api.course_structure(course_module.id, block_types=deprecated_block_types)
-    except errors.CourseStructureNotAvailableError:
-        return data
+    deprecated_blocks = modulestore().get_items(
+        course_module.id,
+        qualifiers={
+            'category': re.compile('^' + '$|^'.join(deprecated_block_types) + '$')
+        }
+    )
 
-    for block in structure_data['blocks'].values():
-        data['blocks'].append([reverse_usage_url('container_handler', block['parent']), block['display_name']])
+    for block in deprecated_blocks:
+        data['blocks'].append([
+            reverse_usage_url('container_handler', block.parent),
+            block.display_name
+        ])
 
     return data
 
@@ -906,6 +913,7 @@ def rerun_course(user, source_course_key, org, number, run, fields, async=True):
 
     # Clear the fields that must be reset for the rerun
     fields['advertised_start'] = None
+    fields['video_upload_pipeline'] = {}
 
     json_fields = json.dumps(fields, cls=EdxJSONEncoder)
     args = [unicode(source_course_key), unicode(destination_course_key), user.id, json_fields]
@@ -1044,6 +1052,7 @@ def settings_handler(request, course_key_string):
                 'EDITABLE_SHORT_DESCRIPTION',
                 settings.FEATURES.get('EDITABLE_SHORT_DESCRIPTION', True)
             )
+            sidebar_html_enabled = course_experience_waffle().is_enabled(ENABLE_COURSE_ABOUT_SIDEBAR_HTML)
             # self_paced_enabled = SelfPacedConfiguration.current().enabled
 
             settings_context = {
@@ -1056,6 +1065,7 @@ def settings_handler(request, course_key_string):
                 'details_url': reverse_course_url('settings_handler', course_key),
                 'about_page_editable': about_page_editable,
                 'short_description_editable': short_description_editable,
+                'sidebar_html_enabled': sidebar_html_enabled,
                 'upload_asset_url': upload_asset_url,
                 'course_handler_url': reverse_course_url('course_handler', course_key),
                 'language_options': settings.ALL_LANGUAGES,

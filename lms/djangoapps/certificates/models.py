@@ -65,7 +65,9 @@ from opaque_keys.edx.django.models import CourseKeyField
 
 from badges.events.course_complete import course_badge_check
 from badges.events.course_meta import completion_check, course_group_check
+from course_modes.models import CourseMode
 from lms.djangoapps.instructor_task.models import InstructorTask
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.signals.signals import COURSE_CERT_AWARDED
 from openedx.core.djangoapps.xmodule_django.models import NoneToEmptyManager
 from util.milestones_helpers import fulfill_course_milestone, is_prerequisite_courses_enabled
@@ -134,7 +136,7 @@ class CertificateWhitelist(models.Model):
 
     objects = NoneToEmptyManager()
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     course_id = CourseKeyField(max_length=255, blank=True, default=None)
     whitelist = models.BooleanField(default=0)
     created = AutoCreatedField(_('created'))
@@ -229,7 +231,7 @@ class GeneratedCertificate(models.Model):
 
     VERIFIED_CERTS_MODES = [CourseMode.VERIFIED, CourseMode.CREDIT_MODE]
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     course_id = CourseKeyField(max_length=255, blank=True, default=None)
     verify_uuid = models.CharField(max_length=32, blank=True, default='', db_index=True)
     download_uuid = models.CharField(max_length=32, blank=True, default='')
@@ -356,8 +358,8 @@ class CertificateGenerationHistory(TimeStampedModel):
     """
 
     course_id = CourseKeyField(max_length=255)
-    generated_by = models.ForeignKey(User)
-    instructor_task = models.ForeignKey(InstructorTask)
+    generated_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    instructor_task = models.ForeignKey(InstructorTask, on_delete=models.CASCADE)
     is_regeneration = models.BooleanField(default=False)
 
     def get_task_name(self):
@@ -416,8 +418,8 @@ class CertificateInvalidation(TimeStampedModel):
     """
     Model for storing Certificate Invalidation.
     """
-    generated_certificate = models.ForeignKey(GeneratedCertificate)
-    invalidated_by = models.ForeignKey(User)
+    generated_certificate = models.ForeignKey(GeneratedCertificate, on_delete=models.CASCADE)
+    invalidated_by = models.ForeignKey(User, on_delete=models.CASCADE)
     notes = models.TextField(default=None, null=True)
     active = models.BooleanField(default=True)
 
@@ -563,18 +565,25 @@ def certificate_status(generated_certificate):
         return {'status': CertificateStatuses.unavailable, 'mode': GeneratedCertificate.MODES.honor, 'uuid': None}
 
 
-def certificate_info_for_user(user, grade, user_is_whitelisted, user_certificate):
+def certificate_info_for_user(user, course_id, grade, user_is_whitelisted, user_certificate):
     """
     Returns the certificate info for a user for grade report.
     """
+    from student.models import CourseEnrollment
+
     certificate_is_delivered = 'N'
     certificate_type = 'N/A'
-    eligible_for_certificate = 'Y' if (user_is_whitelisted or grade is not None) and user.profile.allow_certificate \
-        else 'N'
-
     status = certificate_status(user_certificate)
     certificate_generated = status['status'] == CertificateStatuses.downloadable
-    if certificate_generated:
+    can_have_certificate = CourseOverview.get_from_id(course_id).may_certify()
+    enrollment_mode, __ = CourseEnrollment.enrollment_mode_for_user(user, course_id)
+    mode_is_verified = enrollment_mode in CourseMode.VERIFIED_MODES
+    user_is_verified = grade is not None and mode_is_verified
+
+    eligible_for_certificate = 'Y' if (user_is_whitelisted or user_is_verified or certificate_generated) \
+        and user.profile.allow_certificate else 'N'
+
+    if certificate_generated and can_have_certificate:
         certificate_is_delivered = 'Y'
         certificate_type = status['mode']
 
@@ -701,7 +710,7 @@ class ExampleCertificate(TimeStampedModel):
     # Dummy full name for the generated certificate
     EXAMPLE_FULL_NAME = u'John Doë'
 
-    example_cert_set = models.ForeignKey(ExampleCertificateSet)
+    example_cert_set = models.ForeignKey(ExampleCertificateSet, on_delete=models.CASCADE)
 
     description = models.CharField(
         max_length=255,

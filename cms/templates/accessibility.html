@@ -2,7 +2,7 @@
 <%inherit file="base.html" />
 <%def name="online_help_token()"><% return "accessibility" %></%def>
 <%!
-  from django.core.urlresolvers import reverse
+  from django.urls import reverse
   from django.utils.translation import ugettext as _
   from openedx.core.djangolib.markup import HTML, Text
   from openedx.core.djangolib.js_utils import js_escaped_string, dump_js_escaped_json
@@ -14,7 +14,7 @@
 
 <%block name="header_extras">
     % if not settings.STUDIO_FRONTEND_CONTAINER_URL:
-        <link rel="stylesheet" type="text/css" href="${static.url('common/css/vendor/vendor.min.css')}" />
+        <link rel="stylesheet" type="text/css" href="${static.url('common/css/vendor/common.min.css')}" />
         <link rel="stylesheet" type="text/css" href="${static.url('common/css/vendor/accessibilityPolicy.min.css')}" />
     % endif
 </%block>

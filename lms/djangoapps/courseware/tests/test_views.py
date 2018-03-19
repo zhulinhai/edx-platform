@@ -13,7 +13,7 @@ from uuid import uuid4
 import ddt
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.http import Http404, HttpResponseBadRequest
 from django.test import TestCase
 from django.test.client import Client, RequestFactory
@@ -63,7 +63,6 @@ from openedx.core.djangolib.testing.utils import get_mock_request
 from openedx.core.lib.gating import api as gating_api
 from openedx.features.course_experience import COURSE_OUTLINE_PAGE_FLAG, UNIFIED_COURSE_TAB_FLAG
 from openedx.features.enterprise_support.tests.mixins.enterprise import EnterpriseTestConsentRequired
-from openedx.tests.util import expected_redirect_url
 from student.models import CourseEnrollment
 from student.tests.factories import TEST_PASSWORD, AdminFactory, CourseEnrollmentFactory, UserFactory
 from util.tests.test_date_utils import fake_pgettext, fake_ugettext
@@ -82,7 +81,7 @@ from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory, chec
 QUERY_COUNT_TABLE_BLACKLIST = WAFFLE_TABLES
 
 
-@attr(shard=1)
+@attr(shard=5)
 class TestJumpTo(ModuleStoreTestCase):
     """
     Check the jumpto link for a course.
@@ -106,7 +105,7 @@ class TestJumpTo(ModuleStoreTestCase):
         course = CourseFactory.create()
         chapter = ItemFactory.create(category='chapter', parent_location=course.location)
         section = ItemFactory.create(category='sequential', parent_location=chapter.location)
-        expected = 'courses/{course_id}/courseware/{chapter_id}/{section_id}/?{activate_block_id}'.format(
+        expected = '/courses/{course_id}/courseware/{chapter_id}/{section_id}/?{activate_block_id}'.format(
             course_id=unicode(course.id),
             chapter_id=chapter.url_name,
             section_id=section.url_name,
@@ -118,7 +117,7 @@ class TestJumpTo(ModuleStoreTestCase):
             unicode(section.location),
         )
         response = self.client.get(jumpto_url)
-        self.assertRedirects(response, expected_redirect_url(expected), status_code=302, target_status_code=302)
+        self.assertRedirects(response, expected, status_code=302, target_status_code=302)
 
     def test_jumpto_from_module(self):
         course = CourseFactory.create()
@@ -129,7 +128,7 @@ class TestJumpTo(ModuleStoreTestCase):
         module1 = ItemFactory.create(category='html', parent_location=vertical1.location)
         module2 = ItemFactory.create(category='html', parent_location=vertical2.location)
 
-        expected = 'courses/{course_id}/courseware/{chapter_id}/{section_id}/1?{activate_block_id}'.format(
+        expected = '/courses/{course_id}/courseware/{chapter_id}/{section_id}/1?{activate_block_id}'.format(
             course_id=unicode(course.id),
             chapter_id=chapter.url_name,
             section_id=section.url_name,
@@ -141,9 +140,9 @@ class TestJumpTo(ModuleStoreTestCase):
             unicode(module1.location),
         )
         response = self.client.get(jumpto_url)
-        self.assertRedirects(response, expected_redirect_url(expected), status_code=302, target_status_code=302)
+        self.assertRedirects(response, expected, status_code=302, target_status_code=302)
 
-        expected = 'courses/{course_id}/courseware/{chapter_id}/{section_id}/2?{activate_block_id}'.format(
+        expected = '/courses/{course_id}/courseware/{chapter_id}/{section_id}/2?{activate_block_id}'.format(
             course_id=unicode(course.id),
             chapter_id=chapter.url_name,
             section_id=section.url_name,
@@ -155,7 +154,7 @@ class TestJumpTo(ModuleStoreTestCase):
             unicode(module2.location),
         )
         response = self.client.get(jumpto_url)
-        self.assertRedirects(response, expected_redirect_url(expected), status_code=302, target_status_code=302)
+        self.assertRedirects(response, expected, status_code=302, target_status_code=302)
 
     def test_jumpto_from_nested_module(self):
         course = CourseFactory.create()
@@ -171,7 +170,7 @@ class TestJumpTo(ModuleStoreTestCase):
 
         # internal position of module2 will be 1_2 (2nd item withing 1st item)
 
-        expected = 'courses/{course_id}/courseware/{chapter_id}/{section_id}/1?{activate_block_id}'.format(
+        expected = '/courses/{course_id}/courseware/{chapter_id}/{section_id}/1?{activate_block_id}'.format(
             course_id=unicode(course.id),
             chapter_id=chapter.url_name,
             section_id=section.url_name,
@@ -183,7 +182,7 @@ class TestJumpTo(ModuleStoreTestCase):
             unicode(module2.location),
         )
         response = self.client.get(jumpto_url)
-        self.assertRedirects(response, expected_redirect_url(expected), status_code=302, target_status_code=302)
+        self.assertRedirects(response, expected, status_code=302, target_status_code=302)
 
     def test_jumpto_id_invalid_location(self):
         location = BlockUsageLocator(CourseLocator('edX', 'toy', 'NoSuchPlace', deprecated=True),
@@ -193,7 +192,7 @@ class TestJumpTo(ModuleStoreTestCase):
         self.assertEqual(response.status_code, 404)
 
 
-@attr(shard=2)
+@attr(shard=5)
 @ddt.ddt
 class IndexQueryTestCase(ModuleStoreTestCase):
     """
@@ -203,8 +202,8 @@ class IndexQueryTestCase(ModuleStoreTestCase):
     NUM_PROBLEMS = 20
 
     @ddt.data(
-        (ModuleStoreEnum.Type.mongo, 10, 143),
-        (ModuleStoreEnum.Type.split, 4, 143),
+        (ModuleStoreEnum.Type.mongo, 10, 146),
+        (ModuleStoreEnum.Type.split, 4, 146),
     )
     @ddt.unpack
     def test_index_query_counts(self, store_type, expected_mongo_query_count, expected_mysql_query_count):
@@ -235,7 +234,7 @@ class IndexQueryTestCase(ModuleStoreTestCase):
                 self.assertEqual(response.status_code, 200)
 
 
-@attr(shard=2)
+@attr(shard=5)
 @ddt.ddt
 class ViewsTestCase(ModuleStoreTestCase):
     """
@@ -512,9 +511,9 @@ class ViewsTestCase(ModuleStoreTestCase):
             self.assertEqual(EcommerceService().is_enabled(AnonymousUser()), False)
 
     def test_user_groups(self):
-        # depreciated function
+        # deprecated function
         mock_user = MagicMock()
-        mock_user.is_authenticated.return_value = False
+        type(mock_user).is_authenticated = PropertyMock(return_value=False)
         self.assertEqual(views.user_groups(mock_user), [])
 
     def test_get_redirect_url(self):
@@ -950,7 +949,7 @@ class ViewsTestCase(ModuleStoreTestCase):
             self.assertContains(response, test)
 
 
-@attr(shard=2)
+@attr(shard=5)
 # Patching 'lms.djangoapps.courseware.views.views.get_programs' would be ideal,
 # but for some unknown reason that patch doesn't seem to be applied.
 @patch('openedx.core.djangoapps.catalog.utils.cache')
@@ -992,7 +991,7 @@ class TestProgramMarketingView(SharedModuleStoreTestCase):
         self.assertEqual(response.status_code, 200)
 
 
-@attr(shard=1)
+@attr(shard=5)
 # setting TIME_ZONE_DISPLAYED_FOR_DEADLINES explicitly
 @override_settings(TIME_ZONE_DISPLAYED_FOR_DEADLINES="UTC")
 class BaseDueDateTests(ModuleStoreTestCase):
@@ -1085,6 +1084,7 @@ class TestProgressDueDate(BaseDueDateTests):
 
 
 # TODO: LEARNER-71: Delete entire TestAccordionDueDate class
+@attr(shard=5)
 class TestAccordionDueDate(BaseDueDateTests):
     """
     Test that the accordion page displays due dates correctly
@@ -1124,7 +1124,7 @@ class TestAccordionDueDate(BaseDueDateTests):
         super(TestAccordionDueDate, self).test_format_none()
 
 
-@attr(shard=1)
+@attr(shard=5)
 class StartDateTests(ModuleStoreTestCase):
     """
     Test that start dates are properly localized and displayed on the student
@@ -1166,7 +1166,7 @@ class StartDateTests(ModuleStoreTestCase):
 
 
 # pylint: disable=protected-access, no-member
-@attr(shard=1)
+@attr(shard=5)
 class ProgressPageBaseTests(ModuleStoreTestCase):
     """
     Base class for progress page tests.
@@ -1224,6 +1224,7 @@ class ProgressPageBaseTests(ModuleStoreTestCase):
 
 
 # pylint: disable=protected-access, no-member
+@attr(shard=5)
 @ddt.ddt
 class ProgressPageTests(ProgressPageBaseTests):
     """
@@ -1334,7 +1335,7 @@ class ProgressPageTests(ProgressPageBaseTests):
             user=self.user,
             course_id=self.course.id,
             status=CertificateStatuses.downloadable,
-            download_url="http://www.example.com/certificate.pdf",
+            download_url="",
             mode='verified'
         )
 
@@ -1363,7 +1364,7 @@ class ProgressPageTests(ProgressPageBaseTests):
         self.store.update_item(self.course, self.user.id)
         CourseEnrollment.enroll(self.user, self.course.id, mode="verified")
         with patch(
-                'lms.djangoapps.verify_student.models.SoftwareSecurePhotoVerification.user_is_verified'
+                'lms.djangoapps.verify_student.services.IDVerificationService.user_is_verified'
         ) as user_verify:
             user_verify.return_value = True
 
@@ -1412,7 +1413,7 @@ class ProgressPageTests(ProgressPageBaseTests):
 
         CourseEnrollment.enroll(self.user, self.course.id, mode="verified")
         with patch(
-                'lms.djangoapps.verify_student.models.SoftwareSecurePhotoVerification.user_is_verified'
+                'lms.djangoapps.verify_student.services.IDVerificationService.user_is_verified'
         ) as user_verify:
             user_verify.return_value = True
 
@@ -1424,17 +1425,21 @@ class ProgressPageTests(ProgressPageBaseTests):
                 resp = self._get_progress_page()
                 self.assertContains(resp, u"Download Your Certificate")
 
-    @ddt.data(True, False)
-    def test_progress_queries_paced_courses(self, self_paced):
+    @ddt.data(
+        (True, 37),
+        (False, 36)
+    )
+    @ddt.unpack
+    def test_progress_queries_paced_courses(self, self_paced, query_count):
         """Test that query counts remain the same for self-paced and instructor-paced courses."""
         self.setup_course(self_paced=self_paced)
-        with self.assertNumQueries(34 if self_paced else 33, table_blacklist=QUERY_COUNT_TABLE_BLACKLIST), check_mongo_calls(1):
+        with self.assertNumQueries(query_count, table_blacklist=QUERY_COUNT_TABLE_BLACKLIST), check_mongo_calls(1):
             self._get_progress_page()
 
     @patch.dict(settings.FEATURES, {'ASSUME_ZERO_GRADE_IF_ABSENT_FOR_ALL_TESTS': False})
     @ddt.data(
-        (False, 40, 27),
-        (True, 33, 23)
+        (False, 43, 27),
+        (True, 36, 23)
     )
     @ddt.unpack
     def test_progress_queries(self, enable_waffle, initial, subsequent):
@@ -1472,7 +1477,7 @@ class ProgressPageTests(ProgressPageBaseTests):
         certs_api.set_cert_generation_enabled(self.course.id, True)
         CourseEnrollment.enroll(self.user, self.course.id, mode=course_mode)
         with patch(
-            'lms.djangoapps.verify_student.models.SoftwareSecurePhotoVerification.user_is_verified'
+            'lms.djangoapps.verify_student.services.IDVerificationService.user_is_verified'
         ) as user_verify:
             user_verify.return_value = user_verified
             with patch('lms.djangoapps.grades.course_grade_factory.CourseGradeFactory.read') as mock_create:
@@ -1520,7 +1525,7 @@ class ProgressPageTests(ProgressPageBaseTests):
         self.store.update_item(self.course, self.user.id)
         CourseEnrollment.enroll(self.user, self.course.id, mode="verified")
         with patch(
-                'lms.djangoapps.verify_student.models.SoftwareSecurePhotoVerification.user_is_verified'
+                'lms.djangoapps.verify_student.services.IDVerificationService.user_is_verified'
         ) as user_verify:
             user_verify.return_value = True
 
@@ -1568,7 +1573,7 @@ class ProgressPageTests(ProgressPageBaseTests):
         )
         CourseEnrollment.enroll(self.user, self.course.id, mode="verified")
         with patch(
-                'lms.djangoapps.verify_student.models.SoftwareSecurePhotoVerification.user_is_verified'
+                'lms.djangoapps.verify_student.services.IDVerificationService.user_is_verified'
         ) as user_verify:
             user_verify.return_value = True
 
@@ -1593,7 +1598,7 @@ class ProgressPageTests(ProgressPageBaseTests):
         )
         CourseEnrollment.enroll(self.user, self.course.id, mode="verified")
         with patch(
-                'lms.djangoapps.verify_student.models.SoftwareSecurePhotoVerification.user_is_verified'
+                'lms.djangoapps.verify_student.services.IDVerificationService.user_is_verified'
         ) as user_verify:
             user_verify.return_value = True
 
@@ -1675,7 +1680,7 @@ class ProgressPageTests(ProgressPageBaseTests):
         )
         CourseEnrollment.enroll(self.user, self.course.id, mode="verified")
         with patch(
-                'lms.djangoapps.verify_student.models.SoftwareSecurePhotoVerification.user_is_verified'
+                'lms.djangoapps.verify_student.services.IDVerificationService.user_is_verified'
         ) as user_verify:
             user_verify.return_value = True
 
@@ -1723,7 +1728,7 @@ class ProgressPageTests(ProgressPageBaseTests):
         )
         CourseEnrollment.enroll(self.user, self.course.id, mode="verified")
         with patch(
-                'lms.djangoapps.verify_student.models.SoftwareSecurePhotoVerification.user_is_verified'
+                'lms.djangoapps.verify_student.services.IDVerificationService.user_is_verified'
         ) as user_verify:
             user_verify.return_value = True
             with patch('lms.djangoapps.certificates.api.certificate_downloadable_status',
@@ -1777,6 +1782,7 @@ class ProgressPageTests(ProgressPageBaseTests):
 
 
 # pylint: disable=protected-access, no-member
+@attr(shard=5)
 @ddt.ddt
 class ProgressPageShowCorrectnessTests(ProgressPageBaseTests):
     """
@@ -2055,7 +2061,7 @@ class ProgressPageShowCorrectnessTests(ProgressPageBaseTests):
         self.assert_progress_page_show_grades(resp, show_correctness, due_date, graded, show_grades, 1, 1, .5)
 
 
-@attr(shard=1)
+@attr(shard=5)
 class VerifyCourseKeyDecoratorTests(TestCase):
     """
     Tests for the ensure_valid_course_key decorator.
@@ -2081,7 +2087,7 @@ class VerifyCourseKeyDecoratorTests(TestCase):
         self.assertFalse(mocked_view.called)
 
 
-@attr(shard=1)
+@attr(shard=5)
 class GenerateUserCertTests(ModuleStoreTestCase):
     """
     Tests for the view function Generated User Certs
@@ -2245,7 +2251,7 @@ class ViewCheckerBlock(XBlock):
         return result
 
 
-@attr(shard=1)
+@attr(shard=5)
 @ddt.ddt
 class TestIndexView(ModuleStoreTestCase):
     """
@@ -2344,6 +2350,7 @@ class TestIndexView(ModuleStoreTestCase):
             assert response.status_code == 200
 
 
+@attr(shard=5)
 @ddt.ddt
 class TestIndexViewWithVerticalPositions(ModuleStoreTestCase):
     """
@@ -2410,6 +2417,7 @@ class TestIndexViewWithVerticalPositions(ModuleStoreTestCase):
         self._assert_correct_position(resp, expected_position)
 
 
+@attr(shard=5)
 class TestIndexViewWithGating(ModuleStoreTestCase, MilestonesTestCaseMixin):
     """
     Test the index view for a course with gated content
@@ -2462,6 +2470,7 @@ class TestIndexViewWithGating(ModuleStoreTestCase, MilestonesTestCaseMixin):
         self.assertIn("Content Locked", response.content)
 
 
+@attr(shard=5)
 class TestRenderXBlock(RenderXBlockTestMixin, ModuleStoreTestCase):
     """
     Tests for the courseware.render_xblock endpoint.
@@ -2504,6 +2513,7 @@ class TestRenderXBlockSelfPaced(TestRenderXBlock):
         return options
 
 
+@attr(shard=5)
 class TestIndexViewCrawlerStudentStateWrites(SharedModuleStoreTestCase):
     """
     Ensure that courseware index requests do not trigger student state writes.
@@ -2583,7 +2593,7 @@ class TestIndexViewCrawlerStudentStateWrites(SharedModuleStoreTestCase):
         self.assertEqual(response.status_code, 200)
 
 
-@attr(shard=1)
+@attr(shard=5)
 class EnterpriseConsentTestCase(EnterpriseTestConsentRequired, ModuleStoreTestCase):
     """
     Ensure that the Enterprise Data Consent redirects are in place only when consent is required.
@@ -2596,10 +2606,14 @@ class EnterpriseConsentTestCase(EnterpriseTestConsentRequired, ModuleStoreTestCa
         CourseOverview.load_from_module_store(self.course.id)
         CourseEnrollmentFactory(user=self.user, course_id=self.course.id)
 
-    def test_consent_required(self):
+    @patch('openedx.features.enterprise_support.api.enterprise_customer_for_request')
+    def test_consent_required(self, mock_enterprise_customer_for_request):
         """
         Test that enterprise data sharing consent is required when enabled for the various courseware views.
         """
+        # ENT-924: Temporary solution to replace sensitive SSO usernames.
+        mock_enterprise_customer_for_request.return_value = None
+
         course_id = unicode(self.course.id)
         for url in (
                 reverse("courseware", kwargs=dict(course_id=course_id)),
@@ -2609,6 +2623,7 @@ class EnterpriseConsentTestCase(EnterpriseTestConsentRequired, ModuleStoreTestCa
             self.verify_consent_required(self.client, url)
 
 
+@attr(shard=5)
 @ddt.ddt
 class AccessUtilsTestCase(ModuleStoreTestCase):
     """

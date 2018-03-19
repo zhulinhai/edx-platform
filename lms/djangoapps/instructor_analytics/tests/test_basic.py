@@ -6,7 +6,7 @@ import datetime
 import json
 
 import pytz
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Q
 from edx_proctoring.api import create_exam
 from edx_proctoring.models import ProctoredExamStudentAttempt
@@ -184,7 +184,7 @@ class TestAnalyticsBasic(ModuleStoreTestCase):
         # is returned by verification and enrollment code
         with patch("student.models.CourseEnrollment.enrollment_mode_for_user") as enrollment_patch:
             with patch(
-                "lms.djangoapps.verify_student.models.SoftwareSecurePhotoVerification.verification_status_for_user"
+                "lms.djangoapps.verify_student.services.IDVerificationService.verification_status_for_user"
             ) as verify_patch:
                 enrollment_patch.return_value = ["verified"]
                 verify_patch.return_value = "dummy verification status"
