@@ -10502,7 +10502,7 @@ msgid "The name that is used for ID verification and that appears on your certif
 msgstr "الاسم الذي استخدمته في التعريف عن نفسك هو الذي سيظهر على شهاداتك"
 
 msgid "You receive messages from {platform_name} and course teams at this address."
-msgstr "ستتلقى على هذا العنوان رسائل من فريق المساق وتطبيق LearnApp"
+msgstr "لقد تسلمت رسالة من {platform_name} و فريق المساق على هذا العنوان"
 
 msgid "Check your email account for instructions to reset your password."
 msgstr "تفقد بريدك الإلكتروني بخصوص تعليمات المساعدة لإعادة ضبط كلمة المرور"
@@ -10521,3 +10521,6 @@ msgid ""
 "{paragraphStart}If you do not receive a password reset message, verify that you entered the correct email address, or check your spam folder.{paragraphEnd}" 
 "{paragraphStart}If you need further assistance, {anchorStart}contact technical support{anchorEnd}.{paragraphEnd}"
 msgstr ""
+"لقد أدخلت {boldStart}{email}{boldEnd} إذا كان هذا البريد الإلكتروني مرتبطاً مع حساب {platform_name}، سنرسل لك رسالة تتضمن تعليمات ضبط كلمة المرور على عنوان البريد الإلكتروني{paragraphEnd}"
+"إذا لم تتسلم رسالة لإعادة ضبط كلمة المرور ، يرجى التأكد من إدخال العنوان الصحيح للبريد الإلكتروني، وأيضاً تفقد صندوق البريد{paragraphStart} التطفلي{paragraphEnd}"
+"إذا كنت بحاجة إلى مزيد من المساعدة،  {anchorStart}يرجى التواصل مع فريق الدعم الفني {anchorEnd}.{paragraphEnd}{paragraphStart}"
