@@ -2760,7 +2760,7 @@ def send_email(request, course_id):
         # the email template for each organization that has courses
         # on the site. The dict maps from addresses by org allowing
         # us to find the correct from address to use here.
-        from_addr = from_addr.get(course_overview.display_org_with_default)
+        from_addr = from_addr.get(course_overview.org)
 
     template_name = configuration_helpers.get_value('course_email_template_name')
     if isinstance(template_name, dict):
@@ -2768,7 +2768,7 @@ def send_email(request, course_id):
         # the email template for each organization that has courses
         # on the site. The dict maps template names by org allowing
         # us to find the correct template to use here.
-        template_name = template_name.get(course_overview.display_org_with_default)
+        template_name = template_name.get(course_overview.org)
 
     if len(targets) > 0 and targets[0] == 'specific_learners':
         send_email_to_specific_learners(course, specific_learners, template_name, from_addr, subject, message)
@@ -2798,7 +2798,7 @@ def send_email(request, course_id):
 
         # try to get the microsite from the org code passed in, if it can not be retrieved, ignore
         try:
-            microsite = Microsite.objects.get(key=course_overview.display_org_with_default)
+            microsite = Microsite.objects.get(key=course_overview.org)
             microsite_context = {
                 'platform_name': microsite.values.get('platform_name'),
                 'LMS_ROOT_URL': microsite.values.get('LMS_ROOT_URL')
