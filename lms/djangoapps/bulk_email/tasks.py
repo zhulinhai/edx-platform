@@ -94,7 +94,7 @@ BULK_EMAIL_FAILURE_ERRORS = (
 )
 
 
-def _get_course_email_context(course):
+def _get_course_email_context(course, microsite_context):
     """
     Returns context arguments to apply to all emails, independent of recipient.
     """
@@ -103,6 +103,12 @@ def _get_course_email_context(course):
     course_end_date = get_default_time_display(course.end)
     course_root = reverse('course_root', kwargs={'course_id': course_id})
     base_url = configuration_helpers.get_value('LMS_ROOT_URL', settings.LMS_ROOT_URL)
+    platform_name = configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
+
+    if microsite_context is not None:
+        base_url = microsite_context['LMS_ROOT_URL']
+        platform_name = microsite_context['platform_name']
+
     course_url = '{}{}'.format(
         base_url,
         course_root
@@ -117,7 +123,7 @@ def _get_course_email_context(course):
         'course_end_date': course_end_date,
         'account_settings_url': '{}{}'.format(base_url, reverse('account_settings')),
         'email_settings_url': '{}{}'.format(base_url, reverse('dashboard')),
-        'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
+        'platform_name': platform_name,
     }
     return email_context
 
@@ -173,7 +179,7 @@ def perform_delegate_email_batches(entry_id, course_id, task_input, action_name)
 
     # Get arguments that will be passed to every subtask.
     targets = email_obj.targets.all()
-    global_email_context = _get_course_email_context(course)
+    global_email_context = _get_course_email_context(course, task_input['microsite_context'])
 
     recipient_qsets = [
         target.get_users(course_id, user_id)

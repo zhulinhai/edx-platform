@@ -20230,7 +20230,7 @@ msgstr "استكشف الدورات التدريبية الجديدة"
 
 #: openedx/features/learner_profile/templates/learner_profile/learner_profile.html
 msgid "Learner Profile"
-msgstr ""
+msgstr "الملف الشخصي للمتعلّم"
 
 #: openedx/features/learner_profile/templates/learner_profile/learner_profile.html
 msgid "My Profile"
@@ -25435,3 +25435,11 @@ msgid ""
 "Please note: The support team is English speaking. While we will do our best "
 "to address your inquiry in any language, our responses will be in English."
 msgstr ""
+"يرجى مراعاة أن فريق الدعم الفني يتحدث اللغة الإنجليزية، وسيبذل قصارى جهده الإنجليزية"
+"لفهم سؤالك بأي لغة وسيكون الرد باللغة"
+
+msgid "and/or the X employers providing courses on the Site may choose not to offer a Certificate for some courses"
+msgstr "بالنسبة لأصحاب العمل السابقين ربما قدموا مساقات تعليمية في المكان من دون تقديم شهادات لبعض المساقات"
+
+msgid "depends upon your motivation to learn the material and to do so with honesty. In order to participate in"
+msgstr "يعتمد ذلك على دافعيتك لتعلم المساقات ومدى إخلاصك في ذلك. من أجل الاشتراك في"

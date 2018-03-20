@@ -141,6 +141,7 @@ from util.date_utils import get_default_time_display
 from openedx.core.lib.courses import course_image_url
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.core.mail.message import forbid_multi_line_headers
+from microsite_configuration.models import Microsite
 
 log = logging.getLogger(__name__)
 
@@ -2795,8 +2796,17 @@ def send_email(request, course_id):
                       course_id, request.user, targets)
             return HttpResponseBadRequest(repr(err))
 
+        # try to get the microsite from the org code passed in, if it can not be retrieved, ignore
+        try:
+            microsite = Microsite.objects.get(key=course_overview.display_org_with_default)
+            microsite_context = {
+                'platform_name': microsite.values.get('platform_name'),
+                'LMS_ROOT_URL': microsite.values.get('LMS_ROOT_URL')
+            }
+        except:
+            microsite_context = None
         # Submit the task, so that the correct InstructorTask object gets created (for monitoring purposes)
-        lms.djangoapps.instructor_task.api.submit_bulk_course_email(request, course_id, email.id)
+        lms.djangoapps.instructor_task.api.submit_bulk_course_email(request, course_id, email.id, microsite_context)
 
     response_payload = {
         'course_id': text_type(course_id),
