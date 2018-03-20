@@ -11408,11 +11408,16 @@ msgstr "חשבון עם כתובת דואר אלקטרוני חדשה כבר ק�
 msgid "You should Register before trying to access the Unit"
 msgstr "עליך להירשם לפני שתוכל לגשת ליחידה"
 
-#: lms/templates/enroll_staff.html lms/templates/ccx/enrollment.html
 #: lms/templates/courseware/course_about.html
-#: lms/templates/instructor/instructor_dashboard_2/membership.html
+msgctxt "self"
 msgid "Enroll"
 msgstr "הירשם"
+
+#: lms/templates/enroll_staff.html lms/templates/ccx/enrollment.html
+#: lms/templates/instructor/instructor_dashboard_2/membership.html
+msgctxt "someone"
+msgid "Enroll"
+msgstr "רשום"
 
 #: lms/templates/enroll_staff.html
 msgid "Don't enroll"
@@ -11516,7 +11521,7 @@ msgid ""
 msgstr ""
 "יש לך {strong_start}שאלות כלליות על {platform_name}{strong_end}? בקרוב נוסיף"
 " עמוד שאלות ותשובות ובו תוכל למצוא מידע רב ומועיל ב{platform_name} "
-"{link_start}שאלות הנפוצות{link_end}."
+"{link_start}שאלות נפוצות{link_end}."
 
 #: lms/templates/help_modal.html
 msgid ""
@@ -17788,7 +17793,6 @@ msgstr "אישור"
 msgid "modal open"
 msgstr "מודל פתוח"
 
-#: lms/templates/instructor/instructor_dashboard_2/data_download.html
 #: lms/templates/modal/accessible_confirm.html
 msgid "OK"
 msgstr "בסדר"

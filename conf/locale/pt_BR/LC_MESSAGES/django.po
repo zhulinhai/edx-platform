@@ -241,7 +241,7 @@ msgstr ""
 #: common/djangoapps/course_modes/admin.py
 #: lms/djangoapps/courseware/date_summary.py
 msgid "Verification Deadline"
-msgstr ""
+msgstr "Prazo de verificação"
 
 #: common/djangoapps/course_modes/admin.py
 msgid ""
@@ -383,6 +383,9 @@ msgid ""
 "{partner_names}, sponsored by {enterprise_name}. Please select your "
 "enrollment information below."
 msgstr ""
+"Bem-vindo, {username}! Você está prestes a se matricular em {course_name} de"
+" {partner_names} patrocinado por {enterprise_name}. Selecione a informação "
+"de matrícula abaixo."
 
 #: common/djangoapps/course_modes/views.py
 msgid "Enrollment is closed"
@@ -394,19 +397,19 @@ msgstr ""
 
 #: common/djangoapps/course_modes/views.py
 msgid "Invalid amount selected."
-msgstr ""
+msgstr "Valor selecionado inválido."
 
 #: common/djangoapps/course_modes/views.py
 msgid "No selected price or selected price is too low."
-msgstr ""
+msgstr "Nenhum preço foi selecionado ou o preço selecionado é muito baixo."
 
 #: common/djangoapps/django_comment_common/models.py
 msgid "Administrator"
-msgstr ""
+msgstr "Administrador"
 
 #: common/djangoapps/django_comment_common/models.py
 msgid "Moderator"
-msgstr ""
+msgstr "Moderador"
 
 #: common/djangoapps/django_comment_common/models.py
 msgid "Community TA"
@@ -415,11 +418,11 @@ msgstr ""
 #: common/djangoapps/django_comment_common/models.py
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py
 msgid "Student"
-msgstr ""
+msgstr "Aluno"
 
 #: common/djangoapps/student/admin.py
 msgid "User profile"
-msgstr ""
+msgstr "Perfil do usuário"
 
 #: common/djangoapps/student/forms.py
 msgid "Username must be minimum of two characters long"
@@ -460,11 +463,11 @@ msgstr ""
 
 #: common/djangoapps/student/forms.py
 msgid "A properly formatted e-mail is required"
-msgstr ""
+msgstr "É necessário um endereço de e-mail válido"
 
 #: common/djangoapps/student/forms.py
 msgid "A valid password is required"
-msgstr ""
+msgstr "É necessária uma senha válida"
 
 #: common/djangoapps/student/forms.py
 msgid "Your legal name must be a minimum of two characters long"
@@ -521,7 +524,7 @@ msgstr ""
 
 #: common/djangoapps/student/forms.py common/djangoapps/student/views.py
 msgid "Password: "
-msgstr ""
+msgstr "Senha: "
 
 #: common/djangoapps/student/forms.py
 msgid "Unauthorized email address."
