@@ -25141,6 +25141,9 @@ msgstr "صاحب العمل (المؤسسة/ الشركة) الذي أسس ال�
 msgid "The decision whether a Certificate will be awarded to a given student will be solely within the discretion of the awarding X employer."
 msgstr "وصاحب العمل له القرار الأول والأخير فيما إذا الطالب يستحق شهادة"
 
+msgid "and/or the X employers providing courses on the Site may choose not to offer a Certificate for some courses."
+msgstr "بالنسبة لأصحاب العمل السابقين ربما قدموا مساقات تعليمية في المكان من دون تقديم شهادات لبعض المساقات"
+
 msgid "When you take a course through"
 msgstr "عند البدء بالمساق"
 
