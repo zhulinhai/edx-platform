@@ -10524,3 +10524,6 @@ msgstr ""
 "لقد أدخلت {boldStart}{email}{boldEnd} إذا كان هذا البريد الإلكتروني مرتبطاً مع حساب {platform_name}، سنرسل لك رسالة تتضمن تعليمات ضبط كلمة المرور على عنوان البريد الإلكتروني{paragraphEnd}"
 "إذا لم تتسلم رسالة لإعادة ضبط كلمة المرور ، يرجى التأكد من إدخال العنوان الصحيح للبريد الإلكتروني، وأيضاً تفقد صندوق البريد{paragraphStart} التطفلي{paragraphEnd}"
 "إذا كنت بحاجة إلى مزيد من المساعدة،  {anchorStart}يرجى التواصل مع فريق الدعم الفني {anchorEnd}.{paragraphEnd}{paragraphStart}"
+
+msgid "I agree to the {platform_name}"
+msgstr "أوافق على {platform_name}"
