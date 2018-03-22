@@ -2492,6 +2492,9 @@ msgstr "تم إرسال الجواب"
 msgid "Download"
 msgstr "تنزيل"
 
+msgid "Certificate exceptions group selection"
+msgstr "استثناءات الشهادة لمجموعة مختارة"
+
 #. Translators: 'closed' means the problem's due date has passed. You may no
 #. longer attempt to solve the problem.
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -6602,13 +6605,13 @@ msgstr "طاقم {platform_name} "
 
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py
 msgid "Course Staff"
-msgstr "طاقم المساق "
+msgstr "فريق المساق"
 
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py
 #: lms/templates/preview_menu.html
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
 msgid "Staff"
-msgstr "طاقم المساق"
+msgstr "فريق المساق"
 
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py
 msgid "Used Registration Code"
@@ -20227,11 +20230,11 @@ msgstr "استكشف الدورات التدريبية الجديدة"
 
 #: openedx/features/learner_profile/templates/learner_profile/learner_profile.html
 msgid "Learner Profile"
-msgstr ""
+msgstr "الملف الشخصي للمتعلّم"
 
 #: openedx/features/learner_profile/templates/learner_profile/learner_profile.html
 msgid "My Profile"
-msgstr ""
+msgstr "ملفي الشخصي"
 
 #: openedx/features/learner_profile/templates/learner_profile/learner_profile.html
 msgid ""
@@ -25015,6 +25018,9 @@ msgstr "يُرجى قراءة شروط الخدمة هذه"
 msgid "and the"
 msgstr "و "
 
+msgid "AND THE"
+msgstr "و "
+
 msgid "prior to registering or using any portion of the website (the 'Site,' which consists of all content and pages located within the"
 msgstr "قبل التسجيل أو استخدام أي قسم من الموقع الإلكتروني (ويشار إليه باسم 'الموقع' الذي يتكون من المحتوى والصفحات الموجودة في"
 
@@ -25135,6 +25141,9 @@ msgstr "صاحب العمل (المؤسسة/ الشركة) الذي أسس ال�
 msgid "The decision whether a Certificate will be awarded to a given student will be solely within the discretion of the awarding X employer."
 msgstr "وصاحب العمل له القرار الأول والأخير فيما إذا الطالب يستحق شهادة"
 
+msgid "and/or the X employers providing courses on the Site may choose not to offer a Certificate for some courses."
+msgstr "بالنسبة لأصحاب العمل السابقين ربما قدموا مساقات تعليمية في المكان من دون تقديم شهادات لبعض المساقات"
+
 msgid "When you take a course through"
 msgstr "عند البدء بالمساق"
 
@@ -25195,10 +25204,10 @@ msgstr "بيان يفيد أن المعلومات الواردة في التحذ
 msgid "THE SITE AND ANY INFORMATION, CONTENT OR SERVICES MADE AVAILABLE ON OR THROUGH THE SITE ARE PROVIDED 'AS IS' AND 'AS AVAILABLE' WITHOUT WARRANTY OF ANY KIND (EXPRESS, IMPLIED OR OTHERWISE), INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT, EXCEPT INSOFAR AS ANY SUCH IMPLIED WARRANTIES MAY NOT BE DISCLAIMED UNDER APPLICABLE LAW."
 msgstr "يتوفر 'الموقع' وأي معلومات أو محتوى أو خدمات على أو من خلال 'الموقع' 'بحالتها الراهنة' و 'كما هو متاح' دون أي ضمان من أي نوع (صريح أو ضمني أو غير ذلك)، بما في ذلك على سبيل المثال لا الحصر أيَّ ضمانات ضمنية لإمكانية التسويق والملاءمة لغرض معين وعدم الانتهاك، إلا إذا كانت أي ضمانات ضمنية من هذا القبيل لا يجوز التنصل منها بموجب القانون الواجب التطبيق."
 
-msgid "And THE PARTICIPANTS (AS HERINAFTER DEFINED) DO NOT WARRANT THAT THE SITE WILL OPERATE IN AN UNINTERRUPTED OR ERROR-FREE MANNER, THAT THE SITE IS FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS, OR THAT THE COURSES OR CONTENT PROVIDED WILL MEET YOUR NEEDS OR EXPECTATIONS."
+msgid "PARTICIPANTS (AS HERINAFTER DEFINED) DO NOT WARRANT THAT THE SITE WILL OPERATE IN AN UNINTERRUPTED OR ERROR-FREE MANNER, THAT THE SITE IS FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS, OR THAT THE COURSES OR CONTENT PROVIDED WILL MEET YOUR NEEDS OR EXPECTATIONS."
 msgstr "لا يوجد أي ضمان للمشاركين بأن 'الموقع' سيعمل دون انقطاع أو دون أخطاء، وأن 'الموقع' خال من الفيروسات أو مكونات ضارة أخرى، أو أن الدورات أو المحتوى المقدم سيلبي احتياجاتك أو توقعاتك."
 
-msgid "And THE PARTICIPANTS ALSO MAKE NO WARRANTY ABOUT THE ACCURACY, COMPLETENESS, TIMELINESS, OR QUALITY OF THE SITE OR ANY COURSES OR CONTENT, OR THAT ANY PARTICULAR COURSES OR CONTENT WILL CONTINUE TO BE MADE AVAILABLE."
+msgid "PARTICIPANTS ALSO MAKE NO WARRANTY ABOUT THE ACCURACY, COMPLETENESS, TIMELINESS, OR QUALITY OF THE SITE OR ANY COURSES OR CONTENT, OR THAT ANY PARTICULAR COURSES OR CONTENT WILL CONTINUE TO BE MADE AVAILABLE."
 msgstr "لا يوجد أي ضمان للمشاركين بشأن دقه أو كمال أو المناسبة الزمنية أو جودة 'الموقع' أو أي دورات أو محتوى، أو  أن الموقع سيستمر توفير أي دورات محددة أو محتوى محدد."
 
 msgid "PARTICIPANTS' MEANS THE OTHER X EMPLOYERS, THE ENTITIES PROVIDING INFORMATION, CONTENT OR SERVICES FOR THE SITE, THE COURSE INSTRUCTORS AND THEIR STAFFS."
@@ -25424,3 +25433,25 @@ msgstr "يجب استكمال قسم  '{prereq_section_name}' وبمعدل ال�
 
 msgid "Have a question about something? You can contact the support team directly:"
 msgstr "هل لديك سؤال عن موضوع معين؟ بإمكانك الاتصال مع فريق الدعم مباشرة"
+
+msgid ""
+"Please note: The support team is English speaking. While we will do our best "
+"to address your inquiry in any language, our responses will be in English."
+msgstr ""
+"يرجى مراعاة أن فريق الدعم الفني يتحدث اللغة الإنجليزية، وسيبذل قصارى جهده الإنجليزية"
+"لفهم سؤالك بأي لغة وسيكون الرد باللغة"
+
+msgid "and/or the X employers providing courses on the Site may choose not to offer a Certificate for some courses"
+msgstr "بالنسبة لأصحاب العمل السابقين ربما قدموا مساقات تعليمية في المكان من دون تقديم شهادات لبعض المساقات"
+
+msgid "depends upon your motivation to learn the material and to do so with honesty. In order to participate in"
+msgstr "يعتمد ذلك على دافعيتك لتعلم المساقات ومدى إخلاصك في ذلك. من أجل الاشتراك في"
+
+#: openedx/core/djangoapps/user_api/api.py
+#, python-brace-format
+msgid ""
+"I agree to the {platform_name} "
+"{terms_of_service_link_start}{terms_of_service}{terms_of_service_link_end}"
+msgstr ""
+"أوافق على {platform_name} "
+"{terms_of_service_link_start}{terms_of_service}{terms_of_service_link_end}"

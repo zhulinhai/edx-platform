@@ -141,6 +141,7 @@ from util.date_utils import get_default_time_display
 from openedx.core.lib.courses import course_image_url
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.core.mail.message import forbid_multi_line_headers
+from microsite_configuration.models import Microsite
 
 log = logging.getLogger(__name__)
 
@@ -150,7 +151,6 @@ SUCCESS_MESSAGE_TEMPLATE = _("The {report_type} report is being created. "
                              "To view the status of the report, see Pending Tasks below.")
 
 from django.template import Context
-from django.template.loader import get_template
 
 from django.contrib.auth import get_user_model
 USER_MODEL = get_user_model()
@@ -2662,13 +2662,15 @@ def send_email_to_specific_learners(course, learners, template_name, from_addr, 
     course_title = course.display_name
     course_end_date = get_default_time_display(course.end)
     course_root = reverse('course_root', kwargs={'course_id': course_id})
+    base_url = configuration_helpers.get_value('LMS_ROOT_URL', settings.LMS_ROOT_URL)
+    
     course_url = '{}{}'.format(
-        settings.LMS_ROOT_URL,
+        base_url,
         course_root
     )
 
     course_email_template = CourseEmailTemplate.get_template(name=template_name)
-    image_url = u'{}{}'.format(settings.LMS_ROOT_URL, course_image_url(course))
+    image_url = u'{}{}'.format(base_url, course_image_url(course))
 
     for learner in learners:
 
@@ -2684,9 +2686,9 @@ def send_email_to_specific_learners(course, learners, template_name, from_addr, 
                 'course_url': course_url,
                 'course_image_url': '',
                 'course_end_date': course_end_date,
-                'account_settings_url': '{}{}'.format(settings.LMS_ROOT_URL, reverse('account_settings')),
-                'email_settings_url': '{}{}'.format(settings.LMS_ROOT_URL, reverse('dashboard')),
-                'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
+                'account_settings_url': '{}{}'.format(base_url, reverse('account_settings')),
+                'email_settings_url': '{}{}'.format(base_url, reverse('dashboard')),
+                'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
             }
 
             email_context['email'] = learner
@@ -2758,7 +2760,7 @@ def send_email(request, course_id):
         # the email template for each organization that has courses
         # on the site. The dict maps from addresses by org allowing
         # us to find the correct from address to use here.
-        from_addr = from_addr.get(course_overview.display_org_with_default)
+        from_addr = from_addr.get(course_overview.org)
 
     template_name = configuration_helpers.get_value('course_email_template_name')
     if isinstance(template_name, dict):
@@ -2766,7 +2768,7 @@ def send_email(request, course_id):
         # the email template for each organization that has courses
         # on the site. The dict maps template names by org allowing
         # us to find the correct template to use here.
-        template_name = template_name.get(course_overview.display_org_with_default)
+        template_name = template_name.get(course_overview.org)
 
     if len(targets) > 0 and targets[0] == 'specific_learners':
         send_email_to_specific_learners(course, specific_learners, template_name, from_addr, subject, message)
@@ -2794,8 +2796,17 @@ def send_email(request, course_id):
                       course_id, request.user, targets)
             return HttpResponseBadRequest(repr(err))
 
+        # try to get the microsite from the org code passed in, if it can not be retrieved, ignore
+        try:
+            microsite = Microsite.objects.get(key=course_overview.org)
+            microsite_context = {
+                'platform_name': microsite.values.get('platform_name'),
+                'LMS_ROOT_URL': microsite.values.get('LMS_ROOT_URL')
+            }
+        except:
+            microsite_context = None
         # Submit the task, so that the correct InstructorTask object gets created (for monitoring purposes)
-        lms.djangoapps.instructor_task.api.submit_bulk_course_email(request, course_id, email.id)
+        lms.djangoapps.instructor_task.api.submit_bulk_course_email(request, course_id, email.id, microsite_context)
 
     response_payload = {
         'course_id': text_type(course_id),

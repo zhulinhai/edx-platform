@@ -254,7 +254,8 @@ class InstructorTaskCourseSubmitTest(TestReportMixin, InstructorTaskCourseTestCa
         api_call = lambda: submit_bulk_course_email(
             self.create_task_request(self.instructor),
             self.course.id,
-            email_id
+            email_id,
+            None
         )
         self._test_resubmission(api_call)
 
