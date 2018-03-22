@@ -10516,6 +10516,9 @@ msgstr "اللغة المستخدمة في هذا الموقع الإلكترو�
 msgid "I agree to the {link_start}Terms of Service and Honor Code{link_end}"
 msgstr "أوافق على {link_start} بنود الخدمة ورمز الشرف {link_end}"
 
+msgid "I agree to the {platform_name} {terms_of_service}"
+msgstr "أوافق على {platform_name} ميثاق الشرف {terms_of_service}"
+
 msgid ""
 "{paragraphStart}You entered {boldStart}{email}{boldEnd}. If this email address is associated with your {platform_name} account, we will send a message with password reset instructions to this email address.{paragraphEnd}"
 "{paragraphStart}If you do not receive a password reset message, verify that you entered the correct email address, or check your spam folder.{paragraphEnd}" 
