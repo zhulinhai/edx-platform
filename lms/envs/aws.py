@@ -1147,3 +1147,6 @@ plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.LMS, plugin_c
 ########################## Derive Any Derived Settings  #######################
 
 derive_settings(__name__)
+
+########################## Derive Any Derived Settings  #######################
+SHOW_GLOBAL_MESSAGE = ENV_TOKENS.get('SHOW_GLOBAL_MESSAGE', False)
