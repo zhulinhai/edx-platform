@@ -27,5 +27,5 @@ def get_site_status_msg(course_key):
         # Make as general as possible, because something broken here should not
         # bring down the whole site.
         except:  # pylint: disable=bare-except
-            log.exception("Error while getting a status message.")
+            log.exception("Error while getting a GlobalStatusMessage")
             return None
