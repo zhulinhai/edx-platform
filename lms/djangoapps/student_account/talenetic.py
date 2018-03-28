@@ -67,7 +67,7 @@ class TaleneticOAuth2(BaseOAuth2):
         if self.REDIRECT_IS_HTTPS:
             uri = uri.replace('http://', 'https://')
         return {
-            'uid': ,  # request auth code
+            'uid': ''  # request auth code
         }
 
     def get_user_details(self, response):
