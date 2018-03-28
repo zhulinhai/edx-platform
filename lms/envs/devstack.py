@@ -45,6 +45,16 @@ ANALITICA_TRACK_URL = ''
 ANALITICA_ACTIVE = False
 ANALITICA_TOKEN = ''
 
+################################ CUSTOM BACKEND ########################################
+CUSTOM_BACKENDS = {
+    "custom one": {
+        "AUTH_URL": "",
+        "ACCESS_TOKEN_URL": "",
+        "REFRESH_TOKEN_URL": "",
+        "LOGOUT_URL": ""
+    }
+}
+
 ################################ EMAIL ########################################
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

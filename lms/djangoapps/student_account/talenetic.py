@@ -1,5 +1,6 @@
 import jwt
 import json
+from django.conf import settings
 from student.models import Registration, UserProfile
 from social_core.backends.oauth import BaseOAuth2
 from django.contrib.auth.models import User
@@ -14,32 +15,32 @@ class TaleneticOAuth2(BaseOAuth2):
     Talenetic OAuth2 authentication backend
 
     """
+    settings_dict = settings.CUSTOM_BACKENDS.get('talenetic')
     name = 'talenetic-oauth2'
     REDIRECT_STATE = False
     ID_KEY = 'username'
     STATE_PARAMETER = True
-    AUTHORIZATION_URL = \
-        'https://staging-alj.talenetic.com/jobseekers'
-    ACCESS_TOKEN_URL = \
-        ' https://staging-alj.talenetic.com/api/tokendetails'
+    AUTHORIZATION_URL = settings_dict.get('AUTH_URL') # https://staging-alj.talenetic.com/jobseekers?clientId={clientid}&secretkey={secretkey}&urlredirect={redirecturl}
+    ACCESS_TOKEN_URL = settings_dict.get('ACCESS_TOKEN_URL') # https://staging-alj.talenetic.com/api/sso/Getjwttoken?uid=
     ACCESS_TOKEN_METHOD = 'POST'
-    RESPONSE_TYPE = 'code id_token'
+    REFRESH_TOKEN_URL = settings_dict.get('REFRESH_TOKEN_URL') # https://staging-alj.talenetic.com/api/sso/RefreshjwtToken?uid=NzIzMzUyOWYtZDkyYi00ZGUwLThhODMtNjBiOTk0NzZlMjVj
+    REFRESH_TOKEN_METHOD = 'POST'
+    RESPONSE_TYPE = 'code jwt_token'
     REDIRECT_IS_HTTPS = True
-    REVOKE_TOKEN_URL = \
-        'https://staging-alj.talenetic.com/api/logout'
+    REVOKE_TOKEN_URL = settings_dict.get('LOGOUT_URL') # 'https://staging-alj.talenetic.com/api/logout'
     REVOKE_TOKEN_METHOD = 'GET'
 
     # The order of the default scope is important
     DEFAULT_SCOPE = ['openid', 'profile']
 
 
-    def extra_data(self, user, uid, response, details=None, *args, **kwargs):
-        """
-        Return access_token and extra defined names to store in extra_data field
-        """
-        data = super(HarambeeOAuth2, self).extra_data(user, uid, response, details, *args, **kwargs)
-        data['id_token'] = kwargs['request_id_token']
-        return data
+    # def extra_data(self, user, uid, response, details=None, *args, **kwargs):
+    #     """
+    #     Return access_token and extra defined names to store in extra_data field
+    #     """
+    #     data = super(HarambeeOAuth2, self).extra_data(user, uid, response, details, *args, **kwargs)
+    #     data['id_token'] = kwargs['request_id_token']
+    #     return data
 
 
     def auth_params(self, state=None):
@@ -51,49 +52,45 @@ class TaleneticOAuth2(BaseOAuth2):
         
         params = {
             'client_id': client_id,
+            'client_secret': client_secret,
             'redirect_uri': uri
         }
         if self.STATE_PARAMETER and state:
             params['state'] = state
         if self.RESPONSE_TYPE:
             params['response_type'] = self.RESPONSE_TYPE
-        params['nonce'] = str(uuid.uuid4().hex) + str(uuid.uuid4().hex)
-        params['response_mode'] = 'form_post'
-        params['prompt'] = 'login'
         return params
 
 
     def auth_complete_params(self, state=None):
-        client_id, client_secret = self.get_key_and_secret()
         uri = self.get_redirect_uri(state)
         if self.REDIRECT_IS_HTTPS:
             uri = uri.replace('http://', 'https://')
         return {
-            'grant_type': 'authorization_code',  # request auth code
-            'code': self.data.get('code', ''),  # server response code
-            'client_id': client_id,
-            'client_secret': client_secret,
-            'redirect_uri': uri
+            'uid': ,  # request auth code
         }
 
     def get_user_details(self, response):
+    	log.error("this is response {}".format(response))
         data = jwt.decode(response.get('id_token'), verify=False)
-        return {'username': data.get('CandidateGUID')[0:-6],
-                'email': "{g}@harambeecloud.com".format(g=data.get('CandidateGUID')),
-                'fullname': "{f} {l}".format(f=data.get('Firstname'), l=data.get('Lastname')),
-                'first_name': data.get('Firstname'),
-                'meta': {'hallo':'hallo'},
-                'last_name': data.get('Lastname')}
+        return {'username': data.get('firstname'),
+                'email': data.get('emailaddress'),
+                'fullname': data.get('firstname'),
+                'first_name': data.get('firstname')}
 
 
     def user_data(self, access_token, *args, **kwargs):
         """Loads user data from service. Implement in subclass"""
         data = jwt.decode(access_token, verify=False)
-        return {'username': data.get('CandidateGUID')[0:-6],
-                'email': "{g}@harambeecloud.com".format(g=data.get('CandidateGUID')),
-                'fullname': "{f} {l}".format(f=data.get('Firstname'), l=data.get('Lastname')),
-                'first_name': data.get('Firstname'),
-                'last_name': data.get('Lastname')}
+        return {'username': data.get('firstname'),
+                'email': data.get('emailaddress'),
+                'fullname': data.get('firstname'),
+                'first_name': data.get('firstname')}
+
+
+    def auth_headers(self):
+        return {'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'}
 
 
     def pipeline(self, pipeline, pipeline_index=0, *args, **kwargs):
@@ -132,6 +129,6 @@ class TaleneticOAuth2(BaseOAuth2):
     def revoke_token_params(self, token, uid):
         social_user = social_django.models.DjangoStorage.user.get_social_auth(provider=self.name, uid=uid)
         return {
-            'id_token_hint': social_user.extra_data['id_token'],
+            'id_token_hint': social_user.extra_data['jwt_token'],
             'state': self.get_session_state()
         }
