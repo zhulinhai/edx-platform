@@ -5,6 +5,7 @@ import pytz
 from datetime import datetime, timedelta
 
 from django.contrib.staticfiles.storage import StaticFilesStorage
+from django.core.exceptions import ImproperlyConfigured
 from django.core.files.storage import get_storage_class
 from django.utils.lru_cache import lru_cache
 from pipeline.storage import NonPackagingMixin, PipelineCachedStorage
@@ -12,6 +13,13 @@ from require.storage import OptimizedFilesMixin
 from storages.backends.s3boto import S3BotoStorage
 
 from openedx.core.djangoapps.theming.storage import ThemeCachedFilesMixin, ThemePipelineMixin, ThemeStorage
+
+try:
+    from storages.backends.azure_storage import AzureStorage
+    from azure.storage import AccessPolicy, SharedAccessPolicy
+except ImproperlyConfigured:
+    # We still need the AzureStorage object to be exist during the class definition
+    AzureStorage = object
 
 
 class PipelineForgivingStorage(PipelineCachedStorage):
@@ -28,9 +36,6 @@ class PipelineForgivingStorage(PipelineCachedStorage):
             out = name
         return out
 
-
-from storages.backends.azure_storage import AzureStorage
-from azure.storage import AccessPolicy, SharedAccessPolicy
 
 class ProductionStorage(
         PipelineForgivingStorage,
