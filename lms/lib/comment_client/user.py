@@ -2,7 +2,7 @@
 import settings
 
 import models
-
+import logging
 from .utils import CommentClientPaginatedResult, CommentClientRequestError, merge_dict, perform_request
 
 
@@ -27,6 +27,14 @@ class User(models.Model):
 
     @classmethod
     def from_django_user(cls, user):
+        logging.info('from_django_user------>')
+        logging.info(user)
+        logging.info('cls------>')
+        logging.info(cls.base_url)
+        logging.info('cls------>')
+        logging.info((cls(id=str(user.id),
+                   external_id=str(user.id),
+                   username=user.username)).to_dict())
         return cls(id=str(user.id),
                    external_id=str(user.id),
                    username=user.username)

@@ -644,9 +644,7 @@ def compose_and_send_activation_email(user, profile, user_registration=None):
         message_for_activation = ("Activation for %s (%s): %s\n" % (user, user.email, profile.name) +
                                   '-' * 80 + '\n\n' + message_for_activation)
     #send_activation_email.delay(subject, message_for_activation, from_address, dest_addr)
-    #send_mailX(subject, message_for_activation, from_address, dest_addr, html_message=message_html) # RP
-    #send_mailX(subject, message_for_activation_html, from_address, dest_addr)
-	send_mailX(subject, message, from_address, dest_addr) # RP
+    send_mailX(subject, message_for_activation, from_address, [user.email], html_message=message_for_activation_html) # RP
 
 
 @login_required
@@ -913,11 +911,8 @@ def dashboard(request):
         'display_sidebar_on_dashboard': display_sidebar_on_dashboard,
     }
 
-
-    logging.info('se viene lo bueno caramba !!!!!!!!!!!!!!!!!!!!!!!!')
-    logging.info(cert_statuses)
-
     ecommerce_service = EcommerceService()
+
     if ecommerce_service.is_enabled(request.user):
         context.update({
             'use_ecommerce_payment_flow': True,
@@ -1328,7 +1323,7 @@ def _generate_not_activated_message(user):
         settings.PLATFORM_NAME
     )
 
-    not_activated_msg_template = _('Para iniciar sesi&oacute;n, debe activar su cuenta.<br /><br />Hemos enviado un enlace de activaci&oacute;n a <strong>{email}</strong>.  Si usted no recibe un correo electr&oacute;nico, revise sus carpetas de spam <a href="{support_url}">contact {platform} Support</a>.')
+    not_activated_msg_template = _('Para iniciar sesi&oacute;n, debe activar su cuenta.<br /><br />Hemos enviado un enlace de activaci&oacute;n a <strong>{email}</strong>.  Si usted no recibe un correo electr&oacute;nico, revise sus carpetas de spam <a href="mailto:contacto@campusromero.pe"> contacto@campusromero.pe </a>.')
 
     not_activated_message = not_activated_msg_template.format(
         email=user.email,
@@ -2673,7 +2668,8 @@ def reactivation_email_for_user(user):
     from_address = configuration_helpers.get_value('ACTIVATION_EMAIL_FROM_ADDRESS', from_address)
 
     try:
-        user.email_user(subject, message, from_address)
+        #user.email_user(subject, message_for_activation_html, from_address)
+		send_mailX(subject, message, from_address, [user.email], html_message=message_for_activation_html) # RP
     except Exception:  # pylint: disable=broad-except
         log.error(
             u'Unable to send reactivation email from "%s" to "%s"',

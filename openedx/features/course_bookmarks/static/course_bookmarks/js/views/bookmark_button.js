@@ -6,7 +6,7 @@
             return Backbone.View.extend({
                 errorMessage: gettext('An error has occurred. Please try again.'),
 
-                bookmarkText: gettext('Bookmark this page'),
+                bookmarkText: gettext('Marcar esta página'),
                 bookmarkedText: gettext('Bookmarked'),
 
                 events: {

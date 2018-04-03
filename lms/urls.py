@@ -30,6 +30,24 @@ urlpatterns = (
 
     url(r'^$', 'branding.views.index', name="root"),   # Main marketing page, or redirect to courseware
 
+    # TODO: Move lms specific student views out of common code
+    url(r'^dashboard$', 'student.views.dashboard', name="dashboard"),
+    url(r'^change_enrollment$', 'student.views.change_enrollment', name='change_enrollment'),
+
+    #ITSoluciones
+    url(r'^iframe_button_log_reg$', 'student.views2.iframe_log_reg', name="iframe_log_reg"),    
+    url(r'^purchase_course/{}/enroll$'.format(settings.COURSE_ID_PATTERN),'student.views2.purchase_course', name="purchase_course"),
+    url(r'^purchase_course/{}/change_enrollment$'.format(settings.COURSE_ID_PATTERN),'student.views2.change_enrollment', name="change_enrollment2"),
+    #ITSoluciones
+
+    # MagiaDigital - VD
+    url(r'^purchase_course/(?P<sku>[^/]*)/redirect$', 'student.views2.noLoginBasket', name="noLoginBasket"),
+    url(r'^purchase_course/{}/redirectVerified$'.format(settings.COURSE_ID_PATTERN), 'student.views2.noLogingVerified', name="noLogingVerified"),
+    # -
+
+
+
+
     url(r'', include('student.urls')),
     # TODO: Move lms specific student views out of common code
     url(r'^dashboard$', 'student.views.dashboard', name="dashboard"),

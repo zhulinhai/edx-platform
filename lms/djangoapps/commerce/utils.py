@@ -7,6 +7,8 @@ from django.conf import settings
 
 from commerce.models import CommerceConfiguration
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+import logging
+
 
 
 def is_account_activation_requirement_disabled():
@@ -67,6 +69,7 @@ class EcommerceService(object):
         """
         user_is_active = user.is_active or is_account_activation_requirement_disabled()
         allow_user = user_is_active or user.is_anonymous()
+
         return allow_user and self.config.checkout_on_ecommerce_service
 
     def payment_page_url(self):

@@ -101,10 +101,14 @@ def get_course_overview_with_access(user, action, course_key, check_if_enrolled=
       or has staff access.
     """
     try:
+        log.info('get_course_overview_with_access')
+        log.info(course_key)
         course_overview = CourseOverview.get_from_id(course_key)
+        log.info(course_overview)
     except CourseOverview.DoesNotExist:
         raise Http404("Course not found.")
-    check_course_access(course_overview, user, action, check_if_enrolled)
+    # check_course_access(course_overview, user, action, check_if_enrolled)
+    log.info('RETURN------>get_course_overview_with_access')
     return course_overview
 
 
@@ -117,16 +121,19 @@ def check_course_access(course, user, action, check_if_enrolled=False):
     enrolled in the course or has staff access.
     """
     access_response = has_access(user, action, course, course.id)
-
+    log.info(access_response)
     if not access_response:
         # Deliberately return a non-specific error message to avoid
         # leaking info about access control settings
         raise CoursewareAccessException(access_response)
-
+    log.info(check_if_enrolled)
     if check_if_enrolled:
         # Verify that the user is either enrolled in the course or a staff
         # member.  If the user is not enrolled, raise a Redirect exception
         # that will be handled by middleware.
+        log.info(user.id)
+        log.info(CourseEnrollment.is_enrolled(user, course.id))
+        log.info(has_access(user, 'staff', course))
         if not ((user.id and CourseEnrollment.is_enrolled(user, course.id)) or has_access(user, 'staff', course)):
             raise CourseAccessRedirect(reverse('about_course', args=[unicode(course.id)]))
 

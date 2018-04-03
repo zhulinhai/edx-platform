@@ -12,7 +12,7 @@ from lms.djangoapps.courseware.courses import (
 )
 
 from .permissions import can_view_courses_for_username
-
+import logging
 
 def get_effective_user(requesting_user, target_username):
     """
@@ -48,6 +48,12 @@ def course_detail(request, username, course_key):
         `CourseOverview` object representing the requested course
     """
     user = get_effective_user(request.user, username)
+    logging.info(get_course_overview_with_access(
+        user,
+        get_permission_for_course_about(),
+        course_key,
+    ))
+    logging.info('----RETURN----------------->course_detail')
     return get_course_overview_with_access(
         user,
         get_permission_for_course_about(),

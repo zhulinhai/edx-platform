@@ -7,7 +7,7 @@ import urllib
 from datetime import datetime
 import pytz
 from uuid import uuid4
-
+import qrcode
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import Http404, HttpResponse
@@ -425,8 +425,10 @@ def _render_certificate_template(request, context, course, user_certificate):
                 encoding_errors='replace',
             )
             context = RequestContext(request, context)
+            context['qr_url'] = generateQr(context['share_url'], str(context['certificate_id_number']))
             return HttpResponse(template.render(context))
 
+    context['qr_url'] = generateQr(context['share_url'], str(context['certificate_id_number']))
     return render_to_response("certificates/valid.html", context)
 
 
@@ -602,3 +604,15 @@ def render_html_view(request, user_id, course_id):
 
     # FINALLY, render appropriate certificate
     return _render_certificate_template(request, context, course, user_certificate)
+
+
+def generateQr(url, certificate_id_number):
+    try:
+        img = qrcode.make(url)
+        media_url = '/edx/var/edxapp/media/certificate_template_assets/qr' + certificate_id_number + '.png'
+        relative_url = '/media/certificate_template_assets/qr' + certificate_id_number + '.png'
+        img.save(media_url)
+        return relative_url
+    except Exception as e:
+        log.info(str(e))
+        return ''

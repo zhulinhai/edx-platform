@@ -437,7 +437,7 @@ msgstr "Su nombre legal debe tener por lo menos dos caracteres"
 
 #: common/djangoapps/student/forms.py
 msgid "Usernames can only contain Roman letters, western numerals (0-9), underscores (_), and hyphens (-)."
-msgstr "Los nombres de usuario solo deben contener letras, números (0-9), guiones bajos (_) y guiones (-)."
+msgstr "Los nombres de usuario público solo pueden contener letras (a-z), números (0-9), guiones (-) y guiones bajos (_). No puede contener espacios en blanco, puntos (.), tildes, apóstrofes('), símbolo de unión (&), signo igual (=), paréntesis angulares (< >), signo más (+) o comas (,)."
 
 #: common/djangoapps/student/forms.py
 #, python-format
@@ -4875,11 +4875,11 @@ msgstr "Por favor contacte al equipo del curso si tiene cualquier pregunta."
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Your certificate is available"
-msgstr "Tu certificado está disponible"
+msgstr "Tu certificado está disponible en línea."
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "You can keep working for a higher grade, or request your certificate now."
-msgstr "Puede seguir trabajando en el curso para obtener una calificación superior, o puede solicitar su certificado ahora."
+msgstr "Ahora puedes solicitar tu certificado que respaldará lo aprendido."
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "We're working on it..."
@@ -4900,7 +4900,7 @@ msgstr "Usted no ha recibido un certificado porque no tiene actualmente una iden
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Congratulations, you qualified for a certificate!"
-msgstr "¡Felicitaciones, usted califica para recibir un certificado!"
+msgstr "¡Felicitaciones! Aprobaste el curso de manera satisfactoria"
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Invalid location."
@@ -8740,7 +8740,7 @@ msgstr "Este nombre será usado en todos tus certificados."
 #: cms/templates/register.html lms/templates/register-form.html lms/templates/register-shib.html lms/templates/signup_modal.html themes/stanford-style/lms/templates/register-form.html
 #: themes/stanford-style/lms/templates/register-shib.html
 msgid "Public Username"
-msgstr "Nombre de usuario público"
+msgstr "Nombre de usuario público "
 
 #. Translators: These instructions appear on the registration form,
 #. immediately
@@ -11976,7 +11976,7 @@ msgstr ""
 
 #: lms/templates/course_modes/choose.html themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Benefits of a Verified Certificate"
-msgstr "Beneficios de un Certificado Verificado"
+msgstr "Beneficios de un Certificado"
 
 #: lms/templates/course_modes/choose.html themes/edx.org/lms/templates/course_modes/choose.html
 msgid "{b_start}Eligible for credit:{b_end} Receive academic credit after successfully completing the course"
@@ -11992,23 +11992,23 @@ msgstr "{b_start}Comparte fácilmente:{b_end} Agrega el certificado a tu CV, o p
 
 #: lms/templates/course_modes/choose.html themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Pursue a Verified Certificate"
-msgstr "Tomar el curso con Certificado Verificado"
+msgstr "Tomar el curso con Certificado"
 
 #: lms/templates/course_modes/choose.html themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "Highlight your new knowledge and skills with a verified certificate. Use this valuable credential to improve your job prospects and advance your career, or highlight your certificate in school "
 "applications."
 msgstr ""
-"Resalta tus nuevos conocimientos y habilidades con un Certificado Verificado. Utiliza esta valiosa acreditación para mejorar tus perspectivas de empleo y avanzar en tu carrera, o resalta tu "
-"certificado en aplicaciones académicas."
+"Resalta tus nuevos conocimientos y habilidades con un Certificado. Utiliza esta valiosa acreditación para mejorar tus perspectivas de empleo, "
+"crecer profesionalmente y ser más competitivo."
 
 #: lms/templates/course_modes/choose.html themes/edx.org/lms/templates/course_modes/choose.html
 msgid "{b_start}Official: {b_end}Receive an instructor-signed certificate with the institution's logo"
-msgstr "{b_start}Oficial:{b_end} Recibe un certificado firmado por el instructor y con el logo de la institución"
+msgstr "Cuenta con firmas digitales y con el respaldo del Campus Romero."
 
 #: lms/templates/course_modes/choose.html themes/edx.org/lms/templates/course_modes/choose.html
 msgid "{b_start}Easily shareable: {b_end}Add the certificate to your CV or resume, or post it directly on LinkedIn"
-msgstr "{b_start}Comparte fácilmente:{b_end} Agrega el certificado a su CV, o publícalo directamente en LinkedIn"
+msgstr "Tiene un código QR que hace único tu certificado, el cual permite comprobar su validez."
 
 #: lms/templates/course_modes/choose.html themes/edx.org/lms/templates/course_modes/choose.html
 msgid "{b_start}Motivating: {b_end}Give yourself an additional incentive to complete the course"
@@ -12016,7 +12016,7 @@ msgstr "{b_start}Motivación: {b_end}Dese usted mismo un incentivo adicional par
 
 #: lms/templates/course_modes/choose.html themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Audit This Course"
-msgstr "Tomar este curso como asistente"
+msgstr "ÍNSCRIBETE GRATIS"
 
 #: lms/templates/course_modes/choose.html themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Audit this course for free and have complete access to all the course material, activities, tests, and forums."
@@ -12024,7 +12024,7 @@ msgstr "Tome este curso de forma gratuita como asistente y tendra acceso complet
 
 #: lms/templates/course_modes/choose.html themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Audit This Course (No Certificate)"
-msgstr "Tome este curso como asistente (Sin certificado)"
+msgstr "Llevar este curso de manera gratuita"
 
 #. Translators: b_start notes the beginning of a section of text bolded for
 #. emphasis, and b_end marks the end of the bolded text.
@@ -12033,7 +12033,7 @@ msgid ""
 "Audit this course for free and have complete access to all the course material, activities, tests, and forums.  {b_start}Please note that this track does not offer a certificate for learners who "
 "earn a passing grade.{b_end}"
 msgstr ""
-"Tome este curso de forma gratuita y accede a todo el material, actividades, evaluaciones y foros del curso. {b_start}Tenga en cuenta que esta modalidad no ofrece la oportunidad de recibir un "
+"Toma este curso de forma gratuita y tendrás acceso completo a todo el material, actividades, evaluaciones y foros. {b_start}Tenga en cuenta que esta modalidad no ofrece la oportunidad de recibir un "
 "certificado al finalizar el curso, aunque se obtenga la calificación necesaria para aprobar.{b_end}"
 
 #: lms/templates/courseware/accordion.html
@@ -12387,19 +12387,19 @@ msgstr "Puntuación de prácticas:"
 
 #: lms/templates/courseware/progress.html
 msgid "Problem scores are hidden until the due date."
-msgstr ""
+msgstr "Los puntajes de problemas están ocultos hasta la fecha de vencimiento."
 
 #: lms/templates/courseware/progress.html
 msgid "Practice scores are hidden until the due date."
-msgstr ""
+msgstr "Los puntajes de práctica están ocultos hasta la fecha de vencimiento."
 
 #: lms/templates/courseware/progress.html
 msgid "Problem scores are hidden."
-msgstr ""
+msgstr "Los puntajes de problemas están ocultos."
 
 #: lms/templates/courseware/progress.html
 msgid "Practice scores are hidden."
-msgstr ""
+msgstr "Los puntajes de práctica están ocultos."
 
 #: lms/templates/courseware/progress.html
 msgid "No problem scores in this section"
@@ -12591,7 +12591,7 @@ msgstr "Ver curso archivado"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "I'm taking {course_name} online with edX.org. Check it out!"
-msgstr ""
+msgstr "Estoy tomando {course_name} en línea con edX.org. ¡Echale un vistazo!"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "Share on Facebook"
@@ -12599,7 +12599,7 @@ msgstr "Compartir en Facebook"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "I'm taking {course_name} online with @edxonline. Check it out!"
-msgstr ""
+msgstr "Estoy tomando {course_name} en línea con @edxonline. ¡Echale un vistazo!"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "Course options for"
@@ -12890,11 +12890,11 @@ msgstr "Reportado"
 #. Translators: This labels a group menu in forum navigation
 #: lms/templates/discussion/_thread_list_template.html
 msgid "Group:"
-msgstr ""
+msgstr "Grupo:"
 
 #: lms/templates/discussion/_thread_list_template.html
 msgid "in all groups"
-msgstr ""
+msgstr "en todos los grupos"
 
 #. Translators: This labels a sort menu in forum navigation
 #: lms/templates/discussion/_thread_list_template.html
@@ -12993,22 +12993,24 @@ msgid ""
 "You're almost there! Use the link to activate your account to access engaging, high-quality {platform_name} courses. Note that you will not be able to log back into your account until you have "
 "activated it."
 msgstr ""
+"¡Ya casi está! Use el enlace para activar su cuenta y acceder a nuestros cursos en {platform_name}. Tenga en cuenta que no podrá volver a iniciar sesión en su cuenta hasta que lo haya "
+"activado su cuenta."
 
 #: lms/templates/emails/activation_email.txt
 msgid "Enjoy learning with {platform_name}."
-msgstr ""
+msgstr "Disfruta aprendiendo con {platform_name}."
 
 #: lms/templates/emails/activation_email.txt
 msgid "If you need help, please use our web form at {support_url} or email {support_email}."
-msgstr ""
+msgstr "Si necesita ayuda, contactese con nosotros vía correo electrónico a {support_email}."
 
 #: lms/templates/emails/activation_email.txt
 msgid "This email message was automatically sent by {lms_url} because someone attempted to create an account on {platform_name} using this email address."
-msgstr ""
+msgstr "Este mensaje de correo electrónico fue enviado automáticamente por {lms_url} porque alguien intentó crear una cuenta en {platform_name} usando esta dirección de correo electrónico."
 
 #: lms/templates/emails/activation_email_subject.txt
 msgid "Action Required: Activate your {platform_name} account"
-msgstr ""
+msgstr "Activar tu cuenta en {platform_name}"
 
 #: lms/templates/emails/add_beta_tester_email_message.txt lms/templates/emails/enroll_email_enrolledmessage.txt lms/templates/emails/remove_beta_tester_email_message.txt
 #: lms/templates/emails/unenroll_email_enrolledmessage.txt

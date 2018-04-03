@@ -215,9 +215,11 @@ class CourseOverview(TimeStampedModel):
                 course from the module store.
         """
         store = modulestore()
+        log.info('load_from_module_store')
         with store.bulk_operations(course_id):
             course = store.get_course(course_id)
             if isinstance(course, CourseDescriptor):
+                log.info('isinstance(course, CourseDescriptor)')
                 course_overview = cls._create_or_update(course)
                 try:
                     with transaction.atomic():
@@ -251,12 +253,15 @@ class CourseOverview(TimeStampedModel):
 
                 return course_overview
             elif course is not None:
+                log.info('IOError')
+
                 raise IOError(
                     "Error while loading course {} from the module store: {}",
                     unicode(course_id),
                     course.error_msg if isinstance(course, ErrorDescriptor) else unicode(course)
                 )
             else:
+                log.info('cls.DoesNotExist()')
                 raise cls.DoesNotExist()
 
     @classmethod
@@ -281,8 +286,10 @@ class CourseOverview(TimeStampedModel):
             - IOError if some other error occurs while trying to load the
                 course from the module store.
         """
+        log.info('get_from_id--------->')
         try:
             course_overview = cls.objects.select_related('image_set').get(id=course_id)
+
             if course_overview.version < cls.VERSION:
                 # Throw away old versions of CourseOverview, as they might contain stale data.
                 course_overview.delete()
@@ -294,7 +301,13 @@ class CourseOverview(TimeStampedModel):
         # they were never generated, or because they were flushed out after
         # a change to CourseOverviewImageConfig.
         if course_overview and not hasattr(course_overview, 'image_set'):
+            log.info(course_overview)
+
+            log.info(hasattr(course_overview, 'image_set'))
+
             CourseOverviewImageSet.create(course_overview)
+
+        log.info('RETURN--------->')
 
         return course_overview or cls.load_from_module_store(course_id)
 

@@ -44,9 +44,6 @@ from views import send_mailX
 log = logging.getLogger("edx.student")
 plantilla_email = "<table border=0 cellpadding=0 cellspacing=0 style=font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#585858;width:650px align=center width=650><tr><td height=10 valign=middle align=left> <tr><td valign=top style=background-color:#dbf2ff><table border=0 cellpadding=0 cellspacing=0 style=width:648px><tr><td height=10 width=3%> <td height=10 width=94%> <td height=10 width=3%> <tr><td width=3%> <td width=94% style=font-family:Arial,Helvetica,sans-serif;font-size:24px;color:#db5008><strong>Formulario Contáctanos</strong><td width=3%> <tr><td height=10> <td height=10 valign=top> <td height=10> <tr><td> <td valign=top><p style=font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#585858;line-height:16px>Estimado administrador <strong></strong>:<br><br>Se registró el siguiente formulario para su revisión:<br><p style=font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#585858;line-height:16px>Nombre completo:<strong>{nombreCompleto}</strong><p style=font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#585858;line-height:16px>Email:<strong>{email}</strong><p style=font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#585858;line-height:16px>Región:<strong>{region}</strong><p style=font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#585858;line-height:16px>Curso:<strong>{curso}</strong><p style=font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#585858;line-height:16px>Teléfono:<strong>{telefono}</strong><p style=font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#585858;line-height:16px>Tema:<strong>{tema}</strong><p style=font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#585858;line-height:16px><strong></strong>Descripción:<br><strong>{descripcion}</strong><p><br><td> <tr><td height=10> <td height=10> <td height=10> </table><tr><td style=background-color:#0087ce><table border=0 cellpadding=0 cellspacing=0 style=width:648px><tr><td height=10> <td height=10> <td height=10> <td height=10> <tr><td width=3%> <td width=47% align=left valign=top><p style=font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#fff;line-height:14px><td width=47% align=right valign=top><p style=font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#fff;line-height:14px><strong>Campus Romero</strong><br><a href=https://www.campusromero.pe target=_blank style=font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#fff;line-height:14px;text-decoration:none>www.campusromero.pe</a><td width=3%> <tr><td height=10> <td height=10> <td height=10> <td height=10> </table>"
 
-# Holi boli
-log.info('holi boli')
-
 # ITSoluciones
 @xframe_options_exempt
 def iframe_log_reg(request):
@@ -190,13 +187,13 @@ def change_enrollment(request, course_id, check_access=True):
 
 
 def noLoginBasket(request, sku):
-    return redirect("https://pago-openedx215.magiadigital.com/basket/single-item/?sku=" + sku)
+    return redirect("https://pago.campusromero.pe/basket/single-item/?sku=" + sku)
 
 
 def noLogingVerified(request, course_id):
     try:
         CourseEnrollment.enroll(request.user, CourseKey.from_string(course_id))
-        return HttpResponseRedirect("https://openedx215.magiadigital.com/course_modes/choose/" + course_id + "/")
+        return HttpResponseRedirect("https://cursos.campusromero.pe/course_modes/choose/" + course_id + "/")
     except Exception as e:
         return HttpResponse(str(e), status=500)
 

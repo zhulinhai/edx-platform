@@ -204,9 +204,9 @@
 
             renderAuthWarning: function() {
                 var message = _.sprintf(
-                    gettext('You have successfully signed into %(currentProvider)s, but your %(currentProvider)s' +
-                            ' account does not have a linked %(platformName)s account. To link your accounts,' +
-                            ' sign in now using your %(platformName)s password.'),
+                    gettext('Has iniciado sesión exitosamente en %(currentProvider)s, pero tu cuenta de %(currentProvider)s' +
+                            ' no está vinculada con una cuenta en %(platformName)s. Para vincular tus cuentas,' +
+                            ' ingresa con tu usuario y contraseña de %(platformName)s'),
                     {currentProvider: this.currentProvider, platformName: this.platformName}
                 );
 

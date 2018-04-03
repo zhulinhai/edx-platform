@@ -11,7 +11,7 @@ from openedx.core.lib.api.view_utils import DeveloperErrorViewMixin, view_auth_c
 from .api import course_detail, list_courses
 from .forms import CourseDetailGetForm, CourseListGetForm
 from .serializers import CourseDetailSerializer, CourseSerializer
-
+import logging
 
 @view_auth_classes(is_authenticated=False)
 class CourseDetailView(DeveloperErrorViewMixin, RetrieveAPIView):
@@ -111,9 +111,17 @@ class CourseDetailView(DeveloperErrorViewMixin, RetrieveAPIView):
         requested_params = self.request.query_params.copy()
         requested_params.update({'course_key': self.kwargs['course_key_string']})
         form = CourseDetailGetForm(requested_params, initial={'requesting_user': self.request.user})
+        logging.info(form.is_valid())
         if not form.is_valid():
             raise ValidationError(form.errors)
-
+        logging.info('------------------')
+        logging.info(course_detail(
+            self.request,
+            form.cleaned_data['username'],
+            form.cleaned_data['course_key'],
+        ))
+        logging.info('------------------')
+        
         return course_detail(
             self.request,
             form.cleaned_data['username'],

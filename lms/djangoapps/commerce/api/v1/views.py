@@ -38,8 +38,8 @@ class CourseRetrieveUpdateView(PutAsCreateMixin, RetrieveUpdateAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'course_id'
     model = CourseMode
-    authentication_classes = (JwtAuthentication, OAuth2Authentication, SessionAuthentication,)
-    permission_classes = (ApiKeyOrModelPermission,)
+    #authentication_classes = (JwtAuthentication, OAuth2Authentication, SessionAuthentication,)
+    #permission_classes = (ApiKeyOrModelPermission,)
     serializer_class = CourseSerializer
 
     # Django Rest Framework v3 requires that we provide a queryset.
@@ -73,6 +73,9 @@ class OrderView(APIView):
         # If the account activation requirement is disabled for this installation, override the
         # anonymous user object attached to the request with the actual user object (if it exists)
         if not request.user.is_authenticated() and is_account_activation_requirement_disabled():
+            log.info('request.user.is_authenticated()---------->')
+            log.info(request.user.is_authenticated())
+            log.info(is_account_activation_requirement_disabled())
             try:
                 request.user = User.objects.get(id=request.session._session_cache['_auth_user_id'])
             except User.DoesNotExist:

@@ -10,7 +10,7 @@ from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 
 from openedx.core.djangoapps.util.forms import ExtendedNullBooleanField
-
+import logging
 
 class UsernameValidatorMixin(object):
     """
@@ -38,6 +38,7 @@ class CourseDetailGetForm(UsernameValidatorMixin, Form):
         Ensure a valid `course_key` was provided.
         """
         course_key_string = self.cleaned_data['course_key']
+
         try:
             return CourseKey.from_string(course_key_string)
         except InvalidKeyError:

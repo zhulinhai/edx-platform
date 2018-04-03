@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Courseware views functions
 """
@@ -103,6 +104,10 @@ from xmodule.x_module import STUDENT_VIEW
 
 from ..entrance_exams import user_can_skip_entrance_exam
 from ..module_render import get_module, get_module_by_usage_id, get_module_for_descriptor
+
+# sebas change
+from django.db.models import Q
+from certificates.models import CertificateWhitelist
 
 log = logging.getLogger("edx.courseware")
 
@@ -965,6 +970,31 @@ def _get_cert_data(student, course, course_key, is_active, enrollment_mode):
         returns dict if course certificate is available else None.
     """
 
+
+    # sebas change
+    
+    try:
+        # si el certificado esta en la whistelist, cambiar el enrollment mode de audit a verified.
+        for item in CertificateWhitelist.objects.all():
+
+            if item.user_id == student.id:
+
+                if item.course_id == course_key:
+                    enrollment_mode = 'verified'
+                    # cambiar el valor
+                    temp = CourseEnrollment.objects.filter(Q(course_id=course_key)).get(Q(user=student.id))
+                   
+                    if temp.mode != 'verified':
+                        temp.mode = 'verified'
+                        temp.save()
+
+    except Exception as e:
+        logging.info(e)
+
+
+
+
+
     if enrollment_mode == CourseMode.AUDIT:
         return CertData(
             CertificateStatuses.audit_passing,
@@ -996,7 +1026,7 @@ def _get_cert_data(student, course, course_key, is_active, enrollment_mode):
     if cert_downloadable_status['is_downloadable']:
         cert_status = CertificateStatuses.downloadable
         title = _('Your certificate is available')
-        msg = _('You can keep working for a higher grade, or request your certificate now.')
+        msg = _('Si deseas obtenerlo de manera física sólo tienes que solicitarlo a contacto@campusromero.pe'.decode('utf-8'))
         if certs_api.has_html_certificates_enabled(course_key, course):
             if certs_api.get_active_web_certificate(course) is not None:
                 cert_web_view_url = certs_api.get_certificate_url(
@@ -1052,7 +1082,7 @@ def _get_cert_data(student, course, course_key, is_active, enrollment_mode):
     return CertData(
         CertificateStatuses.requesting,
         _('Congratulations, you qualified for a certificate!'),
-        _('You can keep working for a higher grade, or request your certificate now.'),
+        _('You can keep working for a higher grade, or request your certificate now.'), # sebas
         download_url=None,
         cert_web_view_url=None
     )

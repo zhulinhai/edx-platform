@@ -362,11 +362,26 @@ def _create_base_discussion_view_context(request, course_key):
     """
     Returns the default template context for rendering any discussion view.
     """
+    log.info('1.1.1')
     user = request.user
     cc_user = cc.User.from_django_user(user)
+    log.info('1.1.2')
+    log.info(type(cc_user))
+    log.info(cc_user.__dict__)
+    try:
+        user_info = cc_user.to_dict()
+    except Exception as e:
+        log.info(str(e))
+
     user_info = cc_user.to_dict()
+    log.info('1.1.2_1')
+    log.info(user_info)
     course = get_course_with_access(user, 'load', course_key, check_if_enrolled=True)
+    log.info('1.1.3')
+    log.info(course)
     course_settings = make_course_settings(course, user)
+    log.info('1.1.4')
+
     return {
         'csrf': csrf(request)['csrf_token'],
         'course': course,
@@ -391,12 +406,15 @@ def _create_discussion_board_context(request, course_key, discussion_id=None, th
     """
     Returns the template context for rendering the discussion board.
     """
+    log.info('1.1')
     context = _create_base_discussion_view_context(request, course_key)
+    log.info(context)
     course = context['course']
     course_settings = context['course_settings']
     user = context['user']
     cc_user = cc.User.from_django_user(user)
     user_info = context['user_info']
+    log.info('1.2')
     if thread_id:
         thread = _find_thread(request, course, discussion_id=discussion_id, thread_id=thread_id)
         if not thread:
@@ -428,7 +446,7 @@ def _create_discussion_board_context(request, course_key, discussion_id=None, th
     with newrelic_function_trace("get_cohort_info"):
         course_discussion_settings = get_course_discussion_settings(course_key)
         user_group_id = get_group_id_for_user(user, course_discussion_settings)
-
+    log.info('1.3')
     context.update({
         'root_url': root_url,
         'discussion_id': discussion_id,
@@ -448,6 +466,7 @@ def _create_discussion_board_context(request, course_key, discussion_id=None, th
         'upgrade_price': get_cosmetic_verified_display_price(course),
         # ENDTODO
     })
+    log.info('1.3')
     return context
 
 
@@ -629,18 +648,25 @@ class DiscussionBoardFragmentView(EdxFragmentView):
         """
         course_key = CourseKey.from_string(course_id)
         try:
+            log.info('1')
             context = _create_discussion_board_context(
                 request,
                 course_key,
                 discussion_id=discussion_id,
                 thread_id=thread_id,
             )
+            log.info(context)
+            log.info('2')
+
             html = render_to_string('discussion/discussion_board_fragment.html', context)
             inline_js = render_to_string('discussion/discussion_board_js.template', context)
-
+            log.info('3')
             fragment = Fragment(html)
+            log.info('4')
             self.add_fragment_resource_urls(fragment)
+            log.info('5')
             fragment.add_javascript(inline_js)
+            log.info('6')
             if not settings.REQUIRE_DEBUG:
                 fragment.add_javascript_url(staticfiles_storage.url('discussion/js/discussion_board_factory.js'))
             return fragment
