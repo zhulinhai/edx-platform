@@ -1,0 +1,141 @@
+<style>
+a{ text-decoration: none;}
+.btn, a {font-family: 'Open Sans', sans-serif;
+  display: inline-block;
+  font-weight: 700 !important;
+  padding: 10px 0px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 0px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+background: #e74e13;
+border-radius: 25px ;
+width: 100%;
+color: #fff;}
+.btn:hover,
+.btn:focus {text-decoration: none; background: #003d62;}
+</style>
+<%block name="button_content">
+% if not student_enrolled and not error:
+	% if user_p:
+		% if not is_course_payment:
+			% if not is_payment:
+                <!-- Si el usuario no esta matriculado, y no es un curso registrado como pago.-->
+
+
+
+
+                
+				<form id="class_enroll_form" method="POST" target="_parent" data-remote="true" action="change_enrollment2"> 
+					<input type="hidden" name="course_id" value="${cod_course}">
+					<input type="hidden" name="syserror" value="${ syserror }">				
+				</form>
+				% if analytics :
+					<button class="btn" id="register" onClick='ga("send","event","cursos","inscripcion","${ analytics }", 1);'>¡INSCRÍBETE AQUÍ!</button>
+				% else :
+					% if cod_course != "course-v1:LBM+GET-UPC01+2017" :
+						<button class="btn" id="register">¡INSCRÍBETE AQUÍ!</button>
+					% else :
+						<button class="btn" id="register">¡PAGA AQUÍ!</button>
+					% endif
+				% endif 
+			% else :
+				<!-- Si el usuario no esta matriculado, el curso esta regitrado como pago y esta logeado -->
+				<a href="https://pago.campusromero.pe/basket/single-item/?sku=${ sku }" x="x" class="btn" target="_parent" id="submit" attr="x" >CERTIFÍCATE AQUÍ!</a>
+			% endif
+		% else :
+			<!-- Si es un curso con precio > 0 y el usuario esta logeado -->
+			% if cod_course != "course-v1:LBM+GET-UPC01+2017" :
+				<a href="https://pago.campusromero.pe/basket/single-item/?sku=${ sku }" x="x" class="btn" target="_parent" id="submit" attr="x" >¡INSCRÍBETE AQUÍ!</a>
+			% else :
+				<a href="https://pago.campusromero.pe/basket/single-item/?sku=${ sku }" x="x" class="btn" target="_parent" id="submit" attr="x" >¡PAGA AQUÍ!</a>
+			% endif
+		% endif
+	% else:
+		% if not is_course_payment :
+			% if not is_payment :
+				% if cod_course != "course-v1:LBM+GET-UPC01+2017" :
+					<a href="/login?next=/purchase_course/${cod_course.replace("+", "%2B")}/redirectVerified" x="x" class="btn" target="_parent" id="submit" attr="x" >¡ INSCRÍBETE AQUÍ !</a>
+				% else :
+					<a href="/login?next=/purchase_course/${cod_course.replace("+", "%2B")}/redirectVerified" x="x" class="btn" target="_parent" id="submit" attr="x" >¡ PAGA AQUÍ !</a>
+				% endif			
+			% else :
+				<a href="/login?next=/courses/${cod_course.replace("+", "%2B")}/info" x="x" class="btn" target="_parent" id="submit" attr="xx" >¡CERTIFÍCATE AQUÍ!</a>
+				<input type="hidden" value="${ ins }">
+			% endif
+		% else:
+				% if cod_course != "course-v1:LBM+GET-UPC01+2017" :
+					<a href="/purchase_course/${ sku }/redirect" x="x" class="btn" target="_parent" id="submit" attr="xx" >¡INSCRÍBETE AQUÍ!</a>
+				% else :
+					<a href="/purchase_course/${ sku }/redirect" x="x" class="btn" target="_parent" id="submit" attr="xx" >¡PAGA AQUÍ!</a>
+				% endif
+		% endif
+	% endif 
+% elif error :
+	% if error == "INSCRIPCION CERRADA" :
+		<a class="btn" target="_parent" id="submit">INSCRIPCIÓN CERRADA</a>
+	% elif error == "MODULO NO CULMINADO" :
+		% if student_enrolled :
+			<a href="/courses/${ cod_course }/info" class="btn" id="submit" target="_parent">INGRESAR AL MÓDULO</a>
+		% else :
+			<a class="btn" target="_parent" id="submit">AÚN NO CUMPLES EL REQUISITO!</a>
+		% endif
+	% else :
+		<a class="btn" target="_parent" id="submit">${error}</a>
+	% endif
+% else :
+	% if still_start :
+		<a class="btn" id="submit" target="_parent">GRACIAS POR INSCRIBIRTE</a>
+	% else :
+		<a href="/courses/${ cod_course }/info" class="btn" id="submit" target="_parent">INGRESAR AL MÓDULO</a>
+	% endif
+% endif
+</%block>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+(function(){
+	function getCookie(name) {
+    	    var cookieValue = null;
+	    if (document.cookie && document.cookie !== '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = (cookies[i]).trim();
+				if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+				}
+			}
+	    }
+	    return cookieValue;
+	}	
+    document.getElementById("register").addEventListener("click", function(event){
+		//document.getElementById("class_enroll_form").submit();
+		$.ajax({   
+			type: 'POST',   
+			url: "change_enrollment",   
+			data: $('#class_enroll_form').serialize(),
+			success: function(data){
+				window.location.href = "/course_modes/choose/${ cod_course }/";
+			},
+		}); 
+	});
+	sessionStorage["csrftoken"] = getCookie("csrftoken");
+	var csrftoken = sessionStorage["csrftoken"];
+	var form = document.getElementsByTagName("form")[0];
+	if (form){
+		var inputToken = document.createElement("input");
+		inputToken.type = "hidden";
+		inputToken.name = "csrfmiddlewaretoken"; 
+		inputToken.value = csrftoken;
+		form.append(inputToken);
+	}
+}())
+</script>

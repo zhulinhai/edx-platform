@@ -1,0 +1,29 @@
+<style>
+.button{
+    background: #fff;
+    border: 1px solid #003c63;
+    color: #003c63;
+    display: inline-flex;
+    border-radius: 20px;
+    padding: 8px 10px 8px 10px;
+}
+a{
+    text-decoration: None;
+    font-family: 'dinbold';
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: arial;
+    font-weight: bold;
+
+}
+</style>
+
+<%block name="button_content">
+ 
+%if user.username:
+	<a href="/dashboard" class="button" id="submit" target="_parent">Panel de cursos</a>
+% else :
+	<a href="https://cursos.campusromero.pe/login" target="_parent" id="submit" class="button">Iniciar Sesión</a>
+	<a href="https://cursos.campusromero.pe/register" target="_parent" id="submit" class="button">Registrarse</a>
+% endif
+</%block>
