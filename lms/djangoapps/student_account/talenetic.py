@@ -167,7 +167,7 @@ class TaleneticOAuth2(BaseOAuth2):
     def revoke_token_url(self, token, uid):
         social_user = social_django.models.DjangoStorage.user.get_social_auth(provider=self.name, uid=uid)
         profile = social_user.user.profile
-        meta_data = json.dumps(profile.meta)
+        meta_data = json.loads(profile.meta)
         url = "{}?uid={}".format(self.REVOKE_TOKEN_URL, meta_data.get('uid'))
         return url
 
