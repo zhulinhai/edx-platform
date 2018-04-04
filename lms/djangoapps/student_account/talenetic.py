@@ -29,7 +29,7 @@ class TaleneticOAuth2(BaseOAuth2):
     RESPONSE_TYPE = 'code jwt_token'
     REDIRECT_IS_HTTPS = False
     REVOKE_TOKEN_URL = settings_dict.get('LOGOUT_URL') # 'https://staging-alj.talenetic.com/api/logout'
-    REVOKE_TOKEN_METHOD = 'GET'
+    REVOKE_TOKEN_METHOD = 'POST'
 
     def get_scope_argument(self):
         return {}
@@ -94,9 +94,9 @@ class TaleneticOAuth2(BaseOAuth2):
 
     def _fill_fields(self, data):
         if data.get('firstname') is None:
-            data['firstname'] = data.get('email').split('@')[0]
+            data['firstname'] = data.get('emailaddress').split('@')[0]
         if data.get('username') is None:
-            data['username'] = data.get('email').split('@')[0]
+            data['username'] = data.get('emailaddress').split('@')[0]
         
         return data
 
@@ -104,7 +104,7 @@ class TaleneticOAuth2(BaseOAuth2):
     def user_data(self, access_token, *args, **kwargs):
         """Loads user data from service. Implement in subclass"""
         data = self._fill_fields(kwargs.get('response'))
-        return {'username': data.get('firstname'),
+        return {'username': data.get('username'),
                 'email': data.get('emailaddress'),
                 'fullname': data.get('firstname'),
                 'first_name': data.get('firstname')}
@@ -114,7 +114,7 @@ class TaleneticOAuth2(BaseOAuth2):
         return {
             'secretkey': client_secret,
             'clientId': client_id
-            }
+           }
 
 
     def auth_headers(self):
@@ -132,6 +132,19 @@ class TaleneticOAuth2(BaseOAuth2):
             return out
 
         user = out.get('user')
+        
+        user_profile = user.profile
+        new_meta = {'uid': self._get_uid()}
+
+        if len(user_profile.meta) > 0:
+            previous_meta = json.loads(user_profile.meta)
+            mixed_dicts =\
+                (previous_meta.items() + new_meta.items())
+            new_meta =\
+                {key: value for (key, value) in mixed_dicts}
+
+        user_profile.meta = json.dumps(new_meta)
+        user_profile.save()
 
         if user:
             user.social_user = out.get('social')
@@ -143,7 +156,7 @@ class TaleneticOAuth2(BaseOAuth2):
     def revoke_token_params(self, token, uid):
         social_user = social_django.models.DjangoStorage.user.get_social_auth(provider=self.name, uid=uid)
         return {
-            'id_token_hint': social_user.extra_data['jwt_token'],
+            'id_token_hint': social_user.extra_data['access_token'],
             'state': self.get_session_state()
         }
 
@@ -157,3 +170,32 @@ class TaleneticOAuth2(BaseOAuth2):
             # providers value exactly.
             params = unquote(params)
         return '{0}?{1}'.format(self.authorization_url(), params)
+
+
+    def revoke_token_url(self, token, uid):
+        social_user = social_django.models.DjangoStorage.user.get_social_auth(provider=self.name, uid=uid)
+        profile = social_user.user.profile
+        meta_data = json.dumps(profile.meta)
+        url = "{}?uid={}".format(self.REVOKE_TOKEN_URL, meta_data.get('uid'))
+        return url
+
+    def revoke_token_params(self, token, uid):
+        return {}
+
+    def revoke_token_headers(self, token, uid):
+        return self._get_creds()
+
+    def process_revoke_token_response(self, response):
+        return response.status_code == 200
+
+    def revoke_token(self, token, uid):
+        if self.REVOKE_TOKEN_URL:
+            url = self.revoke_token_url(token, uid)
+            params = self.revoke_token_params(token, uid)
+            headers = self.revoke_token_headers(token, uid)
+            data = urlencode(params) if self.REVOKE_TOKEN_METHOD != 'GET' \
+                                     else None
+            response = self.request(url, params=params, headers=headers,
+                                    data=data, method=self.REVOKE_TOKEN_METHOD)
+            log.error("Logging out from SSO response is {}".format(response))
+            return self.process_revoke_token_response(response)
