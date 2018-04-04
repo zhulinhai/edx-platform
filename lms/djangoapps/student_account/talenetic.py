@@ -153,14 +153,6 @@ class TaleneticOAuth2(BaseOAuth2):
         return user
 
 
-    def revoke_token_params(self, token, uid):
-        social_user = social_django.models.DjangoStorage.user.get_social_auth(provider=self.name, uid=uid)
-        return {
-            'id_token_hint': social_user.extra_data['access_token'],
-            'state': self.get_session_state()
-        }
-
-
     def auth_url(self):
         """Return redirect url"""
         params = self.auth_params()
