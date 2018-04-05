@@ -162,6 +162,14 @@ def index(request, extra_context=None, user=AnonymousUser()):
     else:
         courses = sort_by_announcement(courses)
 
+    if configuration_helpers.get_value(
+        "ENABLE_FILTER_COURSES_BY_USER_LANG",
+        settings.FEATURES.get("ENABLE_FILTER_COURSES_BY_USER_LANG")
+    ):
+        preferred_lang = request.LANGUAGE_CODE
+        courses =\
+            [course for course in courses if course.language == preferred_lang]
+
     context = {'courses': courses}
 
     context['homepage_overlay_html'] = configuration_helpers.get_value('homepage_overlay_html')

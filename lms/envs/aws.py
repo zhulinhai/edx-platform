@@ -1159,3 +1159,6 @@ SOCIAL_AUTH_DISCONNECT_PIPELINE = (
     'social.pipeline.disconnect.disconnect',
     'profiles.utils.disconnect',
 )
+
+SHOW_GLOBAL_MESSAGE = ENV_TOKENS.get('SHOW_GLOBAL_MESSAGE', False)
+

@@ -10,7 +10,7 @@ del DEFAULT_FILE_STORAGE
 MEDIA_ROOT = "/edx/var/edxapp/uploads"
 ORA2_FILEUPLOAD_BACKEND = 'django'
 
-
+SHOW_GLOBAL_MESSAGE = False
 DEBUG = True
 USE_I18N = True
 DEFAULT_TEMPLATE_ENGINE['OPTIONS']['debug'] = True
