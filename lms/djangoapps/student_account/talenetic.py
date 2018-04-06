@@ -61,7 +61,6 @@ class TaleneticOAuth2(BaseOAuth2):
         return self.strategy.authenticate(*args, **kwargs)
 
 
-
     def _get_uid(self):
         return self.data['uid']
 
@@ -80,8 +79,10 @@ class TaleneticOAuth2(BaseOAuth2):
         }
         return params
 
+
     def get_user_id(self, details, response):
         return details.get('email')
+
 
     def user_data(self, access_token, *args, **kwargs):
         """Loads user data from service. Implement in subclass"""
@@ -121,9 +122,13 @@ class TaleneticOAuth2(BaseOAuth2):
         """
         This is a special override of the pipeline method.
         This will grab the user from the actual ran pipeline and
-        add the incomming guid as a username field to the meta field on the user profile
+        add the incoming uid as a uid field to the meta field on the user profile
         """
 
+        # due to some of the usernames that will come in from the SSO containing a .fullstop 
+        # the user can not be found and then the oauth tries
+        # to make a new one and breaks as the email exists, 
+        # this is to set the user if it exists forcefully for the rest of oauth to work properly.
         if kwargs.get('user') is None:
             try:
                 user = User.objects.get(email=kwargs.get('response').get('emailaddress'))
@@ -193,5 +198,4 @@ class TaleneticOAuth2(BaseOAuth2):
                                      else None
             response = self.request(url, params=params, headers=headers,
                                     data=data, method=self.REVOKE_TOKEN_METHOD)
-            log.error("Logging out from SSO response is {}".format(response))
             return self.process_revoke_token_response(response)
