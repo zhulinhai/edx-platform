@@ -5125,13 +5125,15 @@ msgstr ""
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Your enrollment: Audit track"
-msgstr ""
+msgstr "Eich cofrestriad: Lwybr awdit"
 
 #: lms/djangoapps/courseware/views/views.py
 msgid ""
 "You are enrolled in the audit track for this course. The audit track does "
 "not include a certificate."
 msgstr ""
+"Rydych wedi'ch cofrestru ar y trac awdit ar gyfer y cwrs hwn. Nid yw'r "
+"llwybr awdit yn cynnwys tystysgrif."
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Your certificate has been invalidated"

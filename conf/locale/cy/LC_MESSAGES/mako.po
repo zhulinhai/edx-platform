@@ -1197,7 +1197,7 @@ msgstr "Adnodd allanol"
 #. "total_points" is the maximum number of points achievable.
 #: lms/templates/lti.html
 msgid "{points} / {total_points} points"
-msgstr "{points} / {total_points} pwynt"
+msgstr "{points} / {total_points} pwyntiau"
 
 #. Translators: "total_points" is the maximum number of points achievable on
 #. this LTI unit
@@ -1217,6 +1217,7 @@ msgstr "Rhowch launch_url. Cliciwch ar \"Golygu\", a chwblhau'r meysydd gofynnol
 #: lms/templates/lti.html
 msgid "Feedback on your work from the grader:"
 msgstr "Adborth ar eich gwaith gan y graddiwr:"
+
 
 #: lms/templates/lti_form.html
 msgid "Press to Launch"
@@ -4079,7 +4080,7 @@ msgstr "Llywio taflenni"
 
 #: lms/templates/courseware/info.html
 msgid "Course Tools"
-msgstr ""
+msgstr "Rolau tîm y cwrs"
 
 #: lms/templates/courseware/info.html
 msgid "Course Handouts"

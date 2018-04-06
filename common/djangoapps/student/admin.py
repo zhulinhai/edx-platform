@@ -21,7 +21,8 @@ from student.models import (
     RegistrationCookieConfiguration,
     UserAttribute,
     UserProfile,
-    UserTestGroup
+    UserTestGroup,
+    LoginFailures
 )
 from student.roles import REGISTERED_ACCESS_ROLES
 from xmodule.modulestore.django import modulestore
@@ -220,12 +221,20 @@ class CourseEnrollmentAllowedAdmin(admin.ModelAdmin):
     class Meta(object):
         model = CourseEnrollmentAllowed
 
+class LoginFailuresAdmin(admin.ModelAdmin):
+    """ Admin interface for the LoginFailures model """
+    list_display = ('user', 'failure_count', 'lockout_until')
+    search_fields = ('user')
+    
+    class Meta(object):
+        model = LoginFailures
 
 admin.site.register(UserTestGroup)
 admin.site.register(Registration)
 admin.site.register(PendingNameChange)
 admin.site.register(DashboardConfiguration, ConfigurationModelAdmin)
 admin.site.register(RegistrationCookieConfiguration, ConfigurationModelAdmin)
+admin.site.register(LoginFailures, LoginFailuresAdmin)
 
 # We must first un-register the User model since it may also be registered by the auth app.
 try:
