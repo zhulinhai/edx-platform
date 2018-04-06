@@ -89,12 +89,6 @@ class TaleneticOAuth2(BaseOAuth2):
 
 
     def get_user_details(self, response):
-        try:
-            user = User.objects.get(email=response.get('emailaddress'))
-            if user.username:
-                response['username'] = user.username
-        except User.DoesNotExist:
-            pass
         response = self._fill_fields(response)
         return {'username': response.get('username'),
                 'email': response.get('emailaddress'),
@@ -129,6 +123,14 @@ class TaleneticOAuth2(BaseOAuth2):
         This will grab the user from the actual ran pipeline and
         add the incomming guid as a username field to the meta field on the user profile
         """
+
+        if kwargs.get('user') in None:
+            try:
+                user = User.objects.get(email=kwargs.get('response').get('emailaddress'))
+                kwargs['user'] = user
+            except User.DoesNotExist:
+                pass
+
         out = self.run_pipeline(pipeline, pipeline_index, *args, **kwargs)
         if not isinstance(out, dict):
             return out
