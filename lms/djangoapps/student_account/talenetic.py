@@ -90,7 +90,7 @@ class TaleneticOAuth2(BaseOAuth2):
 
     def get_user_details(self, response):
         try:
-            user = User.object.get(email=response.get('emailaddress')):
+            user = User.object.get(email=response.get('emailaddress'))
             if user.username:
                 response['username'] = user.username
         except User.DoesNotExist:
