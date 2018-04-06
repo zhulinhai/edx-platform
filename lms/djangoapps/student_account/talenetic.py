@@ -83,8 +83,18 @@ class TaleneticOAuth2(BaseOAuth2):
     def get_user_id(self, details, response):
         return details.get('email')
 
+    def user_data(self, access_token, *args, **kwargs):
+        """Loads user data from service. Implement in subclass"""
+        return self.get_user_details(self, kwargs.get('response'))
+
 
     def get_user_details(self, response):
+        try:
+            user = User.object.get(email=response.get('emailaddress')):
+            if user.username:
+                response['username'] = user.username
+        except User.DoesNotExist:
+            pass
         response = self._fill_fields(response)
         return {'username': response.get('username'),
                 'email': response.get('emailaddress'),
@@ -100,14 +110,6 @@ class TaleneticOAuth2(BaseOAuth2):
         
         return data
 
-
-    def user_data(self, access_token, *args, **kwargs):
-        """Loads user data from service. Implement in subclass"""
-        data = self._fill_fields(kwargs.get('response'))
-        return {'username': data.get('username'),
-                'email': data.get('emailaddress'),
-                'fullname': data.get('firstname'),
-                'first_name': data.get('firstname')}
 
     def _get_creds(self):
         client_id, client_secret = self.get_key_and_secret()
@@ -132,7 +134,7 @@ class TaleneticOAuth2(BaseOAuth2):
             return out
 
         user = out.get('user')
-        
+
         user_profile = user.profile
         new_meta = {'uid': self._get_uid()}
 
