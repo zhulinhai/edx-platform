@@ -85,7 +85,7 @@ class TaleneticOAuth2(BaseOAuth2):
 
     def user_data(self, access_token, *args, **kwargs):
         """Loads user data from service. Implement in subclass"""
-        return self.get_user_details(self, kwargs.get('response'))
+        return self.get_user_details(kwargs.get('response'))
 
 
     def get_user_details(self, response):
