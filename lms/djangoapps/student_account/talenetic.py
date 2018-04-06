@@ -124,7 +124,7 @@ class TaleneticOAuth2(BaseOAuth2):
         add the incomming guid as a username field to the meta field on the user profile
         """
 
-        if kwargs.get('user') in None:
+        if kwargs.get('user') is None:
             try:
                 user = User.objects.get(email=kwargs.get('response').get('emailaddress'))
                 kwargs['user'] = user
