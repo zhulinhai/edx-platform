@@ -25594,8 +25594,8 @@ msgstr " أو الخدمات الجامعة."
 msgid "With other visitors to the Site, to the extent that you submit comments, course work or other information or content (collectively, 'Postings') to a portion of the Site designed for public communications; and with other members of an "
 msgstr "مع زائرين آخرين للموقع، إلى مدى ما ترسله من تعليقات أو عمل خاص بدورة أو معلومات أخرى أو محتوى آخر (يشار إليها مجتمعة باسم المنشورات) إلى جزء من الموقع مصمم للاتصالات العامة، وكذلك مع أعضاء آخرين لفصل من الفصول "
 
-msgid "class of which you are a member, to the extent you submit Postings to a portion of the Site designed for viewing by those class members. We may provide your Postings to students who later enroll in the same classes as you, within the context of the forums, the courseware or otherwise. If we do re-post your Postings originally made to non-public portions of the Site, we will post them without your real name and e-mail (except with your express permission), but we may use your username without your consent."
-msgstr "تكون منتمي إليها، إلى ما ترسله من منشورات إلى جزء من الموقع مصمم للعرض من جانب أعضاء الفصل الدراسي. يجوز أن نوفر منشوراتك إلى الطلاب الذين ينضمون لاحقًا في نفس الفصول الدراسية التي انضممت إليها، في سياق المنتديات أو مواد الدورات أو خلاف ذلك. إن أعدنا نشر منشوراتك التي تم إرسالها في الأصل إلى أجزاء من الموقع غير مخصصة للنشر العام فسوف ننشرها بدون استخدام اسمك الحقيقي وعنوان بريدك الإلكتروني (إلا إن حصلنا على موافقة صريحة منك)، ولكن يجوز لنا استخدام اسم المستخدم الخاص بك بدون موافقتك."
+msgid " class of which you are a member, to the extent you submit Postings to a portion of the Site designed for viewing by those class members. We may provide your Postings to students who later enroll in the same classes as you, within the context of the forums, the courseware or otherwise. If we do re-post your Postings originally made to non-public portions of the Site, we will post them without your real name and e-mail (except with your express permission), but we may use your username without your consent."
+msgstr " تكون منتمي إليها، إلى ما ترسله من منشورات إلى جزء من الموقع مصمم للعرض من جانب أعضاء الفصل الدراسي. يجوز أن نوفر منشوراتك إلى الطلاب الذين ينضمون لاحقًا في نفس الفصول الدراسية التي انضممت إليها، في سياق المنتديات أو مواد الدورات أو خلاف ذلك. إن أعدنا نشر منشوراتك التي تم إرسالها في الأصل إلى أجزاء من الموقع غير مخصصة للنشر العام فسوف ننشرها بدون استخدام اسمك الحقيقي وعنوان بريدك الإلكتروني (إلا إن حصلنا على موافقة صريحة منك)، ولكن يجوز لنا استخدام اسم المستخدم الخاص بك بدون موافقتك."
 
 msgid "For purposes of scientific research, particularly, for example, in the areas of cognitive science and education. However, we will only share Personal Information about you for this purpose to the extent doing so complies with applicable law and is limited to the Personal Information required to fulfill the purposes stated at the time of collection."
 msgstr "لأغراض البحث العلمي، خاصة - على سبيل المثال - في مجالي العلوم المعرفية والتعليم. على أي حال، سوف نقوم فقط بمشاركة المعلومات الشخصية عنك لهذا الغرض إلى الحد الذي نمتثل فيه للقانون المطبق إبان قيامنا بذلك ويكون ذلك مقصورًا على المعلومات الشخصية المطلوبة لتحقيق الأغراض المحددة وقت الجمع."
@@ -25672,8 +25672,8 @@ msgstr "ال "
 msgid "Sites and the "
 msgstr "موقع و ال"
 
-msgid "Content may contain inaccuracies or typographical errors."
-msgstr "المحتوى على حالات تتسم بالأخطاء إملائية"
+msgid " Content may contain inaccuracies or typographical errors. "
+msgstr " المحتوى على حالات تتسم بالأخطاء إملائية "
 
 msgid " makes no representations about the accuracy, reliability, completeness, or timeliness of any "
 msgstr " ولا تقدم أي بيانات بشأن دقة أو موثوقية أو كمال أو المناسبة الزمنية لأي موقع من مواقع أو أي . "
@@ -25705,8 +25705,8 @@ msgstr "إن غايتنا هي أن نتيح للزائرين في الحاضر 
 msgid "The Site contains links to websites published by third parties, including other content providers as well as certain service providers, such as those who process payments on behalf of "
 msgstr "يحتوي الموقع على ارتباطات بمواقع إلكترونية تنشرها جهات خارجية ، بما في ذلك موفري المحتوى وموفري خدمات معينة، كالذين يعملون على معالجة المدفوعات "
 
-msgid "These other websites are not under our control, and you acknowledge and agree that we are not responsible for the collection and use of your information by such websites, unless we have otherwise indicated in this Policy. We encourage you to be aware when you are be redirected to a third party website and review the privacy policies of each website you visit and use."
-msgstr "وهذه المواقع الإلكترونية خارج نطاق سيطرتنا، وإنك تقر وتوافق على أننا لا نتحمل المسؤولية عن جمع واستخدام معلوماتك من جانب هذه المواقع الإلكترونية، ما لم نشير إلى خلاف ذلك في هذه السياسة. ونشجعك على توخي الحيطة والحذر عندما يُعاد توجيهك إلى موقع إلكتروني لجهة خارجية وأن تراجع سياسات الخصوصية لكل موقع إلكتروني تزوره أو تستخدمه."
+msgid " These other websites are not under our control, and you acknowledge and agree that we are not responsible for the collection and use of your information by such websites, unless we have otherwise indicated in this Policy. We encourage you to be aware when you are be redirected to a third party website and review the privacy policies of each website you visit and use."
+msgstr " وهذه المواقع الإلكترونية خارج نطاق سيطرتنا، وإنك تقر وتوافق على أننا لا نتحمل المسؤولية عن جمع واستخدام معلوماتك من جانب هذه المواقع الإلكترونية، ما لم نشير إلى خلاف ذلك في هذه السياسة. ونشجعك على توخي الحيطة والحذر عندما يُعاد توجيهك إلى موقع إلكتروني لجهة خارجية وأن تراجع سياسات الخصوصية لكل موقع إلكتروني تزوره أو تستخدمه."
 
 msgid " has a program designed to protect Personal Information in its possession or control. This is done through a variety of privacy and security policies, processes and procedures, including administrative, physical, and technical safeguards that reasonably and appropriately protect the confidentiality, integrity, and availability of the Personal Information that it creates, receives, maintains, or transmits. Nonetheless, no method of transmission over the Internet, or method of electronic storage, is 100% secure; and therefore, "
 msgstr "إننا نمتلك برنامجًا مصممًا لحماية المعلومات الشخصية التي في حوزتنا أو تحت سيطرتنا. ويتحقق ذلك من خلال مجموعة متنوعة من سياسات الخصوصية والأمان، والعمليات والإجراءات، والتي تشمل ضوابط إدارية ومادية وفنية من شأنها أن توفر حماية معقولة وملائمة لسرية المعلومات الشخصية ولسلامتها وتوافرها، التي نقوم بإنشائها أو استلامها أو صونها أو إرسالها. ورغم ذلك، ليس هناك طريقة إرسال عبر الإنترنت أو طريقة تخزين إلكتروني مؤمنة بالكامل 100%، "
