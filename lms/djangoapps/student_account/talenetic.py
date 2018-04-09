@@ -62,7 +62,10 @@ class TaleneticOAuth2(BaseOAuth2):
 
 
     def _get_uid(self):
-        return self.data['uid']
+        if 'uid' in self.data:
+            return self.data['uid']
+        else:
+            return None
 
 
     def auth_params(self, state=None):
@@ -91,6 +94,7 @@ class TaleneticOAuth2(BaseOAuth2):
 
     def get_user_details(self, response):
         response = self._fill_fields(response)
+        self._set_uid_to_profile(self._get_uid(), response.get('emailaddress'))
         return {'username': response.get('username'),
                 'email': response.get('emailaddress'),
                 'fullname': response.get('firstname'),
@@ -142,24 +146,28 @@ class TaleneticOAuth2(BaseOAuth2):
 
         user = out.get('user')
 
-        user_profile = user.profile
-        new_meta = {'uid': self._get_uid()}
-
-        if len(user_profile.meta) > 0:
-            previous_meta = json.loads(user_profile.meta)
-            mixed_dicts =\
-                (previous_meta.items() + new_meta.items())
-            new_meta =\
-                {key: value for (key, value) in mixed_dicts}
-
-        user_profile.meta = json.dumps(new_meta)
-        user_profile.save()
-
         if user:
             user.social_user = out.get('social')
             user.is_new = out.get('is_new')
 
         return user
+        
+        
+    def _set_uid_to_profile(self, uid, emailaddress):
+        try:
+            user = User.objects.get(email=emailaddress)
+            new_meta = {'uid': self._get_uid()}
+            if len(user_profile.meta) > 0:
+                previous_meta = json.loads(user_profile.meta)
+                mixed_dicts =\
+                    (previous_meta.items() + new_meta.items())
+                new_meta =\
+                    {key: value for (key, value) in mixed_dicts}
+
+            user_profile.meta = json.dumps(new_meta)
+            user_profile.save()
+        except Exception as e:
+            log.error("Could not save uid to user profile or something else: {}".format(e.message))
 
 
     def auth_url(self):
