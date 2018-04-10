@@ -51,6 +51,7 @@ class TaleneticOAuth2(BaseOAuth2):
         return self.do_auth(response['jwt_token'], response=response,
                             *args, **kwargs)
 
+
     def do_auth(self, jwt_token, *args, **kwargs):
         data = self.user_data(jwt_token, *args, **kwargs)
         response =  kwargs.get('response') or {}
@@ -194,14 +195,18 @@ class TaleneticOAuth2(BaseOAuth2):
         url = "{}?uid={}".format(self.REVOKE_TOKEN_URL, meta_data.get('uid'))
         return url
 
+
     def revoke_token_params(self, token, uid):
         return {}
+
 
     def revoke_token_headers(self, token, uid):
         return self._get_creds()
 
+
     def process_revoke_token_response(self, response):
         return response.status_code == 200
+
 
     def revoke_token(self, token, uid):
         if self.REVOKE_TOKEN_URL:
