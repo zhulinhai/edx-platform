@@ -103,7 +103,7 @@ class TaleneticOAuth2(BaseOAuth2):
 
 
     def _fill_fields(self, data):
-    # a little util to fill in missing data for later consumption
+        # a little util to fill in missing data for later consumption
         if data.get('firstname') is None:
             data['firstname'] = data.get('emailaddress').split('@')[0]
         if data.get('username') is None:
@@ -156,11 +156,11 @@ class TaleneticOAuth2(BaseOAuth2):
 
 
     def _set_uid_to_profile(self, uid, emailaddress):
-    """
-    This function calls for the existing user by emailaddress,
-    if the user is found we save the requested uid to the user profile
-    because we need it to logout.
-    """
+        """
+        This function calls for the existing user by emailaddress,
+        if the user is found we save the requested uid to the user profile
+        because we need it to logout.
+        """
         try:
             user = User.objects.get(email=emailaddress)
             new_meta = {'uid': self._get_uid()}
