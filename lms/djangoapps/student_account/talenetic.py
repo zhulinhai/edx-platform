@@ -103,7 +103,7 @@ class TaleneticOAuth2(BaseOAuth2):
 
 
     def _fill_fields(self, data):
-    # a little util to fill in missing data for later consumption
+        # a little util to fill in missing data for later consumption
         if data.get('firstname') is None:
             data['firstname'] = data.get('emailaddress').split('@')[0]
         if data.get('username') is None:
