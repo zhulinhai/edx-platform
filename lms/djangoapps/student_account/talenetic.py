@@ -21,14 +21,14 @@ class TaleneticOAuth2(BaseOAuth2):
     REDIRECT_STATE = False
     ID_KEY = 'emailaddress'
     STATE_PARAMETER = False
-    AUTHORIZATION_URL = settings_dict.get('AUTH_URL') # https://staging-alj.talenetic.com/jobseekers?clientId={clientid}&secretkey={secretkey}&urlredirect={redirecturl}
-    ACCESS_TOKEN_URL = settings_dict.get('ACCESS_TOKEN_URL') # https://staging-alj.talenetic.com/api/sso/Getjwttoken?uid=
+    AUTHORIZATION_URL = settings_dict.get('AUTH_URL')
+    ACCESS_TOKEN_URL = settings_dict.get('ACCESS_TOKEN_URL')
     ACCESS_TOKEN_METHOD = 'GET'
-    REFRESH_TOKEN_URL = settings_dict.get('REFRESH_TOKEN_URL') # https://staging-alj.talenetic.com/api/sso/RefreshjwtToken?uid=NzIzMzUyOWYtZDkyYi00ZGUwLThhODMtNjBiOTk0NzZlMjVj
+    REFRESH_TOKEN_URL = settings_dict.get('REFRESH_TOKEN_URL')
     REFRESH_TOKEN_METHOD = 'POST'
     RESPONSE_TYPE = 'code jwt_token'
     REDIRECT_IS_HTTPS = False
-    REVOKE_TOKEN_URL = settings_dict.get('LOGOUT_URL') # 'https://staging-alj.talenetic.com/api/logout'
+    REVOKE_TOKEN_URL = settings_dict.get('LOGOUT_URL')
     REVOKE_TOKEN_METHOD = 'POST'
 
     def get_scope_argument(self):
