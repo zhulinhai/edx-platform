@@ -92,7 +92,6 @@ from openedx.core.djangoapps.external_auth.login_and_register import (
 )
 
 from bulk_email.models import Optout
-from cme_registration.views import cme_register_user, cme_create_account
 
 import track.views
 
@@ -137,6 +136,8 @@ from openedx.core.djangoapps.theming import helpers as theming_helpers
 from openedx.core.djangoapps.user_api.preferences import api as preferences_api
 from openedx.core.djangoapps.catalog.utils import get_programs_data
 
+from openedx.stanford.common.djangoapps.student.views import notify_enrollment_by_email
+
 
 log = logging.getLogger("edx.student")
 AUDIT_LOG = logging.getLogger("audit")
@@ -168,19 +169,6 @@ def csrf_token(context):
         return ''
     return (u'<div style="display:none"><input type="hidden"'
             ' name="csrfmiddlewaretoken" value="%s" /></div>' % (token))
-
-
-def superuser_login_as(request, username):
-    if not request.user.is_superuser:
-        return HttpResponse('Permission denied')
-    try:
-        u1 = User.objects.get(username=username)
-        u1.backend = 'django.contrib.auth.backends.ModelBackend'
-    except User.DoesNotExist:
-        return HttpResponse('User not found')
-    logout(request)
-    login(request, u1)
-    return HttpResponse('You are now logged in as ' + username)
 
 
 # NOTE: This view is not linked to directly--it is called from
@@ -495,8 +483,6 @@ def signin_user(request):
 @ensure_csrf_cookie
 def register_user(request, extra_context=None):
     """Deprecated. To be replaced by :class:`student_account.views.login_and_registration_form`."""
-    if settings.FEATURES.get('USE_CME_REGISTRATION'):
-        return cme_register_user(request, extra_context=extra_context)
 
     # Determine the URL to redirect to following login:
     redirect_to = get_next_url_for_login_page(request)
@@ -1209,8 +1195,6 @@ def change_enrollment(request, check_access=True):
                 log.warning("User {0} tried to enroll in non-existent course {1}"
                             .format(user.username, course_id))
                 return HttpResponseBadRequest(_("Course id is invalid"))
-
-            # notify the user of the enrollment via email
             enrollment_email_result = json.loads(notify_enrollment_by_email(course, user, request).content)
             if ('is_success' in enrollment_email_result and not enrollment_email_result['is_success']):
                 return HttpResponseBadRequest(_(enrollment_email_result['error']))
@@ -1239,57 +1223,6 @@ def change_enrollment(request, check_access=True):
         return HttpResponse()
     else:
         return HttpResponseBadRequest(_("Enrollment action is invalid"))
-
-
-def notify_enrollment_by_email(course, user, request):
-    """
-    Updates the user about the course enrollment by email.
-
-    If the Course has already started, use post_enrollment_email
-    If the Course has not yet started, use pre_enrollment_email
-    """
-
-    if (not (settings.FEATURES.get('AUTOMATIC_AUTH_FOR_TESTING')) and course.enable_enrollment_email):
-        from_address = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
-
-        try:
-            # Check if the course has already started and set subject & message accordingly
-            if course.has_started():
-                subject = get_course_about_section(request, course, 'post_enrollment_email_subject')
-                message = get_course_about_section(request, course, 'post_enrollment_email')
-            else:
-                subject = get_course_about_section(request, course, 'pre_enrollment_email_subject')
-                message = get_course_about_section(request, course, 'pre_enrollment_email')
-
-            subject = ''.join(subject.splitlines())
-            context = {
-                'username': user.username,
-                'user_id': user.id,
-                'name': user.profile.name,
-                'course_title': course.display_name,
-                'course_id': course.id,
-                'course_start_date': get_default_time_display(course.start),
-                'course_end_date': get_default_time_display(course.end),
-            }
-            message = substitute_keywords_with_data(message, context)
-            user.email_user(subject, message, from_address)
-
-        except Exception:
-            log.error(
-                "unable to send course enrollment verification email to user from '{from_address}'".format(
-                    from_address=from_address,
-                ),
-                exc_info=True,
-            )
-            return JsonResponse({
-                'is_success': False,
-                'error': _('Could not send enrollment email to the user'),
-            })
-
-        return JsonResponse({"is_success": True, "subject": subject, "message": message})
-
-    else:
-        return JsonResponse({"email_did_fire": False})
 
 
 def _check_can_enroll_in_course(user, course_key, access_type="enroll"):
@@ -2127,8 +2060,6 @@ def create_account(request, post_override=None):
     Used by form in signup_modal.html, which is included into navigation.html
     """
     warnings.warn("Please use RegistrationView instead.", DeprecationWarning)
-    if settings.FEATURES.get('USE_CME_REGISTRATION'):
-        return cme_create_account(request, post_override=post_override)
 
     try:
         user = create_account_with_params(request, post_override or request.POST)

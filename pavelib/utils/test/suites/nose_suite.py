@@ -183,6 +183,7 @@ class SystemTestSuite(NoseTestSuite):
             " openedx/tests/*"
             " openedx/core/lib/*"
             " openedx/stanford/{system}/djangoapps/*"
+            " openedx/stanford/common/djangoapps/*"
             " openedx/stanford/djangoapps/*"
         )
 

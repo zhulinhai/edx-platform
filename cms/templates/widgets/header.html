@@ -225,22 +225,7 @@
         <ol>
           <li class="nav-item nav-account-help">
             <h3 class="title"><span class="label" title="${_('Contextual Online Help')}" target="_blank">${_("Help")}</span></h3>
-
-            <div class="wrapper wrapper-nav-sub">
-              <div class="nav-sub">
-                <ul>
-                  <li class="nav-item nav-help-documentation">
-                    <a href="https://edx.readthedocs.org/projects/edx-partner-course-staff/en/latest/index.html">${_("Studio Documentation")}</a>
-                  </li>
-                  <li class="nav-item nav-help-helpcenter">
-                    <a href="https://stanfordonline.zendesk.com/hc" target="_blank" rel="external">${_("Help Center")}</a>
-                  </li>
-                  <li class="nav-item nav-help-feedback">
-                    <a href="mailto:courseops@stanfordonline.zendesk.com" title="${_("Share your feedback with us.")}">${_("Contact Us")}</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <%include file="header_nav_help_post.html" />
           </li>
           <li class="nav-item nav-account-user">
             <%include file="user_dropdown.html" args="online_help_token=online_help_token" />

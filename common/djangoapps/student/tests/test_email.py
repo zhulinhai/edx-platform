@@ -3,7 +3,6 @@ import json
 import unittest
 
 from student.tests.factories import UserFactory, RegistrationFactory, PendingEmailChangeFactory
-from student.views import notify_enrollment_by_email
 from student.views import (
     reactivation_email_for_user, do_email_change_request, confirm_email_change,
     validate_new_email, SETTING_CHANGE_INITIATED
@@ -20,8 +19,6 @@ from django.http import HttpResponse
 from django.conf import settings
 from edxmako.shortcuts import render_to_string
 from util.request import safe_get_host
-from xmodule.modulestore.tests.factories import CourseFactory
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from util.testing import EventTestMixin
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.theming.tests.test_util import with_comprehensive_theme
@@ -69,40 +66,6 @@ class EmailTestMixin(object):
         self.addCleanup(settings.ALLOWED_HOSTS.pop)
 
 
-class EnrollmentEmailTests(ModuleStoreTestCase):
-    """ Test senging automated emails to users upon course enrollment. """
-    def setUp(self):
-        # Test Contstants
-        super(EnrollmentEmailTests, self).setUp()
-        COURSE_SLUG = "100"
-        COURSE_NAME = "test_course"
-        COURSE_ORG = "EDX"
-
-        self.user = UserFactory(username="tester", email="tester@gmail.com", password="test")
-        self.course = CourseFactory(org=COURSE_ORG, display_name=COURSE_NAME, number=COURSE_SLUG)
-        self.assertIsNotNone(self.course)
-        self.request = RequestFactory().post('random_url')
-        self.request.user = self.user
-
-    def send_enrollment_email(self):
-        """ Send enrollment email to the user and return the Json response data. """
-        return json.loads(notify_enrollment_by_email(self.course, self.user, self.request).content)
-
-    def test_disabled_email_case(self):
-        """ Make sure emails don't fire when enable_enrollment_email setting is disabled. """
-        self.course.enable_enrollment_email = False
-        email_result = self.send_enrollment_email()
-        self.assertIn('email_did_fire', email_result)
-        self.assertFalse(email_result['email_did_fire'])
-
-    def test_custom_enrollment_email_sent(self):
-        """ Test sending of enrollment emails when enable_default_enrollment_email setting is disabled. """
-        self.course.enable_enrollment_email = True
-        email_result = self.send_enrollment_email()
-        self.assertNotIn('email_did_fire', email_result)
-        self.assertIn('is_success', email_result)
-
-
 @unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
 class ActivationEmailTests(TestCase):
     """Test sending of the activation email. """
@@ -114,7 +77,10 @@ class ActivationEmailTests(TestCase):
     OPENEDX_FRAGMENTS = [
         u"Thank you for creating an account with {platform}!".format(platform=settings.PLATFORM_NAME),
         "http://edx.org/activate/",
-        "For more information, check our Help Center here: ",
+        (
+            "Check the help section of the "
+            u"{platform} website".format(platform=settings.PLATFORM_NAME)
+        )
     ]
 
     # Text fragments we expect in the body of an email

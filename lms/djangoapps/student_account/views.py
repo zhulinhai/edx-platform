@@ -74,6 +74,23 @@ def login_and_registration_form(request, initial_mode="login"):
     if UserProfile.has_registered(request.user):
         return redirect(redirect_to)
 
+    if third_party_auth.is_enabled():
+        force_provider_id = settings.FORCED_TPA_PROVIDER_ID
+        if force_provider_id:
+            force_provider = third_party_auth.provider.Registry.get(
+                provider_id=force_provider_id,
+            )
+            if force_provider and force_provider.display_for_login:
+                running_pipeline = third_party_auth.pipeline.get(request)
+                if not running_pipeline:
+                    if initial_mode in [pipeline.AUTH_ENTRY_LOGIN, pipeline.AUTH_ENTRY_REGISTER]:
+                        tpa_url = pipeline.get_login_url(
+                            force_provider_id,
+                            initial_mode,
+                            redirect_url=redirect_to,
+                        )
+                        return redirect(tpa_url)
+
     # Retrieve the form descriptions from the user API
     form_descriptions = _get_form_descriptions(request)
 
@@ -109,7 +126,6 @@ def login_and_registration_form(request, initial_mode="login"):
         return ext_auth_response
 
     # Otherwise, render the combined login/registration page
-
     context = {
         'data': {
             'login_redirect_url': redirect_to,
@@ -466,6 +482,7 @@ def account_settings_context(request):
                 'options': TIME_ZONE_CHOICES,
             }
         },
+        'is_shib_auth': False,
         'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
         'user_accounts_api_url': reverse("accounts_api", kwargs={'username': user.username}),
         'user_preferences_api_url': reverse('preferences_api', kwargs={'username': user.username}),
@@ -503,7 +520,5 @@ def account_settings_context(request):
 
         if any(state.provider.provider_id == 'saml-sunet' for state in auth_states if state.has_account):
             context['is_shib_auth'] = True
-        else:
-            context['is_shib_auth'] = False
 
     return context

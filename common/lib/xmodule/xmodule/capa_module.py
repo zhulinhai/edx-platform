@@ -17,10 +17,13 @@ from xmodule.raw_module import RawDescriptor
 from xmodule.exceptions import NotFoundError, ProcessingError
 from xmodule.exceptions import TimeExpiredError
 
+from openedx.stanford.common.djangoapps.timed_problem.models import TimedCapaFields
+from openedx.stanford.common.djangoapps.timed_problem.models import TimedCapaMixin
+
 log = logging.getLogger("edx.courseware")
 
 
-class CapaModule(CapaMixin, XModule):
+class CapaModule(TimedCapaMixin, CapaMixin, XModule):
     """
     An XModule implementing LonCapa format problems, implemented by way of
     capa.capa_problem.LoncapaProblem
@@ -155,7 +158,7 @@ class CapaModule(CapaMixin, XModule):
         return self.display_name
 
 
-class CapaDescriptor(CapaFields, RawDescriptor):
+class CapaDescriptor(TimedCapaFields, CapaFields, RawDescriptor):
     """
     Module implementing problems in the LON-CAPA format,
     as implemented by capa.capa_problem

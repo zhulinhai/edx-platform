@@ -25,9 +25,6 @@ from certificates.models import (
     ExampleCertificate,
 )
 
-use_cme = settings.FEATURES.get('USE_CME_REGISTRATION', False)
-if use_cme:
-    from cme_registration.models import CmeUserProfile
 if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
     from openedx.stanford.djangoapps.register_cme.models import ExtraInfo
 
@@ -54,10 +51,6 @@ def request_certificate(request):
             course = modulestore().get_course(course_key, depth=2)
 
             designation = None
-            if use_cme:
-                designations = CmeUserProfile.objects.filter(user=student).values('professional_designation')
-                if len(designations):
-                    designation = designations[0]['professional_designation']
             if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
                 designation = ExtraInfo.lookup_professional_designation(student)
 

@@ -34,14 +34,10 @@ from lms.djangoapps.instructor_task.tasks_helper import (
     rescore_problem_module_state,
     reset_attempts_module_state,
     delete_problem_module_state,
-    push_student_responses_to_s3,
-    push_ora2_responses_to_s3,
-    push_course_forums_data_to_s3,
     upload_problem_responses_csv,
     upload_grades_csv,
     upload_problem_grade_report,
     upload_students_csv,
-    push_student_forums_data_to_s3,
     cohort_students_and_upload,
     upload_enrollment_report,
     upload_may_enroll_csv,
@@ -131,7 +127,7 @@ def delete_problem_state(entry_id, xmodule_instance_args):
     return run_main_task(entry_id, visit_fcn, action_name)
 
 
-@task(base=BaseInstructorTask, routing_key=settings.BULK_EMAIL_ROUTING_KEY)  # pylint: disable=not-callable
+@task(base=BaseInstructorTask)  # pylint: disable=not-callable
 def send_bulk_course_email(entry_id, _xmodule_instance_args):
     """Sends emails to recipients enrolled in a course.
 
@@ -206,46 +202,6 @@ def calculate_students_features_csv(entry_id, xmodule_instance_args):
     # Translators: This is a past-tense verb that is inserted into task progress messages as {action}.
     action_name = ugettext_noop('generated')
     task_fn = partial(upload_students_csv, xmodule_instance_args)
-    return run_main_task(entry_id, task_fn, action_name)
-
-
-@task(base=BaseInstructorTask, routing_key=settings.STUDENT_RESPONSES_DOWNLOAD_ROUTING_KEY)
-def get_student_responses(entry_id, xmodule_instance_args):
-    """
-    Generate a CSV file of student responses to all course problems and store in S3.
-    """
-    action_name = ugettext_noop('generated')
-    task_fn = partial(push_student_responses_to_s3, xmodule_instance_args)
-    return run_main_task(entry_id, task_fn, action_name)
-
-
-@task(base=BaseInstructorTask, routing_key=settings.ORA2_RESPONSES_DOWNLOAD_ROUTING_KEY)
-def get_ora2_responses(entry_id, xmodule_instance_args):
-    """
-    Generate a CSV of ora2 responses and push it to S3.
-    """
-    action_name = ugettext_noop('generated')
-    task_fn = partial(push_ora2_responses_to_s3, xmodule_instance_args)
-    return run_main_task(entry_id, task_fn, action_name)
-
-
-@task(base=BaseInstructorTask, routing_key=settings.COURSE_FORUMS_DOWNLOAD_ROUTING_KEY)
-def get_course_forums_usage(entry_id, xmodule_instance_args):
-    """
-    Generate a CSV of course forums usage and push it to S3.
-    """
-    action_name = ugettext_noop('generated')
-    task_fn = partial(push_course_forums_data_to_s3, xmodule_instance_args)
-    return run_main_task(entry_id, task_fn, action_name)
-
-
-@task(base=BaseInstructorTask, routing_key=settings.STUDENT_FORUMS_DOWNLOAD_ROUTING_KEY)
-def get_student_forums_usage(entry_id, xmodule_instance_args):
-    """
-    Generate a CSV of student forums usage and push it to S3.
-    """
-    action_name = ugettext_noop('generated')
-    task_fn = partial(push_student_forums_data_to_s3, xmodule_instance_args)
     return run_main_task(entry_id, task_fn, action_name)
 
 

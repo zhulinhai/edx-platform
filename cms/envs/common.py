@@ -192,7 +192,7 @@ FEATURES = {
     'ENABLE_LIBRARY_INDEX': False,
 
     # Enable course reruns, which will always use the split modulestore
-    'ALLOW_COURSE_RERUNS': False,
+    'ALLOW_COURSE_RERUNS': True,
 
     # Certificates Web/HTML Views
     'CERTIFICATES_HTML_VIEW': False,
@@ -210,7 +210,7 @@ FEATURES = {
     'ENABLE_CREDIT_ELIGIBILITY': ENABLE_CREDIT_ELIGIBILITY,
 
     # Can the visibility of the discussion tab be configured on a per-course basis?
-    'ALLOW_HIDING_DISCUSSION_TAB': True,
+    'ALLOW_HIDING_DISCUSSION_TAB': False,
 
     # Special Exams, aka Timed and Proctored Exams
     'ENABLE_SPECIAL_EXAMS': False,

@@ -23,10 +23,6 @@ from lms.djangoapps.instructor_task.tasks import (
     calculate_grades_csv,
     calculate_problem_grade_report,
     calculate_students_features_csv,
-    get_student_responses,
-    get_student_forums_usage,
-    get_ora2_responses,
-    get_course_forums_usage,
     cohort_students,
     enrollment_report_features_csv,
     calculate_may_enroll_csv,
@@ -64,7 +60,6 @@ def get_running_instructor_tasks(course_id):
     Used to generate a list of tasks to display on the instructor dashboard.
     """
     instructor_tasks = InstructorTask.objects.filter(course_id=course_id)
-
     # exclude states that are "ready" (i.e. not "running", e.g. failure, success, revoked):
     for state in READY_STATES:
         instructor_tasks = instructor_tasks.exclude(task_state=state)
@@ -332,41 +327,6 @@ def submit_calculate_grades_csv(request, course_key):
     return submit_task(request, task_type, task_class, course_key, task_input, task_key)
 
 
-def submit_get_student_responses(request, course_key):
-    """
-    AlreadyRunningError is raised if the student responses report is already being generated.
-    """
-    task_type = 'student_responses'
-    task_class = get_student_responses
-    task_input = {}
-    task_key = ""
-
-    return submit_task(request, task_type, task_class, course_key, task_input, task_key)
-
-
-def submit_ora2_request_task(request, course_key, include_email):
-    """
-    AlreadyRunningError is raised if an ora2 report is already being generated.
-    """
-    task_type = 'ora2_responses'
-    task_class = get_ora2_responses
-    task_input = {'include_email': include_email}
-    task_key = ''
-    return submit_task(request, task_type, task_class, course_key, task_input, task_key)
-
-
-def submit_course_forums_usage_task(request, course_key):
-    """
-    AlreadyRunningError is raised if an course forums usage report is already being generated.
-    """
-    task_type = 'course_forums_usage'
-    task_class = get_course_forums_usage
-    task_input = {}
-    task_key = ''
-
-    return submit_task(request, task_type, task_class, course_key, task_input, task_key)
-
-
 def submit_problem_grade_report(request, course_key):
     """
     Submits a task to generate a CSV grade report containing problem
@@ -389,18 +349,6 @@ def submit_calculate_students_features_csv(request, course_key, features):
     task_class = calculate_students_features_csv
     task_input = features
     task_key = ""
-
-    return submit_task(request, task_type, task_class, course_key, task_input, task_key)
-
-
-def submit_student_forums_usage_task(request, course_key):
-    """
-    AlreadyRunningError is raised if a student forums usage report is already being generated.
-    """
-    task_type = 'student_forums'
-    task_class = get_student_forums_usage
-    task_input = {}
-    task_key = ''
 
     return submit_task(request, task_type, task_class, course_key, task_input, task_key)
 

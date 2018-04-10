@@ -19,8 +19,6 @@ from courseware.student_field_overrides import (
 from xmodule.fields import Date
 from opaque_keys.edx.keys import UsageKey
 
-import csv
-
 DATE_FIELD = Date()
 
 
@@ -248,39 +246,3 @@ def add_block_ids(payload):
         for ele in payload['data']:
             if 'module_id' in ele:
                 ele['block_id'] = UsageKey.from_string(ele['module_id']).block_id
-
-
-# Stanford CSV parser
-def generate_course_forums_d3(url_handle):
-    """
-    Grab the csv file at url_handle and parse it. Return a new-line joined csv string to be graphed
-    """
-    reader = csv.reader(url_handle)
-    reader.next()
-    previous_date = -1
-    previous = None
-    rows = [['Date', 'New Threads', 'Responses', 'Comments']]
-    for row in reader:
-        # this is for backward compatibility because there is a variable number of columns. we only want the first 3
-        date, comment_type, number = row[0:3]
-        if date != previous_date:
-            if previous:
-                rows.append([previous_date] + previous)
-            previous = ['0', '0', '0']
-            previous_date = date
-        if comment_type == 'CommentThread':
-            previous[0] = number
-        elif comment_type == 'Response':
-            previous[1] = number
-        elif comment_type == 'Comment':
-            previous[2] = number
-    # return nothing if there's no data
-    if not previous:
-        return None
-    else:
-        # get the last row's stuff
-        rows.append([previous_date] + previous)
-        # make the string to process in d3
-        csv_string = '\n'.join([','.join(row) for row in rows])
-        return csv_string
-# / Stanford CSV parser

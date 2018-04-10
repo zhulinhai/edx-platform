@@ -11,8 +11,6 @@ from datetime import datetime
 from itertools import chain
 from time import time
 
-import urllib
-
 import dogstats_wrapper as dog_stats_api
 import re
 import unicodecsv
@@ -47,9 +45,6 @@ from lms.djangoapps.grades.new.course_grade import CourseGradeFactory
 from courseware.model_data import DjangoKeyValueStore, FieldDataCache
 from courseware.models import StudentModule
 from courseware.module_render import get_module_for_descriptor_internal
-
-from instructor_analytics.basic import student_response_rows
-
 from edxmako.shortcuts import render_to_string
 from instructor_analytics.basic import (
     enrolled_students_features,
@@ -69,7 +64,6 @@ from openedx.core.djangoapps.course_groups.cohorts import get_cohort
 from openedx.core.djangoapps.course_groups.models import CourseUserGroup
 from opaque_keys.edx.keys import UsageKey
 from openedx.core.djangoapps.course_groups.cohorts import add_user_to_cohort, is_course_cohorted
-from instructor.utils import collect_anonymous_ora2_data, collect_email_ora2_data, collect_course_forums_data, collect_student_forums_data
 from student.models import CourseEnrollment, CourseAccessRole
 from survey.models import SurveyAnswer
 from track.event_transaction_utils import set_event_transaction_type, create_new_event_transaction_id
@@ -880,133 +874,6 @@ def upload_grades_csv(_xmodule_instance_args, _entry_id, course_id, _task_input,
     return task_progress.update_task_state(extra_meta=current_step)
 
 
-# Stanford Student Submission Report Fork
-def push_student_responses_to_s3(_xmodule_instance_args, _entry_id, course_id, _task_input, action_name):
-    """
-    For a given `course_id`, generate a responses CSV file for students that
-    have submitted problem responses, and store using a `ReportStore`. Once
-    created, the files can be accessed by instantiating another `ReportStore` (via
-    `ReportStore.from_config()`) and calling `link_for()` on it. Writes are
-    buffered, so we'll never write part of a CSV file to S3 -- i.e. any files
-    that are visible in ReportStore will be complete ones.
-    """
-    start_time = datetime.now(UTC)
-
-    try:
-        course = get_course_by_id(course_id)
-    except ValueError as e:
-        TASK_LOG.error(e.message)
-        return "failed"
-
-    rows = student_response_rows(course)
-
-    # Generate parts of the file name
-    timestamp_str = start_time.strftime("%Y-%m-%d-%H%M")
-    course_id_prefix = course_filename_prefix_generator(course_id)
-
-    # Perform the actual upload
-    report_store = ReportStore.from_config(config_name='GRADES_DOWNLOAD')
-    report_store.store_rows(
-        course_id,
-        u"{course_id_prefix}_responses_report_{timestamp_str}.csv".format(
-            course_id_prefix=course_id_prefix,
-            timestamp_str=timestamp_str,
-        ),
-        rows
-    )
-
-    return "succeeded"
-
-
-def push_course_forums_data_to_s3(_xmodule_instance_args, _entry_id, course_id, _task_input, action_name):
-    """
-    Collect course forums usage data and upload them to S3 as a CSV
-    """
-    return _push_csv_responses_to_s3(collect_course_forums_data, u'course_forums_usage', course_id, action_name)
-
-
-def push_student_forums_data_to_s3(_xmodule_instance_args, _entry_id, course_id, _task_input, action_name):
-    """
-    Generate student forums report and upload it to s3 as a CSV
-    """
-    return _push_csv_responses_to_s3(collect_student_forums_data, u'student_forums', course_id, action_name)
-
-
-def _push_csv_responses_to_s3(csv_fn, filename, course_id, action_name):
-    """
-    Collect responses and upload them to S3 as a CSV
-    """
-
-    start_time = datetime.now(UTC)
-    num_attempted = 1
-    num_succeeded = 0
-    num_failed = 0
-    num_total = 1
-    curr_step = "Collecting responses"
-
-    def update_task_progress():
-        """Return a dict containing info about current task"""
-        current_time = datetime.now(UTC)
-        progress = {
-            'action_name': action_name,
-            'attempted': num_attempted,
-            'succeeded': num_succeeded,
-            'failed': num_failed,
-            'total': num_total,
-            'duration_ms': int((current_time - start_time).total_seconds() * 1000),
-            'step': curr_step,
-        }
-        _get_current_task().update_state(state=PROGRESS, meta=progress)
-
-        return progress
-
-    update_task_progress()
-
-    try:
-        header, datarows = csv_fn(course_id)
-        rows = [header] + [row for row in datarows]
-    # Update progress to failed regardless of error type
-    # pylint: disable=bare-except
-    except:
-        num_failed = 1
-        update_task_progress()
-
-        return UPDATE_STATUS_FAILED
-
-    timestamp_str = start_time.strftime('%Y-%m-%d-%H%M')
-    course_id_string = urllib.quote(course_id.to_deprecated_string().replace('/', '_'))
-
-    curr_step = "Uploading CSV"
-    update_task_progress()
-    upload_csv_to_report_store(
-        rows,
-        filename,
-        course_id,
-        start_time,
-    )
-
-    num_succeeded = 1
-    curr_step = "Task completed successfully"
-    update_task_progress()
-
-    return UPDATE_STATUS_SUCCEEDED
-
-
-def push_ora2_responses_to_s3(_xmodule_instance_args, _entry_id, course_id, _task_input, action_name):
-    """
-    Collect ora2 responses and upload them to S3 as a CSV, without email addresses.  Pass is_anonymous = True
-    """
-    # push_ora2_responses_to_s3_base(_xmodule_instance_args, u'ORA2_responses_anonymous', _entry_id, course_id, _task_input, action_name, True)
-    include_email = _task_input['include_email']
-    if include_email == 'True':
-        filename = u'ORA2_responses_including_email'
-        return _push_csv_responses_to_s3(collect_email_ora2_data, filename, course_id, action_name)
-    else:
-        filename = u'ORA2_responses_anonymous'
-        return _push_csv_responses_to_s3(collect_anonymous_ora2_data, filename, course_id, action_name)
-# / Stanford Student Submission Report Fork
-
-
 def _graded_assignments(course_key):
     """
     Returns an OrderedDict that maps an assignment type to a dict of subsection-headers and average-header.
@@ -1064,38 +931,6 @@ def _graded_scorable_blocks_to_header(course_key):
     return scorable_blocks_map
 
 
-def parse_student_data(student_data):
-    """
-    Parses student data to output a more easily-readable version of the 'state', which includes last submission time,
-    number of attempts and the students' answers for a specific problem. We have 2 cases:
-    1) for students with field 'student_answers', we output all the fields as they are (maintaining JSON format if
-        applicable
-    2) for students with field 'student_answer' (note singular), we only output columns for student username and that
-        answer
-
-    :param student_data: dict with 2 keys: 'username' and state'. The value of 'state' is a string version of a dict
-
-    :return: 2-d array, where a row is the username and state data for a student. First row is the headers. Only
-        includes students that have submitted an answer to the problem
-    """
-    header = ['username', 'state']
-    rows = []
-
-    for student in student_data:
-        state = student['state']
-        row = [student['username']]
-        try:
-            student_data_dict = json.loads(state)
-        except ValueError:
-            row_field = state
-        else:
-            row_field = student_data_dict.get('student_answer', state)
-        row.append(row_field)
-        rows.append(row)
-
-    return header, rows
-
-
 def upload_problem_responses_csv(_xmodule_instance_args, _entry_id, course_id, task_input, action_name):
     """
     For a given `course_id`, generate a CSV file containing
@@ -1111,6 +946,7 @@ def upload_problem_responses_csv(_xmodule_instance_args, _entry_id, course_id, t
     # Compute result table and format it
     problem_location = task_input.get('problem_location')
     student_data = list_problem_responses(course_id, problem_location)
+    from openedx.stanford.lms.djangoapps.instructor.views.tools import parse_student_data
     header, rows = parse_student_data(student_data)
 
     task_progress.attempted = task_progress.succeeded = len(rows)

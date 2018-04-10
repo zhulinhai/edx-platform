@@ -3,7 +3,6 @@ import logging
 import re
 
 from xblock.fields import JSONField
-from xblock.fields import Integer
 import datetime
 import dateutil.parser
 
@@ -254,25 +253,3 @@ class RelativeTime(JSONField):
             return value
 
         return self.from_json(value)
-
-
-class WarningFieldSingleValueMixin(object):
-    """
-    Wraps around the actual value of another xmodule.field.Field.
-    If the value of this field is set on the front-end, a warning
-    from the backend is shown
-    """
-    def __init__(self, warning=None, warning_condition=None, **kwargs):
-        super(WarningFieldSingleValueMixin, self).__init__(**kwargs)
-        self._values = {
-            "warning": warning,
-        }
-
-
-class IntegerWithWarningField(WarningFieldSingleValueMixin, Integer):
-    """
-    Integer with a warning field built-in. The warning is triggered
-    when the field name is specified under a certain condition
-    """
-    def __init__(self, **kwargs):
-        super(IntegerWithWarningField, self).__init__(**kwargs)

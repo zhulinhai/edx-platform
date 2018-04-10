@@ -1,3 +1,5 @@
+from glob import glob
+
 from cms.envs.common import *
 from openedx.stanford.lms.envs.common import (
     COURSE_MODE_DEFAULTS,
@@ -5,6 +7,8 @@ from openedx.stanford.lms.envs.common import (
     EXTRA_MIMETYPES,
     INSTRUCTOR_QUERY_PROBLEM_TYPES,
 )
+
+STANFORD_ROOT = REPO_ROOT / 'openedx/stanford'
 
 COPYRIGHT_EMAIL = 'copyright@example.com'
 COURSE_UTILITIES = [
@@ -36,6 +40,8 @@ COURSE_UTILITIES = [
     }
 ]
 FEATURES.update({
+    'ALLOW_COURSE_RERUNS': False,
+    'ALLOW_HIDING_DISCUSSION_TAB': True,
     # Display option to send email confirmation of course enrollment
     'ENABLE_ENROLLMENT_EMAIL': False,
 
@@ -46,11 +52,19 @@ INSTALLED_APPS += (
     # Added here to allow translations
     'freetextresponse',
 )
+MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
+MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
+MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'cms/djangoapps/*/templates')
 MIDDLEWARE_CLASSES += (
-    # Log out sneakpeek users
-    'sneakpeek.middleware.SneakPeekLogoutMiddleware',
+    'openedx.stanford.djangoapps.sneakpeek.middleware.SneakPeekLogoutMiddleware',
 )
 SHIB_ONLY_SITE = False
 SHIB_REDIRECT_DOMAIN_WHITELIST = {}
 SPLIT_STUDIO_HOME = False
+STATICFILES_DIRS += glob(STANFORD_ROOT / 'djangoapps/*/static')
+STATICFILES_DIRS += glob(STANFORD_ROOT / 'common/djangoapps/*/static')
+STATICFILES_DIRS += glob(STANFORD_ROOT / 'cms/djangoapps/*/static')
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'cms/djangoapps/*/templates')
 XBLOCKS_ALWAYS_IN_STUDIO = []
