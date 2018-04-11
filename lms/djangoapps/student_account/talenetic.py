@@ -164,7 +164,7 @@ class TaleneticOAuth2(BaseOAuth2):
         try:
             user = User.objects.get(email=emailaddress)
             user_profile = user.profile
-            new_meta = {'uid': uid}
+            new_meta = {'talenetic-uid': uid}
             if len(user_profile.meta) > 0:
                 previous_meta = json.loads(user_profile.meta)
 
@@ -194,7 +194,7 @@ class TaleneticOAuth2(BaseOAuth2):
         social_user = social_django.models.DjangoStorage.user.get_social_auth(provider=self.name, uid=uid)
         profile = social_user.user.profile
         meta_data = json.loads(profile.meta)
-        url = "{}?uid={}".format(self.REVOKE_TOKEN_URL, meta_data.get('uid'))
+        url = "{}?uid={}".format(self.REVOKE_TOKEN_URL, meta_data.get('talenetic-uid'))
         return url
 
 
