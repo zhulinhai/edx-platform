@@ -163,9 +163,11 @@ class TaleneticOAuth2(BaseOAuth2):
         """
         try:
             user = User.objects.get(email=emailaddress)
-            new_meta = {'uid': self._get_uid()}
+            user_profile = user.profile
+            new_meta = {'uid': uid}
             if len(user_profile.meta) > 0:
                 previous_meta = json.loads(user_profile.meta)
+
                 mixed_dicts =\
                     (previous_meta.items() + new_meta.items())
                 new_meta =\
