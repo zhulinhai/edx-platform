@@ -512,6 +512,9 @@ ANALITICA_TRACK_URL = ''
 ANALITICA_ACTIVE = False
 ANALITICA_TOKEN = ''
 
+# Custom backend for oauth2
+CUSTOM_BACKENDS = {}
+
 ############################ Global Database Configuration #####################
 
 DATABASE_ROUTERS = [

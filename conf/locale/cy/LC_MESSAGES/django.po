@@ -11390,6 +11390,10 @@ msgstr "Cyfrif"
 msgid "Help"
 msgstr "Help"
 
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
+msgid "Start Course"
+msgstr "Cychwyn Cwrs"
+
 #: cms/templates/widgets/sock.html
 #: themes/edx.org/cms/templates/widgets/sock.html
 msgid "Looking for help with {studio_name}?"
@@ -12141,12 +12145,6 @@ msgstr "Mewngofnodi gyda {provider_name}"
 #: lms/templates/lti.html
 msgid "External resource"
 msgstr "Adnodd allanol"
-
-#. Translators: "points" is the student's achieved score on this LTI unit, and
-#. "total_points" is the maximum number of points achievable.
-#: lms/templates/lti.html
-msgid "{points} / {total_points} points"
-msgstr "{points} / {total_points} pwynt"
 
 #. Translators: "total_points" is the maximum number of points achievable on
 #. this LTI unit
@@ -14844,7 +14842,7 @@ msgstr ""
 
 #: lms/templates/courseware/info.html
 msgid "Welcome to {org}'s {course_name}!"
-msgstr "Croeso i {course_name} {org}!"
+msgstr "Croeso i {course_name} {org}'s!"
 
 #: lms/templates/courseware/info.html
 msgid "Resume Course"
@@ -14880,7 +14878,7 @@ msgid "Handout Navigation"
 msgstr "Llywio taflenni"
 
 #: lms/templates/courseware/info.html
-#, fuzzy
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
 msgid "Course Tools"
 msgstr "Rolau tîm y cwrs"
 
@@ -14981,18 +14979,25 @@ msgid "{earned} of {total} possible points"
 msgstr "{earned} o'r {total} pwyntiau sy'n bosib"
 
 #: lms/templates/courseware/progress.html
-#, fuzzy
-msgid "Problem Scores: "
-msgstr "Sgorau'r problemau:"
-
-#: lms/templates/courseware/progress.html
-#, fuzzy
-msgid "Practice Scores: "
-msgstr "Sgorau ymarferion:"
-
-#: lms/templates/courseware/progress.html
 msgid "No problem scores in this section"
 msgstr "Dim sgorau sy'n broblem yn yr adran hon"
+
+#: lms/templates/courseware/progress.html
+msgid "Problem Scores: "
+msgstr "Sgoriau broblem:"
+
+#: lms/templates/courseware/progress.html
+msgid "Practice Scores: "
+msgstr "Sgoriau arfer:"
+
+#: lms/templates/lti.html
+msgid "{points} / {total_points} points"
+msgstr "{points} / {total_points} pwyntiau"
+
+
+#: lms/templates/login.html
+msgid "First time here? Create an account"
+msgstr "Y ttro cyntaf yma? Creu cyfrif"
 
 #: lms/templates/courseware/syllabus.html
 msgid "{course.display_number_with_default} Course Info"
@@ -15722,6 +15727,9 @@ msgstr "Dangos y nodiadau"
 #: lms/templates/emails/account_creation_and_enroll_emailMessage.txt
 msgid "Welcome to {course_name}"
 msgstr "Croeso i {course_name}"
+
+msgid "Welcome to {course_title}"
+msgstr "Croeso i {course_title}"
 
 #: lms/templates/emails/account_creation_and_enroll_emailMessage.txt
 msgid ""

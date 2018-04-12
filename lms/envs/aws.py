@@ -138,6 +138,9 @@ ANALITICA_TRACK_URL = ENV_TOKENS.get('ANALITICA_TRACK_URL', ANALITICA_TRACK_URL)
 ANALITICA_ACTIVE = ENV_TOKENS.get('ANALITICA_ACTIVE', ANALITICA_ACTIVE)
 ANALITICA_TOKEN = ENV_TOKENS.get('ANALITICA_TOKEN', ANALITICA_TOKEN)
 
+# Custom backend for oauth2
+CUSTOM_BACKENDS = ENV_TOKENS.get('CUSTOM_BACKENDS', CUSTOM_BACKENDS)
+
 # DEFAULT_COURSE_ABOUT_IMAGE_URL specifies the default image to show for courses that don't provide one
 DEFAULT_COURSE_ABOUT_IMAGE_URL = ENV_TOKENS.get('DEFAULT_COURSE_ABOUT_IMAGE_URL', DEFAULT_COURSE_ABOUT_IMAGE_URL)
 
@@ -1148,5 +1151,13 @@ plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.LMS, plugin_c
 
 derive_settings(__name__)
 
-########################## Derive Any Derived Settings  #######################
+
+SOCIAL_AUTH_DISCONNECT_PIPELINE = (
+    'social.pipeline.disconnect.allowed_to_disconnect',
+    'social.pipeline.disconnect.get_entries',
+    'social.pipeline.disconnect.revoke_tokens',
+    'social.pipeline.disconnect.disconnect',
+)
+
 SHOW_GLOBAL_MESSAGE = ENV_TOKENS.get('SHOW_GLOBAL_MESSAGE', False)
+

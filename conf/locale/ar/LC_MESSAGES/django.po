@@ -25455,3 +25455,276 @@ msgid ""
 msgstr ""
 "أوافق على {platform_name} "
 "{terms_of_service_link_start}{terms_of_service}{terms_of_service_link_end}"
+
+msgid "As used in this Privacy Policy (the 'Policy'), 'we,' 'us' and 'our' refer to"
+msgstr "تشير  الكلملت التالية:نحن، إننا  السياسة في سياسة الخصوصية إلى "
+
+msgid "'Personal Information' is defined in section (3) below."
+msgstr "يرد تعريف المعلومات الشخصية في القسم (3) أدناه."
+
+msgid "At"
+msgstr "في"
+
+msgid "we care about the confidentiality and security of your Personal Information. We will make all commercially reasonable efforts to keep your Personal Information secure in compliance with this Policy."
+msgstr "إن جلّ اهتمامنا هو سرية وأمن معلوماتك الشخصية. وسوف نبذل كل الجهود  للمحافظة على معلوماتك الشخصية وذلك تطبيقاً لسياسة الخصوصية خاصتنا"
+
+msgid "This Policy only applies to information that we collect through the"
+msgstr "تنطبق هذه السياسة فقط على المعلومات التي نجمعها من خلال"
+
+msgid "Website (the 'Site,' which consists of all content and pages located within the"
+msgstr "الموقع الإلكتروني (الموقع، الذي يتكون من كل المحتوى والصفحات الموجودة والمتعلقة في"
+
+msgid "(domain) and does not apply to information that we may collect from you in other ways (for example, this policy does not apply to information that you may provide to us over the phone, by fax or through conventional mail)."
+msgstr "مجال معين)؛ ولكنها لا تنطبق على المعلومات التي قد نحصل عليها منك بطرق أخرى (على سبيل المثال لا تنطبق هذه السياسة على المعلومات التي قد تزودنا بها عبر الهاتف أو الفاكس أو البريد التقليدي)."
+
+msgid "Comments or other information posted by you to our forums, wikis or other areas of the Site designed for public communications or communications among registered class members may be viewed and downloaded by others who visit the Site."
+msgstr "التعليقات أو المعلومات الأخرى التي تنشرها في منتدياتنا أو صفحات الويكيبيديا خاصتنا أو المساحات الأخرى في الموقع المصممة للاتصالات العامة أو الاتصالات بين أعضاء فصل دراسي مسجلين يمكن أن يعرضها أشخاص آخرون يزورون الموقع أو يقوموا بتحميلها"
+
+msgid "For this reason, we encourage you to use discretion when deciding whether to post any information that can be used to identify you to those forums (or other public or classwide areas)."
+msgstr "لذا نحن نجثك على توخي الحذر الانتباه عندما تقرر أن تنشر أية معلومات يمكن استخدامها لتحديد هويتك من قِبَل الأشخاص الآخرين بالمنتدى (أو المساحات الأخرى العامة  مستوى الفصل الدراسي)."
+
+msgid "By using our Site, or providing information to"
+msgstr "عندما استخدامك لموقعناأو توفير  أي معلوماتمعلومات إلى"
+
+msgid "you understand and unambiguously consent to the collection, use, disclosure and retention of information in the United Kingdom and other countries and territories, for the purposes set forth in this Policy and the"
+msgstr "فإنك تقوم بالموافقة  على جمع واستخدام وكشف واستبقاء معلومات في المملكة المتحدة وبلدان وأقاليم أخرى، للأغراض المحددة في هذه السياسة ."
+
+msgid "Terms of Service."
+msgstr "والخاصة بشروط الخدمة"
+
+msgid "You hereby consent to the collection, use, disclosure and retention by"
+msgstr "إنك توافق بموجب هذا على جمع واستخدام وكشف واستبقاء"
+
+msgid "of your Personal Information as described under this Policy, including but not limited to the transfer of your personal data between"
+msgstr "لمعلوماتك الشخصية كما هو مُوضَّح في هذه السياسة، وهذا يشمل ولكن لا يقتصر على نقل بياناتك الشخصية بين"
+
+msgid "and the third parties, affiliates and subsidiaries described in this Policy."
+msgstr "أطراف أخرى والشركات التابعة والفرعية المذكورة في هذه السياسة."
+
+msgid "For further certainty, any consent relating to a right to transfer information referred to in this paragraph shall be deemed to include your consent to the transfer of the applicable Personal Information to a jurisdiction which may provide a different level of privacy protection than that available in your own country."
+msgstr "ولزيادة اليقين، تُعتبر أية موافقة تتعلق بحق نقل المعلومات المشار إليها في هذه الفقرة شاملة لموافقتك على نقل المعلومات الشخصية المنطبقة إلى دائرة الاختصاص القضائي مما يوفر مستوى من حماية الخصوصية يختلف عن المستوى الموجود في بلدك."
+
+msgid "If you do not agree with these terms, then please do not access, browse, or register for the Site. If you choose not to provide us with certain information required to provide you with various services offered on our Site, you may not be able to establish a user account and we may not be able to provide you with those services."
+msgstr "إذا كنت لا توافق على أيٍّ هذه الشروط فيُرجى أن لا تقوم بتسجيل الدخول للموقع أو تصفحه . إذا اخترت عدم تزويدنا بمعلومات معينة مطلوبة لكي نزودك بخدمات متعددة مقدمة على الموقع خاصتنا فقد لا تستطيع إنشاء حساب مستخدم وقد لا نستطيع تزويدك بهذه الخدمات."
+
+msgid "As used in this Policy, 'Personal Information' means any information about yourself that you may provide to us when using the Site, such as when you sign up for a user account or enter into a transaction through the Site, which may include (but is not limited to) your name, contact information, gender, date of birth and work experience."
+msgstr "يُقصد بالمعلومات الشخصية حسبما تُستخدم في هذه السياسة  المعلومات التي يمكن أن تزودنا بها عند استخدام الموقع، على سبيل المثال عندما تسجل الاشتراك للحصول على حساب مستخدم أو تبرم معاملة من خلال الموقع، والتي يمكن أن تشتمل (ولكن دون أن تقتصر) على اسمك ومعلومات الاتصال بك، وجنسك، وتاريخ ميلادك وخبرتك العملية."
+
+msgid "We endeavor to limit the collection of Personal Information to what we need with respect to specific Site activities in order to satisfy business, legal or regulatory requirements."
+msgstr "إننا نسعى لأن تقتصر عملية جمع المعلومات الشخصية على ما نحتاجه فيما يختصالموقع المحددة من أجل استيفاء المتطلبات والشروط التجارية أو القانونية أو التنظيمية."
+
+msgid "We collect information, including Personal Information (described above), when you sign up for a user account, participate in online courses, send us email messages and/or participate in our public forums. We also collect certain usage information about student performance and patterns of learning. In addition, we track information indicating, among other things, which pages of our Site were visited, the order in which they were visited, when they were visited and which hyperlinks and other user interface controls were used."
+msgstr "إننا نقوم بجمع معلومات، بما في ذلك المعلومات الشخصية كما ذكرنا سابقاً عندما تسجل الاشتراك للحصول على حساب المستخدم و/ أو الاشتراك في دورات  عبر الإنتنت و/ أو ترسل لنا رسائل بريد إلكتروني و/ أو تشارك في منتدياتنا العامة. كما أننا نجمع معلومات استخدام معينة حول أداء الطلاب وأساليب التعلم. وبالإضافة إلى ذلك، نحن نتتبع المعلومات الي تدل - من بين أمور أخرى - على أي صفحات في الموقع خاصتنا تم زيارتها، وترتيب زيارتها، ومتى تمت زيارتها، وما الارتباطات التشعبية وعناصر تحكم واجهة المستخدم الأخرى التي جرى استخدامها."
+
+msgid "We may log the IP address, operating system and browser software used by each user of the Site, and we may be able to determine from an IP address a user's Internet Service Provider and the geographic location of his or her point of connectivity. Various web analytics tools are used to collect this information. Some of the information is collected through cookies (small text files placed on your computer that store information about you, which can be accessed by the Site). You should be able to control how and whether cookies will be accepted by your web browser. Most browsers offer instructions on how to reset the browser to reject cookies in the 'Help' section of the toolbar. If you reject our cookies, many functions and conveniences of this Site may not work properly."
+msgstr "ربما سجلنا عنوان بروتوكول الإنترنت ونظام التشغيل والمتصفح التي يستخدمها كل مستخدم للموقع، وقد نستطيع أن نحدد من عنوان برتوكول الإنترنت موفر خدمة الإنترنت الخاص بالمستخدم والموقع الجغرافي لنقطة اتصاله. تُستخدم أدوات تحليلات ويب متعددة لجمع هذه المعلومات. وتُجمع بعض هذه المعلومات من خلال ملفات تعريف الارتباط (ملفات نصية صغيرة توضع على جهاز الكمبيوتر خاصتك وتخزن معلومات عنك يمكن أن يصل إليها الموقع. وينبغي أن يكون بمقدورك التحكم في كيفية قبول متصفح الويب خاصتك لملفات تعريف الارتباط وهل يقبلها أو لا يقبلها. وتوفر معظم المتصفحات إرشادات حول كيفية إعادة تعيين المتصفح لرفض ملفات تعريف الارتباط في قسم Help (المساعدة) بشريط الأدوات. وإذا رفضت ملفات تعريف الارتباط الخاصة بنا من الممكن أن تتوقف  وظائف عديدة في هذا الموقع عن العمل بالشكل المطلوب"
+
+msgid "Among other things, we and the educational institutions that provide courses through"
+msgstr "من بين أمور أخرى، فإننا قد نستخدم والمؤسسات التعليمية التي توفِّر الدورات عبر "
+
+msgid "(the 'Employers') may use the information about you collected through the Site (including your Personal Information) in connection with the following. In cases where we share or disclose your Personal Information: (1) the third party recipients are required to handle the Personal Information in a confidential manner and to maintain adequate security to protect the information from loss, misuse, unauthorized access or disclosure, alteration, and destruction; and (2) we will only disclose and share the Personal Information that is required by the third party to fulfill the purpose stated at the time of collection."
+msgstr "أصحاب العمل) معلوماتك الخاصة التي تم جمعها عبر الموقع (بما في ذلك معلوماتك الشخصية) في الحالات التالية: في الحالات التي نشارك أو نفصح عن معلوماتك الشخصية: (1) المتلقوْن من الجهات الخارجية (الغير) مطالبون بالتعامل بسرية مع المعلومات الشخصية والمحافظة على تدابير أمان ملائمة وكافية لحماية المعلومات من الفقدان، وسوء الاستخدام، والوصول أو الإفصاح غير المصرح به، والتغيير، والإتلاف؛ و(2) سوف نفصح ونشارك فقط المعلومات الشخصية التي تتطلبها الجهة الخارجية (الغير) لتحقيق الغرض المحدد وقت الجمع."
+
+msgid "To enable the employers to assess your To enable the employers to provide, administer and improve the courses"
+msgstr "وذلك لتمكين أصحاب العمل من تقييمكو تقديم الدورات وإدارتها و العمل على تحسينها"
+
+msgid "To help us and the employers improve"
+msgstr "لتساعدنا وتساعد أصحاب العمل في تحسين عروض"
+
+msgid "offerings, both individually (e.g., by course staff when working with a student) and in aggregate, and to individualize the experience and to evaluate the access and use of the Site and the impact of"
+msgstr "حسين عروض ، على المستوى الفردي (على سبيل المثال، بواسطة فريق عمل الدورات عند العمل مع طالب) والجماعي، ولإضفاء الطابع الشخصي على التجربة، وكذلك لتقييم الوصول إلى الموقع واستخدامه "
+
+msgid "on the worldwide educational community."
+msgstr "وأثره على المجتمع التعليمي في أرجاء العالم بأسره."
+
+msgid "For purposes of scientific research, particularly, for example, in the areas of cognitive science and education."
+msgstr "لأغراض البحث العلمي، خاصة - على سبيل المثال - في مجالي العلوم المعرفية والتعليم."
+
+msgid "For the purpose for which you specifically provided the information, for example, to respond to a specific inquiry or provide you with access to the specific course content and/or services you select."
+msgstr "للغرض الذي وفرت المعلومات من أجله تحديدًا، على سبيل المثال للإجابة على تساؤل محدد أو لتزويدك بإمكانية وصول إلى محتوى الدورة المحدد و/ أو الخدمات المحددة التي اخترتها."
+
+msgid "To track both individual and aggregate attendance, progress and completion of an online course, and to analyze statistics on student performance and how students learn."
+msgstr "لتتبع الحضور الفردي والجماعي، ومستوى التقدم  في الدورة عبر الإنترنت وإكمالها، ولتحليل الإحصائيات حول أداء الطلاب وكيف يتعلمون."
+
+msgid "To monitor and detect violations of the Honor Code, the Terms of Service, as well as other misuses and potential misuses of the Site."
+msgstr "ولمراقبة وكشف الحالات التي تخالف ميثاق الشرف وشروط الخدمة وكذلك حالات سوء الاستخدام الأخرى وإساءات استخدام الموقع المحتملة"
+
+msgid "To publish information, but not Personal Information, gathered about"
+msgstr "لنشر المعلومات، ولكن ليس المعلومات الشخصية، التي يتم جمعها "
+
+msgid "access, use, impact and student performance."
+msgstr "عن إمكانية الوصول إلى، واستخدامها، وأثَرها على أداء الطلاب"
+
+msgid "To send you updates about online courses offered by"
+msgstr "لإرسال تحديثات إليك بشأن الدورات الجديدة المقدمة عبر الإنترنت "
+
+msgid "or other events, to send you communications about products or services of"
+msgstr "أو أي فعاليات الأخرى، أو للاتصال بك حول منتجات وخدمات"
+
+msgid "affiliates, or selected business partners that may be of interest to you, or to send you email messages about Site maintenance or updates."
+msgstr "أو شركاتها التابعة أو شركاء أعمالأخرين قد تهتم بهم، أو لإرسال رسائل بريد إلكتروني إليك عن صيانة الموقع أو تحديثاته."
+
+msgid "To archive this information and/or use it for future communications with you."
+msgstr "لأرشفة وحفظ هذه المعلومات و/ أو استخدامها لاتصالات مستقبلة معك"
+
+msgid "To maintain and improve the functioning and security of the Site and our software, systems and network."
+msgstr "للمحافظة وتحسين عمل وأمان الموقع وبرمجياتنا وأنظمتنا وشبكتنا."
+
+msgid "For purposes described elsewhere in this Policy (including, e.g., Sharing with Third Parties)."
+msgstr "أو لأية أغراض أخرى اموضحة ضمن هذه السياسة (بما في ذلك - على سبيل المثال - المشاركة مع جهات خارجية)."
+
+msgid "As otherwise described to you at the point of collection, pursuant to your consent, or as otherwise permitted by law."
+msgstr "كما هو موضح لك, وضمن موافقتك، أو كما هو موضح في القانون."
+
+msgid "To authenticate your identity when you register for a paid certificate."
+msgstr "وذلك لمصادقة هويتك عند التسجيل للحصول على شهادة مدفوعة الأجر."
+
+msgid "To process refunds, as applicable."
+msgstr "ولاسترداد المبلغ في حال مطابقة الشروط."
+
+msgid "We will share information we collect with the employers, and we and the employers may share this information (including Personal Information) with third parties as follows:"
+msgstr "سوف نشارك المعلومات التي نقوم بجمعها مع أصحاب العمل، ويجوز لنا ولأصحاب العمل مشاركة هذه المعلومات (بما فيها المعلومات الشخصية) مع جهات خارجية كالتالي:"
+
+msgid "With service providers or contractors that perform certain functions on our or the employers' behalf, including processing information that you provide to us on the Site, processing purchases via third party providers, and other transactions through the Site, operating the Site or portions of it, providing or administering courses, or in connection with other aspects of "
+msgstr "مع موفري الخدمات أو المقاولين الذين يؤدون وظائف معينة نيابة عنا أو عن أصحاب العمل، بما في ذلك معالجة المعلومات التي تزودنا بها في الموقع، أو معالجة المشتريات عن طريق موفري الخدمات من جهات أخرى، والعمليات الأخرى التي تتم عبر الموقع، أو تشغيل الموقع أو أجزاء منه، أو توفير أو تقديم الدورات ، أو فيما يتعلق بجوانب أخرى للخدمات "
+
+msgid " or University services."
+msgstr " أو الخدمات الجامعة."
+
+msgid "With other visitors to the Site, to the extent that you submit comments, course work or other information or content (collectively, 'Postings') to a portion of the Site designed for public communications; and with other members of an "
+msgstr "مع زائرين آخرين للموقع، إلى مدى ما ترسله من تعليقات أو عمل خاص بدورة أو معلومات أخرى أو محتوى آخر (يشار إليها مجتمعة باسم المنشورات) إلى جزء من الموقع مصمم للاتصالات العامة، وكذلك مع أعضاء آخرين لفصل من الفصول "
+
+msgid " class of which you are a member, to the extent you submit Postings to a portion of the Site designed for viewing by those class members. We may provide your Postings to students who later enroll in the same classes as you, within the context of the forums, the courseware or otherwise. If we do re-post your Postings originally made to non-public portions of the Site, we will post them without your real name and e-mail (except with your express permission), but we may use your username without your consent."
+msgstr " تكون منتمي إليها، إلى ما ترسله من منشورات إلى جزء من الموقع مصمم للعرض من جانب أعضاء الفصل الدراسي. يجوز أن نوفر منشوراتك إلى الطلاب الذين ينضمون لاحقًا في نفس الفصول الدراسية التي انضممت إليها، في سياق المنتديات أو مواد الدورات أو خلاف ذلك. إن أعدنا نشر منشوراتك التي تم إرسالها في الأصل إلى أجزاء من الموقع غير مخصصة للنشر العام فسوف ننشرها بدون استخدام اسمك الحقيقي وعنوان بريدك الإلكتروني (إلا إن حصلنا على موافقة صريحة منك)، ولكن يجوز لنا استخدام اسم المستخدم الخاص بك بدون موافقتك."
+
+msgid "For purposes of scientific research, particularly, for example, in the areas of cognitive science and education. However, we will only share Personal Information about you for this purpose to the extent doing so complies with applicable law and is limited to the Personal Information required to fulfill the purposes stated at the time of collection."
+msgstr "لأغراض البحث العلمي، خاصة - على سبيل المثال - في مجالي العلوم المعرفية والتعليم. على أي حال، سوف نقوم فقط بمشاركة المعلومات الشخصية عنك لهذا الغرض إلى الحد الذي نمتثل فيه للقانون المطبق إبان قيامنا بذلك ويكون ذلك مقصورًا على المعلومات الشخصية المطلوبة لتحقيق الأغراض المحددة وقت الجمع."
+
+msgid "To provide opportunities for you to communicate with other users who may have similar interests or educational goals. For instance, we may recommend specific study partners or connect potential student mentees and mentors. In such cases, we may use all information collected about you to determine who might be interested in communicating with you, but we will only provide other users your username, and not disclose your real name or e-mail address to your contact."
+msgstr "لتوفير فرص التواصل مع مستخدمين آخرين قد يكون لديهم اهتمامات أو أهداف تعليمية مشتركة. فعلى سبيل المثال، قد نوصي بشركاء دراسة معينين أو التوفيق بين طلاب موجَّهين مسترشدين محتملين والموجِّهين المرشدين. وفي مثل هذه الحالات، يجوز أن نستخدم كل المعلومات التي تم جمعها عنك لتحديد مَن قد يهتم بالتواصل معك، ولكننا لن نزود المستخدمين الآخرين إلا باسم المستخدم الخاص بك، ولن نكشف اسمك الحقيقي أو عنوان بريدك الإلكتروني إلى الشخص الذي يرغب التواصل معك."
+
+msgid "To respond to subpoenas, court orders, or other legal process; in response to a request for cooperation from law enforcement or another government agency; to investigate, prevent or take action regarding illegal activities, suspected fraud, security or technical issues, or to enforce our Terms of Service, Honor Code or this Policy; as otherwise may be required by applicable law; or to protect our rights, property or safety or those of others."
+msgstr "للاستجابة للاستدعاءات، أو أوامر المحكمة، أو الإجراءات القانونية الأخرى؛ وكذلك للاستجابة لطلب للتعاون من جهات إنفاذ القانون أو جهة حكومية أخرى؛ وللتحقيق أو منع أو اتخاذ إجراء بشأن أنشطة غير قانونية أو احتيال مشتبه به أو مسائل تتعلق بالأمان أو بنواحٍ فنية، أو لإنفاذ شروط الخدمة أو ميثاق الشرف أو هذه السياسة الخاصة بنا؛ وفضلاً عن ذلك التقيد خلاف ذلك بما قد يوجبه القانون المطبق؛ أو لحماية حقوقنا أو ممتلكاتنا أو سلامتنا أو حقوق وممتلكات وسلامة الآخرين."
+
+msgid "With affiliates of "
+msgstr "مع الشركات التابعة "
+
+msgid " or the employers, or with successors in the event of a merger, acquisition or reorganization, for their use consistent with this Policy."
+msgstr " لأصحاب العمل، أو مع خلفائهما في حالة الاندماج أو الاستحواذ أو إعادة التنظيم، لأغراض استخدامهم المتسق مع هذه السياسة."
+
+msgid "As otherwise described to you at the point of collection, pursuant to your consent, or otherwise as permitted by law (e.g., disclosures permitted under FERPA, to the extent FERPA applies to the information)."
+msgstr "كما هو موضح لك خلاف ذلك في نقطة الجمع، بعد أخذ موافقتك، أو بما يسمح به القانون خلاف ذلك (مثلاً: الإفصاحات المسموح بها بموجب قانون الحقوق التعليمية والخصوصية للأسرة، وإلى مدى تطبيق هذا القانون على المعلومات."
+
+msgid "For integration with third party services. For example, videos and other content may be hosted on YouTube and other websites not controlled by "
+msgstr "للتكامل مع خدمات جهات خارجية (الغير). ومثال ذلك قد تُستضاف فيديوهات ومحتوى آخر على يوتيوب ومواقع إلكترونية أخرى خارج نطاق سيطرة "
+
+msgid " also acts as, among other things, venues for employers to post job opportunities and search for and evaluate job candidates and candidates to post CVs and Profiles and search for and evaluate job opportunities."
+msgstr " و تعمل هذه المعلومات أيضاً أيضًاكمنافذ لأصحاب العمل لنشر فرص العمل والبحث عن مرشحين للوظائف وتقييمهم ولنشر المرشحين لسيرهم الذاتية وملفات التعريف بهم وبحثهم عن فرص العمل وتقييمهم لها."
+
+msgid " does not screen or censor the listings, including Profiles offered. "
+msgstr "لا تقوم بتصفية (فلترة) أو الرقابة على القوائم بما في ذلك ملفات التعريف المقدمة."
+
+msgid " is not involved in the actual transaction between employers and candidates. As a result, "
+msgstr "وهي لا تتدخل في المعاملة الفعلية القائمة بين أصحاب العمل والمرشحين. وبناءً على ذلك، فإننا"
+
+msgid " is not responsible for User Content, the quality, safety or legality of the jobs or CVs posted, the truth or accuracy of the listings, the ability of employers to offer job opportunities to candidates or the ability of candidates to fill job openings and "
+msgstr "ل ا نتحمل المسؤولية عن محتوى المستخدِم أو جودة الوظائف أو السير الذاتية المنشورة أو سلامتها أو قانونيتها، أو صدق أو دقة القوائم، أو قدرة أصحاب العمل على توفير فرص العمل للمرشحين أو قدرة المرشحين على شغل الوظائف الشاغرة، "
+
+msgid " makes no representations about any jobs, CVs or User Content on "
+msgstr " كما أننا لا نقدم أي بيانات بشأن أي وظائف أو سير ذاتية أو محتوى مستخدِم على "
+
+msgid "While "
+msgstr "بينما"
+
+msgid " reserves the right in its sole discretion to remove User Content, job postings, CVs or other material from "
+msgstr " نتحتفظ بالحق حسب رأينا المطلق في إزالة محتوى المستخدِم ومنشورات الوظائف أو السير الذاتية أو المواد الأخرى من "
+
+msgid " from time to time, "
+msgstr " وقت لآخر "
+
+msgid " does not assume any obligation to do so and to the fullest extent permitted by law, disclaims any liability for failing to take any such action."
+msgstr "ولا نتحمل أي التزام بالقيام بذلك وإلى أقصى حد يسمح به القانون ،ونحن نخلي أية مسؤولية قد تقع على عاتقنا  إن أخفقنا باتخاذ أيٍّ من هذه الإجراءات."
+
+msgid "Note that there are risks, including but not limited to the risk of physical harm, of dealing with strangers, underage persons or people acting under false pretenses. You assume all risks associated with dealing with other users with whom you come in contact through "
+msgstr "الرجاء الملاحظة أن هنالك مخاطر، والتي تشمل ،ولكن لا تقتصر، على المخاطر والضرر المادي، والتعامل مع غرباء، وادعاء القاصرين، أو أشخاص ذووي بيانات زائفة. وإنك تتحمل كافة المخاطر المرتبطة بالتعامل مع مستخدمين آخرين تصبح على اتصال بهم من خلال الوقع"
+
+msgid "By its very nature other people's information may be offensive, harmful or inaccurate, and in some cases will be mislabeled or deceptively labeled. We expect that You will use caution and common sense when using the "
+msgstr "قد تكون معلومات أشخاص آخرين بطبيعتها الأساسية هجومية أو ضارة أو غير دقيقة، وتكون في بعض الحالات ذات تسمية خاطئة أو خادعة، لذا فإننا نتمنى أن  تتوخى الحذرعند استخدام ."
+
+msgid "Because learner authentication on the Internet is difficult, "
+msgstr "لأن القيام بمراقبة المصداقية على الانترنت أمر صعب"
+
+msgid " cannot and does not confirm that each User is who they claim to be."
+msgstr " لذا لا نستطيع التحقق من كل متعلم"
+
+msgid "Because we do not and cannot be involved in learner to learner dealings or control the behavior of participants on "
+msgstr "لأننا لا نتدخل ولا نستطيع أن نتدخل في تعاملات المتعلمين مع بعضهم البعض أو نتحكم في سلوكيات المشاركين"
+
+msgid " in the event that You have a dispute with one or more learners, you release "
+msgstr "في حالة وجود نزاع بين وبين متعلم أو أكثر"
+
+msgid " (and our agents and employees) from claims, demands and damages (actual and consequential and direct and indirect) of every kind and nature, known and unknown, suspected and unsuspected, disclosed and undisclosed, arising out of or in any way connected with such disputes to the fullest extent permitted by law."
+msgstr "أنت معفى (ووكلاءنا وموظفينا) من المسؤولية عن المطالبات والمطالب والإضرار (الفعلية والتبعية والمباشرة وغير المباشرة) مهما كان نوعها وطبيعتها سواء المعروفة وغير المعروفة والمريبة وغير المريبة والمفصح عنها وغير المفصح عنها التي تنشأ من مثل هذه النزاعات أو بالارتباط بها بأية طريقة من الطرق إلى أقصى حد يسمح به القانون."
+
+msgid "The "
+msgstr "ال "
+
+msgid "Sites and the "
+msgstr "موقع و ال"
+
+msgid " Content may contain inaccuracies or typographical errors. "
+msgstr " المحتوى على حالات تتسم بالأخطاء إملائية "
+
+msgid " makes no representations about the accuracy, reliability, completeness, or timeliness of any "
+msgstr " ولا تقدم أي بيانات بشأن دقة أو موثوقية أو كمال أو المناسبة الزمنية لأي موقع من مواقع أو أي . "
+
+msgid " Site or the "
+msgstr "مواقع أو أي"
+
+msgid "Content."
+msgstr "محتوى"
+
+msgid " encourages You to keep a back-up copy of any of Your User Content. To the extent permitted by law, in no event shall "
+msgstr "إننا تشجعك على الاحتفاظ بنسخة احتياطية من أي محتوى مستخدِم خاص بك للمدى الذي يسمح به القانون، "
+
+msgid " be liable for the deletion, loss, or unauthorized modification of any learner content."
+msgstr ",وإننا لا نتحمل المسؤولية بأي حال من الأحوال عن حذف أي محتوى لمتعلم أو فقدانه أو التعديل غير المصرح به له."
+
+msgid " does not provide or make any representation as to the quality or nature of any of the third party products or services purchased through any "
+msgstr "ولا نوفر أو نقدم أي بيان بشأن جودة أو طبيعة أي من منتجات أو خدمات الجهات الخارجية  التي يتم شراؤها من خلال أي "
+
+msgid " Site, or any other representation, warranty or guaranty. Any such undertaking, representation, warranty or guaranty would be furnished solely by the provider of such third party products or services, under the terms agreed to by the provider."
+msgstr " ولا نقدم أي كفالة أو ضمان، وأي تعهد أو بيان أو كفالة أو ضمان من هذا القبيل سوف يقدمه موفر المنتجات أو الخدمات الجهات الخارجية  وحده، وذلك بموجب الشروط التي يتفق عليها هذا الموفر."
+
+msgid "In addition, we may share aggregated information that does not personally identify you with the public and with third parties, including but not limited to researchers and business partners."
+msgstr "بالإضافة لذلك، يجوز لنا أن نشارك المعلومات المجمعة التي لا تحدد هويتك الشخصية مع جمهور العموم أو مع الجهات الخارجية ، بما في ذلك ،ولكن لا يقتصر، على الباحثين وشركاء الأعمال."
+
+msgid "Our goal is to provide current and future visitors with the best possible educational experience. To further this goal, we sometimes present different users with different versions of course materials and software. We do this to personalize the experience to the individual learner (assess the learner's level of ability and learning style, and present materials best suited to the learner), to evaluate the effectiveness of our course materials, to improve our understanding of the learning process and to otherwise improve the effectiveness of our offerings. We may publish or otherwise publicize results from this process, but, unless otherwise permitted under this Policy, those publications or public disclosures will not include Personal Information."
+msgstr "إن غايتنا هي أن نتيح للزائرين في الحاضر والمستقبل أفضل تجربة تعليمية ممكنة. وسعياً منا لتحقيق ذلك، فإننا نقدم أحياناً لمستخدمين مختلفين إصدارات مختلفة من مواد الدورات والبرمجيات. ونهدف بهذا إلى إضفاء الطابع الشخصي على التجربة من أجل المتعلم الفرد (تقييم مستوى قدرة المتعلم وأسلوبه في التعلم، وتقديم المواد الأنسب له)، ونهدف أيضًا إلى تقييم فعالية مواد الدورات الخاصة بنا، وتحسين فهمنا للعملية التعليمية، فضلاً عن تحسين فعالية عروضنا. وقد ننشر أو نعلن للعموم نتائج هذه العملية بطريقة أخرى، ولكن لن تحتوي هذه المنشورات أو الإعلانات العامة على معلومات شخصية، ما لم يُسمح بغير ذلك بموجب هذه السياسة."
+
+msgid "The Site contains links to websites published by third parties, including other content providers as well as certain service providers, such as those who process payments on behalf of "
+msgstr "يحتوي الموقع على ارتباطات بمواقع إلكترونية تنشرها جهات خارجية ، بما في ذلك موفري المحتوى وموفري خدمات معينة، كالذين يعملون على معالجة المدفوعات "
+
+msgid " These other websites are not under our control, and you acknowledge and agree that we are not responsible for the collection and use of your information by such websites, unless we have otherwise indicated in this Policy. We encourage you to be aware when you are be redirected to a third party website and review the privacy policies of each website you visit and use."
+msgstr " وهذه المواقع الإلكترونية خارج نطاق سيطرتنا، وإنك تقر وتوافق على أننا لا نتحمل المسؤولية عن جمع واستخدام معلوماتك من جانب هذه المواقع الإلكترونية، ما لم نشير إلى خلاف ذلك في هذه السياسة. ونشجعك على توخي الحيطة والحذر عندما يُعاد توجيهك إلى موقع إلكتروني لجهة خارجية وأن تراجع سياسات الخصوصية لكل موقع إلكتروني تزوره أو تستخدمه."
+
+msgid " has a program designed to protect Personal Information in its possession or control. This is done through a variety of privacy and security policies, processes and procedures, including administrative, physical, and technical safeguards that reasonably and appropriately protect the confidentiality, integrity, and availability of the Personal Information that it creates, receives, maintains, or transmits. Nonetheless, no method of transmission over the Internet, or method of electronic storage, is 100% secure; and therefore, "
+msgstr "إننا نمتلك برنامجًا مصممًا لحماية المعلومات الشخصية التي في حوزتنا أو تحت سيطرتنا. ويتحقق ذلك من خلال مجموعة متنوعة من سياسات الخصوصية والأمان، والعمليات والإجراءات، والتي تشمل ضوابط إدارية ومادية وفنية من شأنها أن توفر حماية معقولة وملائمة لسرية المعلومات الشخصية ولسلامتها وتوافرها، التي نقوم بإنشائها أو استلامها أو صونها أو إرسالها. ورغم ذلك، ليس هناك طريقة إرسال عبر الإنترنت أو طريقة تخزين إلكتروني مؤمنة بالكامل 100%، "
+
+msgid " cannot guarantee its absolute security."
+msgstr " ولذلك يتعذر علينا ضمان الأمان المطلق"
+
+msgid "Please note that we review and may make changes to this Policy from time to time. When changes are made, the Policy link will include a notation 'Revised (date).' indicating that you should review the new terms, which will be effective immediately upon posting on this page, with an updated effective date. The notation will be included in the Policy link for at least seven (7) days after the update has been made. By accessing the Site after any changes have been made, you signify your agreement on a prospective basis to the modified Policy and any changes contained therein. In case you miss the notification referenced above, be sure to return to this page periodically to ensure familiarity with the most current version of this Policy."
+msgstr "الرجاء الملاحظة أننا نستعرض هذه السياسة وقد نُدخل عليها تغييرات من وقت لآخر. ومتى تم إدخال تغييرات فسوف يشمل ارتباط السياسة تنويهًا تم التعديل في (التاريخ). ليشير إلى أنه يتعين عليك مراجعة الشروط الجديدة، والتي سوف تصبح سارية المفعول فور نشرها بهذه الصفحة، مع تاريخ سريان محدّث. وسوف يحتوي ارتباط السياسة على التنويه لسبعة (7) أيام على الأقل بعد إدخال التحديث. وحال الوصول إلى الموقع بعد إدخال أي تغييرات فإنك تعني موافقتك بأثر مستقبلي على السياسة المعدلة وأي تغييرات تحتويها. إذا فاتك التنويه المشار إليه فاحرص على العودة إلى هذه الصفحة على فترات دورية لضمان إلمامك بأحدث إصدار من هذه السياسة."
+
+msgid "Our Site is not intended for use by individuals under the age of 15, and "
+msgstr "ليس مسموح أن يتم استخدام موقعنا من قبَل أشخاص تحت سنّ 15 عامًا، ولا تقوم"
+
+msgid " does not knowingly collect personal data from those in this age group. If we become aware that someone under the age of 15 has registered, we will expunge any related Personal Information from our records."
+msgstr "ونحن لا نقوم عمداً بجمع البيانات الشخصية لهؤلاء الأشخاص الذين هم في هذه الفئة العمرية. فإن علمنا بأن شخصًا يقل عمره عن 15 عامًا قد سجل في الموقع فسوف نمحو أي معلومات شخصية مرتبطة به من سجلاتنا."
+
+msgid "If you have privacy concerns, have disclosed data you would prefer to keep private, or would like to access the information we maintain about you, please contact us at "
+msgstr "إذا كان لديك أية مخاوف تتعلق بالخصوصية أو أفصحت عن بيانات كنت تفضل أن تبقيها سرية أو كنت ترغب في الوصول إلى المعلومات الخاصة بك التي نحتفظ بها فنرجو التواصل معنا على ."
+
+msgid "Print Privacy Policy"
+msgstr "طبع سياسة الخصوصية"
