@@ -103,13 +103,6 @@ from shoppingcart.api import order_history
 from shoppingcart.models import CourseRegistrationCode, DonationConfiguration
 from student.cookies import delete_logged_in_cookies, set_logged_in_cookies, set_user_info_cookie
 from student.forms import AccountCreationForm, PasswordResetFormNoActive, get_registration_extension_form
-from student.helpers import (
-    DISABLE_UNENROLL_CERT_STATES,
-    auth_pipeline_urls,
-    check_verify_status_by_course,
-    destroy_oauth_tokens,
-    get_next_url_for_login_page
-)
 from student.models import (
     ALLOWEDTOENROLL_TO_ENROLLED,
     CourseAccessRole,
@@ -131,6 +124,13 @@ from student.models import (
     anonymous_id_for_user,
     create_comments_service_user,
     unique_id_for_user
+)
+from student.helpers import (
+    AccountValidationError,
+    auth_pipeline_urls,
+    create_or_set_user_attribute_created_on_site,
+    generate_activation_email_context,
+    get_next_url_for_login_page
 )
 from student.signals import REFUND_ORDER
 from student.tasks import send_activation_email
@@ -260,7 +260,30 @@ def index(request, extra_context=None, user=AnonymousUser()):
 
     context["carousel_courses"] = carousel_courses
 
+    context = _set_context_for_third_party_auth(context, request)
+
     return render_to_response('index.html', context)
+
+
+    def _set_context_for_third_party_auth(context, request):
+        """
+        This is to gather the 3rd party auth details for the login to be present on the index.html page
+        """
+        third_party_auth_error = None
+        redirect_to = get_next_url_for_login_page(request)
+        context['login_redirect_url'] = redirect_to  # This gets added to the query string of the "Sign In" button in the header
+        # Bool injected into JS to submit form if we're inside a running third-
+        # party auth pipeline; distinct from the actual instance of the running
+        # pipeline, if any.
+        context['pipeline_running'] = 'true' if pipeline.running(request) else 'false'
+        context['pipeline_url'] =  auth_pipeline_urls(pipeline.AUTH_ENTRY_LOGIN, redirect_url=redirect_to)
+        context['platform_name'] = configuration_helpers.get_value(
+            'platform_name',
+            settings.PLATFORM_NAME
+        )
+        context['third_party_auth_error'] = third_party_auth_error
+
+        return context
 
 
 def process_survey_link(survey_link, user):
