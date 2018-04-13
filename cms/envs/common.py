@@ -1151,6 +1151,9 @@ INSTALLED_APPS = [
 
     # Asset management for mako templates
     'pipeline_mako',
+
+    # Rocket chat xblock
+    'rocketc',
 ]
 
 
