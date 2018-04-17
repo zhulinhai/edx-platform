@@ -337,7 +337,7 @@ msgstr[1] ""
 #: common/lib/xmodule/xmodule/js/src/capa/display.js
 msgid "%(earned)s/%(possible)s point (graded)"
 msgid_plural "%(earned)s/%(possible)s points (graded)"
-msgstr[0] ""
+msgstr[0] "pwyntiau graddio"
 msgstr[1] ""
 
 #. Translators: %(earned)s is the number of points earned. %(possible)s is the
@@ -8218,17 +8218,6 @@ msgstr "Dangoswch ffyrdd eraill o fewngofnodi neu gofrestru"
 msgid "Sign in with Institution/Campus Credentials"
 msgstr "Mewngofnodi gyda chymwysterau sefydliad/campws"
 
-#: cms/templates/login.html cms/templates/widgets/header.html
-#: themes/red-theme/cms/templates/login.html
-msgid "Sign In"
-msgstr "Mewngofnodi"
-
-msgid "First time here?"
-msgstr "Y tro cyntaf yma?"
-
-msgid "Create an Account."
-msgstr "Creu cyfrif."
-
 #: lms/templates/student_account/institution_login.underscore
 #: lms/templates/student_account/institution_register.underscore
 #: test_root/staticfiles/templates/student_account/institution_login.underscore
@@ -11095,3 +11084,76 @@ msgstr "Cadwyd y drafft ar %(last_saved_date)s gan %(edit_username)s"
 
 msgid "Course Type"
 msgstr "Math y Cwrs"
+
+msgid "This is what you will use to login."
+msgstr "Dyma beth fyddwch chi'n ei ddefnyddio i fewngofnodi."
+
+msgid "This name will be used on any certificates that you earn."
+msgstr "Bydd yr enw hwn yn cael ei ddefnyddio ar unrhyw dystysgrifau rydych chi'n eu ennill."
+
+msgid ""
+"The name that will identify you in your courses. It cannot be changed later."
+msgstr ""
+"Yr enw a fydd yn eich adnabod yn eich cyrsiau. Ni ellir ei newid yn nes "
+"ymlaen."
+
+msgid "Enter a valid email address that contains at least 3 characters."
+msgstr "Rhowch gyfeiriad e-bost dilys sy'n cynnwys o leiaf 3 nod."
+
+msgid "Enter a valid email address that contains at least {min} characters."
+msgstr "Rhowch gyfeiriad e-bost dilys sy'n cynnwys o leiaf {min} nod."
+
+msgid "Enter your full name. This name will be used on any certificates that you earn."
+msgstr "Rhowch eich enw llawn. Bydd yr enw hwn yn cael ei ddefnyddio ar unrhyw dystysgrifau rydych chi'n eu ennill."
+
+msgid "Username must be between {min} and {max} characters long."
+msgstr ""
+
+msgid "Username must be between 2 and 30 characters long. The name that will identify you in your courses. It cannot be changed later"
+msgstr ""
+
+msgid "Enter a password."
+msgstr "Rhowch gyfrinair."
+
+msgid "Country or Region of Residence (required)"
+msgstr "Gwlad neu Ranbarth Preswyl (gofynnol)"
+
+msgid "Password (required)"
+msgstr "Cyfrinair (gofynnol)"
+
+msgid "required"
+msgstr "gofynnol"
+
+msgid "Support education research by providing additional information"
+msgstr ""
+
+msgid "I agree to the {platform_name} {terms_of_service}"
+msgstr "Rwy'n cytuno i {terms_of_service} {platform_name}"
+
+msgid "I agree to the {link_start}Terms of Service{link_end}"
+msgstr "Cytunaf i'r {link_start}Telerau Gwasanaeth{link_end}"
+
+msgid "Got it!"
+msgstr "Wedi'i gael!"
+
+msgid "Pass"
+msgstr "Pasiwch"
+
+msgid "Learner's {platform_name} email address or username *"
+msgstr "Cyfeiriad e-bost neu enw defnyddiwr {platform_name} y dysgwr *"
+
+msgid "Location of problem in course"
+msgstr "Lleoliad y broblem yn y cwrs"
+
+msgid "For the specified problem, override the learner's score."
+msgstr ""
+"Ar gyfer y broblem benodol, dilëwch atebion a sgoriau'r dysgwr yn barhaol ac "
+"yn llwyr o'r gronfa ddata."
+
+#: lms/djangoapps/instructor/views/api.py
+msgid ""
+"The enrolled learner profile report is being created. To view the status of "
+"the report, see Pending Tasks below."
+msgstr ""
+"Mae adroddiad proffil dysgwyr cofrestredig yn cael ei greu. I weld statws yr "
+"adroddiad, gweler tasgau yn yr arfaeth"
