@@ -11390,10 +11390,6 @@ msgstr "Cyfrif"
 msgid "Help"
 msgstr "Help"
 
-#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
-msgid "Start Course"
-msgstr "Cychwyn Cwrs"
-
 #: cms/templates/widgets/sock.html
 #: themes/edx.org/cms/templates/widgets/sock.html
 msgid "Looking for help with {studio_name}?"
@@ -12146,6 +12142,12 @@ msgstr "Mewngofnodi gyda {provider_name}"
 msgid "External resource"
 msgstr "Adnodd allanol"
 
+#. Translators: "points" is the student's achieved score on this LTI unit, and
+#. "total_points" is the maximum number of points achievable.
+#: lms/templates/lti.html
+msgid "{points} / {total_points} points"
+msgstr "{points} / {total_points} pwynt"
+
 #. Translators: "total_points" is the maximum number of points achievable on
 #. this LTI unit
 #: lms/templates/lti.html
@@ -12318,7 +12320,7 @@ msgstr "Gweld y cwrs hwn fel:"
 #: lms/templates/preview_menu.html
 #, fuzzy
 msgid "Learner"
-msgstr "Pob dysgwr"
+msgstr "Dysgwr"
 
 #: lms/templates/preview_menu.html
 #, fuzzy
@@ -14842,7 +14844,7 @@ msgstr ""
 
 #: lms/templates/courseware/info.html
 msgid "Welcome to {org}'s {course_name}!"
-msgstr "Croeso i {course_name} {org}'s!"
+msgstr "Croeso i {org}'s {course_name}!"
 
 #: lms/templates/courseware/info.html
 msgid "Resume Course"
@@ -14878,7 +14880,7 @@ msgid "Handout Navigation"
 msgstr "Llywio taflenni"
 
 #: lms/templates/courseware/info.html
-#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html
+#, fuzzy
 msgid "Course Tools"
 msgstr "Rolau tîm y cwrs"
 
@@ -14979,25 +14981,18 @@ msgid "{earned} of {total} possible points"
 msgstr "{earned} o'r {total} pwyntiau sy'n bosib"
 
 #: lms/templates/courseware/progress.html
+#, fuzzy
+msgid "Problem Scores: "
+msgstr "Sgorau'r problemau:"
+
+#: lms/templates/courseware/progress.html
+#, fuzzy
+msgid "Practice Scores: "
+msgstr "Sgorau ymarferion:"
+
+#: lms/templates/courseware/progress.html
 msgid "No problem scores in this section"
 msgstr "Dim sgorau sy'n broblem yn yr adran hon"
-
-#: lms/templates/courseware/progress.html
-msgid "Problem Scores: "
-msgstr "Sgoriau broblem:"
-
-#: lms/templates/courseware/progress.html
-msgid "Practice Scores: "
-msgstr "Sgoriau arfer:"
-
-#: lms/templates/lti.html
-msgid "{points} / {total_points} points"
-msgstr "{points} / {total_points} pwyntiau"
-
-
-#: lms/templates/login.html
-msgid "First time here? Create an account"
-msgstr "Y ttro cyntaf yma? Creu cyfrif"
 
 #: lms/templates/courseware/syllabus.html
 msgid "{course.display_number_with_default} Course Info"
@@ -16860,15 +16855,15 @@ msgstr "Cynhyrchu adroddiad o ganlyniadau'r arolwg"
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
 "To generate a CSV file that lists all student answers to a given problem, "
-"enter the location of the problem (from its Staff Debug Info)."
+"enter the location of the problem (from its Staff Debug Info). "
 msgstr ""
 "I gynhyrchu ffeil CSV sy'n rhestru holl atebion y myfyrwyr i broblem "
-"benodol, rhowch leoliad y broblem (o'r wybodaeth dadfygio staff)."
+"benodol, rhowch leoliad y broblem (o'r wybodaeth dadfygio staff). "
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 #, fuzzy
 msgid "Problem location: "
-msgstr "Lleoliad y broblem:"
+msgstr "Lleoliad y broblem: "
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid "Download a CSV of problem responses"
@@ -19398,7 +19393,9 @@ msgstr "Dychwelyd i'ch dangosfwrdd"
 msgid ""
 "This website uses cookies to ensure you get the best experience on our "
 "website."
-msgstr "Mae'r wefan hon yn defnyddio cwcis i sicrhau eich bod yn cael y profiad gorau ar ein gwefan."
+msgstr ""
+"Mae'r wefan hon yn defnyddio cwcis i sicrhau eich bod yn cael y profiad gorau ar" 
+"ein gwefan"
 
 #: lms/templates/widgets/cookie-consent.html
 msgid "Got it!"
@@ -24050,9 +24047,6 @@ msgstr ""
 "gorau ar ein gwefan. Os ydych chi'n parhau i bori'r wefan hon, rydym yn "
 "deall eich bod chi'n derbyn y defnydd o gwcis."
 
-msgid "Got It!"
-msgstr "Got It!"
-
 msgid "First time here? Create an Account."
 msgstr "Y tro cyntaf yma? Creu cyfrif."
 
@@ -24069,7 +24063,7 @@ msgstr "Cyfeiriad e-bost neu enw defnyddiwr {platform_name} y dysgwr *"
 
 #, fuzzy
 msgid "Location of problem in course"
-msgstr "Lleoliad y broblem yn y cwrs *"
+msgstr "Lleoliad y broblem yn y cwrs"
 
 #, fuzzy
 msgid "For the specified problem, override the learner's score."
@@ -24416,3 +24410,24 @@ msgstr "Hidlydd..."
 
 msgid "Cookie Policy"
 msgstr "Polisi Cwci"
+
+msgid "Already have an {platform_name} account? Sign in."
+msgstr "Oes gennych gyfrif {platform_name} eisoes? Mewngofnodi."
+
+msgid "Create an Account"
+msgstr "Creu cyfrif"
+
+msgid "This is what you will use to login."
+msgstr "Dyma beth fyddwch chi'n ei ddefnyddio i fewngofnodi."
+
+msgid "Username must be between {min} and {max} characters long."
+msgstr ""
+
+msgid "Username must be between 2 and 30 characters long. The name that will identify you in your courses. It cannot be changed later"
+msgstr ""
+
+msgid "Enter a password."
+msgstr "Rhowch gyfrinair."
+
+msgid "Score Override"
+msgstr ""
