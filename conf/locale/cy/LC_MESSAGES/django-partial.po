@@ -2709,6 +2709,9 @@ msgid ""
 "(JSON format)"
 msgstr ""
 
+msgid "Certificate"
+msgstr "tystysgrif"
+
 #. Translators: This field is the container for course-specific certifcate
 #. configuration values
 #: common/lib/xmodule/xmodule/course_module.py
@@ -4650,6 +4653,8 @@ msgid ""
 "successfully completed, received a passing grade, and was awarded this "
 "{platform_name} {certificate_type} Certificate of Completion in "
 msgstr ""
+"wedi'i gwblhau'n llwyddiannus, derbyniwyd gradd llwyddo, a dyfarnwyd "
+"{platform_name} {certificate_type} Tystysgrif Cwblhau "
 
 #. Translators: This text describes the purpose (and therefore, value) of a
 #. course certificate
@@ -4697,7 +4702,7 @@ msgstr ""
 #. for the certificate
 #: lms/djangoapps/certificates/views/webview.py
 msgid "Issued On:"
-msgstr ""
+msgstr "Rhoddwyd ar:"
 
 #. Translators:  The Certificate ID Number is an alphanumeric value unique to
 #. each individual certificate
@@ -4777,11 +4782,6 @@ msgid ""
 "initiative of {partner_long_name}."
 msgstr ""
 
-#. Translators:  This text represents the description of course
-#: lms/djangoapps/certificates/views/webview.py
-#, python-brace-format
-msgid "a course of study offered by {partner_short_name}."
-msgstr ""
 
 #: lms/djangoapps/certificates/views/webview.py
 #, python-brace-format
@@ -9328,3 +9328,9 @@ msgid ""
 "A subcategory name for the discussion. This name appears in the left pane of"
 " the discussion forum for the course."
 msgstr ""
+
+msgid "Course Tools"
+msgstr "Rolau tîm y cwrs"
+
+msgid "a course of study offered by {partner_short_name}."
+msgstr "cwrs astudio a gynigir gan {partner_short_name}."

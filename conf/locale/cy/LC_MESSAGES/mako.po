@@ -1639,6 +1639,9 @@ msgstr "Cytunaf i'r {link_start}Telerau Gwasanaeth{link_end}"
 msgid "I agree to the {link_start}Honor Code{link_end}"
 msgstr "Cytunaf i'r {link_start}Côd anrhydedd{link_end}"
 
+msgid "I agree to the {platform_name} {terms_of_service}"
+msgstr "Rwy'n cytuno i {terms_of_service} {platform_name}"
+
 #: lms/templates/register-form.html lms/templates/signup_modal.html
 #: themes/stanford-style/lms/templates/register-form.html
 msgid "Create My Account"
@@ -4188,7 +4191,7 @@ msgstr "Sgorau'r problemau:"
 
 #: lms/templates/courseware/progress.html
 msgid "Practice Scores: "
-msgstr "Sgorau ymarferion:"
+msgstr "Sgorau ymarferion: "
 
 #: lms/templates/courseware/progress.html
 msgid "No problem scores in this section"
@@ -9071,6 +9074,9 @@ msgid "I agree to the {platform_name} Terms of Service and Honour Code"
 msgstr "Rwy'n cytuno i Amodau Gwasanaeth {platform_name} a Honor Code"
 
 msgid "CREATE ACCOUNT"
+msgstr "Creu cyfrif"
+
+msgid "Create Account"
 msgstr "Creu cyfrif"
 
 msgid "E-mail (required)"
