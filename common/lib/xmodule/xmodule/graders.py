@@ -386,6 +386,7 @@ class AssignmentFormatGrader(CourseGrader):
                     section_name = _("Generated")
 
                 else:
+                    subsection = scores[i]
                     earned = scores[i].graded_total.earned
                     possible = scores[i].graded_total.possible
                     section_name = scores[i].display_name
@@ -401,6 +402,7 @@ class AssignmentFormatGrader(CourseGrader):
                     possible=float(possible)
                 )
             else:
+                subsection = None
                 percentage = 0.0
                 # Translators: "Homework 1 - Unreleased - 0% (?/?)" The section has not been released for viewing.
                 summary = _(u"{section_type} {index} Unreleased - 0% (?/?)").format(
@@ -413,7 +415,7 @@ class AssignmentFormatGrader(CourseGrader):
             )
 
             breakdown.append({'percent': percentage, 'label': short_label,
-                              'detail': summary, 'category': self.category})
+                              'detail': summary, 'category': self.category, 'subsection': subsection})
 
         total_percent, dropped_indices = self.total_with_drops(breakdown)
 
@@ -434,7 +436,7 @@ class AssignmentFormatGrader(CourseGrader):
             )
             total_label = u"{short_label}".format(short_label=self.short_label)
             breakdown = [{'percent': total_percent, 'label': total_label,
-                          'detail': total_detail, 'category': self.category, 'prominent': True}, ]
+                          'detail': total_detail, 'category': self.category, 'prominent': True}]
         else:
             # Translators: "Homework Average = 0%"
             total_detail = _(u"{section_type} Average = {percent:.0%}").format(
