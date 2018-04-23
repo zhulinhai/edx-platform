@@ -435,8 +435,10 @@ class AssignmentFormatGrader(CourseGrader):
                 section_type=self.section_type,
             )
             total_label = u"{short_label}".format(short_label=self.short_label)
+            # In section_breakdown output we need to differentiate when is calculating the percent in a single entry
+            # just adding the only key.
             breakdown = [{'percent': total_percent, 'label': total_label,
-                          'detail': total_detail, 'category': self.category, 'prominent': True}]
+                          'detail': total_detail, 'category': self.category, 'prominent': True, 'only': True, 'subsection': subsection}]
         else:
             # Translators: "Homework Average = 0%"
             total_detail = _(u"{section_type} Average = {percent:.0%}").format(
@@ -451,7 +453,7 @@ class AssignmentFormatGrader(CourseGrader):
 
             if not self.hide_average:
                 breakdown.append({'percent': total_percent, 'label': total_label,
-                                  'detail': total_detail, 'category': self.category, 'prominent': True})
+                                  'detail': total_detail, 'category': self.category, 'prominent': True,})
 
         return {
             'percent': total_percent,
