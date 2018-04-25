@@ -337,7 +337,7 @@ msgstr[1] ""
 #: common/lib/xmodule/xmodule/js/src/capa/display.js
 msgid "%(earned)s/%(possible)s point (graded)"
 msgid_plural "%(earned)s/%(possible)s points (graded)"
-msgstr[0] "pwyntiau graddio"
+msgstr[0] "%(earned)s/%(possible)s pwyntiau (wedi’u graddio)"
 msgstr[1] ""
 
 #. Translators: %(earned)s is the number of points earned. %(possible)s is the
@@ -7979,7 +7979,7 @@ msgstr "Dechrau %(start)s"
 #: lms/templates/learner_dashboard/course_enroll_2017.underscore
 #: test_root/staticfiles/templates/learner_dashboard/course_enroll.underscore
 #: test_root/staticfiles/templates/learner_dashboard/course_enroll_2017.underscore
-msgid "Enroll Now"
+msgid "Enrol Now"
 msgstr "Cofrestru nawr"
 
 #: lms/templates/learner_dashboard/course_enroll.underscore
@@ -10716,8 +10716,8 @@ msgid ""
 "{\"one\"=>\"%(earned)s/%(possible)s point (graded)\", \"other\"=>"
 "\"%(earned)s/%(possible)s points (graded)\"}"
 msgstr ""
-"{\"one\"=>\"%(earned)s/%(possible)s pwynt (graded)\", \"other\"=>"
-"\"%(earned)s/%(possible)s pwynt (graded)\"}"
+"{\"one\"=>\"%(earned)s/%(possible)s pwyntiau (wedi’u graddio)\", \"other\"=>"
+"\"%(earned)s/%(possible)s pwyntiau (wedi’u graddio)\"}"
 
 msgid ""
 "{\"one\"=>\"%(earned)s/%(possible)s point (ungraded)\", \"other\"=>"
@@ -11316,3 +11316,6 @@ msgstr "(dewisol)"
 
 msgid "Select the highest level of education you have completed."
 msgstr "Dewiswch y lefel uchaf o addysg yr ydych wedi'i gwblhau."
+
+msgid "Or explore other courses"
+msgstr "Neu archwilio ar gyrsiau eraill"
