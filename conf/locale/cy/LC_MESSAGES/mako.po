@@ -4187,11 +4187,11 @@ msgstr "{earned} o'r {total} pwyntiau sy'n bosib"
 
 #: lms/templates/courseware/progress.html
 msgid "Problem Scores: "
-msgstr "Sgorau'r problemau:"
+msgstr "Sgoriau problem:"
 
 #: lms/templates/courseware/progress.html
 msgid "Practice Scores: "
-msgstr "Sgorau ymarferion: "
+msgstr "Sgoriau ymarfer: "
 
 #: lms/templates/courseware/progress.html
 msgid "No problem scores in this section"

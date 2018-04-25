@@ -14996,12 +14996,12 @@ msgstr "{earned} o'r {total} pwyntiau sy'n bosib"
 #: lms/templates/courseware/progress.html
 #, fuzzy
 msgid "Problem Scores: "
-msgstr "Sgorau'r problemau:"
+msgstr "Sgoriau problem:"
 
 #: lms/templates/courseware/progress.html
 #, fuzzy
 msgid "Practice Scores: "
-msgstr "Sgorau ymarferion: "
+msgstr "Sgoriau ymarfer: "
 
 #: lms/templates/courseware/progress.html
 msgid "No problem scores in this section"
@@ -24496,3 +24496,20 @@ msgstr "Y wlad neu'r rhanbarth lle rydych chi'n byw."
 
 msgid "Select your country or region of residence. The country or region where you live."
 msgstr "Dewiswch eich gwlad neu ranbarth preswylio. Y wlad neu'r rhanbarth lle rydych chi'n byw."
+
+msgid "Or explore other courses"
+msgstr "Neu archwilio ar gyrsiau eraill"
+
+msgid "Access courses on the go"
+msgstr "cyrsiau Mynediad ar y ewch"
+
+msgid "Download the app and access your courses wherever you are. Sync videos to your device and watch offline, at a time that suits you."
+msgstr "Lawrlwythwch yr app a mynediad eich cyrsiau lle bynnag yr ydych. Sync fideos i'ch dyfais a gwyliwch nhw all-lein, ar amser sy'n addas i chi"
+
+msgid "Learn online with CITB apprenticeships!"
+msgstr "Dysgwch-lein gyda phrentisiaethau CITB!"
+
+msgid "Stand out from the crowd - build your skills for a career in construction."
+msgstr "Sefyll allan oddi wrth y dorf - adeiladu eich sgiliau ar gyfer gyrfa yn y diwydiant adeiladu."
+
+
