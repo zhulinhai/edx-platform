@@ -7387,6 +7387,9 @@ msgstr "Addasu gradd dysgwr ar gyfer problem benodol"
 msgid "Location of problem in course *"
 msgstr "Lleoliad y broblem yn y cwrs *"
 
+msgid "Location of problem in course"
+msgstr "Lleoliad y broblem yn y cwrs"
+
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid "Example"
