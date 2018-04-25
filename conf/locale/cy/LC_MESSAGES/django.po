@@ -18068,9 +18068,8 @@ msgstr "Gweld llyfr graddau"
 msgid "View a specific learner's grades and progress"
 msgstr "Gweld graddau a chynnydd dysgwr penodol"
 
-#: lms/templates/instructor/instructor_dashboard_2/student_admin.html
-msgid "Learner's {platform_name} email address or username *"
-msgstr "Cyfeiriad e-bost neu enw defnyddiwr {platform_name} y dysgwr *"
+msgid "Learner's {platform_name} email address or username"
+msgstr "Cyfeiriad e-bost neu enw defnyddiwr {platform_name} y dysgwr"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid "Learner email address or username"
@@ -18084,9 +18083,8 @@ msgstr "Gweld tudalen broffil"
 msgid "Adjust a learner's grade for a specific problem"
 msgstr "Addasu gradd dysgwr ar gyfer problem benodol"
 
-#: lms/templates/instructor/instructor_dashboard_2/student_admin.html
-msgid "Location of problem in course *"
-msgstr "Lleoliad y broblem yn y cwrs *"
+msgid "Location of problem in course"
+msgstr "Lleoliad y broblem yn y cwrs"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
 msgid "Example"
@@ -24074,17 +24072,8 @@ msgid "We couldn't sign you in."
 msgstr "Ni fedrem eich mewngofnodi."
 
 #, fuzzy
-msgid "Learner's {platform_name} email address or username"
-msgstr "Cyfeiriad e-bost neu enw defnyddiwr {platform_name} y dysgwr *"
-
-#, fuzzy
-msgid "Location of problem in course"
-msgstr "Lleoliad y broblem yn y cwrs"
-
-#, fuzzy
 msgid "For the specified problem, override the learner's score."
-msgstr ""
-"Ar gyfer y broblem benodol, dilëwch atebion a sgoriau'r dysgwr yn barhaol ac "
+msgstr "Ar gyfer y broblem a nodwyd, yn diystyru sgôr y dysgwr."
 "yn llwyr o'r gronfa ddata."
 
 msgid ""
@@ -24162,14 +24151,6 @@ msgstr ""
 msgid "For technical questions, contact the support team directly below:"
 msgstr ""
 "Am gwestiynau technegol, cysylltwch â'r tîm cefnogi yn uniongyrchol isod:"
-
-#, fuzzy
-msgid ""
-"Please note: The support team is English speaking. While we will do our best "
-"to address your inquiry in any language, our responses will be in English."
-msgstr ""
-"Sylwer: Mae tîm cefnogi {platform_name} yn siarad Saesneg. Er y gwnawn ein "
-"gorau i ateb eich ymholiad mewn unrhyw iaith, bydd ein hymatebion yn Saesneg."
 
 msgid "You must consent to data sharing to register."
 msgstr "Rhaid i chi gytuno i rannu data er mwyn cofrestru."
@@ -24512,4 +24493,12 @@ msgstr "Dysgwch-lein gyda phrentisiaethau CITB!"
 msgid "Stand out from the crowd - build your skills for a career in construction."
 msgstr "Sefyll allan oddi wrth y dorf - adeiladu eich sgiliau ar gyfer gyrfa yn y diwydiant adeiladu."
 
+msgid "Options"
+msgstr "Opsiynau"
+
+msgid "These settings include basic information about your account."
+msgstr "Mae'r lleoliadau hyn yn cynnwys gwybodaeth sylfaenol am eich cyfrif."
+
+msgid "Have a question about something? You can contact the support team directly:"
+msgstr "Gennych gwestiwn am rywbeth? Gallwch gysylltu â'r tîm cymorth yn uniongyrchol:"
 
