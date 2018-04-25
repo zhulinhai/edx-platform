@@ -14669,11 +14669,11 @@ msgid "Course is full"
 msgstr "Mae'r cwrs yn llawn"
 
 #: lms/templates/courseware/course_about.html
-msgid "Enrollment in this course is by invitation only"
+msgid "Enrolment in this course is by invitation only"
 msgstr "Gellir ond cofrestru ar y cwrs hwn drwy wahoddiad yn unig"
 
 #: lms/templates/courseware/course_about.html
-msgid "Enrollment is Closed"
+msgid "Enrolment is Closed"
 msgstr "Mae cofrestru wedi cau"
 
 #: lms/templates/courseware/course_about.html
@@ -14996,7 +14996,7 @@ msgstr "{earned} o'r {total} pwyntiau sy'n bosib"
 #: lms/templates/courseware/progress.html
 #, fuzzy
 msgid "Problem Scores: "
-msgstr "Sgoriau problem:"
+msgstr "Sgoriau problem: "
 
 #: lms/templates/courseware/progress.html
 #, fuzzy
@@ -15299,8 +15299,7 @@ msgstr "Ni fyddwch yn derbyn ad-daliad am y swm a daloch."
 msgid ""
 "Are you sure you want to unenroll from %(course_name)s (%(course_number)s)?"
 msgstr ""
-"Ydych chi'n siŵr eich bod am ddadgofrestru o %(course_name)s "
-"(%(course_number)s)?"
+"Ydych chi'n siŵr eich bod am ddadgofrestru o %(course_name)s (%(course_number)s)?"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 #, fuzzy, python-format
@@ -24501,4 +24500,11 @@ msgstr "Mae'r lleoliadau hyn yn cynnwys gwybodaeth sylfaenol am eich cyfrif."
 
 msgid "Have a question about something? You can contact the support team directly:"
 msgstr "Gennych gwestiwn am rywbeth? Gallwch gysylltu â'r tîm cymorth yn uniongyrchol:"
+
+#: lms/templates/learner_dashboard/course_enroll.underscore
+#: lms/templates/learner_dashboard/course_enroll_2017.underscore
+#: test_root/staticfiles/templates/learner_dashboard/course_enroll.underscore
+#: test_root/staticfiles/templates/learner_dashboard/course_enroll_2017.underscore
+msgid "Enrol now"
+msgstr "Cofrestru nawr"
 

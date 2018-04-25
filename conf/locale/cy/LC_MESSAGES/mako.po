@@ -4187,7 +4187,7 @@ msgstr "{earned} o'r {total} pwyntiau sy'n bosib"
 
 #: lms/templates/courseware/progress.html
 msgid "Problem Scores: "
-msgstr "Sgoriau problem:"
+msgstr "Sgoriau problem: "
 
 #: lms/templates/courseware/progress.html
 msgid "Practice Scores: "
@@ -6126,7 +6126,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid "Problem location: "
-msgstr "Lleoliad y broblem:"
+msgstr "Lleoliad y broblem: "
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid "Download a CSV of problem responses"
@@ -9292,3 +9292,5 @@ msgstr "Gorchmynion wedi'u gosod"
 
 msgid "TOTAL"
 msgstr "CYFANSWM"
+
+
