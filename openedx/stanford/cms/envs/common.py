@@ -49,6 +49,7 @@ FEATURES.update({
     'CONTENT_VISIBILITY_NOTICE': True,
 })
 INSTALLED_APPS += (
+    'openedx.stanford.djangoapps.course_utils',
     # Added here to allow translations
     'freetextresponse',
 )
