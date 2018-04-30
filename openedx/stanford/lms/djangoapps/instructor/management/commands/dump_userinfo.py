@@ -19,7 +19,23 @@ from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from shoppingcart.models import PaidCourseRegistration
 
+# Future proof: In Ginko the function is renamed to new.course_grade_factory
+# by Hawthorn the function is renamed again to course_grade_factory
+try:
+    from lms.djangoapps.grades.new.course_grade import CourseGradeFactory
+except ImportError:
+    try:
+        from lms.djangoapps.grades.new.course_grade_factory import CourseGradeFactory
+    except ImportError:
+        from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
+
 from unidecode import unidecode
+
+from django.contrib.auth.models import User
+from courseware.courses import (
+    get_course_with_access,
+)
+
 
 PROFILE_FIELDS = [
     ('user__extrainfo__last_name', 'Last Name'),
@@ -148,6 +164,15 @@ class Command(BaseCommand):
             default=False,
             help='The amount of credits awarded for course completion.',
         ),
+        make_option(
+            '-g',
+            '--include-grades',
+            metavar='INCLUDE_GRADES',
+            dest='include_grades',
+            action='store_true',
+            default=False,
+            help='If you want the new version of the report.',
+        ),
     )
 
     def handle(self, *args, **options):
@@ -158,6 +183,7 @@ class Command(BaseCommand):
         end_date = datetime.strptime(options['end_date'], '%Y-%m-%d').replace(tzinfo=UTC)
         outfile_name = options['outfile']
         verbose = int(options['verbosity']) > 1
+        include_grades = options['include_grades']
 
         if not (course_id):
             raise CommandError('--course must be specified')
@@ -173,7 +199,12 @@ class Command(BaseCommand):
             outfile = tempfile.NamedTemporaryFile(suffix='.csv', delete=False)
             outfile_name = outfile.name
 
-        csv_fieldnames = [label for field, label in CME_SPECIFIC_ORDER if len(label) > 0]
+        if include_grades:
+            user_id = profiles[0]['user__id']
+            user = User.objects.get(id=user_id)
+            csv_fieldnames = self.build_new_columns(user, course_id)
+        else:
+            csv_fieldnames = [label for field, label in CME_SPECIFIC_ORDER if len(label) > 0]
 
         csvwriter = csv.DictWriter(outfile, fieldnames=csv_fieldnames, delimiter='\t', quoting=csv.QUOTE_ALL)
         csvwriter.writeheader()
@@ -195,6 +226,8 @@ class Command(BaseCommand):
         intervals = int(0.10 * total)
         if intervals > 100 and verbose:
             intervals = 101
+        if intervals < 1:
+            intervals = 1
 
         sys.stdout.write("Processing users")
 
@@ -207,6 +240,23 @@ class Command(BaseCommand):
                 'Attested': False,
             }
 
+            if include_grades:
+                # Get scores for each exam and user in a course,
+                # then create a dict that will associate the scores with the user
+                user = User.objects.get(id=user_id)
+                scores = self.get_scores(user, course_id)
+                exams = [
+                    {
+                        'score': grade['percent'],
+                        'label': grade['label'],
+                    }
+                    for grade in scores['section_breakdown']
+                ]
+
+                for exam in exams:
+                    label = exam['label']
+                    student_dict[label] = exam['score']
+
             for field, label in PROFILE_FIELDS:
                 if 'untracked' not in field and len(label) > 0:
                     student_dict[label] = profile[field]
@@ -216,7 +266,7 @@ class Command(BaseCommand):
             if registration:
                 self.add_fields_to(student_dict, ORDER_FIELDS, {user_id: registration.order}, user_id)
 
-                #Registration order special case values
+                # Registration order special case values
                 if student_dict['Payment Type'] == 'Visa':
                     student_dict['Payment Type'] = 'VISA'
 
@@ -267,6 +317,35 @@ class Command(BaseCommand):
 
         outfile.close()
         sys.stdout.write("Data written to {name}\n".format(name=outfile_name))
+
+    def build_new_columns(self, user, course_id):
+        """
+        Get the qualifiable units labels of the course,
+        and add each label of the exam as one new column to CSV
+        """
+        scores = self.get_scores(user, course_id)
+        exam_columns = []
+        for grade in scores['section_breakdown']:
+            percent = str(grade['percent'])
+            category = grade['label']
+            if category not in exam_columns:
+                exam_columns.append((percent, category))
+
+        new_cme_specific_order = CME_SPECIFIC_ORDER + exam_columns
+        csv_fieldnames = [
+            label
+            for field, label in new_cme_specific_order
+            if len(label) > 0
+        ]
+        return csv_fieldnames
+
+    def get_scores(self, user, course_id):
+        """
+        Return the scores for each qualifiable unit per user in a determinated course.
+        """
+        course = get_course_with_access(user, 'load', course_id, depth=None, check_if_enrolled=True)
+        course_grade = CourseGradeFactory().create(user, course)
+        return course_grade.summary
 
     def query_database_for(self, course_id):
         cme_profiles = CourseEnrollment.objects.select_related(
