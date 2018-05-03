@@ -23,8 +23,6 @@ from pytz import UTC
 
 from freezegun import freeze_time
 
-from student.views import LOGIN_LOCKOUT_PERIOD_PLUS_FIVE_MINUTES
-
 
 class ContentStoreTestCase(ModuleStoreTestCase):
     def _login(self, email, password):
@@ -208,13 +206,7 @@ class AuthTestCase(ContentStoreTestCase):
             data = parse_json(resp)
             self.assertFalse(data['success'])
             self.assertIn(
-                (
-                    "This account has been temporarily locked due to excessive login failures. "
-                    "Try again in {minutes} minutes.  For security reasons, "
-                    "resetting the password will NOT lift the lockout. Please wait for {minutes} minutes."
-                ).format(
-                    minutes=LOGIN_LOCKOUT_PERIOD_PLUS_FIVE_MINUTES,
-                ),
+                'This account has been temporarily locked due to excessive login failures. ',
                 data['value']
             )
 
