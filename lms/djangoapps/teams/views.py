@@ -49,6 +49,7 @@ from .serializers import (
     TopicSerializer,
     add_team_count
 )
+from .teams_features import ModifyTeams
 from .utils import emit_team_event
 
 TEAM_MEMBERSHIPS_PER_PAGE = 2
@@ -138,6 +139,7 @@ class TeamsDashboardView(GenericAPIView):
             CourseTeamSerializer,
             {'expand': ('user',)}
         )
+        fragment = ModifyTeams(request)
 
         context = {
             "course": course,
@@ -164,6 +166,7 @@ class TeamsDashboardView(GenericAPIView):
             "countries": list(countries),
             "disable_courseware_js": True,
             "teams_base_url": reverse('teams_dashboard', request=request, kwargs={'course_id': course_id}),
+            "fragment": fragment.get_fragment(),
         }
         return render_to_response("teams/teams.html", context)
 
