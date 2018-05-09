@@ -29,6 +29,8 @@ from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
 from django.contrib.admin import SimpleListFilter
 from datetime import date
 
+from django.contrib.auth.admin import UserAdmin
+
 csrf_protect_m = method_decorator(csrf_protect)
 sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
 
