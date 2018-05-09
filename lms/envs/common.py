@@ -2243,10 +2243,11 @@ INSTALLED_APPS = (
     'import_export',
 
     # Range Filter
-    'rangefilter'
+    'rangefilter',
 
-    #Custom campusromeor
+    #Custom campusromero
     'campusromero'
+
 )
 
 ######################### CSRF #########################################
