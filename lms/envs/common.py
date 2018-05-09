@@ -2246,7 +2246,7 @@ INSTALLED_APPS = (
     'rangefilter'
 
     #Custom campusromeor
-    'campusromero.common.djangoapps.auth_import_export'
+    'campusromero'
 )
 
 ######################### CSRF #########################################
