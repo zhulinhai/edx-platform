@@ -553,5 +553,4 @@ class UserAdmin(ImportExportModelAdmin):
         return super(UserAdmin, self).response_add(request, obj,
                                                    post_url_continue)
 
-
-#admin.site.register(User, UserAdmin)
+admin.site.register(User, UserAdmin)
