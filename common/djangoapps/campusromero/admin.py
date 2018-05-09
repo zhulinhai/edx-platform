@@ -29,6 +29,7 @@ from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
 from django.contrib.admin import SimpleListFilter
 from datetime import date
 
+from django.contrib.auth import get_user_model
 
 csrf_protect_m = method_decorator(csrf_protect)
 sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
@@ -551,6 +552,7 @@ class CustomUserAdmin(ImportExportModelAdmin):
         return super(CustomUserAdmin, self).response_add(request, obj,
                                                    post_url_continue)
 
-admin.site.unregister(User)
-admin.site.register(User, CustomUserAdmin)
-#admin.site.register(User, UserAdmin)
+admin.site.unregister(get_user_model())
+admin.site.register(get_user_model(), CustomUserAdmin)
+# admin.site.unregister(User)
+# admin.site.register(User, CustomUserAdmin)
