@@ -33,9 +33,6 @@ from datetime import date
 csrf_protect_m = method_decorator(csrf_protect)
 sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
 
-admin.site.unregister(User)
-admin.site.unregister(Group)
-
 class UserResource(resources.ModelResource):
     #columnas de UserProfile
     
@@ -393,7 +390,7 @@ class UserResource(resources.ModelResource):
             logging.info('after')
  
 
-class UserAdmin(ImportExportModelAdmin):
+class CustomUserAdmin(ImportExportModelAdmin):
     resource_class = UserResource
     add_form_template = 'admin/auth/user/add_form.html'
     change_user_password_template = None
@@ -432,7 +429,7 @@ class UserAdmin(ImportExportModelAdmin):
     def get_fieldsets(self, request, obj=None):
         if not obj:
             return self.add_fieldsets
-        return super(UserAdmin, self).get_fieldsets(request, obj)
+        return super(CustomUserAdmin, self).get_fieldsets(request, obj)
 
     def get_form(self, request, obj=None, **kwargs):
         """
@@ -442,18 +439,18 @@ class UserAdmin(ImportExportModelAdmin):
         if obj is None:
             defaults['form'] = self.add_form
         defaults.update(kwargs)
-        return super(UserAdmin, self).get_form(request, obj, **defaults)
+        return super(CustomUserAdmin, self).get_form(request, obj, **defaults)
 
     def get_urls(self):
         return [
             url(r'^(.+)/password/$', self.admin_site.admin_view(self.user_change_password), name='auth_user_password_change'),
-        ] + super(UserAdmin, self).get_urls()
+        ] + super(CustomUserAdmin, self).get_urls()
 
     def lookup_allowed(self, lookup, value):
         # See #20078: we don't want to allow any lookups involving passwords.
         if lookup.startswith('password'):
             return False
-        return super(UserAdmin, self).lookup_allowed(lookup, value)
+        return super(CustomUserAdmin, self).lookup_allowed(lookup, value)
 
     @sensitive_post_parameters_m
     @csrf_protect_m
@@ -483,7 +480,7 @@ class UserAdmin(ImportExportModelAdmin):
             'username_help_text': username_field.help_text,
         }
         extra_context.update(defaults)
-        return super(UserAdmin, self).add_view(request, form_url,
+        return super(CustomUserAdmin, self).add_view(request, form_url,
                                                extra_context)
 
     @sensitive_post_parameters_m
@@ -551,7 +548,9 @@ class UserAdmin(ImportExportModelAdmin):
         # * We are adding a user in a popup
         if '_addanother' not in request.POST and IS_POPUP_VAR not in request.POST:
             request.POST['_continue'] = 1
-        return super(UserAdmin, self).response_add(request, obj,
+        return super(CustomUserAdmin, self).response_add(request, obj,
                                                    post_url_continue)
 
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
 #admin.site.register(User, UserAdmin)
