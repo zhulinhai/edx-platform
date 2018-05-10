@@ -29,10 +29,10 @@ from rangefilter.filter import DateRangeFilter, DateTimeRangeFilter
 from django.contrib.admin import SimpleListFilter
 from datetime import date
 
-from django.contrib.auth import get_user_model
-
 csrf_protect_m = method_decorator(csrf_protect)
 sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
+
+admin.site.unregister(User)
 
 class UserResource(resources.ModelResource):
     #columnas de UserProfile
@@ -411,21 +411,25 @@ class CustomUserAdmin(ImportExportModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
+    # list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff'
+    #     ,'date_joined','Fecha_de_nacimiento')
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff'
-        ,'date_joined','Fecha_de_nacimiento')
+            ,'date_joined')
+    # list_filter = ('is_staff', 'is_superuser', 'is_active',
+    #     ('date_joined', DateRangeFilter),('nacimiento',DateRangeFilter),)
     list_filter = ('is_staff', 'is_superuser', 'is_active',
-        ('date_joined', DateRangeFilter),('nacimiento',DateRangeFilter),)
+        ('date_joined', DateRangeFilter))
     search_fields = ('username', 'first_name', 'last_name', 'email')
     ordering = ('username',)
     filter_horizontal = ('groups', 'user_permissions',)
 
     # Cambio de Sebas
-    def Fecha_de_nacimiento(self, obj):
-        try:
-            var = date(obj.nacimiento.year,obj.nacimiento.month,obj.nacimiento.day)
-        except:
-            var = ""
-        return var
+    # def Fecha_de_nacimiento(self, obj):
+    #     try:
+    #         var = date(obj.nacimiento.year,obj.nacimiento.month,obj.nacimiento.day)
+    #     except:
+    #         var = ""
+    #     return var
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
@@ -552,7 +556,4 @@ class CustomUserAdmin(ImportExportModelAdmin):
         return super(CustomUserAdmin, self).response_add(request, obj,
                                                    post_url_continue)
 
-admin.site.unregister(get_user_model())
-admin.site.register(get_user_model(), CustomUserAdmin)
-# admin.site.unregister(User)
-# admin.site.register(User, CustomUserAdmin)
+admin.site.register(User, CustomUserAdmin)

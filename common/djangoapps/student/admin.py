@@ -207,4 +207,4 @@ admin.site.register(RegistrationCookieConfiguration, ConfigurationModelAdmin)
 
 
 # We must first un-register the User model since it may also be registered by the auth app.
-admin.site.register(User, UserAdmin)
+# admin.site.register(User, UserAdmin)
