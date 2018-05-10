@@ -33,12 +33,22 @@ from openedx.core.djangolib.js_utils import (
     </div>
 </div>
 
+<%block name="rocket_chat">
+%if not fragment.discussion_is_available():
 
-${fragment.head_html() |n}
-<div class="hidden-rocket-chat">
-    ${fragment.body_html() |n}
-</div>
+    <% frag = fragment.get_fragment() %>
+    %if frag:
+        ${frag.head_html() |n}
 
+        <div class="hidden-rocket-chat">
+            ${frag.body_html() |n}
+        </div>
+
+        <%static:require_module module_name="teams/js/teams_features" class_name="TeamsView">
+        </%static:require_module>
+    %endif
+%endif
+</%block>
 
 <%block name="js_extra">
 
@@ -62,10 +72,6 @@ ${fragment.head_html() |n}
         teamsBaseUrl: '${teams_base_url | n, js_escaped_string}'
     });
 </%static:require_module>
-
-<%static:require_module module_name="teams/js/teams_features" class_name="TeamsView">
-</%static:require_module>
-
 </%block>
 
 <%include file="../discussion/_underscore_templates.html" />

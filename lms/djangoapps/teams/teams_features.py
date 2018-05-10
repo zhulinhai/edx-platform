@@ -1,88 +1,75 @@
 import logging
-import pkg_resources
 
+from django.conf import settings
 from web_fragments.fragment import Fragment
 
-from xmodule.x_module import STUDENT_VIEW
-from courseware.courses import get_course_by_id, get_course_with_access
-from opaque_keys.edx.keys import CourseKey
-from django.contrib.auth.models import User
-from courseware.module_render import get_module_for_descriptor
+from courseware.courses import get_course_by_id
 from courseware.model_data import FieldDataCache
+from courseware.module_render import get_module_for_descriptor
 from openedx.core.djangoapps.crawlers.models import CrawlersConfig
-CONTENT_DEPTH = 2
 
+from xmodule.x_module import STUDENT_VIEW
+
+CONTENT_DEPTH = 2
+SECTION_NAME = getattr(settings, "TEAM_SECTION", "Teams")
 LOG = logging.getLogger(__name__)
 
 
 class ModifyTeams(object):
     """this class alows to modifies the team's behavior"""
 
-    def __init__(self, request):
+    def __init__(self, request, user, course_key):
 
-        course_id = "course-v1:edX+E2E-101+course"
-        user = User.objects.filter( username="staff")
-        self.effective_user = user[0]
-        self.course_key = CourseKey.from_string(course_id)
+        self.effective_user = user
+        self.course_key = course_key
         self.course = get_course_by_id(self.course_key, CONTENT_DEPTH)
-        self.chapter_url_name = "d500be97e289446ea881b96bb77d3864"
-        self.section_url_name = "ce53628e4ccc4139a6507b3695a125be"
-        self.unit_url_name = "8a1f71613be44683ace5b45599487f04"
-        self.rocket_url_name = "65bc5128d6834b6483cfab904fe5a01e"
         self._prefetch_and_bind_course(request)
 
-        self.chapter = self._find_chapter()
         self.section = self._find_section()
+        self.subsection = self._find_subsection()
 
     def get_fragment(self):
         """This method allows to get a fragment from a course's section"""
-        section = self._find_unit()
-        frag = section.render(STUDENT_VIEW)
-        return frag
-
-    def _find_block(self, parent, url_name, block_type, min_depth=None):
-        """
-        Finds the block in the parent with the specified url_name.
-        If not found, calls get_current_child on the parent.
-        """
-        child = None
-        if url_name:
-            child = parent.get_child_by(lambda m: m.location.block_id == url_name)
-            if not child:
-                # User may be trying to access a child that isn't live yet
-                child = None
-            elif min_depth and not child.has_children_at_depth(min_depth - 1):
-                child = None
-        if not child:
-            child = get_current_child(
-                parent, min_depth=min_depth, requested_child=self.request.GET.get("child"))
-        return child
-
-    def _find_chapter(self):
-        """
-        Finds the requested chapter.
-        """
-        return self._find_block(self.course, self.chapter_url_name, 'chapter', CONTENT_DEPTH - 1)
-
-    def _find_unit(self):
-        """
-        Finds the requested chapter.
-        """
-        return self._find_block(self.section, self.unit_url_name, 'sequential', CONTENT_DEPTH - 1)
-
-    def _find_rocket(self):
-        """
-        Finds the requested chapter.
-        """
-        return self._find_block(self.unit, self.rocket_url_name, 'vertical', CONTENT_DEPTH - 1)
+        unit = self._find_unit()
+        if unit:
+            frag = unit.render(STUDENT_VIEW)
+            return frag
+        return None
 
     def _find_section(self):
         """
-        Finds the requested section.
+        Finds the section where the rocketChat's unit was defined.
         """
-        if self.chapter:
-            return self._find_block(self.chapter, self.section_url_name, 'section')
+        sections = self.course.get_children()
+        for section in sections:
+            if section.display_name==SECTION_NAME:
+                return section
+        LOG.warning("The section, where the rocketChat's unit was defined, is missing")
+        return None
 
+    def _find_subsection(self):
+        """
+        Finds the subsection.
+        """
+        if self.section:
+            subsections = self.section.get_children()
+            if len(subsections)==1:
+                return subsections[0]
+            else:
+                LOG.warning("Only one subsection must be defined")
+        return None
+
+    def _find_unit(self):
+        """
+        Finds the rocketchat's unit.
+        """
+        if self.subsection:
+            units = self.subsection.get_children()
+            if len(units)==1:
+                return units[0]
+            else:
+                LOG.warning("Only one unit must be defined")
+        return None
 
     def _prefetch_and_bind_course(self, request):
         """
@@ -104,8 +91,11 @@ class ModifyTeams(object):
             self.course_key,
             course=self.course,
         )
-    def resource_string(self, path):
-        """Handy helper for getting resources from our kit."""
-        # pylint: disable=no-self-use
-        data = pkg_resources.resource_string(__name__, path)
-        return data.decode("utf8")
+
+    def discussion_is_available(self):
+        """
+        This method checks if teams are using discussion
+        """
+        if "discussion_is_available" in self.course.teams_configuration:
+            return self.course.teams_configuration["discussion_is_available"]
+        return True
