@@ -33,22 +33,25 @@ from openedx.core.djangolib.js_utils import (
     </div>
 </div>
 
-<%block name="rocket_chat">
-%if not fragment.discussion_is_available():
+<% import waffle %>
+% if waffle.switch_is_active('rocket_chat_discussions'):
+    <%block name="rocket_chat">
+    %if not fragment.discussion_is_available():
 
-    <% frag = fragment.get_fragment() %>
-    %if frag:
-        ${frag.head_html() |n}
+        <% frag = fragment.get_fragment() %>
+        %if frag:
+            ${frag.head_html() |n}
 
-        <div class="hidden-rocket-chat">
-            ${frag.body_html() |n}
-        </div>
+            <div class="hidden-rocket-chat">
+                ${frag.body_html() |n}
+            </div>
 
-        <%static:require_module module_name="teams/js/teams_features" class_name="TeamsView">
-        </%static:require_module>
+            <%static:require_module module_name="teams/js/teams_features" class_name="TeamsView">
+            </%static:require_module>
+        %endif
     %endif
-%endif
-</%block>
+    </%block>
+% endif
 
 <%block name="js_extra">
 
