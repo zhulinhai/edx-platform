@@ -10,7 +10,7 @@
 
             $(window).load(function() {
 
-                $( "div.discussion-module" ).replaceWith( xblock);
+                $("div.discussion-module").replaceWith(xblock);
                 $(".loading-animation").hide()
 
                 var targetNode = $(".teams-content")[0];
@@ -21,7 +21,7 @@
                 // Callback function to execute when mutations are observed
                 function fnHandler () {
                     if($("div.discussion-module")[0]){
-                        $( "div.discussion-module" ).replaceWith( xblock);
+                        $("div.discussion-module").replaceWith(xblock);
                         $(".loading-animation").hide()
                     }
                 }
