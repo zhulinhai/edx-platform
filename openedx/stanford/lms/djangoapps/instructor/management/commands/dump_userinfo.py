@@ -36,6 +36,9 @@ from courseware.courses import (
     get_course_with_access,
 )
 
+if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
+    from openedx.stanford.djangoapps.register_cme.models import ExtraInfo
+
 
 PROFILE_FIELDS = [
     ('user__extrainfo__last_name', 'Last Name'),
@@ -199,6 +202,9 @@ class Command(BaseCommand):
             outfile = tempfile.NamedTemporaryFile(suffix='.csv', delete=False)
             outfile_name = outfile.name
 
+        sys.stdout.write("Fetching enrolled students for {course}...".format(course=course_id))
+        certificates, profiles, registrations, unpaid_registrations = self.query_database_for(course_id)
+
         if include_grades:
             user_id = profiles[0]['user__id']
             user = User.objects.get(id=user_id)
@@ -206,12 +212,8 @@ class Command(BaseCommand):
         else:
             csv_fieldnames = [label for field, label in CME_SPECIFIC_ORDER if len(label) > 0]
 
-        csvwriter = csv.DictWriter(outfile, fieldnames=csv_fieldnames, delimiter='\t', quoting=csv.QUOTE_ALL)
+        csvwriter = csv.DictWriter(outfile, fieldnames=csv_fieldnames, delimiter=',', quoting=csv.QUOTE_ALL)
         csvwriter.writeheader()
-
-        sys.stdout.write("Fetching enrolled students for {course}...".format(course=course_id))
-
-        certificates, profiles, registrations, unpaid_registrations = self.query_database_for(course_id)
 
         registration_table = self.build_user_table(registrations)
         unpaid_registration_table = self.build_user_table(unpaid_registrations)
@@ -259,7 +261,10 @@ class Command(BaseCommand):
 
             for field, label in PROFILE_FIELDS:
                 if 'untracked' not in field and len(label) > 0:
-                    student_dict[label] = profile[field]
+                    try:
+                        student_dict[label] = profile[field]
+                    except KeyError:
+                        student_dict[label] = '{} KeyError'.format(field)
 
             registration = self.add_fields_to(student_dict, REGISTRATION_FIELDS, registration_table, user_id)
 
@@ -348,16 +353,18 @@ class Command(BaseCommand):
         return course_grade.summary
 
     def query_database_for(self, course_id):
-        cme_profiles = CourseEnrollment.objects.select_related(
-            'user__extrainfo',
-            'user__profile',
-        ).filter(
-            course_id=course_id,
-        ).values(
-            *[field for field, label in PROFILE_FIELDS if 'untracked' not in field]
-        ).order_by(
-            'user__username',
-        )
+        if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
+            cme_profiles = CourseEnrollment.objects.select_related(
+                'user__extrainfo',
+                'user__profile',
+            ).filter(
+                course_id=course_id,
+            ).values(
+                *[field for field, label in PROFILE_FIELDS if 'untracked' not in field]
+            ).order_by(
+                'user__username',
+            )
+
         unpaid_registrations = CourseEnrollment.objects.filter(course_id=course_id)
         registrations = PaidCourseRegistration.objects.filter(status='purchased', course_id=course_id)
         certificates = GeneratedCertificate.objects.filter(course_id=course_id)
