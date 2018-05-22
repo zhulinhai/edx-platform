@@ -99,3 +99,18 @@ class ModifyTeams(object):
         if "discussion_is_available" in self.course.teams_configuration:
             return self.course.teams_configuration["discussion_is_available"]
         return True
+
+    def get_fragment_sga(self):
+        """"""
+        sections = self.course.get_children()
+        for section in sections:
+            if section.display_name=="SGA":
+                s = section
+                subsections = s.get_children()
+                if len(subsections)==1:
+                    sub = subsections[0]
+                    units = sub.get_children()
+                    if len(units)==1:
+                        unit = units[0]
+                        frag = unit.render(STUDENT_VIEW)
+                        return frag

@@ -39,10 +39,13 @@ from openedx.core.djangolib.js_utils import (
 <%block name="footer_extra">
 %if waffle.switch_is_active('rocket_chat_discussions') and not fragment.discussion_is_available():
     <% frag = fragment.get_fragment() %>
+    <% sga = fragment.get_fragment_sga() %>
     %if frag:
         ${frag.head_html() |n}
+        ${sga.foot_html() |n}
         <div class="hidden-rocket-chat" style="display: none;">
             ${frag.body_html() |n}
+            ${sga.body_html() |n}
         </div>
     %endif
 %endif
