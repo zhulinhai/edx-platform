@@ -5,13 +5,13 @@
 
         function($) {
 
-            var xblock = $(".xblock-student_view-vertical");
+            var xblock = $(".xblock-student_view-rocketc");
             $(".hidden-rocket-chat").hide()
 
             $(window).load(function() {
 
-                $("div.discussion-module").replaceWith(xblock);
-                $(".loading-animation").hide()
+                $(".discussion-module").hide();
+                $(".team-profile").find(".page-content-main").append(xblock);
 
                 var targetNode = $(".teams-content")[0];
 
@@ -20,9 +20,9 @@
 
                 // Callback function to execute when mutations are observed
                 function fnHandler () {
-                    if($("div.discussion-module")[0]){
-                        $("div.discussion-module").replaceWith(xblock);
-                        $(".loading-animation").hide()
+                    if($("div.discussion-module")[0] && !$(".page-content-main").find(".xblock-student_view-rocketc")[0]){
+                        $(".discussion-module").hide();
+                        $(".team-profile").find(".page-content-main").append(xblock);   
                     }
                 }
                 // Create an observer instance linked to the callback function
