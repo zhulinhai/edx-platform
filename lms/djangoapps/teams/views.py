@@ -165,7 +165,6 @@ class TeamsDashboardView(GenericAPIView):
             "countries": list(countries),
             "disable_courseware_js": True,
             "teams_base_url": reverse('teams_dashboard', request=request, kwargs={'course_id': course_id}),
-            "fragment": ModifyTeams(request, user, course_key),
         }
         return render_to_response("teams/teams.html", context)
 
@@ -1265,3 +1264,32 @@ class MembershipDetailView(ExpandableFieldViewMixin, GenericAPIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+class TeamsRocketChatView(GenericAPIView):
+    """
+    RocketChat view
+    """
+
+    def get(self, request, course_id):
+        """
+        Renders the Xblock RocketChat
+
+        Raises a 404 if the course specified by course_id does not exist, the
+        user is not registered for the course, or the teams feature is not enabled.
+        """
+        course_key = CourseKey.from_string(course_id)
+        course = get_course_with_access(request.user, "load", course_key)
+
+        if not is_feature_enabled(course):
+            raise Http404
+
+        if not CourseEnrollment.is_enrolled(request.user, course.id) and \
+                not has_access(request.user, 'staff', course, course.id):
+            raise Http404
+
+        user = request.user
+
+        context = {
+            "fragment": ModifyTeams(request, user, course_key),
+        }
+        return render_to_response("teams/rocket_chat_discussion.html", context)
