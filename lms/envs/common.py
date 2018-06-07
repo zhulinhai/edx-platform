@@ -3447,6 +3447,13 @@ FERNET_KEYS = [
     'DUMMY KEY CHANGE BEFORE GOING TO PRODUCTION',
 ]
 
+############### Settings for external certificates interventions ##################
+EXTERNAL_CERTIFICATES_ORG_DISPLAY_NAMES = []
+EXTERNAL_CERTIFICATES_HTTP_REFERERS = []
+EXTERNAL_CERTIFICATES_HTTP_USER_AGENT = []
+EXTERNAL_CERTIFICATES_IPS_SUBNETS = []
+EXTERNAL_CERTIFICATES_INTERVENTION_DEBUG = False
+
 ############## Plugin Django Apps #########################
 
 from openedx.core.djangoapps.plugins import plugin_apps, plugin_settings, constants as plugin_constants
