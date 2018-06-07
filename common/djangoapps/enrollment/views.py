@@ -6,6 +6,7 @@ consist primarily of authentication, request validation, and serialization.
 import logging
 
 from course_modes.models import CourseMode
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
@@ -39,6 +40,8 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 from six import text_type
+from ipaddress import ip_address, ip_network
+from courseware import courses
 from student.auth import user_has_role
 from student.models import User
 from student.roles import CourseStaffRole, GlobalStaff
@@ -48,6 +51,61 @@ log = logging.getLogger(__name__)
 REQUIRED_ATTRIBUTES = {
     "credit": ["credit:provider_id"],
 }
+
+
+def course_requires_intervention(course):
+    """
+    Analyzes the course to determine if an intervention is necessary
+
+    The requirements for the intervention are:
+    - the course has an org display name
+    - the org display name is different than the org id
+    - the org display name is in a whitelist
+    """
+    org_display_name = course.display_org_with_default
+    is_org_whitelisted = org_display_name in settings.EXTERNAL_CERTIFICATES_ORG_DISPLAY_NAMES
+    is_display_name_different = course.org != org_display_name
+    return is_org_whitelisted and is_display_name_different
+
+
+def call_origin_requires_intervention(request):
+    """
+    Analyzes the request to determine whether the remote caller should have
+    the data intevened.
+
+    For the analysis the referer, user agent and IP are checked agains a whitelist
+    If any of those fields dont match the whitelist, return false, so that no
+    intevention occurs
+    """
+    referer = request.META.get('HTTP_REFERER')
+    user_agent = request.META.get('HTTP_USER_AGENT')
+    remote_addr = request.META.get('REMOTE_ADDR')
+
+    if request.GET.get('force_intervention', False):
+        return True
+
+    if referer not in settings.EXTERNAL_CERTIFICATES_HTTP_REFERERS:
+        if settings.EXTERNAL_CERTIFICATES_INTERVENTION_DEBUG:
+            log.info("The HTTP_REFERER [%s] for this request is not selected for intervention.", referer)
+        return False
+
+    if user_agent not in settings.EXTERNAL_CERTIFICATES_HTTP_USER_AGENT:
+        if settings.EXTERNAL_CERTIFICATES_INTERVENTION_DEBUG:
+            log.info("The HTTP_USER_AGENT [%s] for this request is not selected for intervention.", user_agent)
+        return False
+
+    try:
+        ip = ip_address(unicode(remote_addr))
+    except ValueError:
+        log.info("Could not determine REMOTE_ADDR for intervention")
+        ip = ip_address(u"127.0.0.1")
+    ip_not_in_whitelisted_ranges = all(ip not in ip_network(unicode(x)) for x in settings.EXTERNAL_CERTIFICATES_IPS_SUBNETS)
+    if ip_not_in_whitelisted_ranges:
+        if settings.EXTERNAL_CERTIFICATES_INTERVENTION_DEBUG:
+            log.info("The REMOTE_ADDR [%s] for this request is not selected for intervention.", remote_addr)
+        return False
+
+    return True
 
 
 class EnrollmentCrossDomainSessionAuth(SessionAuthenticationAllowInactiveUser, SessionAuthenticationCrossDomainCsrf):
@@ -577,13 +635,32 @@ class EnrollmentListView(APIView, ApiKeyPermissionMixIn):
             )
         if username == request.user.username or GlobalStaff().has_user(request.user) or \
                 self.has_api_key_permissions(request):
-            return Response(enrollment_data)
+            return Response(self.process_orgs(enrollment_data, request))
         filtered_data = []
         for enrollment in enrollment_data:
             course_key = CourseKey.from_string(enrollment["course_details"]["course_id"])
             if user_has_role(request.user, CourseStaffRole(course_key)):
                 filtered_data.append(enrollment)
-        return Response(filtered_data)
+        return Response(self.process_orgs(filtered_data, request))
+
+    def process_orgs(self, data, request):
+        """
+        Analyze each enrollment and determine if the displayed org needs to be changed to
+        the org display name
+        """
+        for enrollment in data:
+            course_key = CourseKey.from_string(enrollment["course_details"]["course_id"])
+            course = courses.get_course_by_id(course_key)
+
+            # Find if the course is candidate for intervention
+            # Check that the API call origin requires intervention
+            if course_requires_intervention(course) and call_origin_requires_intervention(request):
+                # Do the intervention
+                org_display_name = course.display_org_with_default
+                enrollment["course_details"]["course_id"] = unicode(course_key.replace(org=org_display_name))
+                log.info("The course [%s] had its org intervened to [%s].", course_key, org_display_name)
+
+        return data
 
     def post(self, request):
         """Enrolls the currently logged-in user in a course.

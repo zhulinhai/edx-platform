@@ -3472,6 +3472,12 @@ FERNET_KEYS = [
 # Maximum number of rows to fetch in XBlockUserStateClient calls. Adjust for performance
 USER_STATE_BATCH_SIZE = 5000
 
+############### Settings for external certificates interventions ##################
+EXTERNAL_CERTIFICATES_ORG_DISPLAY_NAMES = []
+EXTERNAL_CERTIFICATES_HTTP_REFERERS = []
+EXTERNAL_CERTIFICATES_HTTP_USER_AGENT = []
+EXTERNAL_CERTIFICATES_IPS_SUBNETS = []
+EXTERNAL_CERTIFICATES_INTERVENTION_DEBUG = False
 
 ############## Plugin Django Apps #########################
 
