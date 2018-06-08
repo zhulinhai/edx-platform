@@ -17,6 +17,7 @@ from enrollment.errors import (
 )
 from enrollment.serializers import CourseEnrollmentSerializer, CourseSerializer
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.lib.exceptions import CourseNotFoundError
 from student.models import (
     AlreadyEnrolledError,
@@ -28,6 +29,26 @@ from student.models import (
 )
 
 log = logging.getLogger(__name__)
+
+
+def filter_enrollments(enrollments):
+    """
+    Given a list of enrollment objects, we filter out the enrollments to orgs that
+    do not belong to the current site
+    """
+
+    orgs_to_include = configuration_helpers.get_value('course_org_filter', [])
+    for enrollment in enrollments:
+
+        org = enrollment.course_id.org
+
+        # Filter out anything that is not attributed to the inclusion rule.
+        if orgs_to_include and org not in orgs_to_include:
+            continue
+
+        # Else, include the enrollment.
+        else:
+            yield enrollment
 
 
 def get_course_enrollments(user_id):
@@ -47,7 +68,7 @@ def get_course_enrollments(user_id):
         is_active=True
     ).order_by('created')
 
-    enrollments = CourseEnrollmentSerializer(qset, many=True).data
+    enrollments = CourseEnrollmentSerializer(filter_enrollments(qset), many=True).data
 
     # Find deleted courses and filter them out of the results
     deleted = []
