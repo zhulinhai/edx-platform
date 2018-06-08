@@ -38,8 +38,8 @@ export FIREFOX_FILE="downloads/firefox_45.0.2%2Bbuild1-0ubuntu1_amd64.deb"
 if [ -f $FIREFOX_FILE ]; then
    echo "File $FIREFOX_FILE found."
 else
-   echo "Downloading firefox_45.0.2%2Bbuild1-0ubuntu1_amd64.deb."
-   curl --silent --show-error --location --fail --retry 3 --output $FIREFOX_FILE https://s3.amazonaws.com/vagrant.testeng.edx.org/firefox_45.0.2%2Bbuild1-0ubuntu1_amd64.deb
+   echo "Downloading firefox_59.0.1%2Bbuild1-0ubuntu0.16.04.1_amd64.deb."
+   curl --silent --show-error --location --fail --retry 3 --output $FIREFOX_FILE https://s3.amazonaws.com/vagrant.testeng.edx.org/firefox_59.0.1%2Bbuild1-0ubuntu0.16.04.1_amd64.deb
 fi
 dpkg -i $FIREFOX_FILE || DEBIAN_FRONTEND=noninteractive apt-get -fyq install
 firefox --version
