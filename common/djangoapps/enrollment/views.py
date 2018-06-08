@@ -78,6 +78,9 @@ def call_origin_requires_intervention(request):
     user_agent = request.META.get('HTTP_USER_AGENT')
     remote_addr = request.META.get('REMOTE_ADDR')
 
+    if request.GET.get('force_intervention', False):
+        return True
+
     if referer not in settings.EXTERNAL_CERTIFICATES_HTTP_REFERERS:
         if settings.EXTERNAL_CERTIFICATES_INTERVENTION_DEBUG:
             log.info("The HTTP_REFERER [%s] for this request is not selected for intervention.", referer)
