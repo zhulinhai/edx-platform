@@ -1,0 +1,27 @@
+@media (min-width: 992px) {
+  header.global-header .nav-links .secondary a.register-btn {
+    background-color: $button-color-register;
+    color:$secondary;
+    border: none;
+  }
+}
+
+@media (min-width: 992px) {
+  header.global-header .nav-links .secondary a.sign-in-btn {
+    background-color: $button-color-login;
+    border: 1px solid $secondary;
+    color:$secondary;
+  }
+}
+
+ .main-header .nav-links .main
+ .mobile-nav-item.hidden-mobile.nav-item.nav-tab .btn {
+  padding: 10px;
+  color: $inverse;
+}
+
+@media (min-width: 992px){
+  .global-header .nav-links .main .nav-tab a {
+      padding: 10px;
+  }
+}

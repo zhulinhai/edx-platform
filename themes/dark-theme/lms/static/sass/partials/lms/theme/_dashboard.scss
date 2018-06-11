@@ -1,0 +1,20 @@
+.dashboard .main-container .my-courses
+.course .details .enter-course {
+  color: $primary-font-color;
+  background: $primary;
+}
+
+.wrapper-messages-primary .message.message-upsell .action-upgrade {
+  background: $color-button-upgrade;
+  color: $primary-font-color;
+}
+
+
+.wrapper-messages-primary .message.message-upsell
+.action-upgrade span {
+  color: $primary-font-color;
+}
+
+div.my-courses div.empty-dashboard-message {
+	background: $gray-l5;
+}

@@ -5,11 +5,68 @@
 // Note: define colors needed by your theme first
 
 // Make the theme white on black
-$primary: #fff;
-$inverse: #000;
+
+//color
+$primary: #D2DB0E;
+$inverse: #2A2A2A;
+$secondary: #FFF;
+$container-bg: $inverse;
+$homepage-background: $inverse;
+$body-bg:$inverse;
+$action-primary-bg: $primary;
+$course-profile-bg: $inverse;
+$body-color:$secondary;
+$headings-base-color: $secondary !default;
+$course-header-bg: $inverse;
+$sidebar-color:#3A3A3A;
+$primary-font-color: $secondary;
+$link-color: $secondary;
+$link-hover: #FFB725;
+$forum-color-copy-light: $secondary;
+$lighter-base-font-color: $secondary;
+$color-button-upgrade: #008638;
+$btn-brand-focus-border-color: rgba(210, 219, 14, 0.5);
+$btn-brand-focus-background: rgba(210, 219, 14, 0.5);
+$pearson-grey: grey;
+$color-hover-icon-courses:#BFBFBF;
+
+//color inline
+$uxpl-blue-hover-active: $primary;
+$uxpl-gray-base: $secondary;
+$black: $secondary;
+$gray-d2: $secondary;
+$dark: $secondary;
+$lightest: $inverse;
+$white: $inverse;
+$blue: $primary;
+$gray-d3: $secondary;
+$light: #3A3A3A;
+$gray-l4: $inverse;
+$gray-l5: #3A3A3A;
+$gray-l6: $gray-l5;
+$dark-gray1: $primary-font-color;
+$dark-gray: $primary-font-color;
+$gray:$secondary;
 
 // Theme fonts
-$font-family-sans-serif: cursive;
+$font-family-sans-serif: Open Sans;
+$serif: Playfair Display;
 
 // Initialize the Open edX Bootstrap theme
 @import 'edx-bootstrap/sass/open-edx/theme';
+
+//navigation
+$button-color-login: $inverse;
+$button-color-register: #0075B4;
+
+//login and register
+$background-color-form-login-register: $inverse;
+
+//courses
+$background-color-courses: $inverse;
+
+//profile
+$background-color-profile: $inverse;
+
+//course-info
+$background-color-info: $inverse;

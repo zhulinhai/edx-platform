@@ -7,3 +7,51 @@
 // rules into modular pieces.
 
 @import 'certificates';
+@import 'login-register';
+@import 'courses';
+@import 'navigation';
+@import 'footer';
+@import 'profile';
+@import 'index';
+@import 'dashboard';
+
+//generals
+
+html, button, input , textarea {
+  color:$primary-font-color !important;
+}
+
+select, option, optgroup {
+  color: $primary-font-color !important;
+  background-color: $inverse;
+}
+
+a {
+  color: $primary;
+}
+
+.btn {
+  border-color: $inverse;
+  background: $primary ;
+  color:$primary-font-color ;
+}
+
+.btn:hover, .is-hovered.btn, .btn:focus, .is-focused.btn {
+  border-color: $inverse;
+  background: $primary ;
+}
+
+@media (min-width: 768px) {
+  .content-wrapper {
+     padding: 0 0 10px;
+  }
+}
+
+.submit-attempt-container {
+  .btn-primary:disabled, .btn-brand:disabled,
+  .btn-primary.is-disabled, .is-disabled.btn-brand {
+    border-color: $pearson-grey;
+    background: $pearson-grey;
+  }
+}
+
