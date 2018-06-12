@@ -31,13 +31,6 @@ class ModifyTeams(object):
     def get_fragment(self):
         """This method allows to get a fragment from a course's section"""
         unit = self._find_unit()
-
-        child = unit.get_children()
-        child = child[0]
-        locator = child.parent
-        locator = locator.to_deprecated_string()
-
-
         if unit:
             frag = unit.render(STUDENT_VIEW)
             return frag
@@ -108,7 +101,9 @@ class ModifyTeams(object):
         return True
 
     def get_rocket_chat_locator(self):
-
+        """
+        This method gets the locator for a unique component in a unit.
+        """
         unit = self._find_unit()
         child = unit.get_children()
         child = child[0]
