@@ -64,7 +64,8 @@ from openedx.core.djangolib.js_utils import (
         courseID: '${unicode(course.id) | n, js_escaped_string}',
         userInfo: ${user_info | n, dump_js_escaped_json},
         teamsUrl: '${teams_url | n, js_escaped_string}',
-        teamsBaseUrl: '${teams_base_url | n, js_escaped_string}'
+        teamsBaseUrl: '${teams_base_url | n, js_escaped_string}',
+        rocketChatLocator: '${rocket_chat_locator | n, js_escaped_string}'
     });
     </%static:require_module>
 %endif
