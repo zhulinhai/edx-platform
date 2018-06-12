@@ -5,35 +5,38 @@
     var xblock;
     var teams;
 
-    function createRocketChatDiscussion(data){
-        var style = $(data)[0];
-        xblock = $(data).find(".xblock-student_view-rocketc");
-        $("head").append(style);
-         $(".discussion-module").hide();
-        if ($("div.discussion-module")[0] && !$(".page-content-main").find(".xblock-student_view-rocketc")[0]){
-            $(".team-profile").find(".page-content-main").append(xblock);
-        }else if ($(".page-content-main").find(".xblock-student_view-rocketc")[0]){
-            $(".xblock-student_view-rocketc").replaceWith(xblock);
-        }
+    function createRocketChatDiscussion(urlRocketChat){
 
-    };
 
-    function loadRocketChat(url){
-        $.ajax({
-            url: url,
-            success: createRocketChatDiscussion
+        var iframe = $('<iframe>', {
+            src: urlRocketChat,
+            id:  "rocketChatXblock",
+            style: "width: 100%; border: none;",
+            scrolling: 'no'
+            });
+
+        iframe.load(function() {
+            $(this).height( $(this).contents().find("body").height() );
         });
-    }
+
+        $(".discussion-module").hide();
+        if ($("div.discussion-module")[0] && !$(".page-content-main").find("#rocketChatXblock")[0]){
+            $(".team-profile").find(".page-content-main").append(iframe);
+        }else if ($(".page-content-main").find("#rocketChatXblock")[0]){
+            $("#rocketChatXblock").attr("src", urlRocketChat)
+        }
+        xblock = iframe;
+    };
 
     function actionsButtons(urlRocketChat){
         $( ".join-team .action" ).unbind().click(function() {
-            loadRocketChat(urlRocketChat);
+            createRocketChatDiscussion(urlRocketChat);
         });
         $( ".create-team .action" ).unbind().click(function() {
-            loadRocketChat(urlRocketChat);
+            createRocketChatDiscussion(urlRocketChat);
         });
         $( ".action-primary" ).unbind().click(function() {
-            loadRocketChat(urlRocketChat);
+            createRocketChatDiscussion(urlRocketChat);
         });
     }
 
@@ -62,15 +65,14 @@
         function($) {
 
             return function(options){
-                var baseUrl = options.teamsBaseUrl;
-                var urlRocketChat = baseUrl + "rocket-chat-discussion";
+                var urlRocketChat = "/xblock/"+options.rocketChatLocator;
                 teams = options.userInfo.teams;
 
                 $(window).load(function() {
 
                     $(".discussion-module").hide();
 
-                    loadRocketChat(urlRocketChat);
+                    createRocketChatDiscussion(urlRocketChat);
                     actionsButtons(urlRocketChat);
                     removeBrowseTab(teams);
 
@@ -81,7 +83,7 @@
 
                     // Callback function to execute when mutations are observed
                     function fnHandler () {
-                        if ($("div.discussion-module")[0] && !$(".page-content-main").find(".xblock-student_view-rocketc")[0]){
+                        if ($("div.discussion-module")[0] && !$(".page-content-main").find("#rocketChatXblock")[0]){
                             $(".discussion-module").hide();
                             $(".team-profile").find(".page-content-main").append(xblock);
                         }
