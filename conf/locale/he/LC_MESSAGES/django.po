@@ -175,7 +175,7 @@ msgstr ""
 #: cms/djangoapps/contentstore/views/videos.py
 #: lms/djangoapps/class_dashboard/dashboard_data.py
 #: lms/djangoapps/instructor/views/api.py lms/templates/help_modal.html
-#: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html
+#: //instructor_dashboard_2/generate_registarion_codes_modal.html
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
 #: lms/templates/shoppingcart/billing_details.html
 #: lms/templates/shoppingcart/receipt.html
@@ -9631,6 +9631,12 @@ msgid ""
 "note that {platform_name} has a different {privacy_policy_link_start}Privacy"
 " Policy{privacy_policy_link_end} from {enterprise_name}."
 msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/sensitive_data_download_msg.txt
+msgid ""
+"Contains information protected under the Protection of Privacy Law - the "
+"wrongful transgressor commits an offense"
+msgstr "מכיל מידע מוגן לפי חוק הגנת הפרטיות - המוסר שלא כדין עובר עביר"
 
 #: lms/templates/logout.html
 msgid "Signed Out"
