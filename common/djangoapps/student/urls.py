@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^email_confirm/(?P<key>[^/]*)$', views.confirm_email_change, name='confirm_email_change'),
 
     url(r'^create_account$', views.create_account, name='create_account'),
+    url(r'^delete_user$', views.delete_user, name='delete_user'),
     url(r'^activate/(?P<key>[^/]*)$', views.activate_account, name="activate"),
 
     url(r'^accounts/disable_account_ajax$', views.disable_account_ajax, name="disable_account_ajax"),

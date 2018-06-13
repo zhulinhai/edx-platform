@@ -3251,3 +3251,46 @@ def text_me_the_app(request):
     }
 
     return render_to_response('text-me-the-app.html', context)
+
+@require_POST
+@login_required
+@ensure_csrf_cookie
+def delete_user(request):
+    """
+    View to delete contained list of usernames
+    """
+    if not request.user.is_staff:
+        raise Http404
+    
+    user_list = request.POST.get("users").split(",")
+    results = {}
+    for user_name in user_list:
+        results[user_name] = self._delete_user(user_name)
+    
+    return JsonResponse(results)
+        
+
+def _delete_user(self, uname):
+        """Deletes a user from django auth"""
+
+        if not uname:
+            return _('Must provide username')
+        if '@' in uname:
+            try:
+                user = User.objects.get(email=uname)
+            except User.DoesNotExist, err:
+                msg = _('Cannot find user with email address {email_addr}').format(email_addr=uname)
+                return msg
+        else:
+            try:
+                user = User.objects.get(username=uname)
+            except User.DoesNotExist, err:
+                msg = _('Cannot find user with username {username} - {error}').format(
+                    username=uname,
+                    error=str(err)
+                )
+                return msg
+        user.delete()
+        return _('Deleted user {username}').format(username=uname)
+    
+    
