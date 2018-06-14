@@ -100,6 +100,7 @@ git+https://github.com/solashirai/crowdsourcehinter.git@518605f0a95190949fe77bd3
 git+https://github.com/edx/xblock-utils.git@v1.0.5#egg=xblock-utils==1.0.5
 -e git+https://github.com/edx-solutions/xblock-google-drive.git@138e6fa0bf3a2013e904a085b9fed77dab7f3f21#egg=xblock-google-drive
 git+https://github.com/edunext/xblock-lti-consumer.git@v1.1.8.1#egg=lti_consumer-xblock==1.1.8.1
+git+https://github.com/edunext/edx-organizations.git@22ee9d258f38eead124da0e229f34e28cfa883e8#egg=edx-organizations==0.4.9.1
 
 # Third Party XBlocks
 
