@@ -70,8 +70,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
-            - v1-{{ checksum ".circleci/config.yml" }}-npm-deps-
+            - v2-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
 
       - run:
           name: Install npm packages
@@ -79,7 +78,7 @@ jobs:
             npm install
 
       - save_cache:
-          key: v1-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
+          key: v2-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
           paths:
             - "node_modules"
 
@@ -106,7 +105,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
+            - v2-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
 
       - run:
           name: Install local pip packages
@@ -143,7 +142,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
+            - v2-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
 
       - run:
           name: Install local pip packages
@@ -180,7 +179,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
+            - v2-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
 
       - run:
           name: Install local pip packages
@@ -217,7 +216,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
+            - v2-{{ checksum ".circleci/config.yml" }}-npm-deps-{{ checksum "package.json" }}
 
       - run:
           name: Install local pip packages
