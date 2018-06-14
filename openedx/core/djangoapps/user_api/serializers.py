@@ -110,8 +110,3 @@ class SoftwareSecurePhotoVerificationSerializer(serializers.ModelSerializer):
         fields = ('status', 'expiration_datetime', 'is_verified')
         model = SoftwareSecurePhotoVerification
 
-class DeleteUserSerializer(serializers.Serializer):
-    """
-    Serializer for receiving list of usernames to delete
-    """
-    users = serializers.ListField()
