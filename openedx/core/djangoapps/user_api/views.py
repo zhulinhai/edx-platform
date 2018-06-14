@@ -27,9 +27,10 @@ from openedx.core.djangoapps.user_api.api import (
 from openedx.core.djangoapps.user_api.helpers import require_post_params, shim_student_view
 from openedx.core.djangoapps.user_api.models import UserPreference
 from openedx.core.djangoapps.user_api.preferences.api import get_country_time_zones, update_email_opt_in
-from openedx.core.djangoapps.user_api.serializers import CountryTimeZoneSerializer, UserPreferenceSerializer, UserSerializer
+from openedx.core.djangoapps.user_api.serializers import CountryTimeZoneSerializer, UserPreferenceSerializer, UserSerializer, DeleteUserSerializer
 from openedx.core.lib.api.authentication import SessionAuthenticationAllowInactiveUser
 from openedx.core.lib.api.permissions import ApiKeyHeaderPermission
+from rest_framework_oauth.authentication import OAuth2Authentication
 from student.cookies import set_logged_in_cookies
 from student.views import AccountValidationError, create_account_with_params
 from util.json_request import JsonResponse
@@ -390,3 +391,48 @@ class CountryTimeZoneListView(generics.ListAPIView):
     def get_queryset(self):
         country_code = self.request.GET.get('country_code', None)
         return get_country_time_zones(country_code)
+
+
+class DeleteUserView(APIView):
+
+    authentication_classes =\
+        (OAuth2Authentication,)
+
+    def post(self, request):
+        try:
+            data = request.data.get("users", None)
+            if data is None:
+                return JsonResponse({"Error": "No users to delete list given empty"})
+            else:
+                user_list = data.split(",")
+            results = {}
+            for user_name in user_list:
+                results[user_name] = self._delete_user(user_name)
+
+            return JsonResponse(results)
+        except Exception as e:
+            return JsonResponse({"Error": "Failed to delete users: {}".format(e.message)})
+
+
+    def _delete_user(self, uname):
+        """Deletes a user from django auth"""
+
+        if not uname:
+            return _('Must provide username')
+        if '@' in uname:
+            try:
+                user = User.objects.get(email=uname)
+            except User.DoesNotExist, err:
+                msg = _('Cannot find user with email address {email_addr}').format(email_addr=uname)
+                return msg
+        else:
+            try:
+                user = User.objects.get(username=uname)
+            except User.DoesNotExist, err:
+                msg = _('Cannot find user with username {username} - {error}').format(
+                    username=uname,
+                    error=str(err)
+                )
+                return msg
+        user.delete()
+        return _('Deleted user {username}').format(username=uname)

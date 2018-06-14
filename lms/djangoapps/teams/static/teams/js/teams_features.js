@@ -3,72 +3,103 @@
     'use strict';
 
     var xblock;
+    var teams;
 
-    function createRocketChatDiscussion(data){
-        var style = $(data)[0];
-        xblock = $(data).find(".xblock-student_view-rocketc");
-        $("head").append(style);
-         $(".discussion-module").hide();
-        if ($("div.discussion-module")[0] && !$(".page-content-main").find(".xblock-student_view-rocketc")[0]){
-            $(".team-profile").find(".page-content-main").append(xblock);
-        }else if ($(".page-content-main").find(".xblock-student_view-rocketc")[0]){
-            $(".xblock-student_view-rocketc").replaceWith(xblock);
+    function createRocketChatDiscussion(urlRocketChat){
+
+
+        var iframe = $('<iframe>', {
+            src: urlRocketChat,
+            id:  "rocketChatXblock",
+            style: "width: 100%; border: none;",
+            scrolling: 'no'
+            });
+
+        iframe.load(function() {
+            $(this).height( $(this).contents().find("body").height() );
+        });
+
+        $(".discussion-module").hide();
+        if ($("div.discussion-module")[0] && !$(".page-content-main").find("#rocketChatXblock")[0]){
+            $(".team-profile").find(".page-content-main").append(iframe);
+        }else if ($(".page-content-main").find("#rocketChatXblock")[0]){
+            $("#rocketChatXblock").attr("src", urlRocketChat)
         }
-
+        xblock = iframe;
     };
 
-    function loadRocketChat(url){
-        $.ajax({
-            url: url,
-            success: createRocketChatDiscussion
+    function actionsButtons(urlRocketChat){
+        $( ".join-team .action" ).unbind().click(function() {
+            createRocketChatDiscussion(urlRocketChat);
+        });
+        $( ".create-team .action" ).unbind().click(function() {
+            createRocketChatDiscussion(urlRocketChat);
+        });
+        $( ".action-primary" ).unbind().click(function() {
+            createRocketChatDiscussion(urlRocketChat);
         });
     }
 
-    function actionsReloadRocketChat(url){
-        $( ".join-team .action" ).unbind().click(function() {
-            loadRocketChat(url);
+    function loadUserTeam(options){
+        var data = {"course_id": options.courseID, "username": options.userInfo.username}
+        $.ajax({
+            url: options.teamsUrl,
+            data: data,
+            success: function(data){
+                teams = data;
+            }
         });
-        $( ".create-team .action" ).unbind().click(function() {
-            loadRocketChat(url);
-        });
-        $( ".action-primary" ).unbind().click(function() {
-            loadRocketChat(url);
-        });
+    }
+
+    function removeBrowseTab(teams){
+        if (teams.count == 1){
+            $("#tab-1").remove();
+            $("#tabpanel-browse").remove();
+            $("#tab-0").addClass("is-active");
+            $("#tabpanel-my-teams").removeClass("is-hidden");
+        }
     }
 
     define(['jquery'],
 
         function($) {
 
-            $(window).load(function() {
+            return function(options){
+                var urlRocketChat = "/xblock/"+options.rocketChatLocator;
+                teams = options.userInfo.teams;
 
-                $(".discussion-module").hide();
-                var baseUrl = $(".container").attr("data-url");
-                var url = baseUrl + "rocket-chat-discussion";
-                loadRocketChat(url);
-                actionsReloadRocketChat(url);
+                $(window).load(function() {
 
-                var targetNode = $(".view-in-course")[0];
+                    $(".discussion-module").hide();
 
-                // Options for the observer (which mutations to observe)
-                var config = {subtree : true, attributes: true}
+                    createRocketChatDiscussion(urlRocketChat);
+                    actionsButtons(urlRocketChat);
+                    removeBrowseTab(teams);
 
-                // Callback function to execute when mutations are observed
-                function fnHandler () {
-                    if ($("div.discussion-module")[0] && !$(".page-content-main").find(".xblock-student_view-rocketc")[0]){
-                        $(".discussion-module").hide();
-                        $(".team-profile").find(".page-content-main").append(xblock);
+                    var targetNode = $(".view-in-course")[0];
+
+                    // Options for the observer (which mutations to observe)
+                    var config = {subtree : true, attributes: true}
+
+                    // Callback function to execute when mutations are observed
+                    function fnHandler () {
+                        if ($("div.discussion-module")[0] && !$(".page-content-main").find("#rocketChatXblock")[0]){
+                            $(".discussion-module").hide();
+                            $(".team-profile").find(".page-content-main").append(xblock);
+                        }
+                        loadUserTeam(options);
+                        actionsButtons(urlRocketChat);
+                        removeBrowseTab(teams);
                     }
-                    actionsReloadRocketChat(url);
-                }
-                // Create an observer instance linked to the callback function
-                var observer = new MutationObserver(fnHandler);
+                    // Create an observer instance linked to the callback function
+                    var observer = new MutationObserver(fnHandler);
 
-                // Start observing the target node for configured mutations
-                observer.observe(targetNode, config);
+                    // Start observing the target node for configured mutations
+                    observer.observe(targetNode, config);
 
-            });
+                });
 
+            };
         });
 
 }).call(this, define || RequireJS.define);
