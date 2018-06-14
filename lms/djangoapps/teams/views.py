@@ -169,6 +169,7 @@ class TeamsDashboardView(GenericAPIView):
             "disable_courseware_js": True,
             "teams_base_url": reverse('teams_dashboard', request=request, kwargs={'course_id': course_id}),
             "rocket_chat_locator": ModifyTeams(request, user, course_key).get_rocket_chat_locator(),
+            "teams_create_url": reverse('create_teams', args= [course_id]),
         }
         return render_to_response("teams/teams.html", context)
 
@@ -1270,15 +1271,15 @@ class MembershipDetailView(ExpandableFieldViewMixin, GenericAPIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 class CreateTeams(GenericAPIView):
-
+    """
+        This class allows to create a team and add a user from a CSV file
+    """
     def post(self, request, course_id):
 
         file = request.FILES
-        if 'file' in file:
-            self.handle_uploaded_file(file['file'], course_id)
+        if 'fileUpload' in file:
+            self.handle_uploaded_file(file['fileUpload'], course_id)
             return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            form = UploadFileForm()
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     def handle_uploaded_file(self, file, course_id):
