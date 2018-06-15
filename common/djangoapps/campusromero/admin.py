@@ -19,6 +19,8 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
+from student.admin import UserProfileInline
+
 # Sebas Imports
 import logging
 from import_export import resources, fields
@@ -430,6 +432,8 @@ class CustomUserAdmin(ImportExportModelAdmin):
     #     except:
     #         var = ""
     #     return var
+
+    inlines = (UserProfileInline,)
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
