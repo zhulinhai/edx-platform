@@ -8,6 +8,8 @@ from datetime import datetime
 import pytz
 from uuid import uuid4
 import qrcode
+import StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import Http404, HttpResponse
@@ -45,6 +47,7 @@ from util import organizations_helpers as organization_api
 from util.views import handle_500
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError
+
 
 log = logging.getLogger(__name__)
 
@@ -609,10 +612,16 @@ def render_html_view(request, user_id, course_id):
 def generateQr(url, certificate_id_number):
     try:
         img = qrcode.make(url)
-        media_url = '/edx/var/edxapp/media/certificate_template_assets/qr' + certificate_id_number + '.png'
-        relative_url = '/media/certificate_template_assets/qr' + certificate_id_number + '.png'
-        img.save(media_url)
-        return relative_url
+        img_io = StringIO.StringIO()
+        img.save(img_io, format='PNG')
+        img_filename = 'qr{}.png'.format(certificate_id_number)
+        django_file = InMemoryUploadedFile(img_io, None, img_file_name, 'image/png', img_io.len, None)
+        storage_path = course_import_export_storage.save(img_filename, django_file)
+        # media_url = '/edx/var/edxapp/media/certificate_template_assets/qr' + certificate_id_number + '.png'
+        # relative_url = '/media/certificate_template_assets/qr' + certificate_id_number + '.png'
+        # img.save(media_url)
+        # return relative_url
+        return storage_path
     except Exception as e:
         log.info(str(e))
         return ''

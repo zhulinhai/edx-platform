@@ -1005,3 +1005,12 @@ ICP_LICENSE = ENV_TOKENS.get('ICP_LICENSE', None)
 
 ############## Settings for CourseGraph ############################
 COURSEGRAPH_JOB_QUEUE = ENV_TOKENS.get('COURSEGRAPH_JOB_QUEUE', LOW_PRIORITY_QUEUE)
+
+
+######################### Certificates QR Codes Storage ################################
+CERTIFICATES_QR_CODE_BUCKET= ENV_TOKENS.get('CERTIFICATES_QR_CODE_BUCKET', '')
+
+if CERTIFICATES_QR_CODE_BUCKET:
+    CERTIFICATES_QR_CODE_STORAGE = 'certificates.storage.CertificatesQRCodeS3Storage'
+else:
+    CERTIFICATES_QR_CODE_STORAGE = DEFAULT_FILE_STORAGE
