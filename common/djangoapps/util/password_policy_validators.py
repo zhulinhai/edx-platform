@@ -78,17 +78,17 @@ def validate_password_complexity(value):
     words = set(value.split())
 
     errors = []
-    if "UPPER" in complexities and len(uppercase) <= complexities.get("UPPER", 0):
+    if len(uppercase) < complexities.get("UPPER", 0):
         errors.append(_("must contain {0} or more uppercase characters").format(complexities["UPPER"]))
-    if "LOWER" in complexities and len(lowercase) <= complexities.get("LOWER", 0):
+    if len(lowercase) < complexities.get("LOWER", 0):
         errors.append(_("must contain {0} or more lowercase characters").format(complexities["LOWER"]))
-    if "DIGITS" in complexities and len(digits) <= complexities.get("DIGITS", 0):
+    if len(digits) < complexities.get("DIGITS", 0):
         errors.append(_("must contain {0} or more digits").format(complexities["DIGITS"]))
-    if "PUNCTUATION" in complexities and len(punctuation) <= complexities.get("PUNCTUATION", 0):
+    if len(punctuation) < complexities.get("PUNCTUATION", 0):
         errors.append(_("must contain {0} or more punctuation characters").format(complexities["PUNCTUATION"]))
-    if "NON ASCII" in complexities and len(non_ascii) <= complexities.get("NON ASCII", 0):
+    if len(non_ascii) < complexities.get("NON ASCII", 0):
         errors.append(_("must contain {0} or more non ascii characters").format(complexities["NON ASCII"]))
-    if "WORDS" in complexities and len(words) <= complexities.get("WORDS", 0):
+    if len(words) < complexities.get("WORDS", 0):
         errors.append(_("must contain {0} or more unique words").format(complexities["WORDS"]))
 
     if errors:
