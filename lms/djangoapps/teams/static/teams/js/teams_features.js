@@ -61,28 +61,26 @@
     };
 
     function buttonAddMembers(staff, url){
-        var button = $("<button class='action'>Add Members</button>");
+        var button = $("<button class='action action-primary'>Add Members</button>");
         var input = $("<input type='file' name='fileUpload' style='display: none;'accept='text/csv'/>")
         if(!$(".page-header-secondary").children()[0] && staff){
             $(".page-header-secondary").append(input);
             $(".page-header-secondary").append(button);
-            uploadFile(input, url);
+
+            input.fileupload({
+                url: url,
+                done:function(){
+                    $(".page-header-secondary").empty();
+                    buttonAddMembers(staff, url);
+                },
+                fail: function(e, data){
+                }
+            });
 
             button.click(function(){
                 input.click();
             });
         }
-    }
-
-    function uploadFile(input, url){
-        input.fileupload({
-            url: url,
-            done:function(){
-                $(".page-header-secondary").append($("<div>Success</div>"));
-            },
-            fail: function(e, data){
-            }
-        });
     }
 
     function loadjs(url) {

@@ -1276,6 +1276,9 @@ class CreateTeams(GenericAPIView):
     """
     def post(self, request, course_id):
 
+        if not has_team_api_access(request.user, course_id) :
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
         file = request.FILES
         if 'fileUpload' in file:
             self.handle_uploaded_file(file['fileUpload'], course_id)
