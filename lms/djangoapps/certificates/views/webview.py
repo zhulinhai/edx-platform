@@ -8,6 +8,8 @@ from datetime import datetime
 import pytz
 from uuid import uuid4
 import qrcode
+import StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import Http404, HttpResponse
@@ -34,6 +36,7 @@ from certificates.models import (
     CertificateStatuses,
     GeneratedCertificate
 )
+from certificates.storage import certificates_qr_code_storage
 from courseware.access import has_access
 from edxmako.shortcuts import render_to_response
 from edxmako.template import Template
@@ -45,6 +48,7 @@ from util import organizations_helpers as organization_api
 from util.views import handle_500
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError
+
 
 log = logging.getLogger(__name__)
 
@@ -608,11 +612,18 @@ def render_html_view(request, user_id, course_id):
 
 def generateQr(url, certificate_id_number):
     try:
-        img = qrcode.make(url)
-        media_url = '/edx/var/edxapp/media/certificate_template_assets/qr' + certificate_id_number + '.png'
-        relative_url = '/media/certificate_template_assets/qr' + certificate_id_number + '.png'
-        img.save(media_url)
-        return relative_url
+        img_filename = 'qr{}.png'.format(certificate_id_number)
+        if not certificates_qr_code_storage.exists(img_filename):
+            img = qrcode.make(url)
+            img_io = StringIO.StringIO()
+            img.save(img_io, format='PNG')
+            django_file = InMemoryUploadedFile(img_io, None, img_filename,
+                                               'image/png', img_io.len, None)
+            storage_path = certificates_qr_code_storage.save(img_filename,
+                                                             django_file)
+        qrcode_s3_url = certificates_qr_code_storage.url(img_filename)
+        log.info("QR Code S3 URL: %s", qrcode_s3_url)
+        return qrcode_s3_url
     except Exception as e:
         log.info(str(e))
         return ''
