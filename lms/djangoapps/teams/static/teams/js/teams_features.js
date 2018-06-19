@@ -124,13 +124,13 @@
             .appendTo("body");
     }
 
-    function addAndRemoveTeamUser(staff, action, label, url){
+    function addTeamUser(staff, url){
 
-        if($(".page-content-secondary")[0] && staff && !$("."+action+"-user")[0]){
-            var button = $("<button class='btn btn-link'>"+label+" User</button>");
-            var container = $("<div class='"+action+"-user'></div>");
+        if($(".page-content-secondary")[0] && staff && !$(".add-user")[0]){
+            var button = $("<button class='btn btn-link'>Add User</button>");
+            var container = $("<div class='add-user'></div>");
             var inputContainer = $("<div class='user-input'></div>");
-            var input = $("<input type='text'class='team-user'type='text'></input>");
+            var input = $("<input type='text' placeholder='Username'></input>");
             var submit = $("<button class='btn btn-link'>Submit</button>");
             var cancel = $("<button class='btn btn-link'>Cancel</button>");
             inputContainer.append(input);
@@ -153,39 +153,20 @@
             });
 
             submit.unbind().click(function(){
-                if(action == "add"){
-                    var username = input.val();
-                    var teamId = location.href.match(/([^\/]*)\/*$/)[1];
-                    var data = {"username": username, "team_id": teamId };
-                    $.ajax({
-                        method: "POST",
-                        url: url,
-                        data: data,
-                    }).done(function() {
-                       location.reload();
-                    }).fail(function(error) {
-                        alert( error.statusText );
-                    })
-                }
-                else if(action=="remove"){
-                    var username = input.val();
-                    var teamId = location.href.match(/([^\/]*)\/*$/)[1];
-                    url = url+teamId+","+username;
-                    $.ajax({
-                        method: "DELETE",
-                        url: url,
-                    }).done(function() {
-                        location.reload();
-                    }).fail(function(error) {
-                        alert( error.statusText );
-                    })
-                }
+                var username = input.val();
+                var teamId = location.href.match(/([^\/]*)\/*$/)[1];
+                var data = {"username": username, "team_id": teamId };
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    data: data,
+                }).done(function() {
+                   location.reload();
+                }).fail(function(error) {
+                    alert( error.statusText );
+                });
              });
         }
-
-    }
-
-    function addTeamUser(url, input){
 
     }
 
@@ -211,8 +192,7 @@
                     actionsButtons(urlRocketChat);
                     buttonAddMembers(staff, urlApiCreateTeams);
                     removeBrowseAndButtons(staff, teamsLocked, options);
-                    addAndRemoveTeamUser(staff, "remove", "Remove", options.teamMembershipsUrl);
-                    addAndRemoveTeamUser(staff, "add", "Add", options.teamMembershipsUrl);
+                    addTeamUser(staff, options.teamMembershipsUrl);
 
                     var targetNode = $(".view-in-course")[0];
 
@@ -228,8 +208,7 @@
                         actionsButtons(urlRocketChat);
                         buttonAddMembers(staff, urlApiCreateTeams);
                         removeBrowseAndButtons(staff, teamsLocked, options);
-                        addAndRemoveTeamUser(staff, "remove", "Remove", options.teamMembershipsUrl);
-                        addAndRemoveTeamUser(staff, "add", "Add", options.teamMembershipsUrl);
+                        addTeamUser(staff, options.teamMembershipsUrl);
 
                     }
                     // Create an observer instance linked to the callback function
