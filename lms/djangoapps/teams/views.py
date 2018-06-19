@@ -1,9 +1,11 @@
 """HTTP endpoints for the Teams API."""
 
 import logging
+import csv
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.http import Http404
@@ -51,6 +53,7 @@ from .serializers import (
 )
 from .teams_features import ModifyTeams
 from .utils import emit_team_event
+from .errors import AlreadyOnTeamInCourse
 
 TEAM_MEMBERSHIPS_PER_PAGE = 2
 TOPICS_PER_PAGE = 12
@@ -166,6 +169,7 @@ class TeamsDashboardView(GenericAPIView):
             "disable_courseware_js": True,
             "teams_base_url": reverse('teams_dashboard', request=request, kwargs={'course_id': course_id}),
             "rocket_chat_locator": ModifyTeams(request, user, course_key).get_rocket_chat_locator(),
+            "teams_create_url": reverse('create_teams', args= [course_id]),
         }
         return render_to_response("teams/teams.html", context)
 
@@ -1265,3 +1269,71 @@ class MembershipDetailView(ExpandableFieldViewMixin, GenericAPIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+class CreateTeams(GenericAPIView):
+    """
+        This class allows to create a team and add a user from a CSV file
+    """
+    def post(self, request, course_id):
+
+        if not has_team_api_access(request.user, course_id) :
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        file = request.FILES
+        if 'fileUpload' in file:
+            self.handle_uploaded_file(file['fileUpload'], course_id)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def handle_uploaded_file(self, file, course_id):
+
+        reader = csv.reader(file)
+        course_key = CourseKey.from_string(course_id)
+        course_module = modulestore().get_course(course_key)
+        topics = get_alphabetical_topics(course_module)
+        topic_ids = {}
+
+        for topic in topics:
+            topic_ids[topic["id"]] = topic["id"]
+
+        for row in reader:
+
+            if not self.get_from_list(row, 1) in topic_ids:
+                continue
+            try:
+                user = User.objects.get(Q(username=row[0]) | Q(email=row[0]))
+            except User.DoesNotExist:
+                continue
+            if not CourseEnrollment.is_enrolled(user, course_key):
+                continue
+            try:
+                team = CourseTeam.objects.get(Q(topic_id=self.get_from_list(row, 1)) & Q(name=self.get_from_list(row, 2)) & Q(course_id=course_key))
+            except CourseTeam.DoesNotExist:
+                data = {
+                    'last_activity_at': '',
+                    'topic_id': self.get_from_list(row, 1),
+                    'name': self.get_from_list(row, 2),
+                    'description': self.get_from_list(row, 3),
+                    'course_id': course_id,
+                    'language': self.get_from_list(row, 4),
+                    'country': self.get_from_list(row, 5),
+                    'membership': [],
+                    'id': None,
+                    'date_created': ''
+                }
+                field_errors = {}
+                serializer = CourseTeamCreationSerializer(data=data)
+                add_serializer_errors(serializer, data, field_errors)
+                team = serializer.save()
+            try:
+                team.add_user(user)
+            except AlreadyOnTeamInCourse:
+                membership = CourseTeamMembership.objects.get(user__username=user.username)
+                membership.delete()
+                team.add_user(user)
+
+    def get_from_list(self, values, index):
+        try:
+            return values[index]
+        except IndexError:
+            return ''
