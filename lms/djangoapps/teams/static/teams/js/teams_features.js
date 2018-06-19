@@ -61,7 +61,7 @@
     };
 
     function buttonAddMembers(staff, url){
-        var button = $("<button class='action action-primary'>Add Members</button>");
+        var button = $("<button class='btn btn-secondary'>Add Members</button>");
         var input = $("<input type='file' name='fileUpload' style='display: none;'accept='text/csv'/>")
         if(!$(".page-header-secondary").children()[0] && staff){
             $(".page-header-secondary").append(input);
