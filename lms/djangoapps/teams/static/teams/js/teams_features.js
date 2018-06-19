@@ -38,7 +38,7 @@
         $( ".action-primary" ).unbind().click(function() {
             createRocketChatDiscussion(urlRocketChat);
         });
-    }
+    };
 
     function loadUserTeam(options){
         var data = {"course_id": options.courseID, "username": options.userInfo.username}
@@ -49,7 +49,7 @@
                 teams = data;
             }
         });
-    }
+    };
 
     function removeBrowseTab(teams){
         if (teams.count == 1){
@@ -58,14 +58,49 @@
             $("#tab-0").addClass("is-active");
             $("#tabpanel-my-teams").removeClass("is-hidden");
         }
+    };
+
+    function buttonAddMembers(staff, url){
+        var button = $("<button class='action action-primary'>Add Members</button>");
+        var input = $("<input type='file' name='fileUpload' style='display: none;'accept='text/csv'/>")
+        if(!$(".page-header-secondary").children()[0] && staff){
+            $(".page-header-secondary").append(input);
+            $(".page-header-secondary").append(button);
+
+            input.fileupload({
+                url: url,
+                done:function(){
+                    $(".page-header-secondary").empty();
+                    buttonAddMembers(staff, url);
+                },
+                fail: function(e, data){
+                }
+            });
+
+            button.click(function(){
+                input.click();
+            });
+        }
+    }
+
+    function loadjs(url) {
+        $('<script>')
+            .attr('type', 'text/javascript')
+            .attr('src', url)
+            .appendTo("body");
     }
 
     define(['jquery'],
 
         function($) {
 
+            loadjs('/static/js/vendor/jQuery-File-Upload/js/vendor/jquery.ui.widget.js');
+            loadjs('/static/js/vendor/jQuery-File-Upload/js/jquery.fileupload.js');
+
             return function(options){
                 var urlRocketChat = "/xblock/"+options.rocketChatLocator;
+                var urlApiCreateTeams = options.teamsCreateUrl;
+                var staff = options.userInfo.staff;
                 teams = options.userInfo.teams;
 
                 $(window).load(function() {
@@ -75,6 +110,7 @@
                     createRocketChatDiscussion(urlRocketChat);
                     actionsButtons(urlRocketChat);
                     removeBrowseTab(teams);
+                    buttonAddMembers(staff, urlApiCreateTeams);
 
                     var targetNode = $(".view-in-course")[0];
 
@@ -90,6 +126,7 @@
                         loadUserTeam(options);
                         actionsButtons(urlRocketChat);
                         removeBrowseTab(teams);
+                        buttonAddMembers(staff, urlApiCreateTeams);
                     }
                     // Create an observer instance linked to the callback function
                     var observer = new MutationObserver(fnHandler);
