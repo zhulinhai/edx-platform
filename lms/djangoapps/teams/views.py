@@ -170,6 +170,7 @@ class TeamsDashboardView(GenericAPIView):
             "teams_base_url": reverse('teams_dashboard', request=request, kwargs={'course_id': course_id}),
             "rocket_chat_locator": ModifyTeams(request, user, course_key).get_rocket_chat_locator(),
             "teams_create_url": reverse('create_teams', args= [course_id]),
+            "teams_locked": modulestore().get_course(course_key).teams_configuration.get("teams_locked"),
         }
         return render_to_response("teams/teams.html", context)
 
@@ -1117,6 +1118,9 @@ class MembershipListView(ExpandableFieldViewMixin, GenericAPIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+        if course_module.teams_configuration.get("teams_locked") and not request.user.is_staff:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
         try:
             membership = team.add_user(user)
             emit_team_event(
@@ -1251,6 +1255,12 @@ class MembershipDetailView(ExpandableFieldViewMixin, GenericAPIView):
     def delete(self, request, team_id, username):
         """DELETE /api/team/v0/team_membership/{team_id},{username}"""
         team = self.get_team(team_id)
+
+        course_module = modulestore().get_course(team.course_id)
+
+        if course_module.teams_configuration.get("teams_locked") and not request.user.is_staff:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
         if has_team_api_access(request.user, team.course_id, access_username=username):
             membership = self.get_membership(username, team)
             removal_method = 'self_removal'

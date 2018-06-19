@@ -51,13 +51,24 @@
         });
     };
 
-    function removeBrowseTab(teams){
-        if (teams.count == 1){
+    function removeBrowseAndButtons(staff, teamsLocked){
+        if (teamsLocked && !staff){
+            // Remove browse
             $("#tab-1").remove();
             $("#tabpanel-browse").remove();
             $("#tab-0").addClass("is-active");
             $("#tabpanel-my-teams").removeClass("is-hidden");
-        }
+            // remove join and leave button
+            $(".join-team .action-primary").remove();
+            $(".page-content-secondary .leave-team").remove();
+
+        }else if(teams.count == 1 && !staff){
+            // Remove browse
+            $("#tab-1").remove();
+            $("#tabpanel-browse").remove();
+            $("#tab-0").addClass("is-active");
+            $("#tabpanel-my-teams").removeClass("is-hidden");
+        };
     };
 
     function buttonAddMembers(staff, url){
@@ -101,6 +112,7 @@
                 var urlRocketChat = "/xblock/"+options.rocketChatLocator;
                 var urlApiCreateTeams = options.teamsCreateUrl;
                 var staff = options.userInfo.staff;
+                var teamsLocked = (options.teamsLocked == "true");
                 teams = options.userInfo.teams;
 
                 $(window).load(function() {
@@ -109,8 +121,8 @@
 
                     createRocketChatDiscussion(urlRocketChat);
                     actionsButtons(urlRocketChat);
-                    removeBrowseTab(teams);
                     buttonAddMembers(staff, urlApiCreateTeams);
+                    removeBrowseAndButtons(staff, teamsLocked);
 
                     var targetNode = $(".view-in-course")[0];
 
@@ -125,8 +137,8 @@
                         }
                         loadUserTeam(options);
                         actionsButtons(urlRocketChat);
-                        removeBrowseTab(teams);
                         buttonAddMembers(staff, urlApiCreateTeams);
+                        removeBrowseAndButtons(staff, teamsLocked);
                     }
                     // Create an observer instance linked to the callback function
                     var observer = new MutationObserver(fnHandler);
