@@ -6,8 +6,8 @@ import json
 from student.models import CourseEnrollment
 
 from lms.djangoapps.grades.context import grading_context_for_course
-from lms.djangoapps.grades.new.course_grade_factory import CourseGradeFactory
-from lms.djangoapps.grades.new.course_data import CourseData
+from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
+from lms.djangoapps.grades.course_data import CourseData
 from lms.djangoapps.instructor.views.reports_helpers import (
     DictList,
     proccess_headers,
@@ -63,7 +63,7 @@ class ServiceGrades(object):
         counter_assignment_type = {}
 
         for student in self.students:
-            course_grade_factory = CourseGradeFactory().create(student, self.course)
+            course_grade_factory = CourseGradeFactory().read(student, self.course)
             gradeset = course_grade_factory.summary
             gradeset["username"] = course_grade_factory.user
             course_grades.append(gradeset)
@@ -150,7 +150,7 @@ class ServiceGrades(object):
             total_section = proccess_grades_dict(student, course_policy)
             user = student['username']
             assignment_type_dict = DictList()
-            course_grade_factory = CourseGradeFactory().create(user, self.course)
+            course_grade_factory = CourseGradeFactory().read(user, self.course)
             for chapter, sequentials in subsections.items():
                 for sequential in sequentials:
                     header_name = '{} - {}'.format(chapter, sequential.format)
@@ -184,7 +184,7 @@ class ServiceGrades(object):
         grading_context = grading_context_for_course(self.course_key)
 
         for student in section_grades:
-            course_grade_factory = CourseGradeFactory().create(student["username"], self.course)
+            course_grade_factory = CourseGradeFactory().read(student["username"], self.course)
             sections = course_grade_factory.chapter_grades
             problem_score_dict = {}
             problem_score_dict['username'] = student['username'].username

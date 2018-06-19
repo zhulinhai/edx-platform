@@ -37,6 +37,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods, require_POST
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey, UsageKey
+from opaque_keys.edx.locations import SlashSeparatedCourseKey
 from six import text_type
 
 import instructor_analytics.basic

@@ -26,15 +26,15 @@ urlpatterns = [
 
         # Grades by section
     url(r'^get_section_grades/(?P<report_type>[\w\-]+)$',
-        'lms.djangoapps.instructor.views.api.get_additional_grades', name="get_section_grades"),
+        api.get_additional_grades, name="get_section_grades"),
 
     # Grades by assignment type
     url(r'^get_assignment_type_grades/(?P<report_type>[\w\-]+)$',
-        'lms.djangoapps.instructor.views.api.get_additional_grades', name="get_assignment_type_grades"),
+        api.get_additional_grades, name="get_assignment_type_grades"),
 
     # Grades by enhanced problem grade
     url(r'^get_enhanced_problem_grade/(?P<report_type>[\w\-]+)$',
-        'lms.djangoapps.instructor.views.api.get_additional_grades', name="get_enhanced_problem_grade"),
+        api.get_additional_grades, name="get_enhanced_problem_grade"),
 
     url(r'^reset_student_attempts$', api.reset_student_attempts, name='reset_student_attempts'),
     url(r'^rescore_problem$', api.rescore_problem, name='rescore_problem'),
