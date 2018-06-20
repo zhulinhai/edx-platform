@@ -69,11 +69,35 @@
 
             input.fileupload({
                 url: url,
-                done:function(){
+                done:function(e, data){
                     $(".page-header-secondary").empty();
                     buttonAddMembers(staff, url);
+                    var errors = data.result.errors;
+                    var success = data.result.success;
+                    var container = $("<div title='Result'></div>");
+                    var list = $("<ul></ul>");
+
+                    for (var key in errors){
+                        var item = $("<li style='color: red; font-size:12px;'>Error in "+key+" = "+errors[key]+"</li>");
+                        list.append(item);
+                    };
+
+                    container.append(list);
+                    var list = $("<ul></ul>");
+
+                    for (var key in success){
+                        var item = $("<li style='color: green; font-size:12px;'>"+success[key]+"</li>");
+                        list.append(item);
+                    };
+
+                    container.append(list);
+                    container.dialog();
                 },
                 fail: function(e, data){
+                    $(".page-header-secondary").empty();
+                    buttonAddMembers(staff, url);
+                    var container = $("<div title='Result'>"+data.errorThrown+"</div>");
+                    container.dialog();
                 }
             });
 
@@ -96,6 +120,7 @@
 
             loadjs('/static/js/vendor/jQuery-File-Upload/js/vendor/jquery.ui.widget.js');
             loadjs('/static/js/vendor/jQuery-File-Upload/js/jquery.fileupload.js');
+            loadjs('/static/js/vendor/jquery-ui.min.js');
 
             return function(options){
                 var urlRocketChat = "/xblock/"+options.rocketChatLocator;
