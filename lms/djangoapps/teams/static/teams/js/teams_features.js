@@ -124,15 +124,22 @@
             .appendTo("body");
     }
 
-    function addTeamUser(staff, url){
+    function addTeamUser(staff, url, usersEnrolled){
 
         if($(".page-content-secondary")[0] && staff && !$(".add-user")[0]){
             var button = $("<button class='btn btn-link'>Add User</button>");
             var container = $("<div class='add-user'></div>");
             var inputContainer = $("<div class='user-input'></div>");
-            var input = $("<input type='text' placeholder='Username'></input>");
+            var input = $("<input list='users'placeholder='Username'><datalist id='users'></datalist><br>");
             var submit = $("<button class='btn btn-link'>Submit</button>");
-            var cancel = $("<button class='btn btn-link'>Cancel</button>");
+            var cancel = $("<button class='btn btn-link' style='margin: 8px;'>Cancel</button>");
+
+            for (var user in usersEnrolled) {
+                var option = $("<option value="+usersEnrolled[user]+">");
+                input.append(option);
+            }
+
+
             inputContainer.append(input);
             inputContainer.append(submit);
             inputContainer.append(cancel);
@@ -163,7 +170,11 @@
                 }).done(function() {
                    location.reload();
                 }).fail(function(error) {
-                    alert( error.statusText );
+                    if( error.status == 404){
+                        alert( error.statusText);
+                    }else if (error.status == 400){
+                        alert( error.responseJSON["user_message"]);
+                    }
                 });
              });
         }
@@ -183,6 +194,7 @@
                 var urlApiCreateTeams = options.teamsCreateUrl;
                 var staff = options.userInfo.staff;
                 var teamsLocked = JSON.parse(options.teamsLocked);
+                var usersEnrolled = JSON.parse(options.usersEnrolled);
 
                 $(window).load(function() {
 
@@ -192,7 +204,7 @@
                     actionsButtons(urlRocketChat);
                     buttonAddMembers(staff, urlApiCreateTeams);
                     removeBrowseAndButtons(staff, teamsLocked, options);
-                    addTeamUser(staff, options.teamMembershipsUrl);
+                    addTeamUser(staff, options.teamMembershipsUrl, usersEnrolled);
 
                     var targetNode = $(".view-in-course")[0];
 
@@ -208,7 +220,7 @@
                         actionsButtons(urlRocketChat);
                         buttonAddMembers(staff, urlApiCreateTeams);
                         removeBrowseAndButtons(staff, teamsLocked, options);
-                        addTeamUser(staff, options.teamMembershipsUrl);
+                        addTeamUser(staff, options.teamMembershipsUrl, usersEnrolled);
 
                     }
                     // Create an observer instance linked to the callback function
