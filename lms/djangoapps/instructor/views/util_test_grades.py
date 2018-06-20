@@ -25,29 +25,31 @@ from xmodule.modulestore.django import modulestore
 
 class ServiceGrades(object):
 
-    def __init__(self, course_id):
-        self.course_string = course_id
-        self.course_key = CourseKey.from_string(course_id)
-        self.course = courses.get_course_by_id(self.course_key)
-        self.students = CourseEnrollment.objects.users_enrolled_in(self.course_key)
-        self.headers = ['username', 'fullname']
+    def __init__(self, course_id=None):
+        if course_id is not None:
+            self.course_string = course_id
+            self.course_key = CourseKey.from_string(course_id)
+            self.course = courses.get_course_by_id(self.course_key)
+            self.students = CourseEnrollment.objects.users_enrolled_in(self.course_key)
+            self.headers = ['username', 'fullname']
 
     def generate(self, _xmodule_instance_args, _entry_id, course_id, _task_input, action_name):
         """
         Public method to generate a grade report.
         """
+        course_string = str(course_id)
         from lms.djangoapps.instructor_task.tasks_helper.grades import _CourseGradeReportContext, CourseGradeReport
         with modulestore().bulk_operations(course_id):
             context = _CourseGradeReportContext(_xmodule_instance_args, _entry_id, course_id, _task_input, action_name)
 
             if action_name == 'section_report':
-                return ServiceGrades(self.course_string).by_section(context)
+                return ServiceGrades(course_string).by_section(context)
 
             if action_name == 'assignment_type_report':
-                return ServiceGrades(self.course_string).by_assignment_type(context)
+                return ServiceGrades(course_string).by_assignment_type(context)
 
             if action_name == 'enhanced_problem_report':
-                return ServiceGrades(self.course_string).enhanced_problem_grade(context)
+                return ServiceGrades(course_string).enhanced_problem_grade(context)
 
     def get_grades(self):
         """
@@ -181,7 +183,7 @@ class ServiceGrades(object):
         course_policy = course_grade[1]
         rows = []
         final_grades = []
-        grading_context = grading_context_for_course(self.course_key)
+        grading_context = grading_context_for_course(self.course)
 
         for student in section_grades:
             course_grade_factory = CourseGradeFactory().read(student["username"], self.course)
@@ -198,7 +200,7 @@ class ServiceGrades(object):
                 # earneds and possibles points.
                 for sequential in sequentials:
                     for problem_score in sequential.problem_scores:
-                        for problem_name in grading_context['all_graded_blocks']:
+                        for problem_name in grading_context['all_graded_blocks']: ## This was changed
                             if problem_name.fields['category'] == 'problem':
                                 if problem_name.location.block_id == problem_score.name:
                                     grade_tuple = course_grade_factory.score_for_module(problem_name.location)

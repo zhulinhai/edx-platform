@@ -37,7 +37,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods, require_POST
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey, UsageKey
-from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from opaque_keys.edx.locator import CourseLocator
 from six import text_type
 
 import instructor_analytics.basic
@@ -80,7 +80,7 @@ from lms.djangoapps.instructor.views import INVOICE_KEY
 from lms.djangoapps.instructor.views.instructor_task_helpers import extract_email_features, extract_task_features
 from lms.djangoapps.instructor_task.api import submit_override_score
 from lms.djangoapps.instructor_task.api_helper import AlreadyRunningError, QueueConnectionError
-from lms.djangoapps.instructor_task.tasks import calculate_section_grades, calculate_assignment_tye_grades, calculate_enhanced_problem_grade
+from lms.djangoapps.instructor_task.tasks import calculate_section_grades, calculate_assignment_type_grades, calculate_enhanced_problem_grade
 from lms.djangoapps.instructor_task.models import ReportStore
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.course_groups.cohorts import is_course_cohorted
@@ -3438,7 +3438,7 @@ def _create_error_response(request, msg):
 
 TYPE_GRADE = {
     'section': {'task_name': 'report_by_section', 'task_class': calculate_section_grades},
-    'assignment_type': {'task_name': 'report_by_assingment_type', 'task_class': calculate_assignment_tye_grades},
+    'assignment_type': {'task_name': 'report_by_assingment_type', 'task_class': calculate_assignment_type_grades},
     'enhanced_problem': {'task_name': 'report_by_enhanced_problem', 'task_class': calculate_enhanced_problem_grade},
 }
 
@@ -3452,7 +3452,7 @@ def get_additional_grades(request, course_id, report_type):
     AlreadyRunningError is raised if the course's grades are already being updated.
     """
     submit_report_type = TYPE_GRADE[report_type]
-    course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
+    course_key = CourseLocator.from_string(course_id)
     try:
         lms.djangoapps.instructor_task.api.calculate_grades(request, course_key, submit_report_type)
         success_status = _("The grade report is being created."

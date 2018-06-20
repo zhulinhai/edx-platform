@@ -214,12 +214,12 @@ def calculate_section_grades(entry_id, xmodule_instance_args):
         xmodule_instance_args.get('task_id'), entry_id, action_name
     )
 
-    task_fn = partial(ServiceGrades('course-v1:organizacion+cs272018+2018_t1').generate, xmodule_instance_args)
+    task_fn = partial(ServiceGrades().generate, xmodule_instance_args)
     return run_main_task(entry_id, task_fn, action_name)
 
 
 @task(base=BaseInstructorTask, routing_key=settings.GRADES_DOWNLOAD_ROUTING_KEY)  # pylint: disable=not-callable
-def calculate_assignment_tye_grades(entry_id, xmodule_instance_args):
+def calculate_assignment_type_grades(entry_id, xmodule_instance_args):
     # Translators: This is a past-tense verb that is inserted into task progress messages as {action}.
     action_name = ugettext_noop('assignment_type_report')
     TASK_LOG.info(
@@ -227,7 +227,7 @@ def calculate_assignment_tye_grades(entry_id, xmodule_instance_args):
         xmodule_instance_args.get('task_id'), entry_id, action_name
     )
 
-    task_fn = partial(ServiceGrades('course-v1:organizacion+cs272018+2018_t1').generate, xmodule_instance_args)
+    task_fn = partial(ServiceGrades().generate, xmodule_instance_args)
     return run_main_task(entry_id, task_fn, action_name)
 
 
@@ -240,7 +240,7 @@ def calculate_enhanced_problem_grade(entry_id, xmodule_instance_args):
         xmodule_instance_args.get('task_id'), entry_id, action_name
     )
 
-    task_fn = partial(ServiceGrades('course-v1:organizacion+cs272018+2018_t1').generate, xmodule_instance_args)
+    task_fn = partial(ServiceGrades().generate, xmodule_instance_args)
     return run_main_task(entry_id, task_fn, action_name)
 
 
