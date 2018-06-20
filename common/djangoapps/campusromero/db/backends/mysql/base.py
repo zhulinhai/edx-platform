@@ -4,7 +4,7 @@ from .features import CustomDatabaseFeatures
 
 class DatabaseWrapper(base.DatabaseWrapper):
     """
-    This class overrides DatabaseWrapper for djngo mysql backend,
+    This class overrides DatabaseWrapper for django mysql backend,
     in order to fix supports_transactions problem launched by
     import_export admin library. The problem is documented here:
     https://code.djangoproject.com/ticket/26541
