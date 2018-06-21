@@ -124,6 +124,63 @@
             .appendTo("body");
     }
 
+    function addTeamMember(staff, url, usersEnrolled){
+
+        if($(".page-content-secondary")[0] && staff && !$(".add-user")[0]){
+            var button = $("<button class='btn btn-link'>Add User</button>");
+            var container = $("<div class='add-user'></div>");
+            var inputContainer = $("<div class='user-input'></div>");
+            var input = $("<input list='users'placeholder='Username'><datalist id='users'></datalist><br>");
+            var submit = $("<button class='btn btn-link'>Submit</button>");
+            var cancel = $("<button class='btn btn-link' style='margin: 8px;'>Cancel</button>");
+
+            for (var user in usersEnrolled) {
+                var option = $("<option value="+usersEnrolled[user]+">");
+                input.append(option);
+            }
+
+
+            inputContainer.append(input);
+            inputContainer.append(submit);
+            inputContainer.append(cancel);
+
+            container.append(button);
+            $(".page-content-secondary").append(container);
+            container.after(inputContainer);
+
+            inputContainer.hide();
+
+            button.unbind().click(function(){
+                inputContainer.show();
+            });
+
+            cancel.unbind().click(function(){
+                inputContainer.hide();
+                input.val("");
+            });
+
+            submit.unbind().click(function(){
+                var username = input.val();
+                var teamId = location.href.match(/([^\/]*)\/*$/)[1];
+                var data = {"username": username, "team_id": teamId };
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    data: data,
+                }).done(function() {
+                   location.reload();
+                }).fail(function(error) {
+                    if( error.status == 404){
+                        alert( error.statusText);
+                    }else if (error.status == 400){
+                        alert( error.responseJSON["user_message"]);
+                    }
+                });
+             });
+        }
+
+    }
+
     define(['jquery'],
 
         function($) {
@@ -137,6 +194,7 @@
                 var urlApiCreateTeams = options.teamsCreateUrl;
                 var staff = options.userInfo.staff;
                 var teamsLocked = JSON.parse(options.teamsLocked);
+                var usersEnrolled = JSON.parse(options.usersEnrolled);
 
                 $(window).load(function() {
 
@@ -146,6 +204,7 @@
                     actionsButtons(urlRocketChat);
                     buttonAddMembers(staff, urlApiCreateTeams);
                     removeBrowseAndButtons(staff, teamsLocked, options);
+                    addTeamUser(staff, options.teamMembershipsUrl, usersEnrolled);
 
                     var targetNode = $(".view-in-course")[0];
 
@@ -161,6 +220,8 @@
                         actionsButtons(urlRocketChat);
                         buttonAddMembers(staff, urlApiCreateTeams);
                         removeBrowseAndButtons(staff, teamsLocked, options);
+                        addTeamUser(staff, options.teamMembershipsUrl, usersEnrolled);
+
                     }
                     // Create an observer instance linked to the callback function
                     var observer = new MutationObserver(fnHandler);

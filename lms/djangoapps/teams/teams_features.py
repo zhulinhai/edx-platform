@@ -7,6 +7,7 @@ from courseware.courses import get_course_by_id
 from courseware.model_data import FieldDataCache
 from courseware.module_render import get_module_for_descriptor
 from openedx.core.djangoapps.crawlers.models import CrawlersConfig
+from student.models import CourseEnrollmentManager
 
 from xmodule.x_module import STUDENT_VIEW
 
@@ -109,3 +110,9 @@ class ModifyTeams(object):
         child = child[0]
         locator = child.parent
         return locator.to_deprecated_string()
+
+def get_users_enrolled(course_key):
+    """Return a generator with the username of every user in the course"""
+    users = CourseEnrollmentManager().users_enrolled_in(course_key)
+    for user in users:
+        yield user.username
