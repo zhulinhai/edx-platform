@@ -478,7 +478,7 @@ class UserAnaliticsView(APIView):
 
         org_filter = request.GET.get('org', None)
         data = ()
-        enrollment_list = CourseEnrollment.objects.All()
+        enrollment_list = CourseEnrollment.objects.all()
 
         if org_filter is None or org_filter == 'All':
             data = data + (self._get_total_courses_for_all_orgs(),)
@@ -576,6 +576,7 @@ class UserAnaliticsView(APIView):
         except Exception as err:
             Log.error("Total Courses, An error accured while trying to get the total courses, ERROR = {}".format(err.message))
             return {"Total Courses, Error": "An error accured while trying to get the total courses, ERROR = {}".format(err.message)}
+
 
 
     def _get_total_users_for_all_orgs(self, enrollment_list):
