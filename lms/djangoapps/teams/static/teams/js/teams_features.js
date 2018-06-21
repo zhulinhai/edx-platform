@@ -71,14 +71,13 @@
                 url: url,
                 done:function(e, data){
                     $(".page-header-secondary").empty();
-                    buttonAddMembers(staff, url);
                     var errors = data.result.errors;
                     var success = data.result.success;
-                    var container = $("<div title='Result'></div>");
+                    var container = $("<div id='result' title='Result'></div>");
                     var list = $("<ul></ul>");
 
                     for (var key in errors){
-                        var item = $("<li style='color: red; font-size:12px;'>Error in "+key+" = "+errors[key]+"</li>");
+                        var item = $("<li class='errors'>Error in "+key+" = "+errors[key]+"</li>");
                         list.append(item);
                     };
 
@@ -86,7 +85,7 @@
                     var list = $("<ul></ul>");
 
                     for (var key in success){
-                        var item = $("<li style='color: green; font-size:12px;'>"+success[key]+"</li>");
+                        var item = $("<li class='success'>"+success[key]+"</li>");
                         list.append(item);
                     };
 
@@ -95,8 +94,7 @@
                 },
                 fail: function(e, data){
                     $(".page-header-secondary").empty();
-                    buttonAddMembers(staff, url);
-                    var container = $("<div title='Result'>"+data.errorThrown+"</div>");
+                    var container = $("<div title='Results'>"+data.errorThrown+"</div>");
                     container.dialog();
                 }
             });

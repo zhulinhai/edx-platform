@@ -1337,6 +1337,10 @@ class CreateTeams(GenericAPIView):
                 field_errors = {}
                 serializer = CourseTeamCreationSerializer(data=data)
                 add_serializer_errors(serializer, data, field_errors)
+                if field_errors:
+                    for error in field_errors:
+                        errors["{}-[{}]".format(line, error)] = field_errors[error]["developer_message"]
+                    continue
                 team = serializer.save()
             try:
                 team.add_user(user)
