@@ -478,7 +478,7 @@ class UserAnaliticsView(APIView):
 
         org_filter = request.GET.get('org', None)
         data = ()
-        enrollment_list = CourseEnrollment.objects.filter(is_active=True)
+        enrollment_list = CourseEnrollment.objects.All()
 
         if org_filter is None or org_filter == 'All':
             data = data + (self._get_total_courses_for_all_orgs(),)
