@@ -35,7 +35,7 @@ urlpatterns = [
     url (
         r'^/user_analytics$',
         UserAnaliticsView.as_view(),
-        name = 'delete_user'
+        name = 'user_analytics'
     ),
     url(
         r'^v1/me$',

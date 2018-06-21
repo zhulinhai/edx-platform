@@ -34,7 +34,7 @@ from rest_framework_oauth.authentication import OAuth2Authentication
 from student.cookies import set_logged_in_cookies
 from student.views import AccountValidationError, create_account_with_params
 from util.json_request import JsonResponse
-from organizations.models import OrganizationCourse, Organization
+from organizations.models import OrganizationCourse
 from student.models import CourseEnrollment, Registration
 import json
 from util.organizations_helpers import get_organizations, get_organization_by_short_name
@@ -478,21 +478,33 @@ class UserAnaliticsView(APIView):
 
         org_filter = request.GET.get('org', None)
         data = ()
+        enrollment_list = CourseEnrollment.objects.all()
 
         if org_filter is None or org_filter == 'All':
             data = data + (self._get_total_courses_for_all_orgs(),)
-            data = data + (self._get_total_users_for_all_orgs(),)
+            data = data + (self._get_total_users_for_all_orgs(enrollment_list),)
         else:
             data = data + (self._get_total_courses_for_org(org_filter),)
-            data = data + (self._get_total_users_for_org(org_filter),)
-                
+            data = data + (self._get_total_users_for_org(org_filter, enrollment_list),)
 
+
+        data = data + ({"Total unique enrollments": self._get_unique_enrollments_total(enrollment_list)},)
         data = data + (self._get_total_registered_users(),)
         data = data + (self._get_total_organizations(),)
-        data = data + (self._get_enrollment_totals(),)
+        data = data + (self._get_enrollment_totals(enrollment_list),)
 
         return JsonResponse(data)
 
+
+    def _get_unique_enrollments_total(self, enrollment_list):
+        """
+        Takes the given enrollment_list and makes it unique
+        """
+        unique_list = []
+        for enrollment in enrollment_list:
+            if enrollment.user.email not in unique_list:
+                unique_list.append(enrollment.user.email)
+        return len(unique_list)
 
 
     def _get_total_registered_users(self):
@@ -520,23 +532,23 @@ class UserAnaliticsView(APIView):
 
 
 
-    def _get_enrollment_totals(self):
+    def _get_enrollment_totals(self, enrollment_list):
         """
         retreives the total of enrolled users, listing active and non active enrollments
         """
 
         try:
-            total_enrolled_users_active = CourseEnrollment.objects.filter(is_active=True).count()
-            total_enrolled_users_not_active = CourseEnrollment.objects.filter(is_active=False).count()
+            total_enrolled_users_active = enrollment_list.filter(is_active=True).count()
+            total_enrolled_users_not_active = enrollment_list.filter(is_active=False).count()
 
             return {
-                    "Total Enrolled Users": total_enrolled_users_active + total_enrolled_users_not_active,
-                    "Total Enrolled Users - Active": total_enrolled_users_active,
-                    "Total Enrolled Users - NOT Active": total_enrolled_users_not_active
+                    "Total Enrollments": total_enrolled_users_active + total_enrolled_users_not_active,
+                    "Total Enrollments - Active": total_enrolled_users_active,
+                    "Total Enrollments - NOT Active": total_enrolled_users_not_active
                    }
         except Exception as err:
-            Log.error("Total Enrolled Users, An error accured while trying to get the total enrolled users, ERROR = {}".format(err))
-            return {"Total Enrolled Users, Error": "An error accured while trying to get the total enrolled users, ERROR = {}".format(err)}
+            Log.error("Total Enrollments, An error accured while trying to get the total enrolled users, ERROR = {}".format(err))
+            return {"Total Enrollments, Error": "An error accured while trying to get the total enrolled users, ERROR = {}".format(err)}
 
 
     def _get_total_courses_for_all_orgs(self):
@@ -545,11 +557,9 @@ class UserAnaliticsView(APIView):
         """
 
         data = {}
-        try:
-            total_courses = OrganizationCourse.objects.filter(active=True).count()
-            data = {"Total courses": total_courses}
-        except Exception as err:
-                Log.error("Unable to count the total number of OrganizationCourses, Error {}".format(err))
+        all_orgs = get_organizations()
+        for org in all_orgs:
+            data.update(self._get_total_courses_for_org(org['short_name']))
 
         return data
 
@@ -569,19 +579,20 @@ class UserAnaliticsView(APIView):
 
 
 
-    def _get_total_users_for_all_orgs(self):
+    def _get_total_users_for_all_orgs(self, enrollment_list):
         """
         retrieves the total number of enrolled users per organization
         """
-        try:
-            return {"Total users": CourseEnrollment.objects.filter(is_active=True).count()}
-        except Exception as err:
-            Log.error("Total users: Unable to calculate the total users for all users, Error ".format(err))
-            return {"Total users": "Unable to calculate the total users for all users, Error ".format(err)}
+        data = {}
+        all_orgs = get_organizations()
+        for org in all_orgs:
+            data.update(self._get_total_users_for_org(org['short_name'], enrollment_list))
+
+        return data
 
 
 
-    def _get_total_users_for_org(self, org_short_name):
+    def _get_total_users_for_org(self, org_short_name, enrollment_list):
         """
         retrieves the total number of enrolled users for the given organization
         Caveat, the User object does not have a direct link to the ORG object in the database,
@@ -592,9 +603,9 @@ class UserAnaliticsView(APIView):
         org_courses = OrganizationCourse.objects.filter(organization__short_name=org_short_name)
         for course in org_courses:
             try:
-                total_users = total_users + CourseEnrollment.objects.filter(course_id=CourseKey.from_string(course.course_id)).count()
+                total_users = total_users + enrollment_list.filter(course_id=CourseKey.from_string(course.course_id)).count()
             except Exception as err:
                 Log.error("Unable to get count for CourseEnrollment on course {}".format(course.course_id))
                 return {"Unable to get count for CourseEnrollment on course {}".format(course.course_id)}
 
-        return {"Total users for {}".format(org_short_name): total_users}
+        return {"Total Enrollments for {}".format(org_short_name): total_users}
