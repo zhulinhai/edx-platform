@@ -502,8 +502,11 @@ class UserAnaliticsView(APIView):
         """
         unique_list = []
         for enrollment in enrollment_list:
-            if enrollment.user.email not in unique_list:
-                unique_list.append(enrollment.user.email)
+            try:
+                if enrollment.user.email not in unique_list:
+                    unique_list.append(enrollment.user.email)
+            except User.DoesNotExist:
+                pass
         return len(unique_list)
 
 
