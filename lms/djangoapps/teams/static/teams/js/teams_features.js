@@ -204,7 +204,7 @@
                     actionsButtons(urlRocketChat);
                     buttonAddMembers(staff, urlApiCreateTeams);
                     removeBrowseAndButtons(staff, teamsLocked, options);
-                    addTeamUser(staff, options.teamMembershipsUrl, usersEnrolled);
+                    addTeamMember(staff, options.teamMembershipsUrl, usersEnrolled);
 
                     var targetNode = $(".view-in-course")[0];
 
@@ -220,7 +220,7 @@
                         actionsButtons(urlRocketChat);
                         buttonAddMembers(staff, urlApiCreateTeams);
                         removeBrowseAndButtons(staff, teamsLocked, options);
-                        addTeamUser(staff, options.teamMembershipsUrl, usersEnrolled);
+                        addTeamMember(staff, options.teamMembershipsUrl, usersEnrolled);
 
                     }
                     // Create an observer instance linked to the callback function
