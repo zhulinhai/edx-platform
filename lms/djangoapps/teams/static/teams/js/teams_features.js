@@ -73,7 +73,7 @@
     };
 
     function buttonAddMembers(staff, url){
-        var button = $("<button class='action action-primary'>Add Members</button>");
+        var button = $("<button class='btn btn-secondary'>Add Members</button>");
         var input = $("<input type='file' name='fileUpload' style='display: none;'accept='text/csv'/>")
         if(!$(".page-header-secondary").children()[0] && staff){
             $(".page-header-secondary").append(input);
@@ -81,11 +81,33 @@
 
             input.fileupload({
                 url: url,
-                done:function(){
+                done:function(e, data){
                     $(".page-header-secondary").empty();
-                    buttonAddMembers(staff, url);
+                    var errors = data.result.errors;
+                    var success = data.result.success;
+                    var container = $("<div id='result' title='Result'></div>");
+                    var list = $("<ul></ul>");
+
+                    for (var key in errors){
+                        var item = $("<li class='errors'>Error in "+key+" = "+errors[key]+"</li>");
+                        list.append(item);
+                    };
+
+                    container.append(list);
+                    var list = $("<ul></ul>");
+
+                    for (var key in success){
+                        var item = $("<li class='success'>"+success[key]+"</li>");
+                        list.append(item);
+                    };
+
+                    container.append(list);
+                    container.dialog();
                 },
                 fail: function(e, data){
+                    $(".page-header-secondary").empty();
+                    var container = $("<div title='Results'>"+data.errorThrown+"</div>");
+                    container.dialog();
                 }
             });
 
@@ -108,6 +130,7 @@
 
             loadjs('/static/js/vendor/jQuery-File-Upload/js/vendor/jquery.ui.widget.js');
             loadjs('/static/js/vendor/jQuery-File-Upload/js/jquery.fileupload.js');
+            loadjs('/static/js/vendor/jquery-ui.min.js');
 
             return function(options){
                 var urlRocketChat = "/xblock/"+options.rocketChatLocator;

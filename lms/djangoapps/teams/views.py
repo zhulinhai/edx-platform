@@ -1287,13 +1287,12 @@ class CreateTeams(GenericAPIView):
     def post(self, request, course_id):
 
         if not has_team_api_access(request.user, course_id) :
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
         file = request.FILES
         if 'fileUpload' in file:
-            self.handle_uploaded_file(file['fileUpload'], course_id)
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(self.handle_uploaded_file(file['fileUpload'], course_id))
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def handle_uploaded_file(self, file, course_id):
 
@@ -1302,31 +1301,45 @@ class CreateTeams(GenericAPIView):
         course_module = modulestore().get_course(course_key)
         topics = get_alphabetical_topics(course_module)
         topic_ids = {}
+        errors = {}
+        success = {}
+
+        headings = reader.next()
 
         for topic in topics:
             topic_ids[topic["id"]] = topic["id"]
 
         for row in reader:
+            line_number = str(reader.line_num)
+            line = "line {}".format(line_number)
 
-            if not self.get_from_list(row, 1) in topic_ids:
+            if not self.get_from_list(row, headings.index("TeamTopic")) in topic_ids:
+                errors[line] = "The topic {} does not exist.".format(self.get_from_list(row, headings.index("TeamTopic")))
                 continue
             try:
-                user = User.objects.get(Q(username=row[0]) | Q(email=row[0]))
+                user = User.objects.get(Q(username=self.get_from_list(row, headings.index("Student"))) |
+                Q(email=self.get_from_list(row, headings.index("Student"))))
             except User.DoesNotExist:
+                errors[line] = "The user {} does not exist.".format(self.get_from_list(row, headings.index("Student")))
                 continue
             if not CourseEnrollment.is_enrolled(user, course_key):
+                errors[line] = "The user {} is not enrolled in this course.".format(self.get_from_list(row, headings.index("Student")))
                 continue
             try:
-                team = CourseTeam.objects.get(Q(topic_id=self.get_from_list(row, 1)) & Q(name=self.get_from_list(row, 2)) & Q(course_id=course_key))
+                team = CourseTeam.objects.get(
+                    Q(topic_id=self.get_from_list(row, headings.index("TeamTopic"))) &
+                    Q(name=self.get_from_list(row, headings.index("TeamName"))) &
+                    Q(course_id=course_key))
+
             except CourseTeam.DoesNotExist:
                 data = {
                     'last_activity_at': '',
-                    'topic_id': self.get_from_list(row, 1),
-                    'name': self.get_from_list(row, 2),
-                    'description': self.get_from_list(row, 3),
+                    'topic_id': self.get_from_list(row, headings.index("TeamTopic")),
+                    'name': self.get_from_list(row, headings.index("TeamName")),
+                    'description': self.get_from_list(row, headings.index("TeamDescription")),
                     'course_id': course_id,
-                    'language': self.get_from_list(row, 4),
-                    'country': self.get_from_list(row, 5),
+                    'language': self.get_from_list(row, headings.index("TeamLanguage")),
+                    'country': self.get_from_list(row, headings.index("TeamCountry")),
                     'membership': [],
                     'id': None,
                     'date_created': ''
@@ -1334,6 +1347,10 @@ class CreateTeams(GenericAPIView):
                 field_errors = {}
                 serializer = CourseTeamCreationSerializer(data=data)
                 add_serializer_errors(serializer, data, field_errors)
+                if field_errors:
+                    for error in field_errors:
+                        errors["{}-[{}]".format(line, error)] = field_errors[error]["developer_message"]
+                    continue
                 team = serializer.save()
             try:
                 team.add_user(user)
@@ -1341,6 +1358,13 @@ class CreateTeams(GenericAPIView):
                 membership = CourseTeamMembership.objects.get(user__username=user.username)
                 membership.delete()
                 team.add_user(user)
+
+            success[line] = "The user {} has been added to the team {}.".format(
+                self.get_from_list(row, headings.index("Student")),
+                self.get_from_list(row, headings.index("TeamName"))
+                )
+
+        return {"errors": errors, "success": success}
 
     def get_from_list(self, values, index):
         try:
