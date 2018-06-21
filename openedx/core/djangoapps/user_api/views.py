@@ -578,7 +578,6 @@ class UserAnaliticsView(APIView):
             return {"Total Courses, Error": "An error accured while trying to get the total courses, ERROR = {}".format(err.message)}
 
 
-
     def _get_total_users_for_all_orgs(self, enrollment_list):
         """
         retrieves the total number of enrolled users per organization
