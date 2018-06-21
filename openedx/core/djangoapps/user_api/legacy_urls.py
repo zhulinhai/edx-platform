@@ -37,6 +37,10 @@ urlpatterns = [
         r'^delete_user$',
         user_api_views.DeleteUserView.as_view(),
     ),
+    url(
+        r'^user_analytics$',
+        user_api_views.UserAnaliticsView.as_view(),
+    ),
 ]
 
 if settings.FEATURES.get('ENABLE_COMBINED_LOGIN_REGISTRATION'):
