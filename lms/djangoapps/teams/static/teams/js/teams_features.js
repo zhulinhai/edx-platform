@@ -3,7 +3,6 @@
     'use strict';
 
     var xblock;
-    var teams;
 
     function createRocketChatDiscussion(urlRocketChat){
 
@@ -46,28 +45,30 @@
             url: options.teamsUrl,
             data: data,
             success: function(data){
-                teams = data;
+                if(data.count == 1){
+                    removeBrowseTab();
+                }
             }
         });
     };
 
-    function removeBrowseAndButtons(staff, teamsLocked){
+    function removeBrowseTab(){
+        $("#tab-1").remove();
+        $("#tabpanel-browse").remove();
+        $("#tab-0").addClass("is-active");
+        $("#tabpanel-my-teams").removeClass("is-hidden");
+    };
+
+    function removeBrowseAndButtons(staff, teamsLocked, options){
         if (teamsLocked && !staff){
             // Remove browse
-            $("#tab-1").remove();
-            $("#tabpanel-browse").remove();
-            $("#tab-0").addClass("is-active");
-            $("#tabpanel-my-teams").removeClass("is-hidden");
+            removeBrowseTab();
             // remove join and leave button
             $(".join-team .action-primary").remove();
             $(".page-content-secondary .leave-team").remove();
 
-        }else if(teams.count == 1 && !staff){
-            // Remove browse
-            $("#tab-1").remove();
-            $("#tabpanel-browse").remove();
-            $("#tab-0").addClass("is-active");
-            $("#tabpanel-my-teams").removeClass("is-hidden");
+        }else if(!staff){
+            loadUserTeam(options);
         };
     };
 
@@ -112,8 +113,7 @@
                 var urlRocketChat = "/xblock/"+options.rocketChatLocator;
                 var urlApiCreateTeams = options.teamsCreateUrl;
                 var staff = options.userInfo.staff;
-                var teamsLocked = (options.teamsLocked == "true");
-                teams = options.userInfo.teams;
+                var teamsLocked = JSON.parse(options.teamsLocked);
 
                 $(window).load(function() {
 
@@ -122,7 +122,7 @@
                     createRocketChatDiscussion(urlRocketChat);
                     actionsButtons(urlRocketChat);
                     buttonAddMembers(staff, urlApiCreateTeams);
-                    removeBrowseAndButtons(staff, teamsLocked);
+                    removeBrowseAndButtons(staff, teamsLocked, options);
 
                     var targetNode = $(".view-in-course")[0];
 
@@ -135,10 +135,9 @@
                             $(".discussion-module").hide();
                             $(".team-profile").find(".page-content-main").append(xblock);
                         }
-                        loadUserTeam(options);
                         actionsButtons(urlRocketChat);
                         buttonAddMembers(staff, urlApiCreateTeams);
-                        removeBrowseAndButtons(staff, teamsLocked);
+                        removeBrowseAndButtons(staff, teamsLocked, options);
                     }
                     // Create an observer instance linked to the callback function
                     var observer = new MutationObserver(fnHandler);
