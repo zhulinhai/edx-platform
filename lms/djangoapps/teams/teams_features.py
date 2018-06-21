@@ -112,7 +112,7 @@ class ModifyTeams(object):
         return locator.to_deprecated_string()
 
 def get_users_enrolled(course_key):
-    """Return a list with the username of every user in the course"""
+    """Return a generator with the username of every user in the course"""
     users = CourseEnrollmentManager().users_enrolled_in(course_key)
     for user in users:
         yield user.username

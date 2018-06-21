@@ -124,7 +124,7 @@
             .appendTo("body");
     }
 
-    function addTeamUser(staff, url, usersEnrolled){
+    function addTeamMember(staff, url, usersEnrolled){
 
         if($(".page-content-secondary")[0] && staff && !$(".add-user")[0]){
             var button = $("<button class='btn btn-link'>Add User</button>");
