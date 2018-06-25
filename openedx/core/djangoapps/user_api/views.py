@@ -502,8 +502,11 @@ class UserAnaliticsView(APIView):
         """
         unique_list = []
         for enrollment in enrollment_list:
-            if enrollment.user.email not in unique_list:
-                unique_list.append(enrollment.user.email)
+            try:
+                if enrollment.user.email not in unique_list:
+                    unique_list.append(enrollment.user.email)
+            except User.DoesNotExist:
+                pass
         return len(unique_list)
 
 
@@ -529,7 +532,6 @@ class UserAnaliticsView(APIView):
         except Exception as err:
             Log.error("Total Organizations, An error accured while trying to get the total organizations, ERROR = {}".format(err))
             return {"Total Organizations, Error": "An error accured while trying to get the total organizations, ERROR = {}".format(err)}
-
 
 
     def _get_enrollment_totals(self, enrollment_list):
@@ -578,7 +580,6 @@ class UserAnaliticsView(APIView):
             return {"Total Courses, Error": "An error accured while trying to get the total courses, ERROR = {}".format(err.message)}
 
 
-
     def _get_total_users_for_all_orgs(self, enrollment_list):
         """
         retrieves the total number of enrolled users per organization
@@ -589,7 +590,6 @@ class UserAnaliticsView(APIView):
             data.update(self._get_total_users_for_org(org['short_name'], enrollment_list))
 
         return data
-
 
 
     def _get_total_users_for_org(self, org_short_name, enrollment_list):
