@@ -592,7 +592,6 @@ class UserAnaliticsView(APIView):
         return data
 
 
-
     def _get_total_users_for_org(self, org_short_name, enrollment_list):
         """
         retrieves the total number of enrolled users for the given organization
