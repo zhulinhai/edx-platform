@@ -1356,7 +1356,7 @@ class CreateTeams(GenericAPIView):
             try:
                 team.add_user(user)
             except AlreadyOnTeamInCourse:
-                membership = CourseTeamMembership.objects.get(user__username=user.username)
+                membership = CourseTeamMembership.get_memberships(username=user.username, course_ids=[course_key])
                 membership.delete()
                 team.add_user(user)
 
