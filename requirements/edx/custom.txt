@@ -1,0 +1,3 @@
+git+https://github.com/django-import-export/django-import-export.git@690f126e5749f00ece2a4f9d549bd43a94c3308d#egg=import-export==1.0.0
+git+https://github.com/silentsokolov/django-admin-rangefilter.git@v0.2.1#egg=rangefilter==0.2.1
+git+https://github.com/lincolnloop/python-qrcode.git@v6.0#egg=qrcode==6.0
