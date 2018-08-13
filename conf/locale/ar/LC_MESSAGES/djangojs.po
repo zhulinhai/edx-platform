@@ -4617,7 +4617,7 @@ msgstr "نأسف لحدوث خطأ. "
 #. profile forms.
 #: lms/static/js/student_account/views/FormView.js
 msgid "(optional)"
-msgstr ""
+msgstr "(اختياري)"
 
 #: lms/static/js/student_account/views/LoginView.js
 msgid "We couldn't sign you in."
@@ -8470,7 +8470,7 @@ msgstr ""
 #: lms/templates/student_account/register.underscore
 #: test_root/staticfiles/templates/student_account/register.underscore
 msgid "Create an account using"
-msgstr "أنشئ حساباً باستخدام"
+msgstr "انشاء حساب بمساعدة"
 
 #: lms/templates/student_account/register.underscore
 #: test_root/staticfiles/templates/student_account/register.underscore
@@ -8481,7 +8481,7 @@ msgstr "أنشئ حساباً باستخدام %(providerName)s."
 #: lms/templates/student_account/register.underscore
 #: test_root/staticfiles/templates/student_account/register.underscore
 msgid "or create a new one here"
-msgstr "أو أنشئ حساباً جديداً باستخدام"
+msgstr "أو لإنشاء حساب جديد هنا"
 
 #: lms/templates/student_account/register.underscore
 msgid "Create account"

@@ -10005,7 +10005,7 @@ msgstr "username@domain.com"
 #: openedx/core/djangoapps/user_api/views.py
 #, python-brace-format
 msgid "The email address you used to register with {platform_name}"
-msgstr "כתובת דואר אלקטרוני שהשתמשת בזמן רישום ל{platform_name}"
+msgstr "כתובת האי מייל שאיתה נרשמת ל{platform_name}."
 
 #. #-#-#-#-#  django-partial.po (edx-platform)  #-#-#-#-#
 #. Translators: This label appears above a field on the login form
@@ -10023,7 +10023,7 @@ msgstr "סיסמה"
 
 #: openedx/core/djangoapps/user_api/views.py lms/templates/login.html
 msgid "Remember me"
-msgstr "זכור אותי"
+msgstr "זכרו אותי"
 
 #. Translators: This message is shown to users who attempt to create a new
 #. account using an email address associated with an existing account.
@@ -10050,7 +10050,7 @@ msgstr "נראה כי {username} שייך לחשבון קיים. נסה שוב �
 #. below a field meant to hold the user's email address.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "This is what you will use to login."
-msgstr ""
+msgstr "כתובת האי מייל תשמש אותך להתחברות."
 
 #. Translators: This label appears above a field on the registration form
 #. meant to confirm the user's email address.
@@ -10066,14 +10066,14 @@ msgstr ""
 #. a field on the registration form meant to hold the user's name.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Jane Q. Learner"
-msgstr ""
+msgstr "אז איך אמרת שקוראים לך?"
 
 #. Translators: These instructions appear on the registration form,
 #. immediately
 #. below a field meant to hold the user's full name.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "This name will be used on any certificates that you earn."
-msgstr ""
+msgstr "זה השם שיופיע בכל תעודות הסיום שלך."
 
 #: cms/templates/register.html lms/templates/register-form.html
 #: lms/templates/register-shib.html lms/templates/signup_modal.html
@@ -10088,13 +10088,13 @@ msgstr "שם משתמש"
 #: openedx/core/djangoapps/user_api/views.py
 msgid ""
 "The name that will identify you in your courses. It cannot be changed later."
-msgstr ""
+msgstr "זה יהיה הכינוי שלך המזהה שלך בקורסים. לא ניתן לשנות אותו מאוחר יותר."
 
 #. Translators: This example username is used as a placeholder in
 #. a field on the registration form meant to hold the user's username.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Jane_Q_Learner"
-msgstr ""
+msgstr "אז איך אמרת שקוראים לך?"
 
 #. Translators: This label appears above a dropdown menu on the registration
 #. form used to select the user's highest completed level of education.
@@ -10161,7 +10161,7 @@ msgstr "סקור את תנאי השימוש והקוד האתי"
 #: openedx/core/djangoapps/user_api/views.py
 #, python-brace-format
 msgid "I agree to the {platform_name} {terms_of_service}"
-msgstr "אני מסכים ל{terms_of_service} של {platform_name}"
+msgstr "קראתי והסכמתי ל{terms_of_service} של {platform_name}"
 
 #. Translators: "Terms of Service" is a legal document users must agree to
 #. in order to register a new account.
@@ -10174,7 +10174,7 @@ msgstr "עליך להסכים ל{terms_of_service} של {platform_name}"
 
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Review the Terms of Service"
-msgstr "סקור את תנאי השימוש"
+msgstr "לקריאת תנאי השימוש"
 
 #: openedx/core/djangoapps/verified_track_content/models.py
 msgid "The course key for the course we would like to be auto-cohorted."
@@ -10916,7 +10916,7 @@ msgstr "קורסים"
 #: cms/templates/login.html cms/templates/widgets/header.html
 #: themes/red-theme/cms/templates/login.html
 msgid "Sign In"
-msgstr "כניסה"
+msgstr "התחבר/י"
 
 #: cms/templates/login.html themes/red-theme/cms/templates/login.html
 msgid "Sign In to {studio_name}"
@@ -11870,7 +11870,7 @@ msgstr "הירשם"
 #: lms/templates/navigation.html themes/edx.org/lms/templates/header.html
 #: themes/red-theme/lms/templates/header.html
 msgid "Sign in"
-msgstr "כניסה"
+msgstr "התחבר/י"
 
 #: lms/templates/navigation.html themes/edx.org/lms/templates/header.html
 msgid ""
@@ -17570,7 +17570,7 @@ msgstr "הצג את סטטוס המשימות שהגשת לגבי בעיה זו.
 
 #: lms/templates/learner_dashboard/_dashboard_incomplete_profile_notification.html
 msgid "Your profile has missing fields!"
-msgstr "חסרים מספר נתונים בהגדרת החשבון שלך!"
+msgstr "אופס...נראה ששכחת כמה שדות חשובים בהגדרת החשבון שלך."
 
 #: lms/templates/learner_dashboard/_dashboard_incomplete_profile_notification.html
 msgid "Please {link_start}complete your profile{link_end}."
@@ -17841,7 +17841,9 @@ msgid ""
 "Check your {email_start}{email}{email_end} inbox for an account activation "
 "link from {platform_name}. If you need help, contact "
 "{link_start}{platform_name} Support{link_end}."
-msgstr ""
+msgstr "שלחנו לך מייל אימות ל{email_start}{email}{email_end} ובו ניתן למצוא קישור"
+"לאימות המשתמש שלך ב{platform_name}. אם נתקלת בבעיות, אנשי התמיכה שלנו פה לשירו"
+"תך: {link_start}{platform_name} תמיכה{link_end}"
 
 #: lms/templates/registration/activate_account_notice.html
 msgid "You're almost there!"

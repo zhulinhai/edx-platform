@@ -4373,7 +4373,7 @@ msgstr "אירעה שגיאה."
 #. profile forms.
 #: lms/static/js/student_account/views/FormView.js
 msgid "(optional)"
-msgstr ""
+msgstr "(אופציונלי)"
 
 #: lms/static/js/student_account/views/LoginView.js
 msgid "We couldn't sign you in."
@@ -8067,7 +8067,7 @@ msgstr "יצירת חשבון"
 
 #: lms/templates/student_account/login.underscore
 msgid "Sign In"
-msgstr "התחבר"
+msgstr "התחבר/י"
 
 #: lms/templates/student_account/login.underscore
 #: test_root/staticfiles/templates/student_account/login.underscore
@@ -8128,11 +8128,11 @@ msgstr "שחזר את הסיסמה שלי"
 #: lms/templates/student_account/register.underscore
 #: test_root/staticfiles/templates/student_account/register.underscore
 msgid "Already have an account?"
-msgstr "יש לך כבר חשבון?"
+msgstr "כבר נרשמת לכאן?"
 
 #: lms/templates/student_account/register.underscore
 msgid "Sign in."
-msgstr "התחבר"
+msgstr "התחבר/י"
 
 #: lms/templates/student_account/register.underscore
 msgid "Create an Account"
@@ -8141,7 +8141,7 @@ msgstr "יצירת חשבון"
 #: lms/templates/student_account/register.underscore
 #: test_root/staticfiles/templates/student_account/register.underscore
 msgid "Create an account using"
-msgstr "צור חשבון בעזרת"
+msgstr "יצירת חשבון בעזרת"
 
 #: lms/templates/student_account/register.underscore
 #: test_root/staticfiles/templates/student_account/register.underscore
@@ -8152,7 +8152,7 @@ msgstr "צור חשבון באמצעות %(providerName)s."
 #: lms/templates/student_account/register.underscore
 #: test_root/staticfiles/templates/student_account/register.underscore
 msgid "or create a new one here"
-msgstr "או צור אחד חדש כאן"
+msgstr "או ליצירת אחד חדש כאן"
 
 #: lms/templates/student_account/register.underscore
 msgid "Create account"
@@ -8169,7 +8169,7 @@ msgstr "פרטי חשבון המשתמש שלך"
 
 #: edx-platform/israelxedu.gov.il/lms/templates/student_account/register.underscore:57
 msgid "Support education research by providing additional information"
-msgstr "לצרכי מחקר ושיפור הלמידה נשמח אם תשתפ/י אותנו במספר נתונים נוספים אודותיך"
+msgstr "רוצה לקבל קורסים מותאמים אישית? ספר/י לנו עוד על עצמך"
 
 #: lms/templates/student_profile/badge.underscore
 #: test_root/staticfiles/templates/student_profile/badge.underscore

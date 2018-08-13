@@ -5142,7 +5142,7 @@ msgstr "الأدوات الخاصة بالوسائط المتعدّدة"
 #: themes/stanford-style/lms/templates/footer.html
 #: themes/stanford-style/lms/templates/static_templates/tos.html
 msgid "Terms of Service"
-msgstr "شروط الخدمة"
+msgstr "شروط الاستخدام"
 
 #: lms/djangoapps/branding/api.py
 #, python-brace-format
@@ -10426,7 +10426,7 @@ msgstr "username@domain.com"
 #: openedx/core/djangoapps/user_api/views.py
 #, python-brace-format
 msgid "The email address you used to register with {platform_name}"
-msgstr "عنوان البريد الإلكتروني الذي استخدمته للتسجيل في {platform_name}"
+msgstr "عنوان البريد الإلكتروني الذي قمت بالتسجيل به {platform_name}."
 
 #. #-#-#-#-#  django-partial.po (edx-platform)  #-#-#-#-#
 #. Translators: This label appears above a field on the login form
@@ -10473,7 +10473,7 @@ msgstr ""
 #. below a field meant to hold the user's email address.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "This is what you will use to login."
-msgstr ""
+msgstr "سيتم استخدام عنوان البريد الإلكتروني لتسجيل الدخول."
 
 #. Translators: This label appears above a field on the registration form
 #. meant to confirm the user's email address.
@@ -10489,14 +10489,14 @@ msgstr ""
 #. a field on the registration form meant to hold the user's name.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Jane Q. Learner"
-msgstr ""
+msgstr "إذن ما هو اسمك?"
 
 #. Translators: These instructions appear on the registration form,
 #. immediately
 #. below a field meant to hold the user's full name.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "This name will be used on any certificates that you earn."
-msgstr ""
+msgstr "هذا هو الاسم الذي سيظهر على جميع شهادات التخرج الخاصة بك."
 
 #: cms/templates/register.html lms/templates/register-form.html
 #: lms/templates/register-shib.html lms/templates/signup_modal.html
@@ -10511,13 +10511,13 @@ msgstr "اسم المستخدم"
 #: openedx/core/djangoapps/user_api/views.py
 msgid ""
 "The name that will identify you in your courses. It cannot be changed later."
-msgstr ""
+msgstr "سيكون هذا هو لقبك ومعرفك في الدورات. لا يمكن تغييره لاحقا."
 
 #. Translators: This example username is used as a placeholder in
 #. a field on the registration form meant to hold the user's username.
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Jane_Q_Learner"
-msgstr ""
+msgstr "إذن ما هو اسمك?"
 
 #. Translators: This label appears above a dropdown menu on the registration
 #. form used to select the user's highest completed level of education.
@@ -10584,7 +10584,7 @@ msgstr "استعراض شروط الخدمة وميثاق الشرف"
 #: openedx/core/djangoapps/user_api/views.py
 #, python-brace-format
 msgid "I agree to the {platform_name} {terms_of_service}"
-msgstr "أوافق على {terms_of_service} الخاصة بمنصة {platform_name}"
+msgstr "لقد قرأت ووافقت على {terms_of_service} ل- {platform_name}"
 
 #. Translators: "Terms of Service" is a legal document users must agree to
 #. in order to register a new account.
@@ -10593,7 +10593,7 @@ msgstr "أوافق على {terms_of_service} الخاصة بمنصة {platform_n
 #: openedx/core/djangoapps/user_api/views.py
 #, python-brace-format
 msgid "You must agree to the {platform_name} {terms_of_service}"
-msgstr "يجب الموافقة على {terms_of_service} الخاصة بمنصة {platform_name}. "
+msgstr "يجب أن توافق على {terms_of_service} ل- {platform_name}"
 
 #: openedx/core/djangoapps/user_api/views.py
 msgid "Review the Terms of Service"
@@ -18459,7 +18459,10 @@ msgid ""
 "Check your {email_start}{email}{email_end} inbox for an account activation "
 "link from {platform_name}. If you need help, contact "
 "{link_start}{platform_name} Support{link_end}."
-msgstr ""
+msgstr "أرسلنا إليك رسالة تحقق إلى{email_start}{email}{email_end} "
+"حيث يمكنك ايجاد رابط التحقق من اسم مستخدمك في. {platform_name} "
+"إذا كان لديك أي مشكلة , فإن فريق الدعم لدينا في خدمتك: "
+"{link_start}{platform_name} الدعم{link_end}"
 
 #: lms/templates/registration/activate_account_notice.html
 msgid "You're almost there!"
