@@ -3,6 +3,7 @@
 import logging
 import json
 import urlparse
+import urllib
 
 from django.conf import settings
 from django.contrib import messages
@@ -62,6 +63,18 @@ def login_and_registration_form(request, initial_mode="login"):
 
     # If we're already logged in, redirect to the dashboard
     if request.user.is_authenticated():
+        return redirect(redirect_to)
+
+    if settings.FEATURES.get("BUILDACADEMY_REGISTRATION", True) and initial_mode == "register":
+        POST_AUTH_PARAMS = ('course_id', 'enrollment_action', 'course_mode', 'm')
+        if any(param in request.GET for param in POST_AUTH_PARAMS):
+            params = [(param, request.GET[param]) for param in POST_AUTH_PARAMS if param in request.GET]
+        else:
+            params = []
+        redirect_to = request.GET.get('next')
+        if redirect_to:
+            params.append(('next', redirect_to))
+        redirect_to = '{}?{}'.format(reverse('membership'), urllib.urlencode(params))
         return redirect(redirect_to)
 
     # Retrieve the form descriptions from the user API

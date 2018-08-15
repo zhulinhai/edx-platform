@@ -2,6 +2,7 @@
 #
 # List of valid templates is explicitly managed for (short-term)
 # security reasons.
+import urllib
 
 from edxmako.shortcuts import render_to_response, render_to_string
 from mako.exceptions import TopLevelLookupException
@@ -14,6 +15,8 @@ from django.views.decorators.http import require_http_methods
 from openedx.core.djangoapps.user_api.accounts.api import check_account_exists
 from django.contrib.auth.models import User, AnonymousUser
 from student.views import create_account, create_account_with_params
+from student.helpers import get_next_url_for_login_page
+from django.core.urlresolvers import resolve, reverse
 
 
 def render_404(request):
@@ -59,6 +62,15 @@ def render_subs(request, template):
     if request.GET.get('pay'):
         pay = request.GET['pay']
 
+    redirect_to = get_next_url_for_login_page(request)
+    POST_AUTH_PARAMS = ('course_id', 'enrollment_action', 'course_mode')
+    post_auth_params = []
+    if any(param in request.GET for param in POST_AUTH_PARAMS):
+        post_auth_params = [(param, request.GET[param]) for param in POST_AUTH_PARAMS if param in request.GET]
+    next_param = request.GET.get('next')
+    if next_param:
+        post_auth_params.append(('next', next_param))
+
     user = request.user
     if user.is_authenticated():
         if stype == '1':
@@ -67,7 +79,7 @@ def render_subs(request, template):
             if stype == '2' or stype == '3' or stype == '6':
                 step_pos = 2
             else:
-                return redirect('/dashboard')
+                return redirect(redirect_to)
     else:
         step_pos = 1
         user = user
@@ -171,7 +183,8 @@ def render_subs(request, template):
                 # print post_vars
                 user = create_account_with_params(request, post_vars)
                 if user.is_authenticated():
-                    redirect_to = "/membership?m=%s" % (stype)
+                    post_auth_params.append(('m', stype))
+                    redirect_to = '{}?{}'.format(reverse('membership'), urllib.urlencode(post_auth_params))
                     return redirect(redirect_to)
 
     # step2 or step3
@@ -274,11 +287,15 @@ def render_subs(request, template):
         else:
             template = "subscription.html"
 
+    post_auth_params.append(('m', stype))
+
     # return template
     return render_to_response(
         'subscriptions/' + template,
         {
             'stype': stype,
+            'post_auth_url': urllib.urlencode(post_auth_params),
+            'redirect_to': redirect_to,
             'UserInfo': UserInfo,
             'UserInfoError': UserInfoError,
             'step_pos': step_pos,

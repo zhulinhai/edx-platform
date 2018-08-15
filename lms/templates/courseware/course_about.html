@@ -249,7 +249,7 @@ $(document).ready(function(){
               <span class="register" style='margin-bottom:20px;'>Enrollment in this course is for paid subscriptions</span>
                <a href="http://buildacademy.com/membership" class="button">Upgrade membership</a>
               %else:
-                       <a href="https://buildacademy.com/membership/" class="button">
+                       <a href="https://buildacademy.com/membership/?course_id=${course.id}" class="button">
                 ${_("Join").format(course_name=course.display_number_with_default) | h}
                     </a>
              %endif
@@ -279,7 +279,7 @@ $(document).ready(function(){
                 ${_("Enroll").format(course_name=course.display_number_with_default) | h}
               </a>
 	    %else:
-		     <a href="https://buildacademy.com/membership/" class="button">
+		     <a href="https://buildacademy.com/membership/?course_id=${course.id}" class="button">
                 ${_("Join ").format(course_name=course.display_number_with_default) | h}
               </a>
 

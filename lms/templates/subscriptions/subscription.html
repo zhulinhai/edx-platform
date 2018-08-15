@@ -47,7 +47,7 @@ import requests
 
     <div ng-controller="SubscribeStep1Controller" class="row ng-scope">
         <div class="small-12 large-33-48 columns">
-            <form novalidate="" name="subscribeForm" action="/membership?m=${stype}" method="POST" class="reg ng-scope ng-pristine ng-invalid ng-invalid-required">
+            <form novalidate="" name="subscribeForm" action="/membership?${post_auth_url}" method="POST" class="reg ng-scope ng-pristine ng-invalid ng-invalid-required">
 <!--            <form novalidate="" name="register-form" action="/create_account" method="POST" class="reg ng-scope ng-pristine ng-invalid ng-invalid-required">-->
              <input type="hidden" name="stype" value="${stype}">
                 <h4 class="underline">Create your account</h4>
@@ -99,7 +99,7 @@ import requests
                                 name="Username" id="Username" maxlength="100"
                                 class="ng-pristine ng-invalid ng-invalid-required ng-valid-pattern">
                                 % if UserInfoError["Username"] == 1:
-				<small class="ng-scope ng-hide">The name that will identify you - (cannot be changed later)</small>
+				<small class="ng-scope ng-hide">Use only letters and numbers without spaces or special characters (cannot be changed later)</small>
 				% endif
                         </label>
                     </div>
