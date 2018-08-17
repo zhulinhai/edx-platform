@@ -201,8 +201,9 @@ class UserAttributeAdmin(admin.ModelAdmin):
 @admin.register(LoginFailures)
 class LoginFailuresAdmin(admin.ModelAdmin):
     """ Admin interface for the LoginFailures model. """
+    raw_id_fields = ('user',)
     list_display = ('user', 'failure_count', 'lockout_until',)
-    list_filter = ('user', 'lockout_until',)
+    list_filter = ('lockout_until',)
     search_fields = ('user__username', 'user__email',)
 
 
