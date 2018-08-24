@@ -39,6 +39,8 @@ def render(request, template):
 
     url(r'^jobs$', 'static_template_view.views.render', {'template': 'jobs.html'}, name="jobs")
     """
+    if settings.MKTG_URLS.get(template, False):
+         return redirect(settings.MKTG_URLS.get(template))
     return render_to_response('static_templates/' + template, {})
 
 
