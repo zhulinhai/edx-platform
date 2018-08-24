@@ -2,10 +2,11 @@
 @import 'lms/theme/variables-v1';
 
 // Unsupported browser alert
-$browser-update-background: #fff !important;
+$browser-update-background: #fff;
 $browser-update-ok-button: $button-color;
 $browser-update-ignore-button: $action-primary-disabled-bg;
 
+// Name of the style class used to customize browser-update alert
 .buorg {
   background-color: $browser-update-background;
   background-position: 8px 17px;

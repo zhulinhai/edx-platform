@@ -36,18 +36,18 @@ import waffle
 %>
 % if waffle.switch_is_active('enable_unsupported_browser_alert'):
   <script>
-  var $buoop = {
-    notify:${unsupported_browser_alert_versions | n, decode.utf8},
-    api:5,
-    reminder:0
-  };
-  function $buo_f(){
-   var e = document.createElement("script");
-   e.src = "//browser-update.org/update.min.js";
-   document.body.appendChild(e);
-  };
-  try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
-  catch(e){window.attachEvent("onload", $buo_f)}
+    var $buoop = {
+        notify:${unsupported_browser_alert_versions | n, decode.utf8},
+        api:5,
+        reminder:0
+    };
+    function $buo_f() {
+        var e = document.createElement("script");
+        e.src = "//browser-update.org/update.min.js";
+        document.body.appendChild(e);
+    };
+    try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
+    catch(e){window.attachEvent("onload", $buo_f)}
   </script>
 % endif
 
