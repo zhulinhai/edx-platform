@@ -76,3 +76,49 @@ class RocketChatCredentials(APIView):
 
         LOG.error("Rocketchat API object can not be initialized")
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class RocketChatChangeRole(APIView):
+
+    authentication_classes = (
+        SessionAuthentication,
+    )
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, course_id):
+        """
+        This methods allows to chege the role of a specific user
+        """
+        if not request.user.is_staff:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        username = request.POST.get("username", None)
+        role = request.POST.get("role", None)
+
+        if not username or not role:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        rocket_chat_settings = get_rocket_chat_settings()
+
+        api_rocket_chat = initialize_api_rocket_chat(rocket_chat_settings)
+
+        if api_rocket_chat:
+
+            user_info = api_rocket_chat.users_info(username=username)
+
+            try:
+                user_info = user_info.json()
+                if not user_info.get('success', False):
+                    return Response(user_info.get("error"), status=status.HTTP_400_BAD_REQUEST)
+
+                user = user_info.get("user")
+                data = {"roles": [role]}
+                response = api_rocket_chat.users_update(user.get("_id"), **data)
+                if response.status_code == 200:
+                    return Response(status=status.HTTP_204_NO_CONTENT)
+                return Response(response.json().get("error"), status=status.HTTP_400_BAD_REQUEST)
+
+            except AttributeError:
+                LOG.error("Rocketchat API response with: %s", user_info)
+                return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
