@@ -14,7 +14,7 @@ from rocket_chat.utils import (
     create_user,
     get_subscriptions_rids,
 )
-from .serializers import RocketChatCredentialsSerializer
+from .serializers import RocketChatCredentialsSerializer, RocketChatChangeRoleSerializer
 
 LOG = logging.getLogger(__name__)
 
@@ -91,11 +91,14 @@ class RocketChatChangeRole(APIView):
         """
         if not request.user.is_staff:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-        username = request.POST.get("username", None)
-        role = request.POST.get("role", None)
 
-        if not username or not role:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        serializer = RocketChatChangeRoleSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response("Data is not valid", status=status.HTTP_400_BAD_REQUEST)
+
+        username = serializer.data["username"]
+        role = serializer.data["role"]
 
         rocket_chat_settings = get_rocket_chat_settings()
 
@@ -118,7 +121,8 @@ class RocketChatChangeRole(APIView):
                 return Response(response.json().get("error"), status=status.HTTP_400_BAD_REQUEST)
 
             except AttributeError:
-                LOG.error("Rocketchat API response with: %s", user_info)
+                LOG.error("Rocketchat API can not get the user information")
                 return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+        LOG.error("Rocketchat API object can not be initialized")
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
