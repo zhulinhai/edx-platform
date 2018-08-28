@@ -2,13 +2,18 @@
     'use strict';
 
     function loadComponents(pageContentMain, pageContentSecondary){
+        var navigationOptions = $(".rocket-chat-options").children();
         if(window.location.hash == "#main"){
             pageContentSecondary.hide();
+            $(navigationOptions[1]).removeClass("active");
             pageContentMain.show();
+            $(navigationOptions[0]).addClass("active");
 
         }else if (window.location.hash == "#settings"){
             pageContentMain.hide();
+            $(navigationOptions[0]).removeClass("active");
             pageContentSecondary.show();
+            $(navigationOptions[1]).addClass("active");
         }
     }
 

@@ -1,8 +1,6 @@
 
 .page-content-main.rocket-chat-view{
-    display: inline-block;
-    width: 90%;
-    float: left;
+    padding: 10px;
 
     .rocket-chat-view{
         width: 100%;
@@ -10,17 +8,20 @@
         position: relative;
     }
 }
-.page-content-nav{
-    .rocket-chat-options{
-        padding:30px;
-        list-style: none;
-        display: inline-block;
-        float: right;
+
+.page-content-nav.rocket-chat-options{
+
+    padding: 10px;
+
+    a{
+        padding: 10px;
+        margin: 3px;
+    }
+    .active{
+        border-bottom: 3px solid;
     }
 }
 
 .page-content-secondary.rocket-chat-view{
     padding: 10px;
-    display: inline-block;
-    float: left;
 }
