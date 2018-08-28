@@ -17,6 +17,8 @@ from django.contrib.auth.models import User, AnonymousUser
 from student.views import create_account, create_account_with_params
 from student.helpers import get_next_url_for_login_page
 from django.core.urlresolvers import resolve, reverse
+from django.core.validators import ValidationError
+from six import text_type, iteritems
 
 
 def render_404(request):
@@ -181,11 +183,31 @@ def render_subs(request, template):
                     backend="django_subscription"
                 )
                 # print post_vars
-                user = create_account_with_params(request, post_vars)
-                if user.is_authenticated():
-                    post_auth_params.append(('m', stype))
-                    redirect_to = '{}?{}'.format(reverse('membership'), urllib.urlencode(post_auth_params))
-                    return redirect(redirect_to)
+                try:
+                    user = create_account_with_params(request, post_vars)
+                    if user.is_authenticated():
+                        post_auth_params.append(('m', stype))
+                        redirect_to = '{}?{}'.format(reverse('membership'), urllib.urlencode(post_auth_params))
+                        return redirect(redirect_to)
+                except ValidationError as exc:
+                    field, error_list = next(iteritems(exc.message_dict))
+                    conflicts = ", ".join(error_list)
+                    user = request.user
+                    return render_to_response(
+                        'subscriptions/' + template,
+                        {
+                            'stype': stype,
+                            'post_auth_url': urllib.urlencode(post_auth_params),
+                            'redirect_to': redirect_to,
+                            'UserInfo': UserInfo,
+                            'UserInfoError': UserInfoError,
+                            'step_pos': step_pos,
+                            'step_error': 0,
+                            'conflicts': conflicts,
+                            'user': user,
+                            'pay_ok': pay_ok
+                        }
+                    )
 
     # step2 or step3
     if user != '' and (step_pos == 3 or step_pos == 2):
