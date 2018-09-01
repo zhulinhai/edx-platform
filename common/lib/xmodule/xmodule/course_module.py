@@ -934,6 +934,13 @@ class CourseFields(object):
         scope=Scope.settings
     )
 
+    rocket_chat_email_notifications = Boolean(
+        display_name=_("Email Notifications"),
+        help=_("Enter true or false. True to notify the users by email when they have a private message or an unread mention"),
+        default=False,
+        scope=Scope.settings
+    )
+
 
 class CourseModule(CourseFields, SequenceModule):  # pylint: disable=abstract-method
     """

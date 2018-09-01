@@ -87,10 +87,11 @@ def initialize_api_rocket_chat(rocket_chat_settings):
     return api_rocket_chat
 
 
-def get_subscriptions_rids(api_rocket_chat, auth_token, user_id, unread=False):
+def get_subscriptions(api_rocket_chat, auth_token, user_id, unread=False):
     """
-    This method allow to get the roomid for every subscrition
+    This method allowo to get the user subscriptions
     """
+    original_headers = dict(api_rocket_chat.headers)
     api_rocket_chat.headers['X-Auth-Token'] = auth_token
     api_rocket_chat.headers['X-User-Id'] = user_id
     response = api_rocket_chat._RocketChat__call_api_get('subscriptions.get')
@@ -102,6 +103,8 @@ def get_subscriptions_rids(api_rocket_chat, auth_token, user_id, unread=False):
         subscriptions = response.get('update', [])
         for subscription in subscriptions:
             if not unread:
-                yield subscription['rid']
+                yield subscription
             elif subscription['unread'] > 0:
-                yield subscription['rid']
+                yield subscription
+
+    api_rocket_chat.headers = original_headers

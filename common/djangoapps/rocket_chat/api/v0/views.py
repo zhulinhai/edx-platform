@@ -12,7 +12,7 @@ from rocket_chat.utils import (
     get_rocket_chat_settings,
     initialize_api_rocket_chat,
     create_user,
-    get_subscriptions_rids,
+    get_subscriptions,
 )
 from .serializers import RocketChatCredentialsSerializer, RocketChatChangeRoleSerializer
 
@@ -66,7 +66,7 @@ class RocketChatCredentials(APIView):
             auth_token = data.get('authToken', None)
             user_id = data.get('userId', None)
 
-            subscriptions_rids = get_subscriptions_rids(api_rocket_chat, auth_token, user_id, True)
+            subscriptions_rids = [s["rid"] for s in get_subscriptions(api_rocket_chat, auth_token, user_id, True)]
 
             serializer = RocketChatCredentialsSerializer(
                 data={"url_service": url_service, "auth_token": auth_token, "user_id": user_id, "room_ids": list(subscriptions_rids)}
