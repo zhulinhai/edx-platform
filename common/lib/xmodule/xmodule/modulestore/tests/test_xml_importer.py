@@ -6,6 +6,7 @@ from opaque_keys.edx.locator import BlockUsageLocator, CourseLocator
 from xblock.fields import String, Scope, ScopeIds, List
 from xblock.runtime import Runtime, KvsFieldData, DictKeyValueStore
 from xmodule.x_module import XModuleMixin
+from opaque_keys.edx.keys import CourseKey
 from opaque_keys.edx.locations import Location
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.inheritance import InheritanceMixin
