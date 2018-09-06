@@ -321,3 +321,27 @@ if os.path.isfile(join(dirname(abspath(__file__)), 'private.py')):
 MODULESTORE = convert_module_store_setting_if_needed(MODULESTORE)
 
 SECRET_KEY = '85920908f28904ed733fe576320db18cabd7b6cd'
+
+#theme_hack = ENV_ROOT.dirname() / 'edxapp' / 'edx-platform' / 'themes' / 'proversity-openedx-themes' / 'edx-platform' / 'pearson-theme' / 'lms' / 'templates'
+#MAKO_TEMPLATE_DIRS_BASE.insert(0, theme_hack)
+#DEFAULT_TEMPLATE_ENGINE['DIRS'].insert(0, theme_hack)
+
+#DEFAULT_SITE_THEME = "pearson-theme"
+#ENABLE_COMPREHENSIVE_THEMING = False
+#COMPREHENSIVE_THEME_DIRS = [
+#    "/edx/app/edxapp/edx-platform/themes",
+#    "/edx/app/edxapp/edx-platform/themes/proversity-openedx-themes/edx-platform",
+#]
+
+XBLOCK_SETTINGS = { 'RocketChatXBlock': {'private_url_service': 'http://staging.rocket-chat.proversity.io',
+                   'public_url_service': 'http://staging.rocket-chat.proversity.io',
+                   'admin_user': 'proversity', "admin_pass": 'rocketchat2018', "username":"staff", "password":"edx",
+                   "client_id": "f8179ed766590666a7cd", "client_secret":"bc0267d3e5f9b0dd74c96e7cc738df3e7e465987"},
+                    "bibblio": {
+                    "client_id": "ff90bfe4",
+                    "client_secret": "1c2428219c598bcfc6cc26a197afbc47",
+                    "recommendation_key": "d496d274-3190-46b0-b119-6a250efdd8ad"
+                  },}
+
+INSTALLED_APPS += ['agnosticcontentxblock']
+ACTIVATE_SUBSCRIPTION_PRODUCT = True

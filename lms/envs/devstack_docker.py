@@ -1,6 +1,7 @@
 """ Overrides for Docker-based devstack. """
 
 from .devstack import *  # pylint: disable=wildcard-import, unused-wildcard-import
+from path import Path as path
 
 # Docker does not support the syslog socket at /dev/log. Rely on the console.
 LOGGING['handlers']['local'] = LOGGING['handlers']['tracking'] = {
@@ -41,6 +42,7 @@ FEATURES.update({
     'ENABLE_DISCUSSION_SERVICE': True,
     'SHOW_HEADER_LANGUAGE_SELECTOR': True,
     'ENABLE_ENTERPRISE_INTEGRATION': False,
+    'USE_MICROSITES': True,
 })
 
 ENABLE_MKTG_SITE = os.environ.get('ENABLE_MARKETING_SITE', False)
@@ -74,3 +76,17 @@ MKTG_URLS = {
 CREDENTIALS_SERVICE_USERNAME = 'credentials_worker'
 
 COURSE_CATALOG_API_URL = 'http://edx.devstack.discovery:18381/api/v1/'
+
+ENABLE_ROCKET_CHAT_SERVICE = True
+
+MICROSITE_TEMPLATE_BACKEND = 'microsite_configuration.backends.filebased.FilebasedMicrositeTemplateBackend'
+MICROSITE_BACKEND = 'microsite_configuration.backends.database.DatabaseMicrositeBackend'
+
+MICROSITE_ROOT_DIR = "/edx/app/edxapp/themes/microsites"
+
+MAKO_TEMPLATE_DIRS_BASE.insert(0, path(MICROSITE_ROOT_DIR))
+
+DEFAULT_TEMPLATE_ENGINE_DIRS.append(MICROSITE_ROOT_DIR)
+
+
+

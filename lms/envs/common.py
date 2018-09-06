@@ -243,7 +243,7 @@ FEATURES = {
     'ALLOW_WIKI_ROOT_ACCESS': True,
 
     # Turn on/off Microsites feature
-    'USE_MICROSITES': False,
+    'USE_MICROSITES': True,
 
     # Turn on third-party auth. Disabled for now because full implementations are not yet available. Remember to run
     # migrations if you enable this; we don't create tables by default.
@@ -2200,7 +2200,7 @@ INSTALLED_APPS = [
     # When a user is deleted, Django queries all tables with a FK to the auth_user table,
     # and since django-rest-framework-oauth imports this, it will try to access tables
     # defined by oauth_provider.  If those tables don't exist, an error can occur.
-    'oauth_provider',
+    #'oauth_provider',
 
     'openedx.core.djangoapps.auth_exchange',
 
@@ -3300,6 +3300,7 @@ NOTIFICATION_EMAIL_EDX_LOGO = "templates/credit_notifications/edx-logo-header.pn
 # for MICROSITE_BACKEND possible choices are
 # 1. microsite_configuration.backends.filebased.FilebasedMicrositeBackend
 # 2. microsite_configuration.backends.database.DatabaseMicrositeBackend
+
 MICROSITE_BACKEND = 'microsite_configuration.backends.filebased.FilebasedMicrositeBackend'
 # for MICROSITE_TEMPLATE_BACKEND possible choices are
 # 1. microsite_configuration.backends.filebased.FilebasedMicrositeTemplateBackend
