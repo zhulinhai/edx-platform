@@ -1,7 +1,6 @@
 import logging
 
 from xmodule.modulestore.django import modulestore
-from xmodule.modulestore.exceptions import ItemNotFoundError
 from student.models import get_user
 from third_party_auth import pipeline
 
@@ -10,7 +9,6 @@ from lms.djangoapps.course_blocks.api import get_course_blocks
 from lms.djangoapps.courseware.courses import get_course_by_id
 from lms.djangoapps.instructor_task.models import ReportStore
 
-from opaque_keys.edx.locator import BlockUsageLocator
 
 logger = logging.getLogger(__name__)
 
@@ -44,23 +42,23 @@ class GenerateCompletionReport(object):
         required_ids = self.get_required_ids()
         activities = len(required_ids)
 
-        for id, item in enumerate(required_ids):
-            fieldnames.append("required_activity_{}".format(item + 1))
+        for idx, item in enumerate(required_ids):
+            fieldnames.append("required_activity_{}".format(idx + 1))
 
         rows.append(fieldnames)
 
         for user in self.users:
-            user, u_prof = get_user(user.email)
-            first_name, last_name = self.get_first_and_last_name(u_prof.name)
+            user, user_profile = get_user(user.email)
+            first_name, last_name = self.get_first_and_last_name(user_profile.name)
             completed_activities = self.get_completed_activities(user)
             last_login = user.last_login
-            disp_last_login = None
+            display_last_login = None
             # Last login could not be defined for a user
             if last_login:
-                disp_last_login = last_login.strftime('%Y/%m/%d %H:%M:%S')
+                display_last_login = last_login.strftime('%Y/%m/%d %H:%M:%S')
 
             providers = pipeline.get_provider_user_states(user)
-            user_provider_ids = [assoc.remote_id for assoc in providers if assoc.has_account]
+            user_provider_ids = [provider.remote_id for provider in providers if provider.has_account]
 
             if user_provider_ids:
                 user_id = '//'.join(user_provider_ids)
@@ -73,7 +71,7 @@ class GenerateCompletionReport(object):
                     user.username,
                     user.email,
                     user.date_joined.strftime('%Y/%m/%d %H:%M:%S'),
-                    disp_last_login,
+                    display_last_login,
                     self.get_count_required_completed_activities(required_ids, completed_activities),
                     activities,
                     self.course_key.to_deprecated_string(),
@@ -172,8 +170,11 @@ class GenerateCompletionReport(object):
         """
         Takes the argument full_name a returns a list with the first name and last name
         """
-        if full_name is not None or full_name == '':
-            if ' ' in full_name:
-                return full_name.split(' ', 1)
-            return [full_name, '']
-        return ['', '']
+        try:
+            result = full_name.split(' ', 1)
+        except AttributeError:
+            return ['', '']
+        else:
+            if len(result) == 2:
+                return result
+            return [full_name, full_name]
