@@ -16,6 +16,14 @@ import requests
 </style>
 <!-- style -->
 
+<%
+
+if stype == '4' or stype == '1':
+    show_billing = False
+else:
+    show_billing = True
+%>
+
 <section class="subscribe-step1">
 
     <div class="row push-up push-down">
@@ -24,11 +32,13 @@ import requests
                 <div class="large-4 small-4 columns">
                     <img src="/static/subscription/images/account-orange-v2.png">
                 </div>
+                % if show_billing:
                 <div class="large-4 small-4 columns ">
                     <img src="/static/subscription/images/billing-gray-v2.png">
                 </div>
+                % endif
                 <div class="large-4 small-4 columns">
-                    <img src="/static/subscription/images/start-training-gray-v1.png">
+                    <img src="/static/subscription/images/start-gray-v1.png">
                 </div>
             </div>
         </div>
@@ -50,7 +60,7 @@ import requests
             <form novalidate="" name="subscribeForm" action="/membership?${post_auth_url}" method="POST" class="reg ng-scope ng-pristine ng-invalid ng-invalid-required">
 <!--            <form novalidate="" name="register-form" action="/create_account" method="POST" class="reg ng-scope ng-pristine ng-invalid ng-invalid-required">-->
              <input type="hidden" name="stype" value="${stype}">
-                <h4 class="underline">Create your account</h4>
+                <h4 class="underline">Register</h4>
                 <div class="signin-link subscribe-body-text">Already have an account? <a href="/login?${post_auth_url}">Sign in</a>.</div>
                 <div>
                 </div>
@@ -132,7 +142,7 @@ import requests
                 <div class="row">
                     <div class="small-12 columns">
                         <div class="subscribe-body-text disclaimer">
-                            We'll send you new courses, recommended courses, and special offers by email.  You can update your email preferences at any time.
+                           You can update your email preferences at any time.
                         </div>
                     </div>
                 </div>
@@ -144,7 +154,7 @@ import requests
 				required="required" aria-required="true" aria-describedby="register-honor_code-desc" 
 				class="input-block checkbox pull-left" 
 				name="honor_code" id="register-honor_code">
-                	    	<label for="register-honor_code">I agree to the Build Academy <a href="https://buildacademy.com/terms" target='_blank'>Terms of Service</a>.*</label>
+                	    	<label for="register-honor_code">I agree to <a href="https://buildacademy.com/terms" target='_blank'>Terms of Service</a>.*</label>
 			</div>
 		</div>
 
@@ -180,15 +190,14 @@ import requests
 		</div>
                 <hr>
                 <div class="text-center">
-                    <h4>Real training. Real results.</h4>
+                    <h4>Global challenges.</h4>
                     <div class="benefits">
-			% if stype == '1':
+                        % if stype == '1':
                             Introductory courses <br>
-                            Products courses + CEUs<br>
-                            Mobile compatibility<br>
                             Unlimited viewing<br>
                             Discussion forums<br>
-			% endif
+                            Professional Community<br>
+                        % endif
 
 			% if stype == '2':
 				Free Features<br>

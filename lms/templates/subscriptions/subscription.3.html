@@ -16,6 +16,13 @@ import requests
 </style>
 <!-- style -->
 
+<%
+if stype == '4' or stype == '1':
+    show_billing = False
+else:
+    show_billing = True
+%>
+
 <section class="subscribe-step1">
 
     <div class="row push-up push-down">
@@ -24,9 +31,11 @@ import requests
                 <div class="large-4 small-4 columns">
                     <img src="/static/subscription/images/account-gray.png">
                 </div>
+                % if show_billing:
                 <div class="large-4 small-4 columns ">
                     <img src="/static/subscription/images/billing-gray-v2.png">
                 </div>
+                % endif
                 <div class="large-4 small-4 columns">
                     <img src="/static/subscription/images/start-training-orange-v1.png">
                 </div>

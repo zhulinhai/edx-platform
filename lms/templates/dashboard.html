@@ -77,7 +77,7 @@ import json
 <section class="container dashboard" id="dashboard-main">
   <section class="my-courses" id="my-courses" role="main" aria-label="Content">
     <header class="wrapper-header-courses">
-      <h2 class="header-courses">${_("My Courses")}</h2>
+      <h2 class="header-courses">${_("My Dashboard")}</h2>
     </header>
 
 
@@ -134,7 +134,7 @@ import json
   % if settings.FEATURES.get('ENABLE_DASHBOARD_SEARCH'):
     <div id="dashboard-search-bar" class="search-bar dashboard-search-bar" role="search" aria-label="Dashboard">
       <form>
-        <label for="dashboard-search-input">${_('Search Your Courses')}</label>
+        <label for="dashboard-search-input">${_('Search')}</label>
         <div class="search-field-wrapper">
           <input id="dashboard-search-input" type="text" class="search-field"/>
           <button type="submit" class="search-button" aria-label="${_('Search')}">

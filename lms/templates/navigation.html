@@ -188,12 +188,18 @@ site_status_msg = get_site_status_msg(course_id)
 <div id='menulist'>
 
 <ul id='menulist-items'>
-<li class="compact_menu_list"> <a href='https://buildacademy.com/'>Home</a> </li>
-<li class="compact_menu_list"> <a href='/courses'>Courses</a> </li>
-<li class="compact_menu_list"> <a href='https://buildacademy.com/about'>About</a> </li>
-<li class="compact_menu_list"> <a href='https://buildacademy.com/contact'>Contact</a> </li>
-<li class="compact_menu_list"> <a class="cta cta-register" href="/login${login_query()}">Login</a></li>
 
+<li class="compact_menu_list"><a href="https://buildacademy.com/">Home</a></li>
+<li class="compact_menu_list"><a href="https://buildacademy.com/crowdsolving-for-clients/">Crowdsolving</a></li>
+<li class="compact_menu_list"><a href="https://buildacademy.com/challenges">Challenges</a></li>
+<li class="compact_menu_list"><a href="${marketing_link('COURSES')}">Courses</a></li>
+<li class="compact_menu_list"><a href="https://buildacademy.com/about">About</a></li>
+<li class="compact_menu_list"><a href="https://buildacademy.com/contact">Contact</a></li>
+<li class="compact_menu_list"><a href="${marketing_link('SCHOOLS')}">${_("Schools")}</a></li>
+% if not user.is_authenticated():
+<li class="compact_menu_list nav-courseware-01"><a class="cta cta-login" href="/login${login_query()}"><b>${_("Sign in")}</b></a></li>
+<li class="compact_menu_list nav-global-04"><a class="btn-neutral" href="https://buildacademy.com/membership/"><b>Join</b></a></li>
+% endif
 </ul>
 
 </div>

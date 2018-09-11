@@ -15,7 +15,12 @@ import requests
 #mobile-nav .hamburger,#mobile-nav .sign-in{display:none !important}
 </style>
 <!-- style -->
-
+<%
+if stype == '4' or stype == '1':
+    show_billing = False
+else:
+    show_billing = True
+%>
 <section class="subscribe-step1">
 
     <div class="row push-up push-down">
@@ -24,9 +29,11 @@ import requests
                 <div class="large-4 small-4 columns">
                     <img src="/static/subscription/images/account-gray.png">
                 </div>
+                % if show_billing:
                 <div class="large-4 small-4 columns ">
                     <img src="/static/subscription/images/billing-gray-v2.png">
                 </div>
+                % endif
                 <div class="large-4 small-4 columns">
                     <img src="/static/subscription/images/start-training-orange-v1.png">
                 </div>
@@ -90,15 +97,14 @@ import requests
         </div>
                 <hr>
                 <div class="text-center">
-                    <h4>Real training. Real results.</h4>
+                    <h4>Global challenges.</h4>
                     <div class="benefits">
-			% if stype == '1':
+                        % if stype == '1':
                             Introductory courses <br>
-                            Products courses + CEUs<br>
-                            Mobile compatibility<br>
                             Unlimited viewing<br>
                             Discussion forums<br>
-			% endif
+                            Professional Community<br>
+                        % endif
 
 			% if stype == '2':
 				Free Features<br>
