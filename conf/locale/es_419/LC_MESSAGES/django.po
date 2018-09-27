@@ -14895,7 +14895,7 @@ msgstr "Tiene un código QR que hace único tu certificado, el cual permite comp
 msgid ""
 "{b_start}Motivating: {b_end}Give yourself an additional incentive to "
 "complete the course"
-msgstr "{b_start}Motivación: {b_end}Dese usted mismo un incentivo adicional para completar el curso"
+msgstr "Tiene un valor legal de acuerdo a la ley N°27269"
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
@@ -15712,8 +15712,7 @@ msgstr "Compartir en Facebook"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "I'm taking {course_name} online with @edxonline. Check it out!"
-msgstr ""
-msgstr "Estoy tomando {course_name} en línea con @edxonline. ¡Echale un vistazo!"
+msgstr "Estoy tomando {course_name} en línea con Campus Romero. ¡Echale un vistazo!"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "Course options for"
