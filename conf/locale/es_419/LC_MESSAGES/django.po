@@ -3,31 +3,31 @@
 # Copyright (C) 2017 EdX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 # EdX Team <info@edx.org>, 2017.
-# 
+#
 # #-#-#-#-#  django-studio.po (0.1a)  #-#-#-#-#
 # edX translation file.
 # Copyright (C) 2017 EdX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 # EdX Team <info@edx.org>, 2017.
-# 
+#
 # #-#-#-#-#  mako.po (0.1a)  #-#-#-#-#
 # edX translation file
 # Copyright (C) 2017 edX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 # EdX Team <info@edx.org>, 2017.
-# 
+#
 # #-#-#-#-#  mako-studio.po (0.1a)  #-#-#-#-#
 # edX translation file
 # Copyright (C) 2017 edX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 # EdX Team <info@edx.org>, 2017.
-# 
+#
 # #-#-#-#-#  wiki.po (0.1a)  #-#-#-#-#
 # edX translation file
 # Copyright (C) 2017 edX
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 # EdX Team <info@edx.org>, 2017.
-# 
+#
 # Translators:
 # Juan Camilo Montoya Franco <juan.montoya@edunext.co>, 2017
 # Cristian Salamea <ovnicraft@gmail.com>, 2017
@@ -2739,7 +2739,7 @@ msgid ""
 "Enter the name of the course as it should appear in the edX.org course list."
 msgstr ""
 "Ingrese el nombre del curso, como debe aparecer en la lista de cursos de "
-"edX."
+"Campus Romero."
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid "Course Display Name"
@@ -2861,7 +2861,7 @@ msgid ""
 "on edx.org, and a New! badge temporarily appears next to the course image."
 msgstr ""
 "Ingrese true o false. Si se ingresa true, el curso aparecerá en la lista de "
-"cursos nuevos en edx.org y estará identificado temporalmente con una "
+"cursos nuevos en Campus Romero y estará identificado temporalmente con una "
 "etiqueta de Nuevo! junto a la imagen del curso."
 
 #: common/lib/xmodule/xmodule/course_module.py
@@ -14817,7 +14817,7 @@ msgstr "Inscribirse en {course_name} | Elegir tu ruta"
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Sorry, there was an error when trying to enroll you"
-msgstr "Lo sentimos, hubo un error al intentar inscribirte"
+msgstr "Lo sentimos, hubo un error al intentar inscribirlo"
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
@@ -14832,47 +14832,39 @@ msgid ""
 "qualify for academic credit, advance your career, or strengthen your school "
 "applications."
 msgstr ""
-"Hazte elegible para crédito académico y destaca tus nuevos conocimientos y "
-"habilidades con un certificado verificado. Utiliza esta valiosa acreditación"
-" aplica por crédito académico, para avanzar en tu carrera, o mejorar tus "
-"aplicaciones académicas."
+"Hágase elegible para crédito académico y destaque sus nuevos conocimientos y habilidades con un certificado verificado. Utilize esta valiosa acreditación aplicar por crédito académico, para avanzar "
+"en su carrera, o mejorar sus aplicaciones académicas."
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Benefits of a Verified Certificate"
-msgstr "Beneficios de un Certificado Verificado"
+msgstr "Beneficios de un Certificado"
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Eligible for credit:{b_end} Receive academic credit after "
 "successfully completing the course"
-msgstr ""
-"{b_start}Eligible para crédito académico:{b_end} Recibe crédito académico "
-"luego de completar exitosamente el curso"
+msgstr "{b_start}Eligible para crédito académico:{b_end} Reciba crédito académico luego de completar exitosamente el curso"
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Official:{b_end} Receive an instructor-signed certificate with the "
 "institution's logo"
-msgstr ""
-"{b_start}Oficial:{b_end} Recibe un certificado firmado por el instructor con"
-" el logo de la institución"
+msgstr "{b_start}Oficial:{b_end} Reciba un certificado firmado por el instructor con el logo de la institución"
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Easily shareable:{b_end} Add the certificate to your CV or resume, "
 "or post it directly on LinkedIn"
-msgstr ""
-"{b_start}Comparte fácilmente:{b_end} Agrega el certificado a tu CV, o "
-"publícalo directamente en LinkedIn"
+msgstr "{b_start}Comparte fácilmente:{b_end} Agrega el certificado a tu CV, o publícalo directamente en LinkedIn"
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Pursue a Verified Certificate"
-msgstr "Tomar el curso con Certificado Verificado"
+msgstr "Tomar el curso con Certificado"
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
@@ -14881,56 +14873,46 @@ msgid ""
 "this valuable credential to improve your job prospects and advance your "
 "career, or highlight your certificate in school applications."
 msgstr ""
-"Resalta tus nuevos conocimientos y habilidades con un Certificado "
-"Verificado. Utiliza esta valiosa acreditación para mejorar tus perspectivas "
-"de empleo y avanzar en tu carrera, o resalta tu certificado en aplicaciones "
-"académicas."
+"Resalta tus nuevos conocimientos y habilidades con un Certificado. Utiliza esta valiosa acreditación para mejorar tus perspectivas de empleo, "
+"crecer profesionalmente y ser más competitivo."
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Official: {b_end}Receive an instructor-signed certificate with the "
 "institution's logo"
-msgstr ""
-"{b_start}Oficial:{b_end} Recibe un certificado firmado por el instructor y "
-"con el logo de la institución"
+msgstr "Cuenta con firmas digitales y con el respaldo del Campus Romero."
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Easily shareable: {b_end}Add the certificate to your CV or resume, "
 "or post it directly on LinkedIn"
-msgstr ""
-"{b_start}Comparte fácilmente:{b_end} Agrega el certificado a su CV, o "
-"publícalo directamente en LinkedIn"
+msgstr "Tiene un código QR que hace único tu certificado, el cual permite comprobar su validez."
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "{b_start}Motivating: {b_end}Give yourself an additional incentive to "
 "complete the course"
-msgstr ""
-"{b_start}Motivación: {b_end}Date a ti mismo un incentivo adicional para "
-"completar el curso"
+msgstr "Tiene un valor legal de acuerdo a la ley N°27269"
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Audit This Course"
-msgstr "Tomar este curso como asistente"
+msgstr "ÍNSCRIBETE GRATIS"
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid ""
 "Audit this course for free and have complete access to all the course "
 "material, activities, tests, and forums."
-msgstr ""
-"Toma este curso de forma gratuita como asistente y tendrás acceso completo a"
-" todo el material, actividades, evaluaciones, y foros."
+msgstr "Tome este curso de forma gratuita como asistente y tendra acceso completo a todo el material, actividades, evaluaciones, y foros."
 
 #: lms/templates/course_modes/choose.html
 #: themes/edx.org/lms/templates/course_modes/choose.html
 msgid "Audit This Course (No Certificate)"
-msgstr "Toma este curso como asistente (Sin certificado)"
+msgstr "Llevar este curso de manera gratuita"
 
 #. Translators: b_start notes the beginning of a section of text bolded for
 #. emphasis, and b_end marks the end of the bolded text.
@@ -14942,10 +14924,8 @@ msgid ""
 "track does not offer a certificate for learners who earn a passing "
 "grade.{b_end}"
 msgstr ""
-"Toma este curso de forma gratuita y accede a todo el material, actividades, "
-"evaluaciones y foros del curso. {b_start}Ten en cuenta que esta modalidad no"
-" ofrece la oportunidad de recibir un certificado al finalizar el curso, "
-"aunque se obtenga la calificación necesaria para aprobar.{b_end}"
+"Toma este curso de forma gratuita y tendrás acceso completo a todo el material, actividades, evaluaciones y foros. {b_start}Tenga en cuenta que esta modalidad no ofrece la oportunidad de recibir un "
+"certificado al finalizar el curso, aunque se obtenga la calificación necesaria para aprobar.{b_end}"
 
 #: lms/templates/courseware/accordion.html
 msgid "{chapter} current chapter"
@@ -15724,8 +15704,7 @@ msgstr "Ver curso archivado"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "I'm taking {course_name} online with edX.org. Check it out!"
-msgstr ""
-"Estoy haciendo {course_name} en línea con edX.org. ¡Échale un vistazo!"
+msgstr "Estoy tomando {course_name} en línea con edX.org. ¡Echale un vistazo!"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "Share on Facebook"
@@ -15733,8 +15712,7 @@ msgstr "Compartir en Facebook"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "I'm taking {course_name} online with @edxonline. Check it out!"
-msgstr ""
-"Estoy haciendo {course_name} en línea con @edxonline. ¡Échale un vistazo!"
+msgstr "Estoy tomando {course_name} en línea con Campus Romero. ¡Echale un vistazo!"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "Course options for"
@@ -15869,9 +15847,7 @@ msgstr ""
 msgid ""
 "Pursue a {cert_name_long} to highlight the knowledge and skills you gain in "
 "this course."
-msgstr ""
-"Obten un {cert_name_long} para destacar el conocimiento y habilidades que "
-"adquirirás en este curso."
+msgstr "Obtén tu Certificado para destacar tus conocimientos y habilidades que adquirirás en este curso. "
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid ""
@@ -15879,13 +15855,12 @@ msgid ""
 "the course. {line_break}{link_start}Learn more about the verified "
 "{cert_name_long}{link_end}."
 msgstr ""
-"Es oficial. Es fácil de compartir. Es comprobado como motivador para la "
-"finalización del curso. {line_break}{link_start}Aprende más sobre el "
-"{cert_name_long}{link_end} verificado."
+"El fácil acceso a la educación gratuita ya es un plus para mejorar tus capacidades y habilidades. Si a eso le sumas un certificado que equivale a un sello de calidad, obtendrás un resultado "
+"increíble que mejorará tus perspectivas de emprendimiento, personales y profesionales.  {line_break}{link_start} Conoce más sobre el Certificado{link_end}"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid "Upgrade to Verified"
-msgstr "Optar por el Certificado Verificado"
+msgstr "CERTIFÍCATE AQUÍ"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 msgid ""
