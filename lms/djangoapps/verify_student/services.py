@@ -68,9 +68,8 @@ class IDVerificationService(object):
             'created_at__gte': (earliest_allowed_date or earliest_allowed_verification_date())
         }
 
-        return (SoftwareSecurePhotoVerification.objects.filter(**filter_kwargs).exists() or
-                SSOVerification.objects.filter(**filter_kwargs).exists() or
-                ManualVerification.objects.filter(**filter_kwargs).exists())
+        # TODO: Bypassing the user verification can be handled by a setting
+        return True
 
     @classmethod
     def verifications_for_user(cls, user):
