@@ -16,7 +16,7 @@ from .accounts.views import (
     DeactivateLogoutView,
     LMSAccountRetirementView
 )
-from .preferences.views import PreferencesDetailView, PreferencesView
+from .preferences.views import PreferencesDetailView, PreferencesView, ChangeToVerifiedMode
 from .verification_api.views import IDVerificationStatusView
 from .validation.views import RegistrationValidationView
 
@@ -153,5 +153,10 @@ urlpatterns = [
         r'^v1/preferences/{}/(?P<preference_key>[a-zA-Z0-9_]+)$'.format(settings.USERNAME_PATTERN),
         PreferencesDetailView.as_view(),
         name='preferences_detail_api'
+    ),
+    url(
+        r'^v1/preferences/change_to_verified_mode/$',
+        ChangeToVerifiedMode.as_view(),
+        name='change_to_verified_mode'
     ),
 ]
