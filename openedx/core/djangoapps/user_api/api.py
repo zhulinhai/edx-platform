@@ -846,9 +846,7 @@ class RegistrationFormFactory(object):
         Keyword Arguments:
             required (bool): Whether this field is required; defaults to True
         """
-        
-        
-        
+
         if configuration_helpers.get_value("enableCombinedToSPrivacy", false):
             # Translators: This is a legal document users must agree to
             # in order to register a new account.
