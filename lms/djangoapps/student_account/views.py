@@ -596,13 +596,16 @@ def _get_custom_form_fields(custom_form_model):
     Get the fields from the model and then create a list that contains,
     every custom form field and its information.
     """
-    custom_form_fields = custom_form_model._meta.fields # pylint: disable=W0212
+    custom_form_fields = custom_form_model._meta.fields  # pylint: disable=W0212
+    blacklisted_fields = ["id", "user"]
     extended_profile_fields = []
-    for field_index in range(2, len(custom_form_fields)):
+    for field in custom_form_fields:
+        if field.name in blacklisted_fields:
+            continue
         extended_profile_fields.append({
-            "field_name": _(custom_form_fields[field_index].name),
-            "field_label": _(custom_form_fields[field_index].verbose_name),
-            "field_type": 'TextField' if not custom_form_fields[field_index].choices else 'ListField',
-            "field_options": [] if not custom_form_fields[field_index].choices else custom_form_fields[field_index].choices
+            "field_name": field.name,
+            "field_label": _(field.verbose_name),
+            "field_type": "TextField" if not field.choices else "ListField",
+            "field_options": [] if not field.choices else field.choices
         })
     return extended_profile_fields
