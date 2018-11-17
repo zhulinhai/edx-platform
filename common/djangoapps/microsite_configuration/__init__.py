@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 This file implements a class which is a handy utility to make any
 call to the settings completely microsite aware by replacing the:
@@ -11,9 +12,6 @@ from microsite_configuration import settings
 from django.conf import settings as base_settings
 
 from microsite_configuration import microsite
-
-from django.core import signals
-from django.conf import settings
 
 
 class MicrositeAwareSettings(object):
@@ -32,9 +30,13 @@ class MicrositeAwareSettings(object):
             return getattr(base_settings, name)
 
 
-def intercept_settings(sender, environ, **kwargs):
-    import random
-    settings.PLATFORM_NAME = "EXAMPLE " + str(random.randint(1, 100))
+from django.core import signals
+from eox_tenant.signals import (
+    start_tenant,
+    finish_tenant,
+    clear_tenant,
+)
 
-
-signals.request_started.connect(intercept_settings)
+signals.request_started.connect(start_tenant)
+signals.request_finished.connect(finish_tenant)
+signals.got_request_exception.connect(clear_tenant)

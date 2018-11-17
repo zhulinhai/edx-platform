@@ -87,6 +87,12 @@ def get_all_config():
     return BACKEND.get_all_config()
 
 
+def get_configuration():
+    """
+    """
+    return BACKEND.get_configuration()
+
+
 def clear():
     """
     Clears out any microsite configuration from the current request/thread
