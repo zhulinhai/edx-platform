@@ -14,12 +14,6 @@
 <%namespace name='static' file='static_content.html'/>
 
 
-  <h1>
-    microsite dice: ${ microsite.get_value("PLATFORM_NAME") }
-    <br/>
-    settings dice: ${ settings.PLATFORM_NAME }
-  </h1>
-
 
 % if uses_bootstrap:
   <div class="container-fluid wrapper-footer">
@@ -124,6 +118,19 @@
           </ul>
         </nav>
       </div>
+
+<%!
+from microsite_configuration import microsite
+import os
+import datetime
+%>
+<div style="font-size: 14px;">
+  <p><strong>Debug information</strong></p>
+  <p style="margin: 0" id="tenant-debug-microsite">microsite says: ${ microsite.get_value("PLATFORM_NAME") }</p>
+  <p style="margin: 0" id="tenant-debug-settings">settings says: ${ settings.PLATFORM_NAME }</p>
+  <p style="margin: 0" id="tenant-debug-osprocid">OS process ID: ${ os.getpid() }</p>
+  <p style="margin: 0" id="tenant-debug-time">Time: ${ datetime.datetime.now() }</p>
+<div>
 
       ## Please leave this link and use one of the logos provided
       ## The OpenEdX link may be hidden when this view is served
