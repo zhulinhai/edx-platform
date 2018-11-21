@@ -3,6 +3,7 @@ This module contains signals needed for email integration
 """
 import datetime
 import logging
+import os
 from random import randint
 
 import crum
@@ -163,6 +164,23 @@ def email_marketing_user_field_changed(sender, user=None, table=None, setting=No
         new_value: New value
         kwargs: Not used
     """
+
+    msg = ""
+    try:
+        EDNX_TENANT_KEY = settings.EDNX_TENANT_KEY
+        EDNX_TENANT_DOMAIN = settings.EDNX_TENANT_DOMAIN
+        EDNX_TENANT_SETUP_TIME = settings.EDNX_TENANT_SETUP_TIME
+        PLATFORM_NAME = settings.PLATFORM_NAME
+
+        msg = "{}".format(
+            EDNX_TENANT_KEY,
+            PLATFORM_NAME
+        )
+    except Exception as e:
+        log.warn("We had an error trying to read the settings: {}".format(e))
+
+    log.warn("During a signal. PROCID {} | {}".format(os.getpid(), msg))
+
 
     # ignore anonymous users
     if user.is_anonymous:
