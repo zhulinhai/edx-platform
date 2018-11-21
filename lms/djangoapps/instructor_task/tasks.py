@@ -20,6 +20,7 @@ of the query for traversing StudentModule objects.
 
 """
 import logging
+import os
 from functools import partial
 
 from celery import task
@@ -154,6 +155,24 @@ def send_bulk_course_email(entry_id, _xmodule_instance_args):
     to instantiate an xmodule instance.  This is unused here.
     """
     # Translators: This is a past-tense verb that is inserted into task progress messages as {action}.
+
+    msg = ""
+    try:
+        EDNX_TENANT_KEY = settings.EDNX_TENANT_KEY
+        EDNX_TENANT_DOMAIN = settings.EDNX_TENANT_DOMAIN
+        EDNX_TENANT_SETUP_TIME = settings.EDNX_TENANT_SETUP_TIME
+        PLATFORM_NAME = settings.PLATFORM_NAME
+
+        msg = "{}".format(
+            EDNX_TENANT_KEY,
+            PLATFORM_NAME
+        )
+    except Exception as e:
+        TASK_LOG.warn("We had an error trying to read the settings: {}".format(e))
+
+    TASK_LOG.warn("During a CELERY task. PROCID {} | {}".format(os.getpid(), msg))
+
+
     action_name = ugettext_noop('emailed')
     visit_fcn = perform_delegate_email_batches
     return run_main_task(entry_id, visit_fcn, action_name)
