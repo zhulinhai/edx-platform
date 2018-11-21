@@ -31,7 +31,7 @@ class MicrositeAwareSettings(object):
 
 
 from django.core import signals
-from celery.signals import after_task_publish, before_task_publish, task_prerun
+# from celery.signals import after_task_publish, before_task_publish, task_prerun
 
 from eox_tenant.signals import (
     start_tenant,
@@ -46,6 +46,6 @@ signals.request_started.connect(start_tenant)
 signals.request_finished.connect(finish_tenant)
 signals.got_request_exception.connect(clear_tenant)
 
-after_task_publish.connect(after_task_publish_tenant)
-before_task_publish.connect(before_task_publish_tenant)
-task_prerun.connect(task_prerun_tenant)
+# after_task_publish.connect(after_task_publish_tenant)
+# before_task_publish.connect(before_task_publish_tenant)
+# task_prerun.connect(task_prerun_tenant)
