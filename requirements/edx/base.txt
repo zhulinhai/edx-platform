@@ -40,6 +40,9 @@ git+https://github.com/edx-solutions/xblock-drag-and-drop-v2@v2.1.6#egg=xblock-d
 git+https://github.com/open-craft/xblock-poll@add89e14558c30f3c8dc7431e5cd6536fff6d941#egg=xblock-poll==1.5.1
 git+https://github.com/edx/xblock-utils.git@v1.1.1#egg=xblock-utils==1.1.1
 -e common/lib/xmodule
+azure-storage==v0.20.3
+azure-common==1.1.8       # via azure-storage
+azure-nspkg==2.0.0        # via azure-common, azure-storage
 amqp==1.4.9               # via kombu
 analytics-python==1.1.0
 anyjson==0.3.3            # via kombu
