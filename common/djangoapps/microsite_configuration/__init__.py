@@ -9,9 +9,13 @@ with:
 
 from microsite_configuration import settings
 """
+import logging
 from django.conf import settings as base_settings
+from django.core import signals
 
 from microsite_configuration import microsite
+
+LOG = logging.getLogger(__name__)
 
 
 class MicrositeAwareSettings(object):
@@ -29,23 +33,16 @@ class MicrositeAwareSettings(object):
         except KeyError:
             return getattr(base_settings, name)
 
+try:
+    from eox_tenant.signals import (
+        start_tenant,
+        finish_tenant,
+        clear_tenant,
+    )
 
-from django.core import signals
-# from celery.signals import after_task_publish, before_task_publish, task_prerun
+    signals.request_started.connect(start_tenant)
+    signals.request_finished.connect(finish_tenant)
+    signals.got_request_exception.connect(clear_tenant)
 
-from eox_tenant.signals import (
-    start_tenant,
-    finish_tenant,
-    clear_tenant,
-    after_task_publish_tenant,
-    before_task_publish_tenant,
-    task_prerun_tenant,
-)
-
-signals.request_started.connect(start_tenant)
-signals.request_finished.connect(finish_tenant)
-signals.got_request_exception.connect(clear_tenant)
-
-# after_task_publish.connect(after_task_publish_tenant)
-# before_task_publish.connect(before_task_publish_tenant)
-# task_prerun.connect(task_prerun_tenant)
+except ImportError:
+    LOG.fatal("Could not import eox_tenant signals")
