@@ -17,65 +17,46 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="0" style=" border:none !important;">
 <tr>
   <td>
-    <!--[if (gte mso 9)|(IE)]>
-      <table width="650" align="center" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td>
-    <![endif]-->
+  
     <table align="center" cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 650px; border:none !important;">
 
       <!-- Enlace campus-->
-    <tr>
+      <tr>
         <td  style="padding-bottom:10px; padding-top:10px; ">
           <p style="text-align:right;margin:0px;"><a href="http://www.campusromero.pe" target="_blank" title="Campus Virtual Romero" style="font-size:10px; color:#000000;text-decoration:none;">www.campusromero.pe</a></p>
         </td>
       </tr>
 
-      <!-- Inicio cabecera-->
-      <tr>
-        <td bgcolor="#ffffff" style="padding:0; margin:0;">
-        <img  src="http://cursos.campusromero.pe/static/images/ac_banner.gif" alt="" width="100%" style="display:block;" style="height:auto !important; width:100% !important; ">
-        </td>
-      </tr>
-      <!-- fin cabecera -->
-
       <!-- Inicio nota 02 -->
       <tr>
         <td bgcolor="#FFFFFF"   style="padding: 30px 30px 30px 30px;border-bottom: 1px solid #f2f2f2;">
           <table width="100%" border="0" cellspacing="0" cellpadding="0" style=" border:none !important;">
             <tr>
               <td align="center" style="font-family: sans-serif !important; font-size: 15px; line-height: 22px;">
-              <p class="h2" style="text-align:center; font-family: Arial, sans-serif; padding: 0; font-size: 26px; line-height: 30px; color:#003d62;margin: 0 0 10px;">¡Hola!</p>
-${("¡Gracias por formar parte del {platform_name}!").format(
-   platform_name=microsite.get_value(
-     'platform_name',
-     settings.PLATFORM_NAME
-   )
-   )
-}
-Comienza activando tu cuenta haciendo clic sobre el botón abajo
-
-
+                <p class="h2" style="text-align:center; font-family: Arial, sans-serif; padding: 0; font-size: 26px; line-height: 30px; color:#003d62;margin: 0 0 10px;">¡Hola!</p>
+                ${("¡Gracias por formar parte del {platform_name}!").format(
+                platform_name=microsite.get_value(
+                'platform_name',
+                settings.PLATFORM_NAME))}
+                Comienza activando tu cuenta haciendo clic sobre el botón abajo
               </td>
             </tr>
             <tr>
               <td height="25"  >&nbsp;</td>
             </tr>
-
             <tr>
               <td align="center" style="font-family: sans-serif !important; font-size: 15px; line-height: 22px;">
-
                 <table align="center" border="0" cellpadding="0" cellspacing="0" bgcolor="#e84b0f" class="buttonwrapper" style="border-radius:25px;  border:none !important;">
                   <tr>
-                     <td  height="50" style="text-align: center; font-size: 18px; font-weight: bold; padding: 0 30px 0 30px;">
-                       <a href="http://${settings.SITE_NAME}/activate/${ key }" style="width:100%; height:100%; line-height:50px; font-family: sans-serif !important; color:#ffffff; font-weight:300;  text-decoration: none;">Activa tu cuenta aquí</a>
-                     </td>
-                   </tr>
-                </table>
-
-              </td>
-            </tr>
-
+                   <td  height="50" style="text-align: center; font-size: 18px; font-weight: bold; padding: 0 30px 0 30px;">
+                     <a href="http://${settings.SITE_NAME}/activate/${ key }" style="width:100%; height:100%; line-height:50px; font-family: sans-serif !important; color:#ffffff; font-weight:300;  text-decoration: none;">
+                       Activa tu cuenta aquí
+                     </a>
+                   </td>
+                 </tr>
+               </table>
+             </td>
+           </tr>
           </table>
         </td>
       </tr>
@@ -85,56 +66,36 @@ Comienza activando tu cuenta haciendo clic sobre el botón abajo
       <tr>
         <td bgcolor="#FFFFFF"   style="padding: 30px 30px 30px 30px;border-bottom: 1px solid #f2f2f2;">
           <table width="100%" border="0" cellspacing="0" cellpadding="0" style=" border:none !important;">
-
             <tr>
               <td   style="font-family: sans-serif !important; font-size: 15px; line-height: 22px;">
-
-<p style="margin-top:0; margin-bottom:20px;"><img src="http://cursos.campusromero.pe/static/images/icon-descubre.gif" width="60" height="60" alt="" align="left"/><strong>Descubre</strong><br />
-Explora el <a href="http://www.campusromero.pe/cursos" style="color:#e84b0f;font-family: sans-serif !important; color:#252525; font-weight:300;">catálogo de cursos</a>.</p>
-<hr style="border:none; border-top:dotted 1px #D4D4D4; padding-bottom:15px;" />
-<p style="margin-top:0; margin-bottom:20px;"><img src="http://cursos.campusromero.pe/static/images/icon-aprende.gif" width="60" height="60" alt="" align="left"/><strong>Aprende</strong><br />
- <a href="http://cursos.campusromero.pe/login" style="color:#e84b0f;font-family: sans-serif !important; color:#252525; font-weight:300;">Inicia sesión</a> e inscríbete en un curso.</p>
-<p style="margin-top:0; margin-bottom:20px;">Puedes acceder a los cursos desde tu casa, café; donde quieras. Solo necesitas una conexión a internet y muchas ganas de aprender.</p>
-<hr style="border:none; border-top:dotted 1px #D4D4D4; padding-bottom:15px;" />
-
-<p style="margin-top:0; margin-bottom:20px;"><img src="http://cursos.campusromero.pe/static/images/cerebro.gif" width="95" height="93" alt="" align="left"/><br />¡Éxitos! Te esperamos.<br />
-<span style="font-size:16px; color:#003d62;"><strong>Campus Virtual Romero</strong></span></p>
-              </td>
+                <p style="margin-top:0; margin-bottom:20px;"><strong>Descubre</strong><br />
+                  Explora el <a href="http://www.campusromero.pe/cursos" style="color:#e84b0f;font-family: sans-serif !important; color:#252525; font-weight:300;">catálogo de cursos</a>.</p>
+                  <hr style="border:none; border-top:dotted 1px #D4D4D4; padding-bottom:15px;" />
+                  <p style="margin-top:0; margin-bottom:20px;"><strong>Aprende</strong><br />
+                   <a href="http://cursos.campusromero.pe/login" style="color:#e84b0f;font-family: sans-serif !important; color:#252525; font-weight:300;">Inicia sesión</a> e inscríbete en un curso.</p>
+                   <p style="margin-top:0; margin-bottom:20px;">Puedes acceder a los cursos desde tu casa, café; donde quieras. Solo necesitas una conexión a internet y muchas ganas de aprender.</p>
+                   <hr style="border:none; border-top:dotted 1px #D4D4D4; padding-bottom:15px;" />
+                   <p style="margin-top:0; margin-bottom:20px;"><br />¡Éxitos! Te esperamos.<br />
+                    <span style="font-size:16px; color:#003d62;"><strong>Campus Virtual Romero</strong></span></p>
+                  </td>
             </tr>
           </table>
         </td>
       </tr>
       <!-- fin nota 02 -->
-
       <tr>
         <td bgcolor="#003d62"  style="padding-top:10px; padding-bottom:10px;">
-
           <table width="100%" border="0" cellspacing="0" cellpadding="0" style=" border:none !important;">
             <tr>
               <td  style="font-family: sans-serif !important; font-size: 15px; line-height: 22px;">
               <p class="tcalign" style="text-align:center; margin:0; padding:0;">
               <a href="https://www.facebook.com/CampusVirtualRomero/" target="_blank"  style="text-decoration:none;font-family: sans-serif !important; color:#252525; font-weight:300;">
-              <img src="http://cursos.campusromero.pe/static/images/btn-facebook.gif" alt="" width="160" height="40" style="vertical-align:middle;"></a>
+              <img src="https://edunextpublic.s3.amazonaws.com/openedx/campusromero/btn-facebook.gif" alt="" width="160" height="40" style="vertical-align:middle;"></a>
               <a href="https://www.linkedin.com/" target="_blank"  style="text-decoration:none;font-family: sans-serif !important; color:#252525; font-weight:300;">
-              <img src="http://cursos.campusromero.pe/static/images/btn-linkedin.gif" alt="" width="160" height="40" style="vertical-align:middle;" ></a>
+              <img src="https://edunextpublic.s3.amazonaws.com/openedx/campusromero/btn-linkedin.gif" alt="" width="160" height="40" style="vertical-align:middle;" ></a>
               <a href="https://twitter.com/campusromero" target="_blank"  style="text-decoration:none;font-family: sans-serif !important; color:#252525; font-weight:300;">
-              <img src="http://cursos.campusromero.pe/static/images/btn-twitter.gif" alt="" width="160" height="40" style="vertical-align:middle;" ></a>
+              <img src="https://edunextpublic.s3.amazonaws.com/openedx/campusromero/btn-twitter.gif" alt="" width="160" height="40" style="vertical-align:middle;" ></a>
               </p>
-              </td>
-            </tr>
-
-          </table>
-
-        </td>
-      </tr>
-
-     <tr>
-        <td>
-
-          <table width="100%" border="0" cellspacing="0" cellpadding="0" style=" border:none !important;">
-            <tr>
-              <td>
-              <img src="http://cursos.campusromero.pe/static/images/degrade.jpg" alt="Recupera tu contraseña" width="100%" style="display:block;height:auto !important; width:100% !important; ">
               </td>
             </tr>
 
@@ -155,13 +116,6 @@ Explora el <a href="http://www.campusromero.pe/cursos" style="color:#e84b0f;font
         </td>
       </tr>
     </table>
-    <!--[if (gte mso 9)|(IE)]>
-          </td>
-        </tr>
-    </table>
-    <![endif]-->
-
-
     </td>
   </tr>
 </table>
