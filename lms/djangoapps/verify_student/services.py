@@ -68,8 +68,13 @@ class IDVerificationService(object):
             'created_at__gte': (earliest_allowed_date or earliest_allowed_verification_date())
         }
 
-        # TODO: Bypassing the user verification can be handled by a setting
-        return True
+        # Bypassing the user verification when the service is not required
+        if getattr(settings, "CAMPUS_BYPASS_VERIFICATION_SERVICE", False):
+            return True
+
+        return (SoftwareSecurePhotoVerification.objects.filter(**filter_kwargs).exists() or
+                SSOVerification.objects.filter(**filter_kwargs).exists() or
+                ManualVerification.objects.filter(**filter_kwargs).exists())
 
     @classmethod
     def verifications_for_user(cls, user):
@@ -146,6 +151,10 @@ class IDVerificationService(object):
             'created_at__gte': earliest_allowed_verification_date()
         }
 
+        # Bypassing the user verification when the service is not required
+        if getattr(settings, "CAMPUS_BYPASS_VERIFICATION_SERVICE", False):
+            return True
+
         return (SoftwareSecurePhotoVerification.objects.filter(**filter_kwargs).exists() or
                 SSOVerification.objects.filter(**filter_kwargs).exists() or
                 ManualVerification.objects.filter(**filter_kwargs).exists())
@@ -170,6 +179,11 @@ class IDVerificationService(object):
             'error': '',
             'should_display': True,
         }
+
+        # Bypassing the user verification when the service is not required
+        if getattr(settings, "CAMPUS_BYPASS_VERIFICATION_SERVICE", False):
+            user_status['status'] = 'approved'
+            return user_status
 
         # We need to check the user's most recent attempt.
         try:
