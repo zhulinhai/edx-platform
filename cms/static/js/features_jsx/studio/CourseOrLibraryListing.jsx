@@ -9,7 +9,6 @@ export function CourseOrLibraryListing(props) {
   const allowReruns = props.allowReruns;
   const linkClass = props.linkClass;
   const idBase = props.idBase;
-
   return (
     <ul className="list-courses">
       {
@@ -21,7 +20,11 @@ export function CourseOrLibraryListing(props) {
                 <div className="course-metadata">
                   <span className="course-org metadata-item">
                     <span className="label">{gettext('Organization:')}</span>
-                    <span className="value">{item.org}</span>
+                      <span className="value">{item.org} 
+                      {item.real_org && item.real_org != item.org &&
+                        <span> ({item.real_org})</span>
+                      }
+                      </span>
                   </span>
                   <span className="course-num metadata-item">
                     <span className="label">{gettext('Course Number:')}</span>
