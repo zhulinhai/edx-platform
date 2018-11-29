@@ -3472,6 +3472,8 @@ FERNET_KEYS = [
 # Maximum number of rows to fetch in XBlockUserStateClient calls. Adjust for performance
 USER_STATE_BATCH_SIZE = 5000
 
+############### Custom settings Campus Romero ###############
+CAMPUS_BYPASS_VERIFICATION_SERVICE = True
 
 ############## Plugin Django Apps #########################
 
