@@ -3474,6 +3474,7 @@ USER_STATE_BATCH_SIZE = 5000
 
 ############### Custom settings Campus Romero ###############
 CAMPUS_BYPASS_VERIFICATION_SERVICE = True
+CAMPUS_HIDE_DEADLINE_FOR_VERIFICATION = True
 
 ############## Plugin Django Apps #########################
 

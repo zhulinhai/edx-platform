@@ -481,6 +481,9 @@ class VerifiedUpgradeDeadlineDate(DateSummary):
 
     @property
     def title(self):
+        if getattr(settings, "CAMPUS_HIDE_DEADLINE_FOR_VERIFICATION", False):
+            return ""
+
         dynamic_deadline = self._dynamic_deadline()
         if dynamic_deadline is not None:
             return _('Upgrade to Verified Certificate')
