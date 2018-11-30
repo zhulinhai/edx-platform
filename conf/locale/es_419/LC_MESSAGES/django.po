@@ -6669,7 +6669,7 @@ msgstr "registrarse"
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Your enrollment: Audit track"
-msgstr "Su inscripción: ruta de asistente"
+msgstr "Tu inscripción es gratuita, esta modalidad no ofrece un certificado al finalizar."
 
 #: lms/djangoapps/courseware/views/views.py
 msgid ""
@@ -27363,3 +27363,6 @@ msgstr ""
 "eso, que te invitamos a {htmlStart}obtener una copia de dichos certificados "
 "para guardar el respaldo de haber estudiado con nosotros{htmlEnd} y de las "
 "habilidades conseguidas. "
+
+msgid "Congratulations! You are already enrolled in {course_name}"
+msgstr "Felicitaciones! Ya estás inscrito/a en {course_name}"
