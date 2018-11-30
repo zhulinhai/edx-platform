@@ -37,7 +37,10 @@ def favicon_path(default=getattr(settings, 'FAVICON_PATH', 'images/favicon.ico')
     Django template tag that outputs the configured favicon:
     {% favicon_path %}
     """
-    return staticfiles_storage.url(configuration_helpers.get_value('favicon_path', default))
+    favicon = configuration_helpers.get_value('favicon_path', default)
+    if favicon.startswith("https://") or favicon.startswith("http://"):
+        return favicon
+    return staticfiles_storage.url(favicon)
 
 
 @register.simple_tag(name="microsite_css_overrides_file")
