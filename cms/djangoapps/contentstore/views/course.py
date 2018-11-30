@@ -704,6 +704,7 @@ def _process_courses_list(courses_iter, in_process_course_actions, split_archive
             'lms_link': get_lms_link_for_item(course.location),
             'rerun_link': _get_rerun_link_for_item(course.id),
             'org': course.display_org_with_default,
+            'real_org': course.location.org,
             'number': course.display_number_with_default,
             'run': course.location.run
         }
