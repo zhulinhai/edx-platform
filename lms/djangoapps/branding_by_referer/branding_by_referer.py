@@ -33,7 +33,7 @@ class SetBrandingByReferer(MiddlewareMixin):
                 stored_referer = UserPreference.get_value(request.user, self.MARKETING_SITE_REFERER)
             if not stored_referer:
                 stored_referer = request.COOKIES.get(self.MARKETING_SITE_REFERER)
-                if stored_referer:
+                if stored_referer and request.user.is_authenticated:
                     # Stored on cookie, now lets store it more permanently on UserPreference
                     UserPreference.objects.update_or_create(
                         user=request.user,
