@@ -67,4 +67,4 @@ def get_branding_overrides_for_current_user():
     """
     Helper method to access current overrides dict (e.g. {"logo_src":"example.jpg"})
     """
-    return SetBrandingByReferer.current_theme_match
+    return getattr(SetBrandingByReferer, 'current_theme_match', {})
