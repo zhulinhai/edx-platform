@@ -7,6 +7,8 @@ from openedx.core.djangoapps.user_api.models import UserPreference
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.six.moves.urllib.parse import urlparse
 from django.conf import settings
+from django.shortcuts import redirect
+import edx_oauth2_provider
 
 
 class SetBrandingByReferer(MiddlewareMixin):
@@ -27,6 +29,7 @@ class SetBrandingByReferer(MiddlewareMixin):
         branding_overrides = options_dict.get('BRANDING_BY_REFERER', {}).get(referer_domain, None)
         if branding_overrides:
             self.pending_cookie = referer_domain
+            SetBrandingByReferer.user_referer = referer_domain
         else:
             stored_referer = None
             if request.user.is_authenticated:
@@ -41,6 +44,7 @@ class SetBrandingByReferer(MiddlewareMixin):
                         value=stored_referer
                     )
             branding_overrides = options_dict.get('BRANDING_BY_REFERER', {}).get(stored_referer, None)
+            SetBrandingByReferer.user_referer = stored_referer
 
         SetBrandingByReferer.current_theme_match = branding_overrides or {}
 
@@ -60,7 +64,22 @@ class SetBrandingByReferer(MiddlewareMixin):
                 secure=settings.SESSION_COOKIE_SECURE or None
             )
             self.pending_cookie = None
+
+        if SetBrandingByReferer.user_referer:
+            # Logic edx-platform/common/djangoapps/student/views/login.py
+            oauth_client_ids = request.session.get(edx_oauth2_provider.constants.AUTHORIZED_CLIENTS_SESSION_KEY, [])
+            referer_url = '//{}'.format(SetBrandingByReferer.user_referer)
+            if urlparse(request.META.get('HTTP_REFERER', '')).path == '/logout':
+                return redirect(referer_url)
+            if not oauth_client_ids and getattr(request.resolver_match, 'url_name', None) == 'logout':
+                return redirect(referer_url)
         return response
+
+
+def get_branding_referer_url_for_current_user():
+    if not hasattr(SetBrandingByReferer, 'user_referer'):
+        return None
+    return '//{}'.format(getattr(SetBrandingByReferer, 'user_referer'))
 
 
 def get_branding_overrides_for_current_user():
