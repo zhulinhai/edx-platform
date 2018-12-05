@@ -2,10 +2,13 @@
 Set user logo and other visual elements according to referrer
 """
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+import collections
+import copy
 from datetime import datetime, timedelta
 from openedx.core.djangoapps.user_api.models import UserPreference
 from django.utils.deprecation import MiddlewareMixin
 from django.utils.six.moves.urllib.parse import urlparse
+from django.utils.six import iteritems
 from django.conf import settings
 from django.shortcuts import redirect
 import edx_oauth2_provider
@@ -77,13 +80,26 @@ class SetBrandingByReferer(MiddlewareMixin):
 
 
 def get_branding_referer_url_for_current_user():
+    """ get valid referer url saved for this user """
     if not hasattr(SetBrandingByReferer, 'user_referer'):
         return None
     return '//{}'.format(getattr(SetBrandingByReferer, 'user_referer'))
 
 
-def get_branding_overrides_for_current_user():
+def update(target, data):
+    """ recursive dict.update """
+    for key, value in iteritems(data):
+        if isinstance(value, collections.Mapping):
+            target[key] = update(target.get(key, {}), value)
+        else:
+            target[key] = value
+    return target
+
+
+def get_options_with_overrides_for_current_user():
     """
     Helper method to access current overrides dict (e.g. {"logo_src":"example.jpg"})
     """
-    return getattr(SetBrandingByReferer, 'current_theme_match', {})
+    options_dict = configuration_helpers.get_value("THEME_OPTIONS", {})
+    overrides = copy.deepcopy(getattr(SetBrandingByReferer, 'current_theme_match', {}))
+    return update(options_dict, overrides)
