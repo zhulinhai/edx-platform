@@ -6490,7 +6490,7 @@ msgstr "Estamos trabajando para generar los certificados de los cursos."
 
 #: lms/djangoapps/courseware/date_summary.py
 msgid "Upgrade to Verified Certificate"
-msgstr "Cambiar a la opción con Certificado Verificado"
+msgstr "¡Invierte en tu CV y certifícate aquí!"
 
 #: lms/djangoapps/courseware/date_summary.py
 msgid "Verification Upgrade Deadline"
@@ -6676,8 +6676,11 @@ msgid ""
 "You are enrolled in the audit track for this course. The audit track does "
 "not include a certificate."
 msgstr ""
-"Usted está inscrito en el curso como asistente. Este modo de tomar el curso "
-"no incluye la obtención de un certificado."
+"Sin embargo, si cumples con tener la calificación necesaria para aprobar el curso y "
+"realizas el pago con cualquiera de los medios que ofrecemos, podrás obtener tu "
+"certificado y respaldar lo aprendido. Te alentamos a revisar todo el material, rendir"
+"tus prácticas y examen final.Si necesitas información adicional escríbenos a"
+"contacto@campusromero.pe o llámanos al +51 948430337"
 
 #: lms/djangoapps/courseware/views/views.py
 msgid "Your enrollment: Honor track"
@@ -27366,3 +27369,18 @@ msgstr ""
 
 msgid "Congratulations! You are already enrolled in {course_name}"
 msgstr "Felicitaciones! Ya estás inscrito/a en {course_name}"
+
+msgid ""
+"You're almost done, there's only one more step. Before enrolling in a course"
+"             you need to activate your account. We have sent an email to "
+"{email_start}{email}{email_end}             with an account activation link."
+" If you do not find this message in your inbox, check your             other"
+" mail folders and the spam folder. If you need assistance, "
+"{link_start}contact us here{link_end}."
+msgstr ""
+"Ya casi has terminado, hay solo un paso más. Antes de inscribirte en un curso,"
+"necesitas activar tu cuenta. Hemos enviado un mensaje de correo electronico a "
+"{email_start}{email}{email_end} con un enlace de activación de cuenta. Si no "
+"encuentra este mensaje en su bandeja de entrada, revisa sus otras carpetas de"
+"correo y la carpeta de correo no deseado. Si necesita asistencia ponte en "
+"{link_start}contacto con nosotros aquí.{link_end}"

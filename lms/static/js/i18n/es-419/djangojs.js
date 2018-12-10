@@ -1496,6 +1496,7 @@
     "Required": "Requerido", 
     "Required field.": "Campo requerido.", 
     "Rescore problem '<%- problem_id %>' for all students?": "\u00bfRe puntuar el problema '<%- problem_id %>' para todos los estudiantes?", 
+    "Reset My Password": "Restablecer mi contrase\u00f1a", 
     "Reset Password": "Restablecer Contrase\u00f1a", 
     "Reset Your Password": "Restablecer tu contrase\u00f1a", 
     "Reset attempts for all students on problem '<%- problem_id %>'?": "\u00bfReiniciar los env\u00edos para todos los estudiantes en el problema '<%- problem_id %>'?", 
