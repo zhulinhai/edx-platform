@@ -23,6 +23,13 @@ LMS_ROOT_URL = 'http://localhost:8000'
 LMS_INTERNAL_ROOT_URL = LMS_ROOT_URL
 ENTERPRISE_API_URL = LMS_INTERNAL_ROOT_URL + '/enterprise/api/v1/'
 
+############################### LANG ########################
+ LANGUAGE_CODE = 'en'
+TIME_ZONE = 'America/Bogota'
+ FEATURES['SHOW_HEADER_LANGUAGE_SELECTOR'] = True
+FEATURES['SHOW_FOOTER_LANGUAGE_SELECTOR'] = True
+FEATURES['EDNX_SITE_AWARE_LOCALE'] = True
+
 ################################ LOGGERS ######################################
 
 # Silence noisy logs
