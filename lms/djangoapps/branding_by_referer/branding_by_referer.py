@@ -81,7 +81,7 @@ class SetBrandingByReferer(MiddlewareMixin):
 
 def get_branding_referer_url_for_current_user():
     """ get valid referer url saved for this user """
-    if not hasattr(SetBrandingByReferer, 'user_referer'):
+    if not getattr(SetBrandingByReferer, 'user_referer', None):
         return None
     return '//{}'.format(getattr(SetBrandingByReferer, 'user_referer'))
 
