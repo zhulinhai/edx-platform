@@ -74,3 +74,15 @@ MKTG_URLS = {
 CREDENTIALS_SERVICE_USERNAME = 'credentials_worker'
 
 COURSE_CATALOG_API_URL = 'http://edx.devstack.discovery:18381/api/v1/'
+
+CUSTOM_BACKENDS = {
+    "teachfirst": {
+        "ACCESS_TOKEN_URL": "https://my.dev.teachfirst.org.uk/oauth/token", 
+        "AUTH_URL": "https://my.dev.teachfirst.org.uk/oauth/authorize", 
+    },
+    "careersandenterprise": {
+        "ACCESS_TOKEN_URL": "https://tools.careersandenterprise.co.uk/oauth/authorize", 
+        "AUTH_URL": "https://my.dev.teachfirst.org.uk/oauth/authorize", 
+    }
+}
+
