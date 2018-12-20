@@ -4,6 +4,7 @@ Set user logo and other visual elements according to referrer
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 import collections
 import copy
+import json
 from datetime import datetime, timedelta
 from openedx.core.djangoapps.user_api.models import UserPreference
 from django.utils.deprecation import MiddlewareMixin
@@ -21,35 +22,65 @@ class SetBrandingByReferer(MiddlewareMixin):
     and we store the referer on cookie/UserPreference for any future requests
     """
     MARKETING_SITE_REFERER = 'MARKETING_SITE_REFERER'
+    COOKIE_MARKETING_SITE_REFERER = 'COOKIE_MARKETING_SITE_REFERER'
 
     def process_request(self, request):
         """
         Process request middleware method
         """
         self.pending_cookie = None
-        options_dict = configuration_helpers.get_value("THEME_OPTIONS", {'default': True})
+        options_dict = configuration_helpers.get_value('THEME_OPTIONS', {'default': True})
         referer_domain = urlparse(request.META.get('HTTP_REFERER', '')).netloc
         branding_overrides = options_dict.get('BRANDING_BY_REFERER', {}).get(referer_domain, None)
+
         if branding_overrides:
             self.pending_cookie = referer_domain
-            SetBrandingByReferer.user_referer = referer_domain
         else:
-            stored_referer = None
-            if request.user.is_authenticated:
-                stored_referer = UserPreference.get_value(request.user, self.MARKETING_SITE_REFERER)
-            if not stored_referer:
-                stored_referer = request.COOKIES.get(self.MARKETING_SITE_REFERER)
-                if stored_referer and request.user.is_authenticated:
-                    # Stored on cookie, now lets store it more permanently on UserPreference
-                    UserPreference.objects.update_or_create(
-                        user=request.user,
-                        key=self.MARKETING_SITE_REFERER,
-                        value=stored_referer
-                    )
-            branding_overrides = options_dict.get('BRANDING_BY_REFERER', {}).get(stored_referer, None)
-            SetBrandingByReferer.user_referer = stored_referer
+            referer_domain = None
+            stored_referer_data = self.get_stored_referer_data(request)
+            if stored_referer_data:
+                is_valid = stored_referer_data['site_domain'] == request.get_host()
+                referer_domain = stored_referer_data['referer_domain'] if is_valid else None
+                branding_overrides = options_dict.get('BRANDING_BY_REFERER', {}).get(referer_domain, None)
 
+        SetBrandingByReferer.user_referer = referer_domain
         SetBrandingByReferer.current_theme_match = branding_overrides or {}
+
+    def get_stored_referer_data(self, request):
+        stored_referer_data = None
+        if request.user.is_authenticated:
+            stored_referer_data = UserPreference.get_value(request.user, self.MARKETING_SITE_REFERER)
+            if stored_referer_data:
+                try:
+                    stored_referer_data = json.loads(stored_referer_data)
+                except ValueError:
+                    # Supporting legacy 'string' version
+                    stored_referer_data = {
+                        'referer_domain': stored_referer_data,
+                        'site_domain': request.get_host()
+                    }
+                    self.update_user_referer_data(request, stored_referer_data)
+
+        if not stored_referer_data:
+            referer_on_cookie = request.COOKIES.get(self.COOKIE_MARKETING_SITE_REFERER)
+            if referer_on_cookie:
+                # Stored on cookie, now lets store it more permanently on UserPreference
+                stored_referer_data = {
+                    'referer_domain': referer_on_cookie,
+                    'site_domain': request.get_host()
+                }
+                self.update_user_referer_data(request, stored_referer_data)
+        return stored_referer_data
+
+    def update_user_referer_data(self, request, data):
+        if request.user.is_authenticated:
+            UserPreference.objects.update_or_create(
+                user=request.user,
+                key=self.MARKETING_SITE_REFERER,
+                defaults={
+                    'value': json.dumps(data)
+                }
+            )
 
     def process_response(self, request, response):
         """
@@ -59,7 +90,7 @@ class SetBrandingByReferer(MiddlewareMixin):
             max_age = 30 * 24 * 60 * 60
             expires = datetime.strftime(datetime.utcnow() + timedelta(seconds=max_age), "%a, %d-%b-%Y %H:%M:%S GMT")
             response.set_cookie(
-                self.MARKETING_SITE_REFERER,
+                self.COOKIE_MARKETING_SITE_REFERER,
                 self.pending_cookie,
                 max_age=max_age,
                 expires=expires,
@@ -100,6 +131,6 @@ def get_options_with_overrides_for_current_user():
     """
     Helper method to access current overrides dict (e.g. {"logo_src":"example.jpg"})
     """
-    options_dict = configuration_helpers.get_value("THEME_OPTIONS", {})
+    options_dict = configuration_helpers.get_value('THEME_OPTIONS', {})
     overrides = copy.deepcopy(getattr(SetBrandingByReferer, 'current_theme_match', {}))
     return update(options_dict, overrides)
