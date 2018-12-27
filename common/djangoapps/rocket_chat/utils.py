@@ -50,7 +50,7 @@ def create_course_group(api_rocket_chat, course_id, user_id, username):
     """
     Add an user to the course group
     """
-    room_name = re.sub('[^A-Za-z0-9]+', '', course_id)
+    room_name = "{}__{}".format("General", re.sub('[^A-Za-z0-9]+', '', course_id))
     response = api_rocket_chat.groups_info(room_name=room_name)
     try:
         response = response.json()
