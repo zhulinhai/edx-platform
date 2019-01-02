@@ -17,7 +17,7 @@ from lms.djangoapps.courseware.exceptions import CourseAccessRedirect
 from lms.djangoapps.grades.api.serializers import GradingPolicySerializer
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-from openedx.core.lib.api.view_utils import DeveloperErrorViewMixin, view_auth_classes
+from openedx.core.lib.api.view_utils import DeveloperErrorResponseException, DeveloperErrorViewMixin, view_auth_classes
 from student.roles import CourseStaffRole
 
 log = logging.getLogger(__name__)
@@ -29,6 +29,70 @@ class GradeViewMixin(DeveloperErrorViewMixin):
     """
     Mixin class for Grades related views.
     """
+    def _get_course_with_intervention(self, course_key_string, user, access_action, request):
+        """
+        Returns the requested course verifiying, access by the user and org display name intervention
+
+        Provided that the requests and the course match the requirements for intervention, the course
+        will be returned by its org display name instead of the org name.
+        """
+        try:
+            course = self._get_course(course_key_string, user, access_action)
+        except DeveloperErrorResponseException as e:
+            course = False
+            original_exception = e
+
+        if call_origin_requires_intervention(request):
+            course_key = CourseKey.from_string(course_key_string)
+
+            def test_course_for_intervention(org):
+                real_course_key = course_key.replace(org=org)
+                try:
+                    real_course = self._get_course(unicode(real_course_key), user, access_action)
+                except DeveloperErrorResponseException as e:
+                    real_course = False
+
+                if real_course and course_requires_intervention(real_course):
+                    log.info('Course with ID "%s" was found using org intervention with [%s]',
+                             course_key_string, unicode(real_course_key))
+                    return real_course
+
+            site_orgs = configuration_helpers.get_value('course_org_filter', [])
+            possible_courses = filter(None, map(test_course_for_intervention, site_orgs))
+            if not possible_courses:
+                log.info('No course was found for intervention when called with: [%s]', course_key_string)
+
+            # If we also found a course with the org ID add it to the possibilities
+            if course:
+                possible_courses.append(course)
+
+            # By now, more than one course is possibly in the list, we need to pick one
+            if len(possible_courses) == 1:
+                course = possible_courses[0]
+            elif len(possible_courses) > 1:
+                # This scenario means there is a collision.
+                # More than one course where this user has access was found with <ORG>+ID+RUN
+                # Where <ORG> is any of the site's orgs or the original org ID
+                # We will select the first match of the org against the site's preferred list
+                preferred_list = configuration_helpers.get_value(
+                    'PREFERRED_ORG_FOR_CERTIFICATES',
+                    configuration_helpers.get_value('course_org_filter', [])
+                )
+                for preferred in preferred_list:
+                    match = [x for x in possible_courses if x.org == preferred]
+                    if match:
+                        course = match[0]
+                        break
+
+                log.warn('Collision found on the intervention [%s]. Using [%s] '
+                         'based on the site PREFERRED_ORG_FOR_CERTIFICATES',
+                         ','.join([unicode(x.id) for x in possible_courses]), unicode(course.id))
+
+        if not course and original_exception:
+            raise original_exception
+
+        return course
+
     def _get_course(self, course_key_string, user, access_action):
         """
         Returns the course for the given course_key_string after
@@ -174,52 +238,7 @@ class UserGradeView(GradeViewMixin, GenericAPIView):
         Return:
             A JSON serialized representation of the requesting user's current grade status.
         """
-
-        course = self._get_course(course_id, request.user, 'load')
-
-        # Grades intervention:
-        # if the course was not found, we attempt to find it using the org display name
-        if call_origin_requires_intervention(request):
-            course_key = CourseKey.from_string(course_id)
-
-            def test_course_for_intervention(org):
-                real_course_key = course_key.replace(org=org)
-                real_course = self._get_course(unicode(real_course_key), request.user, 'load')
-
-                if not isinstance(real_course, Response) and course_requires_intervention(real_course):
-                    log.info('Course with ID "%s" was found using org intervention with [%s]',
-                             course_id, unicode(real_course_key))
-                    return real_course
-
-            site_orgs = configuration_helpers.get_value('course_org_filter', [])
-            possible_courses = filter(None, map(test_course_for_intervention, site_orgs))
-
-            # If we also found a course with the org ID add it to the possibilities
-            if not isinstance(course, Response):
-                possible_courses.append(course)
-
-            # By now, more than one course is possibly in the list, we need to pick one
-            if len(possible_courses) == 1:
-                course = possible_courses[0]
-            elif len(possible_courses) > 1:
-                # This scenario means there is a collision.
-                # More than one course where this user has access was found with <ORG>+ID+RUN
-                # Where <ORG> is any of the site's orgs or the original org ID
-                # We will select the first match of the org against the site's preferred list
-                preferred_list = configuration_helpers.get_value(
-                    'PREFERRED_ORG_FOR_CERTIFICATES',
-                    configuration_helpers.get_value('course_org_filter', [])
-                )
-                for preferred in preferred_list:
-                    match = [x for x in possible_courses if x.org == preferred]
-                    if match:
-                        course = match[0]
-                        break
-
-                log.warn('Collision found on the intervention [%s]. Using [%s] '
-                         'based on the site PREFERRED_ORG_FOR_CERTIFICATES',
-                         ','.join([unicode(x.id) for x in possible_courses]), unicode(course.id))
-
+        course = self._get_course_with_intervention(course_id, request.user, 'load', request)
         grade_user = self._get_effective_user(request, course)
         course_grade = CourseGradeFactory().read(grade_user, course)
 
