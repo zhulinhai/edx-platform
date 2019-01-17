@@ -163,10 +163,8 @@ class SetBrandingByReferer(MiddlewareMixin):
         """
         Check if the ENABLE_BRANDING_BY_REFERER is set and return its value.
         """
-        features = configuration_helpers.get_value('FEATURES', None)
-        if features:
-            return features.get('ENABLE_BRANDING_BY_REFERER', False)
-        return False
+        feature_enable = configuration_helpers.get_value('FEATURES', {}).get('ENABLE_BRANDING_BY_REFERER', False)
+        return feature_enable
 
 
 def get_branding_referer_url_for_current_user():
