@@ -8130,7 +8130,7 @@ msgstr ""
 #: themes/stanford-style/lms/templates/register-form.html
 #: themes/stanford-style/lms/templates/register-shib.html
 msgid "Full Name"
-msgstr "Nombre Completo"
+msgstr "Nombres y Apellidos completos"
 
 #: lms/djangoapps/instructor/views/tools.py
 msgid "Extended Due Date"
@@ -12029,7 +12029,7 @@ msgstr "Año de nacimiento"
 #. form used to select the country in which the user lives.
 #: openedx/core/djangoapps/user_api/api.py
 msgid "Country or Region of Residence"
-msgstr "País o región de residencia"
+msgstr "País"
 
 #. Translators: These instructions appear on the registration form,
 #. immediately
@@ -27306,8 +27306,7 @@ msgstr ""
 "Recuerda que este curso brinda la posibilidad de obtener un certificado con "
 "el cual podrás resaltar tus nuevos conocimientos y habilidades. Utiliza esta "
 "valiosa acreditación para agregar valor a tu hoja de vida, mejorar tus "
-"perspectivas de empleo, crecer profesionalmente y ser más competitivo.\n"
-"¡Invierte en tu CV y certifícate aquí!"
+"perspectivas de empleo, crecer profesionalmente y ser más competitivo."
 
 msgid "Congratulations! Approved the course satisfactorily!"
 msgstr "¡Felicitaciones! Aprobaste el curso de manera satisfactoria."

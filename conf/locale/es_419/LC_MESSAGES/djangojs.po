@@ -5555,7 +5555,7 @@ msgstr ""
 #: lms/static/js/student_account/views/account_settings_factory.js
 #: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js
 msgid "Full Name"
-msgstr "Nombre completo"
+msgstr "Nombres y Apellidos completos"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid ""
@@ -5567,7 +5567,7 @@ msgstr ""
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid "Country or Region of Residence"
-msgstr "País o región de residencia"
+msgstr "País"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid "The country or region where you live."

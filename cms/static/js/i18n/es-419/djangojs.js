@@ -604,7 +604,7 @@
     "Couldn't Save This Assignment": "No se ha podido salvar esta tarea.", 
     "Country": "Pa\u00eds", 
     "Country of residence": "Pa\u00eds de residencia", 
-    "Country or Region of Residence": "Pa\u00eds o regi\u00f3n de residencia", 
+    "Country or Region of Residence": "Pa\u00eds", 
     "Course": [
       "Curso", 
       "Cursos"
@@ -916,7 +916,7 @@
     "Formats": "Formatos", 
     "Free text notes": "Notas o comentarios", 
     "Frequently Asked Questions": "Preguntas frecuentes", 
-    "Full Name": "Nombre completo", 
+    "Full Name": "Nombres y Apellidos completos", 
     "Full Profile": "Perfil completo", 
     "Fullscreen": "Pantalla completa", 
     "Fully Supported": "Completamente soportado", 
