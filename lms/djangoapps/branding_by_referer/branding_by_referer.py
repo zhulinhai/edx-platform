@@ -31,6 +31,8 @@ class SetBrandingByReferer(MiddlewareMixin):
 
         Always set the cookie value if the http_referer is in the BRANDING_BY_REFERER options.
         """
+        if not self.check_feature_enable():
+            return None
         self.pending_cookie = None
         options_dict = configuration_helpers.get_value('THEME_OPTIONS', {'default': True})
         referer_domain = urlparse(request.META.get('HTTP_REFERER', '')).netloc
@@ -114,6 +116,8 @@ class SetBrandingByReferer(MiddlewareMixin):
         """
         Process response middleware method.
         """
+        if not self.check_feature_enable():
+            return response
         if self.pending_cookie:
             self.set_cookie(response, self.pending_cookie)
             self.pending_cookie = None
@@ -141,7 +145,7 @@ class SetBrandingByReferer(MiddlewareMixin):
 
     def set_cookie(self, response, cookie_value):
         """
-        Method to set recursively a new cookie.
+        Method to set a new cookie with the passed value.
         """
         max_age = 30 * 24 * 60 * 60
         expires = datetime.strftime(datetime.utcnow() + timedelta(seconds=max_age), "%a, %d-%b-%Y %H:%M:%S GMT")
@@ -153,6 +157,16 @@ class SetBrandingByReferer(MiddlewareMixin):
             domain=settings.SESSION_COOKIE_DOMAIN,
             secure=settings.SESSION_COOKIE_SECURE or None
         )
+
+
+    def check_feature_enable(self):
+        """
+        Check if the ENABLE_BRANDING_BY_REFERER is set and return its value.
+        """
+        features = configuration_helpers.get_value('FEATURES', None)
+        if features:
+            return features.get('ENABLE_BRANDING_BY_REFERER', False)
+        return False
 
 
 def get_branding_referer_url_for_current_user():
