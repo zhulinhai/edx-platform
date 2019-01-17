@@ -1,18 +1,19 @@
 """
 Set user logo and other visual elements according to referrer
 """
-from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 import collections
 import copy
 import json
 from datetime import datetime, timedelta
-from openedx.core.djangoapps.user_api.models import UserPreference
-from django.utils.deprecation import MiddlewareMixin
-from django.utils.six.moves.urllib.parse import urlparse
-from django.utils.six import iteritems
+
+import edx_oauth2_provider
 from django.conf import settings
 from django.shortcuts import redirect
-import edx_oauth2_provider
+from django.utils.deprecation import MiddlewareMixin
+from django.utils.six import iteritems
+from django.utils.six.moves.urllib.parse import urlparse
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.core.djangoapps.user_api.models import UserPreference
 
 
 class SetBrandingByReferer(MiddlewareMixin):
