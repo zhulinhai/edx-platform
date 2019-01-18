@@ -3,7 +3,7 @@ Django admin configuration pages for the user_api app
 """
 from django.contrib import admin
 
-from .models import RetirementState, UserRetirementStatus, UserRetirementRequest
+from .models import RetirementState, UserRetirementStatus, UserRetirementRequest, UserPreference
 
 
 @admin.register(RetirementState)
@@ -43,3 +43,14 @@ class UserRetirementRequestAdmin(admin.ModelAdmin):
 
     class Meta(object):
         model = UserRetirementRequest
+
+
+@admin.register(UserPreference)
+class UserPreferenceAdmin(admin.ModelAdmin):
+    """
+    Admin interface for the UserPreference model.
+    """
+    list_display = ('user', 'key', 'value',)
+
+    class Meta(object):
+        model = UserPreference
