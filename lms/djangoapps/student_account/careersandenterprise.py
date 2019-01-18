@@ -16,7 +16,6 @@ class CareersAndEnterpriseOAuth2(BaseOAuth2):
     ACCESS_TOKEN_URL = settings_dict.get('ACCESS_TOKEN_URL')
     USER_DATA_URL = settings_dict.get('USER_DATA_URL')
     ACCESS_TOKEN_METHOD = 'POST'
-    RESPONSE_TYPE = 'code'
 
     def auth_complete(self, *args, **kwargs):
         """Completes login process, must return user instance."""
@@ -46,17 +45,17 @@ class CareersAndEnterpriseOAuth2(BaseOAuth2):
         }
 
     def get_user_details(self, response):
-        username = re.sub('[^A-Za-z0-9]+', '_', response.get('name'))
+        username = re.sub('[^A-Za-z0-9]+', '_', response.get('name', ''))
         fullname = "{} {}".format(response.get('firstName'), response.get('lastName'))
         return {'username': username,
                 'email': response.get('mail'),
                 'fullname': fullname}
 
     def user_data(self, access_token, *args, **kwargs):
-        response = self.get_json(self.USER_DATA_URL, headers={
-            'Authorization': 'Bearer {}'.format(access_token)
-        })
-        return response
+        return self.get_json(
+            self.USER_DATA_URL,
+            headers={'Authorization': 'Bearer {}'.format(access_token)},
+        )
 
-    def get_user_id(self, details, response):
+    def get_user_id(self, details, response):  #pylint: disable=unused-argument
         return details.get('email')
