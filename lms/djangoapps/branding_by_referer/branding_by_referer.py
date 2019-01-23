@@ -7,6 +7,7 @@ import json
 from datetime import datetime, timedelta
 
 import edx_oauth2_provider
+from crum import get_current_request
 from django.conf import settings
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
@@ -34,10 +35,12 @@ class SetBrandingByReferer(MiddlewareMixin):
         """
         if not self.check_feature_enable():
             return None
+
         self.pending_cookie = None
         options_dict = configuration_helpers.get_value('THEME_OPTIONS', {'default': True})
         referer_domain = urlparse(request.META.get('HTTP_REFERER', '')).netloc
         branding_overrides = options_dict.get('BRANDING_BY_REFERER', {}).get(referer_domain, None)
+        request.branding_by_referer = {}
 
         if branding_overrides:
             self.pending_cookie = referer_domain
@@ -52,8 +55,9 @@ class SetBrandingByReferer(MiddlewareMixin):
             else:
                 referer_domain = request.COOKIES.get(self.COOKIE_MARKETING_SITE_REFERER, None)
                 branding_overrides = options_dict.get('BRANDING_BY_REFERER', {}).get(referer_domain, None)
-        SetBrandingByReferer.user_referer = referer_domain
-        SetBrandingByReferer.current_theme_match = branding_overrides or {}
+
+        request.branding_by_referer['user_referer'] = referer_domain
+        request.branding_by_referer['current_theme_match'] = branding_overrides or {}
 
 
     def get_stored_referer_data(self, request):
@@ -119,22 +123,26 @@ class SetBrandingByReferer(MiddlewareMixin):
         """
         if not self.check_feature_enable():
             return response
+
         if self.pending_cookie:
             self.set_cookie(response, self.pending_cookie)
             self.pending_cookie = None
 
-        if SetBrandingByReferer.user_referer:
+        current_branding_by_referer = getattr(request, 'branding_by_referer', {})
+
+        if current_branding_by_referer.get('user_referer', None):
             # Logic edx-platform/common/djangoapps/student/views/login.py
             oauth_client_ids = request.session.get(edx_oauth2_provider.constants.AUTHORIZED_CLIENTS_SESSION_KEY, [])
-            user_referer = '//{}'.format(SetBrandingByReferer.user_referer)
+            user_referer = '//{}'.format(current_branding_by_referer.get('user_referer'))
             referer_path = urlparse(request.META.get('HTTP_REFERER', '')).path
             url_resolver_name = getattr(request.resolver_match, 'url_name', None)
 
             if referer_path == '/logout':
-                stored_referer_data = UserPreference.get_value(request.user, self.MARKETING_SITE_REFERER)
-                if stored_referer_data:
-                    stored_referer_data_json = json.loads(stored_referer_data)
-                    self.set_cookie(response, stored_referer_data_json['referer_domain'])
+                if request.user.is_authenticated():
+                    stored_referer_data = UserPreference.get_value(request.user, self.MARKETING_SITE_REFERER)
+                    if stored_referer_data:
+                        stored_referer_data_json = json.loads(stored_referer_data)
+                        self.set_cookie(response, stored_referer_data_json['referer_domain'])
                 return redirect(user_referer)
 
             if url_resolver_name == 'logout' and not oauth_client_ids:
@@ -169,9 +177,10 @@ class SetBrandingByReferer(MiddlewareMixin):
 
 def get_branding_referer_url_for_current_user():
     """ get valid referer url saved for this user """
-    if not getattr(SetBrandingByReferer, 'user_referer', None):
+    current_branding_by_referer = getattr(get_current_request(), 'branding_by_referer', {})
+    if not current_branding_by_referer.get('user_referer', None):
         return None
-    return '//{}'.format(getattr(SetBrandingByReferer, 'user_referer'))
+    return '//{}'.format(current_branding_by_referer['user_referer'])
 
 
 def update(target, data):
@@ -188,6 +197,9 @@ def get_options_with_overrides_for_current_user():
     """
     Helper method to access current overrides dict (e.g. {"logo_src":"example.jpg"})
     """
-    options_dict = configuration_helpers.get_value('THEME_OPTIONS', {})
-    overrides = copy.deepcopy(getattr(SetBrandingByReferer, 'current_theme_match', {}))
+    options_dict = copy.deepcopy(configuration_helpers.get_value('THEME_OPTIONS', {}))
+    current_branding_by_referer = getattr(get_current_request(), 'branding_by_referer', {})
+    if not current_branding_by_referer.get('user_referer', None):
+        return options_dict
+    overrides = copy.deepcopy(current_branding_by_referer['current_theme_match'])
     return update(options_dict, overrides)
