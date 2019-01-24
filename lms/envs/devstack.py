@@ -279,3 +279,27 @@ if os.path.isfile(join(dirname(abspath(__file__)), 'private.py')):
 MODULESTORE = convert_module_store_setting_if_needed(MODULESTORE)
 
 SECRET_KEY = '85920908f28904ed733fe576320db18cabd7b6cd'
+
+#
+# MICROSITE THEMING
+#
+
+# from path import Path as path
+# FEATURES['USE_MICROSITES'] = True
+# ENABLE_ROCKET_CHAT_SERVICE = True
+# MICROSITE_TEMPLATE_BACKEND = 'microsite_configuration.backends.filebased.FilebasedMicrositeTemplateBackend'
+# MICROSITE_BACKEND = 'microsite_configuration.backends.database.DatabaseMicrositeBackend'
+# MICROSITE_ROOT_DIR = "/edx/app/openedx-themes/edx-theme-microsites"
+# MAKO_TEMPLATE_DIRS_BASE.insert(0, path(MICROSITE_ROOT_DIR))
+# DEFAULT_TEMPLATE_ENGINE_DIRS.append(MICROSITE_ROOT_DIR)
+
+#
+# COMPREHENSIVE THEMING
+#
+
+DEFAULT_SITE_THEME = "qa-theme"
+ENABLE_COMPREHENSIVE_THEMING = True
+COMPREHENSIVE_THEME_DIRS = ["/edx/var/edx-themes/edx-theme/edx-platform"]
+
+ACTIVATE_SUBSCRIPTION_PRODUCT = True
+

@@ -523,10 +523,15 @@ OAUTH2_PROVIDER = {
 OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2_provider.Application'
 
 ################################## TEMPLATE CONFIGURATION #####################################
+
+
+theme_hack = REPO_ROOT.dirname().dirname().dirname() / 'var' / 'edx-themes' / 'edx-theme' / 'edx-platform' / 'qa-theme' / 'lms' / 'templates'
+
 # Mako templating
 import tempfile
 MAKO_MODULE_DIR = os.path.join(tempfile.gettempdir(), 'mako_lms')
 MAKO_TEMPLATE_DIRS_BASE = [
+    theme_hack,
     PROJECT_ROOT / 'templates',
     COMMON_ROOT / 'templates',
     COMMON_ROOT / 'lib' / 'capa' / 'capa' / 'templates',
