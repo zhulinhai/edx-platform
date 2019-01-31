@@ -1130,6 +1130,12 @@ class CourseDescriptor(CourseFields, SequenceDescriptor, LicenseMixin):
         return min(self._grading_policy['GRADE_CUTOFFS'].values())
 
     @property
+    def utec_lowest_passing_grade(self):
+        for key, val in settings.FEATURES['UTEC_GRADE'].iteritems():
+            if float(val['min']) <= float(min(self._grading_policy['GRADE_CUTOFFS'].values())) <= float(val['max']):
+                return val['label']
+
+    @property
     def is_cohorted(self):
         """
         Return whether the course is cohorted.
