@@ -656,6 +656,8 @@ def create_account_with_params(request, params):
         not eamap.external_domain.startswith(openedx.core.djangoapps.external_auth.views.SHIBBOLETH_DOMAIN_PREFIX)
     )
 
+    tos_required = settings.FEATURES.get("UTEC_TOS_REQUIRED", tos_required)
+
     form = AccountCreationForm(
         data=params,
         extra_fields=extra_fields,
