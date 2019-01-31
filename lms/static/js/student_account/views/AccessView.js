@@ -51,6 +51,7 @@
                     };
 
                     this.thirdPartyAuthHint = options.third_party_auth_hint || null;
+                    this.utecThirdPartyAuthPriority = options.utec_third_party_auth_priority;
 
                     // Account activation messages
                     this.accountActivationMessages = options.account_activation_messages || [];
@@ -137,7 +138,8 @@
                             createAccountOption: this.createAccountOption,
                             hideAuthWarnings: this.hideAuthWarnings,
                             pipelineUserDetails: this.pipelineUserDetails,
-                            enterpriseName: this.enterpriseName
+                            enterpriseName: this.enterpriseName,
+                            utecThirdPartyAuthPriority: this.utecThirdPartyAuthPriority
                         });
 
                     // Listen for 'password-help' event to toggle sub-views
@@ -174,7 +176,8 @@
                             model: model,
                             thirdPartyAuth: this.thirdPartyAuth,
                             platformName: this.platformName,
-                            hideAuthWarnings: this.hideAuthWarnings
+                            hideAuthWarnings: this.hideAuthWarnings,
+                            utecThirdPartyAuthPriority: this.utecThirdPartyAuthPriority
                         });
 
                     // Listen for 'auth-complete' event so we can enroll/redirect the user appropriately.

@@ -59,6 +59,7 @@
                     this.errorMessage = data.thirdPartyAuth.errorMessage || '';
                     this.platformName = data.platformName;
                     this.autoSubmit = data.thirdPartyAuth.autoSubmitRegForm;
+                    this.utecThirdPartyAuthPriority = data.utecThirdPartyAuthPriority;
                     this.hideAuthWarnings = data.hideAuthWarnings;
                     this.autoRegisterWelcomeMessage = data.thirdPartyAuth.autoRegisterWelcomeMessage || '';
                     this.registerFormSubmitButtonText =
@@ -147,7 +148,8 @@
                             hasSecondaryProviders: this.hasSecondaryProviders,
                             platformName: this.platformName,
                             autoRegisterWelcomeMessage: this.autoRegisterWelcomeMessage,
-                            registerFormSubmitButtonText: this.registerFormSubmitButtonText
+                            registerFormSubmitButtonText: this.registerFormSubmitButtonText,
+                            utecThirdPartyAuthPriority: this.utecThirdPartyAuthPriority
                         }
                     }));
 

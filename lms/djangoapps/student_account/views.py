@@ -146,6 +146,7 @@ def login_and_registration_form(request, initial_mode="login"):
                 'PASSWORD_RESET_SUPPORT_LINK', settings.PASSWORD_RESET_SUPPORT_LINK
             ) or settings.SUPPORT_SITE_LINK,
             'account_activation_messages': account_activation_messages,
+            'utec_third_party_auth_priority': settings.FEATURES.get('UTEC_THIRD_PARTY_AUTH_PRIORITY', False),
 
             # Include form descriptions retrieved from the user API.
             # We could have the JS client make these requests directly,
