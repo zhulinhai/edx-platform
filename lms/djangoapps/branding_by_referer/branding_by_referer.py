@@ -79,8 +79,17 @@ class SetBrandingByReferer(MiddlewareMixin):
             referer_on_cookie = request.COOKIES.get(self.COOKIE_MARKETING_SITE_REFERER, None)
 
             if stored_referer_data and referer_on_cookie:
-                stored_referer_data_json = json.loads(stored_referer_data)
-                stored_referer_data_json['referer_domain'] = referer_on_cookie
+                try:
+                    stored_referer_data_json = json.loads(stored_referer_data)
+                    stored_referer_data_json['referer_domain'] = referer_on_cookie
+                except ValueError:
+                    # This is for support legacy user preferences records,
+                    # that have a string value instead of json value.
+                    stored_referer_data_json = {
+                        'referer_domain': referer_on_cookie,
+                        'site_domain': request.get_host()
+                    }
+
                 return self.update_user_referer_data(request, stored_referer_data_json)
             if referer_on_cookie:
                 stored_referer_data = {
