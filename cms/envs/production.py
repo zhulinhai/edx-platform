@@ -297,6 +297,10 @@ if FEATURES.get('AUTH_USE_CAS'):
             CAS_ATTRIBUTE_CALLBACK['function']
         )
 
+# Login using the LMS as the identity provider
+if FEATURES.get('DISABLE_STUDIO_SSO_OVER_LMS', False):
+    LOGIN_URL = EDX_ROOT_URL + '/signin'
+
 # Specific setting for the File Upload Service to store media in a bucket.
 FILE_UPLOAD_STORAGE_BUCKET_NAME = ENV_TOKENS.get('FILE_UPLOAD_STORAGE_BUCKET_NAME', FILE_UPLOAD_STORAGE_BUCKET_NAME)
 FILE_UPLOAD_STORAGE_PREFIX = ENV_TOKENS.get('FILE_UPLOAD_STORAGE_PREFIX', FILE_UPLOAD_STORAGE_PREFIX)
