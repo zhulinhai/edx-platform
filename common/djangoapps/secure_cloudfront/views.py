@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 
 from cryptography.hazmat.backends import default_backend
@@ -12,6 +13,8 @@ from django.shortcuts import redirect
 
 from botocore.signers import CloudFrontSigner
 
+LOGGER = logging.getLogger(__name__)
+
 
 @login_required(redirect_field_name='dashboard')
 def secure_cloudfront_video(request):
@@ -19,6 +22,7 @@ def secure_cloudfront_video(request):
     This view generates a redirect to the AWS resource
     """
     meta = request.META
+    LOGGER.INFO('CloudFront view meta data = %s', meta)
     if not meta or meta.get('HTTP_HOST') not in meta.get('HTTP_REFERER', ''):
         raise Http404
 
