@@ -22,7 +22,7 @@ def secure_cloudfront_video(request):
     This view generates a redirect to the AWS resource
     """
     meta = request.META
-    LOGGER.INFO('CloudFront view meta data = %s', meta)
+    LOGGER.info('CloudFront view meta data = %s', meta)
     if not meta or meta.get('HTTP_HOST') not in meta.get('HTTP_REFERER', ''):
         raise Http404
 
@@ -31,10 +31,10 @@ def secure_cloudfront_video(request):
     if not key:
         raise Http404
 
-    try:
-        cloudfront_url = settings.CLOUDFRONT_URL
-        cloudfront_id = settings.CLOUDFRONT_ID
-    except AttributeError:
+    cloudfront_url = settings.CLOUDFRONT_URL
+    cloudfront_id = settings.CLOUDFRONT_ID
+
+    if not cloudfront_url or not cloudfront_id:
         raise Http404
 
     resource = '{}/{}'.format(cloudfront_url, key)
@@ -49,9 +49,9 @@ def secure_cloudfront_video(request):
 
 def rsa_signer(message):
 
-    try:
-        cloudfront_key = settings.CLOUDFRONT_PRIVATE_SIGNING_KEY
-    except AttributeError:
+    cloudfront_key = str(settings.CLOUDFRONT_PRIVATE_SIGNING_KEY)
+
+    if not cloudfront_key:
         raise Http404
 
     private_key = serialization.load_pem_private_key(
