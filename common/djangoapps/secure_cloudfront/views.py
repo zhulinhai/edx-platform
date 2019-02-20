@@ -6,39 +6,41 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect
-from django.views.generic import View
 
 from botocore.signers import CloudFrontSigner
 
 
-class SecureCloudFrontVideo(View):
+@login_required(redirect_field_name='dashboard')
+def secure_cloudfront_video(request):
     """
+    This view generates a redirect to the AWS resource
     """
+    meta = request.META
+    if not meta or meta.get('HTTP_HOST') not in meta.get('HTTP_REFERER', ''):
+        raise Http404
 
-    def get(self, request, *args, **kwargs):
-        """
-        """
-        key = request.GET.get('key')
+    key = request.GET.get('key')
 
-        if not key:
-            raise Http404
+    if not key:
+        raise Http404
 
-        try:
-            cloudfront_url = settings.CLOUDFRONT_URL
-            cloudfront_id = settings.CLOUDFRONT_ID
-        except AttributeError:
-            raise Http404
+    try:
+        cloudfront_url = settings.CLOUDFRONT_URL
+        cloudfront_id = settings.CLOUDFRONT_ID
+    except AttributeError:
+        raise Http404
 
-        resource = '{}/{}'.format(cloudfront_url, key)
+    resource = '{}/{}'.format(cloudfront_url, key)
 
-        expiration_date = _in_an_minute()
+    expiration_date = _in_an_minute()
 
-        cloudfront_signer = CloudFrontSigner(cloudfront_id, rsa_signer)
-        redirect_url = cloudfront_signer.generate_presigned_url(resource, date_less_than=expiration_date)
+    cloudfront_signer = CloudFrontSigner(cloudfront_id, rsa_signer)
+    redirect_url = cloudfront_signer.generate_presigned_url(resource, date_less_than=expiration_date)
 
-        return redirect(redirect_url)
+    return redirect(redirect_url)
 
 
 def rsa_signer(message):

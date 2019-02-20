@@ -43,7 +43,7 @@ from openedx.core.djangoapps.verified_track_content import views as verified_tra
 from openedx.core.djangoapps.common_views.xblock import xblock_resource
 from openedx.features.enterprise_support.api import enterprise_enabled
 from ratelimitbackend import admin
-from secure_cloudfront.views import SecureCloudFrontVideo
+from secure_cloudfront.views import secure_cloudfront_video
 from static_template_view import views as static_template_view_views
 from staticbook import views as staticbook_views
 from student import views as student_views
@@ -806,7 +806,7 @@ urlpatterns += [
 urlpatterns += [
     url(
         r'^secure-cloudfront-video/$',
-        SecureCloudFrontVideo.as_view(),
+        secure_cloudfront_video,
         name='secure_cloudfront_video',
     ),
 ]
