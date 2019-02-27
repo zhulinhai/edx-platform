@@ -1,7 +1,13 @@
 <% if (is_enrolled && collectionCourseStatus === 'completed') { %>
     <div class="final-grade">
         <div class="grade-header"><%- gettext('Final Grade') %><span class="sr"><%- StringUtils.interpolate(gettext('for {courseName}'), {courseName: title}) %></span></div>
-        <div class="grade-display"><%- grade %>%</div>
+        <div class="grade-display">
+            <% if (grade) { %>
+                <%- grade %>%
+            <% } else { %>
+                gettext('Not available')
+            <% } %>
+        </div>
     </div>
 <% } else if (is_enrolled && (typeof expired === 'undefined' || expired === false)) { %>
     <a href="<%- course_url %>" class="view-course-button btn-brand btn cta-primary">
